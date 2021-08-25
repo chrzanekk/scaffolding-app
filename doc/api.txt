@@ -1,0 +1,4 @@
+@RequestParam(name = "application_id", required = true) String appId, - application id ex. life-adviser
+@RequestParam(name = "domain", required = true) String domain, - domain/context. ex.main-stream
+@RequestParam(name = "domain_id", required = true) String domainId, - domain/Context id - logged user id from mobile app
+@RequestParam(name = "secret", required = true) String secret) - application secret
