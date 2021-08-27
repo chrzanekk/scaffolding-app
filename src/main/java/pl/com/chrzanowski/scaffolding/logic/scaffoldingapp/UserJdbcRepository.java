@@ -3,6 +3,7 @@ package pl.com.chrzanowski.scaffolding.logic.scaffoldingapp;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
+import pl.com.chrzanowski.scaffolding.domain.courseplatform.CustomerData;
 import pl.com.chrzanowski.scaffolding.domain.scaffoldingapp.UserData;
 import pl.com.chrzanowski.scaffolding.domain.scaffoldingapp.UsersFilter;
 import pl.com.chrzanowski.scaffolding.logic.CommonJdbcRepository;
@@ -14,11 +15,11 @@ import java.util.Map;
 import static pl.com.chrzanowski.scaffolding.logic.adviser.JdbcUtil.*;
 
 @Service
-public class ScaffoldingUserJdbcRepository {
+public class UserJdbcRepository {
     private JdbcTemplate jdbcTemplate;
     private CommonJdbcRepository commonJdbcRepository;
 
-    public ScaffoldingUserJdbcRepository(JdbcTemplate jdbcTemplate, CommonJdbcRepository commonJdbcRepository) {
+    public UserJdbcRepository(JdbcTemplate jdbcTemplate, CommonJdbcRepository commonJdbcRepository) {
         this.jdbcTemplate = jdbcTemplate;
         this.commonJdbcRepository = commonJdbcRepository;
     }
@@ -138,6 +139,16 @@ public class ScaffoldingUserJdbcRepository {
 
         return prepareUsers(jdbcTemplate.queryForList(query));
 
+    }
+    List<UserData> findConfirmEmailNotificationRecipients() {
+        String query = "SELECT * FROM users " +
+                "WHERE is_enabled = true " +
+                "AND email_confirmed = false " +
+                "AND NOT EXISTS(" +
+                "SELECT * FROM notifications " +
+                "WHERE user_id = users.id AND seen_datetime IS NULL " +
+                "AND kind = 'e');";
+        return prepareUsers(jdbcTemplate.queryForList(query));
     }
 
 

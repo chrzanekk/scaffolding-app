@@ -52,6 +52,96 @@ public class UserData {
         this.emailConfirmed = emailConfirmed;
     }
 
+    public UserData(String login, String passwordHash, String language, Boolean regulationAccepted, Boolean newsletterAccepted, Boolean isEnabled, LocalDateTime registrationDatetime, String registrationIp, String registrationUserAgent, Boolean emailConfirmed) {
+        this.login = login;
+        this.passwordHash = passwordHash;
+        this.language = language;
+        this.regulationAccepted = regulationAccepted;
+        this.newsletterAccepted = newsletterAccepted;
+        this.isEnabled = isEnabled;
+        this.registrationDatetime = registrationDatetime;
+        this.registrationIp = registrationIp;
+        this.registrationUserAgent = registrationUserAgent;
+        this.emailConfirmed = emailConfirmed;
+    }
+
+    public UserData(UserData userData, LocalDateTime deleteDateTime) {
+        this.id = userData.getId();
+        this.login = userData.getLogin();
+        this.passwordHash = userData.getPasswordHash();
+        this.language = userData.getLanguage();
+        this.regulationAccepted = userData.getRegulationAccepted();
+        this.newsletterAccepted = userData.getNewsletterAccepted();
+        this.isEnabled = userData.getEnabled();
+        this.emailConfirmed = userData.getEmailConfirmed();
+        this.registrationDatetime = userData.getRegistrationDatetime();
+        this.registrationIp = userData.getRegistrationIp();
+        this.registrationUserAgent = userData.getRegistrationUserAgent();
+        this.deleteDateTime = deleteDateTime;
+
+    }
+
+    public UserData(UserData userData, String[] authorities) {
+        this.id = userData.getId();
+        this.login = userData.getLogin();
+        this.passwordHash = userData.getPasswordHash();
+        this.language = userData.getLanguage();
+        this.regulationAccepted = userData.getRegulationAccepted();
+        this.newsletterAccepted = userData.getNewsletterAccepted();
+        this.isEnabled = userData.getEnabled();
+        this.emailConfirmed = userData.getEmailConfirmed();
+        this.registrationDatetime = userData.getRegistrationDatetime();
+        this.registrationIp = userData.getRegistrationIp();
+        this.registrationUserAgent = userData.getRegistrationUserAgent();
+        this.authorities = authorities;
+    }
+
+    public UserData(UserData userData, String passwordHash) {
+        this.id = userData.getId();
+        this.login = userData.getLogin();
+        this.passwordHash = passwordHash;
+        this.language = userData.getLanguage();
+        this.regulationAccepted = userData.getRegulationAccepted();
+        this.newsletterAccepted = userData.getNewsletterAccepted();
+        this.isEnabled = userData.getEnabled();
+        this.emailConfirmed = userData.getEmailConfirmed();
+        this.registrationDatetime = userData.getRegistrationDatetime();
+        this.registrationIp = userData.getRegistrationIp();
+        this.registrationUserAgent = userData.getRegistrationUserAgent();
+        this.authorities = userData.getAuthorities();
+    }
+
+    public UserData(UserData userData, String registrationIp, String registrationUserAgent) {
+        this.id = userData.getId();
+        this.login = userData.getLogin();
+        this.passwordHash = userData.getPasswordHash();
+        this.language = userData.getLanguage();
+        this.regulationAccepted = userData.getRegulationAccepted();
+        this.newsletterAccepted = userData.getNewsletterAccepted();
+        this.isEnabled = userData.getEnabled();
+        this.emailConfirmed = userData.getEmailConfirmed();
+        this.registrationDatetime = userData.getRegistrationDatetime();
+        this.registrationIp = registrationIp;
+        this.registrationUserAgent = registrationUserAgent;
+        this.authorities = userData.getAuthorities();
+    }
+
+    public UserData(UserData userData, String language, Boolean newsletterAccepted) {
+        this.id = userData.getId();
+        this.login = userData.getLogin();
+        this.passwordHash = userData.getPasswordHash();
+        this.language = language;
+        this.regulationAccepted = userData.getRegulationAccepted();
+        this.newsletterAccepted = newsletterAccepted;
+        this.isEnabled = userData.getEnabled();
+        this.emailConfirmed = userData.getEmailConfirmed();
+        this.registrationDatetime = userData.getRegistrationDatetime();
+        this.registrationIp = userData.getRegistrationIp();
+        this.registrationUserAgent = userData.getRegistrationUserAgent();
+        this.authorities = userData.getAuthorities();
+    }
+
+
     public Long getId() {
         return id;
     }

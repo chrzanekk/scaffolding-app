@@ -1,6 +1,6 @@
 package pl.com.chrzanowski.scaffolding.domain.scaffoldingapp;
 
-import pl.com.chrzanowski.scaffolding.logic.courseplatform.Language;
+import pl.com.chrzanowski.scaffolding.logic.scaffoldingapp.Language;
 
 public class UsersFilter {
     private Long id;
@@ -19,6 +19,7 @@ public class UsersFilter {
         this.pageSize = pageSize;
         this.loginLike = loginLike;
     }
+
 
     public UsersFilter(String login) {
         this.login = login;
