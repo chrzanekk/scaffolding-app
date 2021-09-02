@@ -15,7 +15,7 @@ function performPasswordChange() {
 
 function sendPasswordResetRequest(password) {
    $.ajax({
-        url: "/api/crs/customer/reset-password",
+        url: "/api/scaffolding/user/reset-password",
         method: "PUT",
         contentType: "application/json",
         data: JSON.stringify(

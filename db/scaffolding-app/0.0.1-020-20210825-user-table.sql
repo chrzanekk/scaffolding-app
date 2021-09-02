@@ -75,9 +75,9 @@ CREATE TABLE sent_emails(
 		create_datetime datetime,
 		primary key (id),
 		foreign key (user_id) REFERENCES users(id)
-)
+);
 
-CREATE TABLE password_reset_token(
+CREATE TABLE password_reset_tokens(
 		id int auto_increment,
 		user_id int not null,
 		value varchar(300) not null UNIQUE,
@@ -88,7 +88,7 @@ CREATE TABLE password_reset_token(
 );
 
 CREATE TABLE tokens(
-		int id auto_increment,
+		id int auto_increment,
 		value varchar(300) UNIQUE,
 		expiration_datetime datetime,
 		user_id int,

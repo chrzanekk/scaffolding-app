@@ -49,7 +49,7 @@
             <p th:if="${data.statusId == 6 && @authenticatedUser.hasRole('Super administrator') == true}"
                th:each="cancelled : ${data.statusCancellations}">
                 Anulowane przez
-                <span th:text="${cancelled.userData.firstName} + ' ' + ${cancelled.userData.lastName}"></span>
+                <span th:text="${cancelled.scaffUserData.firstName} + ' ' + ${cancelled.scaffUserData.lastName}"></span>
                 (<span th:text="${#temporals.format(cancelled.date, 'yyyy-MM-dd HH:mm:ss')}"></span>): <span
                     th:text="${cancelled.reason}"></span>
             </p>

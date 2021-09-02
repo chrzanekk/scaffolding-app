@@ -10,7 +10,7 @@
 </head>
 
 <body>
-<nav th:replace="${@courseCustomersService.getLoggedCustomer()} ? 'fragments/logged-in-navbar' : 'fragments/logged-out-navbar'"></nav>
+<nav th:replace="${@scaffUsersService.getLoggedUser()} ? 'fragments/logged-in-navbar' : 'fragments/logged-out-navbar'"></nav>
 
 <div class="container my-5">
 
@@ -19,7 +19,7 @@
     </div>
 
 
-    <div th:if="${!@courseCustomersService.getLoggedCustomer().getEmailConfirmed()}" class="mt-5">
+    <div th:if="${!@scaffUsersService.getLoggedUser().getEmailConfirmed()}" class="mt-5">
 
         <div id="email-not-confirmed-alert" class="alert alert-danger text-center" role="alert">
             <div th:text="#{my.account.email.not.confirmed}"></div>

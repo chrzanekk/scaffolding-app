@@ -11,7 +11,7 @@ $(document).ready(function () {
 function sendNotifications() {
     setButtonProcessing();
     $.ajax({
-        url: "/admin/api/crs/notifications",
+        url: "/admin/api/scaffolding/notifications",
         method: "POST",
         contentType: "application/json",
         data: JSON.stringify({

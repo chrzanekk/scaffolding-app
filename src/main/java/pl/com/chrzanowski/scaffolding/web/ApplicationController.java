@@ -33,6 +33,9 @@ import pl.com.chrzanowski.scaffolding.logic.adviser.AdviserService;
 import pl.com.chrzanowski.scaffolding.logic.adviser.ApplicationsService;
 import pl.com.chrzanowski.scaffolding.logic.adviser.ContextConfigsService;
 import pl.com.chrzanowski.scaffolding.logic.courseplatform.*;
+import pl.com.chrzanowski.scaffolding.logic.courseplatform.EmailConfirmationService;
+import pl.com.chrzanowski.scaffolding.logic.courseplatform.EmailService;
+import pl.com.chrzanowski.scaffolding.logic.scaffoldingapp.LanguagesUtil;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;

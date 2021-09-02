@@ -1,81 +1,81 @@
 <footer class="page-footer font-small pt-5 mt-5 bg-light shadow-sm">
 
-    <div class="container-fluid text-center text-md-left mb-5">
+<!--    <div class="container-fluid text-center text-md-left mb-5">-->
 
-        <div class="row">
-
-
-            <div class="col-md-3 my-2 text-center">
-                <h5 class="text-uppercase" th:text="#{footer.about.company}"></h5>
-                <span class="text-uppercase"><a style="color:#5bc0de;"
-                                                onclick="trace('link.clicked', 'lazur-dragon-company-page')"
-                                                target="_blank" th:href="${@applicationConfig.getCompanyPageUrl()}"
-                                                th:text="${@applicationConfig.getCompanyName()}"></a></span><br>
-                <span th:text="${@applicationConfig.getCompanyAddressFirstLine()}"></span><br>
-                <span th:text="${@applicationConfig.getCompanyAddressSecondLine()}"></span><br>
-                <span th:text="${@applicationConfig.getCompanyCountry()}"></span><br>
-                NIP: <span th:text="${@applicationConfig.getCompanyNip()}"></span><br>
-            </div>
-
-            <div class="col-md-3 my-2 text-center">
+<!--        <div class="row">-->
 
 
-                <h5 class="text-uppercase" th:text="#{footer.documents}"></h5>
+<!--            <div class="col-md-3 my-2 text-center">-->
+<!--                <h5 class="text-uppercase" th:text="#{footer.about.company}"></h5>-->
+<!--                <span class="text-uppercase"><a style="color:#5bc0de;"-->
+<!--                                                onclick="trace('link.clicked', 'lazur-dragon-company-page')"-->
+<!--                                                target="_blank" th:href="${@applicationConfig.getCompanyPageUrl()}"-->
+<!--                                                th:text="${@applicationConfig.getCompanyName()}"></a></span><br>-->
+<!--                <span th:text="${@applicationConfig.getCompanyAddressFirstLine()}"></span><br>-->
+<!--                <span th:text="${@applicationConfig.getCompanyAddressSecondLine()}"></span><br>-->
+<!--                <span th:text="${@applicationConfig.getCompanyCountry()}"></span><br>-->
+<!--                NIP: <span th:text="${@applicationConfig.getCompanyNip()}"></span><br>-->
+<!--            </div>-->
 
-                <ul class="list-unstyled">
-                    <li>
-                        <a href="/regulation" th:text="#{footer.regulation}"></a>
-                    </li>
-                    <li>
-                        <a href="/privacy-policy" th:text="#{footer.privacy.policy}"></a>
-                    </li>
-                    <li>
-                        <a href="/rodo" th:text="#{footer.rodo}"></a>
-                    </li>
-                </ul>
-
-            </div>
-
-            <div class="col-md-3 my-2 text-center">
+<!--            <div class="col-md-3 my-2 text-center">-->
 
 
-                <h5 class="text-uppercase">Social Media</h5>
+<!--                <h5 class="text-uppercase" th:text="#{footer.documents}"></h5>-->
 
-                <ul class="list-unstyled">
-                    <li>
-                        <i class="fab fa-youtube" style="color: #c4302b;"></i> <a
-                            href="https://www.youtube.com/channel/UCsRBHSzh-QVENYPxtfDKDNA" target="_blank"
-                            onclick="trace('link.clicked', 'youtube-footer')">YouTube</a>
-                    </li>
-                    <li>
-                        <i class="fab fa-facebook" style="color: #3b5998;"></i> <a
-                            href="https://www.facebook.com/computin.college" target="_blank"
-                            onclick="trace('link.clicked', 'facebook-footer')">Facebook</a>
-                    </li>
-                </ul>
+<!--                <ul class="list-unstyled">-->
+<!--                    <li>-->
+<!--                        <a href="/regulation" th:text="#{footer.regulation}"></a>-->
+<!--                    </li>-->
+<!--                    <li>-->
+<!--                        <a href="/privacy-policy" th:text="#{footer.privacy.policy}"></a>-->
+<!--                    </li>-->
+<!--                    <li>-->
+<!--                        <a href="/rodo" th:text="#{footer.rodo}"></a>-->
+<!--                    </li>-->
+<!--                </ul>-->
 
-            </div>
+<!--            </div>-->
 
-            <div class="col-md-3 my-2 text-center">
-
-
-                <h5 class="text-uppercase" th:text="#{footer.contact}"></h5>
-
-                <ul class="list-unstyled">
-                    <li>
-                        <a class="d-block text-info" onclick="trace('link.clicked', 'contact-mail')"
-                           th:href="${@applicationConfig.getCompanyContactMailto()}"
-                           th:text="${@applicationConfig.getCompanyContactMail()}"></a>
-                    </li>
-                </ul>
-
-            </div>
+<!--&lt;!&ndash;            <div class="col-md-3 my-2 text-center">&ndash;&gt;-->
 
 
-        </div>
+<!--&lt;!&ndash;                <h5 class="text-uppercase">Social Media</h5>&ndash;&gt;-->
+
+<!--&lt;!&ndash;                <ul class="list-unstyled">&ndash;&gt;-->
+<!--&lt;!&ndash;                    <li>&ndash;&gt;-->
+<!--&lt;!&ndash;                        <i class="fab fa-youtube" style="color: #c4302b;"></i> <a&ndash;&gt;-->
+<!--&lt;!&ndash;                            href="https://www.youtube.com/channel/UCsRBHSzh-QVENYPxtfDKDNA" target="_blank"&ndash;&gt;-->
+<!--&lt;!&ndash;                            onclick="trace('link.clicked', 'youtube-footer')">YouTube</a>&ndash;&gt;-->
+<!--&lt;!&ndash;                    </li>&ndash;&gt;-->
+<!--&lt;!&ndash;                    <li>&ndash;&gt;-->
+<!--&lt;!&ndash;                        <i class="fab fa-facebook" style="color: #3b5998;"></i> <a&ndash;&gt;-->
+<!--&lt;!&ndash;                            href="https://www.facebook.com/computin.college" target="_blank"&ndash;&gt;-->
+<!--&lt;!&ndash;                            onclick="trace('link.clicked', 'facebook-footer')">Facebook</a>&ndash;&gt;-->
+<!--&lt;!&ndash;                    </li>&ndash;&gt;-->
+<!--&lt;!&ndash;                </ul>&ndash;&gt;-->
+
+<!--&lt;!&ndash;            </div>&ndash;&gt;-->
+
+<!--&lt;!&ndash;            <div class="col-md-3 my-2 text-center">&ndash;&gt;-->
 
 
-    </div>
+<!--&lt;!&ndash;                <h5 class="text-uppercase" th:text="#{footer.contact}"></h5>&ndash;&gt;-->
+
+<!--&lt;!&ndash;                <ul class="list-unstyled">&ndash;&gt;-->
+<!--&lt;!&ndash;                    <li>&ndash;&gt;-->
+<!--&lt;!&ndash;                        <a class="d-block text-info" onclick="trace('link.clicked', 'contact-mail')"&ndash;&gt;-->
+<!--&lt;!&ndash;                           th:href="${@applicationConfig.getCompanyContactMailto()}"&ndash;&gt;-->
+<!--&lt;!&ndash;                           th:text="${@applicationConfig.getCompanyContactMail()}"></a>&ndash;&gt;-->
+<!--&lt;!&ndash;                    </li>&ndash;&gt;-->
+<!--&lt;!&ndash;                </ul>&ndash;&gt;-->
+
+<!--&lt;!&ndash;            </div>&ndash;&gt;-->
+
+
+<!--        </div>-->
+
+
+<!--    </div>-->
 
     <div class="footer-copyright text-center py-3">© 2020 Copyright:
         <b><a style="color:black;" target="_blank" onclick="trace('link.clicked', 'lazur-dragon-company-page')"

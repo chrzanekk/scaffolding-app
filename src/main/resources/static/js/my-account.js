@@ -18,7 +18,7 @@ function performPasswordChange() {
 
 function sendPasswordChangeRequest(actualPassword, newPassword) {
    $.ajax({
-           url: "/api/crs/change-password",
+           url: "/api/scaffolding/change-password",
            method: "post",
            contentType: "application/json",
            data: JSON.stringify(
@@ -43,7 +43,7 @@ function showError(text) {
 
 function sendLoggedCustomerPutRequest() {
     $.ajax({
-    url: "/api/crs/logged-customer",
+    url: "/api/scaffolding/logged-customer",
         method: "PUT",
         contentType: "application/json",
         data: JSON.stringify(
@@ -62,7 +62,7 @@ function sendLoggedCustomerPutRequest() {
 
 function sendEmailConfirmationLink() {
     $.ajax({
-        url: "/api/crs/send/email-confirmation-link",
+        url: "/api/scaffolding/send/email-confirmation-link",
         method: "POST",
         contentType: "application/json"
     })

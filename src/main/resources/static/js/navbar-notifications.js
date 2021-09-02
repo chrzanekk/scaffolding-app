@@ -27,7 +27,7 @@ $(document).ready(function () {
 
 function findNotificationsCount() {
     $.ajax({
-        url: "/api/crs/notifications/count/unseen",
+        url: "/api/scaffolding/notifications/count/unseen",
         type: "GET",
         dataType: "json",
         contentType: "application/json"
@@ -53,7 +53,7 @@ function fillNotificationsCounter(notificationsCount) {
 
 function findNotifications() {
     $.ajax({
-        url: "/api/crs/notifications",
+        url: "/api/scaffolding/notifications",
         type: "GET",
         dataType: "json",
         contentType: "application/json"

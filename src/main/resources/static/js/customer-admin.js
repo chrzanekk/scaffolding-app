@@ -5,11 +5,11 @@ $(document).ready(function () {
 
 function sendDeleteRequest(){
     $.ajax({
-        url: "/admin/api/crs/customer/" + customer.id,
+        url: "/admin/api/scaffolding/user/" + user.id,
         type: "DELETE"
     })
         .done(function(response) {
-            window.location.href = '/admin/customers';
+            window.location.href = '/admin/users';
         })
         .fail(function(jqxhr, textStatus, errorThrown){
             displayErrorInformation(jqxhr.responseText);
@@ -33,7 +33,7 @@ function sendDeleteRequest(){
 
 function sendPasswordChangeRequest(password) {
        $.ajax({
-               url: "/admin/api/crs/customer-change-password/"  + customer.id,
+               url: "/admin/api/scaffolding/user-change-password/"  + user.id,
                method: "put",
                contentType: "application/json",
                data: JSON.stringify(
@@ -68,19 +68,12 @@ function getAuthorities(){
 
 function sendUpdateRequest() {
     $.ajax({
-        url: "/admin/api/crs/customer/" + customer.id,
+        url: "/admin/api/scaffolding/user/" + user.id,
         method: "PUT",
         contentType: "application/json",
         data: JSON.stringify({
             invoiceFirstAndLastName: $("#first-and-last-name").val(),
             login: $("#login").val(),
-            invoiceType: $("#invoice-type").find(":selected").val(),
-            invoiceCompanyName: $("#invoice-company-name").val(),
-            invoiceStreet: $("#invoice-street").val(),
-            invoicePostalCode: $("#invoice-postal-code").val(),
-            invoiceCity: $("#invoice-city").val(),
-            invoiceNip: $("#invoice-nip").val(),
-            invoiceCountry: $("#invoice-country").find(":selected").val(),
             language: $("#language").find(":selected").val(),
             isEnabled: $("#enabled").find(":selected").val(),
             registrationDatetime: $("#registration-datetime").val(),

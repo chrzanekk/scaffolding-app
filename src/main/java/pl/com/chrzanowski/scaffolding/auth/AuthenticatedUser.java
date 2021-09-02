@@ -10,15 +10,15 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 import pl.com.chrzanowski.scaffolding.config.AdviserConfig;
 import pl.com.chrzanowski.scaffolding.domain.UserData;
-import pl.com.chrzanowski.scaffolding.domain.courseplatform.CustomerData;
+import pl.com.chrzanowski.scaffolding.domain.scaffoldingapp.ScaffUserData;
 import pl.com.chrzanowski.scaffolding.logic.ApplicationConfigService;
 import pl.com.chrzanowski.scaffolding.logic.CacheType;
 import pl.com.chrzanowski.scaffolding.logic.Language;
 import pl.com.chrzanowski.scaffolding.logic.UsersService;
-import pl.com.chrzanowski.scaffolding.logic.courseplatform.CourseCustomersService;
-import pl.com.chrzanowski.scaffolding.logic.courseplatform.CustomerAuthoritiesService;
-import pl.com.chrzanowski.scaffolding.logic.courseplatform.CustomerAuthority;
-import pl.com.chrzanowski.scaffolding.logic.courseplatform.LanguagesUtil;
+import pl.com.chrzanowski.scaffolding.logic.scaffoldingapp.LanguagesUtil;
+import pl.com.chrzanowski.scaffolding.logic.scaffoldingapp.ScaffUserAuthoritiesService;
+import pl.com.chrzanowski.scaffolding.logic.scaffoldingapp.ScaffUserAuthority;
+import pl.com.chrzanowski.scaffolding.logic.scaffoldingapp.ScaffUsersService;
 
 import java.util.*;
 
@@ -29,17 +29,20 @@ public class AuthenticatedUser {
     private ApplicationConfigService applicationConfigService;
     private UserDetailsService userDetailsService;
     private AdviserConfig adviserConfig;
-    private CourseCustomersService courseCustomersService;
-    private CustomerAuthoritiesService customerAuthoritiesService;
+    private ScaffUserAuthoritiesService scaffUserAuthoritiesService;
+    private ScaffUsersService scaffUsersService;
 
-    public AuthenticatedUser(UserPermissionsJdbcRepository userPermissionsJdbcRepository, UsersService usersService, ApplicationConfigService applicationConfigService, UserDetailsService userDetailsService, AdviserConfig adviserConfig, CourseCustomersService courseCustomersService, CustomerAuthoritiesService customerAuthoritiesService) {
+    public AuthenticatedUser(UserPermissionsJdbcRepository userPermissionsJdbcRepository, UsersService usersService,
+                             ApplicationConfigService applicationConfigService, UserDetailsService userDetailsService
+            , AdviserConfig adviserConfig, ScaffUsersService scaffUsersService,
+                             ScaffUserAuthoritiesService scaffUserAuthoritiesService) {
         this.userPermissionsJdbcRepository = userPermissionsJdbcRepository;
         this.usersService = usersService;
         this.applicationConfigService = applicationConfigService;
         this.userDetailsService = userDetailsService;
         this.adviserConfig = adviserConfig;
-        this.courseCustomersService = courseCustomersService;
-        this.customerAuthoritiesService = customerAuthoritiesService;
+        this.scaffUsersService = scaffUsersService;
+        this.scaffUserAuthoritiesService = scaffUserAuthoritiesService;
     }
 
     public String getAppVersion() {
@@ -91,53 +94,26 @@ public class AuthenticatedUser {
 
     public List<Menu> getMenu() {
 
-        CustomerData loggedCustomer = courseCustomersService.getLoggedCustomer();
+        ScaffUserData loggedUser = scaffUsersService.getLoggedUser();
         Language currentLang = LanguagesUtil.getCurrentLanguage();
 
-        if (customerAuthoritiesService.hasCustomerAuthority(loggedCustomer, CustomerAuthority.ADMIN)) {
+        if (scaffUserAuthoritiesService.hasUserAuthority(loggedUser, ScaffUserAuthority.ADMIN)) {
             return new ArrayList<>(Arrays.asList(
-                    new Menu("Course Platform", "#", new Permissions[]{Permissions.LIFE_ADVISER_COMMON}, new ArrayList<>(Arrays.asList(
-                            new Menu(chooseMenuName("Courses", "Kursy", currentLang), "/admin/courses", new Permissions[]{Permissions.LIFE_ADVISER_COMMON}, Collections.emptyList()),
-                            new Menu(chooseMenuName("Buy Our Code", "Kup Nasz Kod", currentLang), "/admin/buy-our-code", new Permissions[]{Permissions.LIFE_ADVISER_COMMON}, Collections.emptyList()),
-                            new Menu(chooseMenuName("Selections", "Selekcje", currentLang), "/admin/selections", new Permissions[]{Permissions.LIFE_ADVISER_COMMON}, Collections.emptyList()),
-                            new Menu(chooseMenuName("Orders", "Zamówienia", currentLang), "/admin/orders", new Permissions[]{Permissions.LIFE_ADVISER_COMMON}, Collections.emptyList()),
-                            new Menu(chooseMenuName("Customers", "Klienci", currentLang), "/admin/customers", new Permissions[]{Permissions.LIFE_ADVISER_COMMON}, Collections.emptyList()),
-                            new Menu(chooseMenuName("Authors", "Autorzy", currentLang), "/admin/authors", new Permissions[]{Permissions.LIFE_ADVISER_COMMON}, Collections.emptyList()),
-                            new Menu(chooseMenuName("Course Comments", "Komentarze Do Kursów", currentLang), "/admin/course-comments", new Permissions[]{Permissions.LIFE_ADVISER_COMMON}, Collections.emptyList()),
-                            new Menu(chooseMenuName("Lesson Comments", "Komentarze Do Lekcji", currentLang), "/admin/lesson-comments", new Permissions[]{Permissions.LIFE_ADVISER_COMMON}, Collections.emptyList())
-                    ))),
-                    new Menu(chooseMenuName("Entertainment", "Rozrywka", currentLang), "#", new Permissions[]{Permissions.LIFE_ADVISER_COMMON}, new ArrayList<>(Arrays.asList(
-                            new Menu(chooseMenuName("Memes", "Memy", currentLang), "/admin/memes", new Permissions[]{Permissions.LIFE_ADVISER_COMMON}, Collections.emptyList())
-                    ))),
-                    new Menu(chooseMenuName("Procedures", "Procedury", currentLang), "#", new Permissions[]{Permissions.LIFE_ADVISER_COMMON}, new ArrayList<>(Arrays.asList(
-                            new Menu(chooseMenuName("Invoice Issuing", "Wystawianie Faktury", currentLang), "/admin/procedure/issue-invoice", new Permissions[]{Permissions.LIFE_ADVISER_COMMON}, Collections.emptyList()),
-                            new Menu(chooseMenuName("Return (Orders, Courses)", "Zwroty (Zamówienia, Kursy)", currentLang), "/admin/procedure/course-return", new Permissions[]{Permissions.LIFE_ADVISER_COMMON}, Collections.emptyList())
+                    new Menu("Fleet", "#", new Permissions[]{Permissions.LIFE_ADVISER_COMMON},
+                            new ArrayList<>(Arrays.asList(
+                                    new Menu(chooseMenuName("Cars", "Samochody", currentLang), "/admin/cars",
+                                            new Permissions[]{Permissions.LIFE_ADVISER_COMMON}, Collections.emptyList())
+                            ))),
+                    new Menu(chooseMenuName("Scaffolding Logs", "Dziennik rusztowań", currentLang), "#",
+                            new Permissions[]{Permissions.LIFE_ADVISER_COMMON}, new ArrayList<>(Arrays.asList(
+                            new Menu(chooseMenuName("Logs", "Dzienniki", currentLang), "/admin/scaffolding-log",
+                                    new Permissions[]{Permissions.LIFE_ADVISER_COMMON}, Collections.emptyList())
                     ))),
                     new Menu("Marketing", "#", new Permissions[]{Permissions.LIFE_ADVISER_COMMON}, new ArrayList<>(Arrays.asList(
                             new Menu("Newsletter", "/admin/marketing/newsletter", new Permissions[]{Permissions.LIFE_ADVISER_COMMON}, Collections.emptyList())
                     ))),
                     new Menu(chooseMenuName("Notifications", "Powiadomienia", currentLang), "#", new Permissions[]{Permissions.LIFE_ADVISER_COMMON}, new ArrayList<>(Arrays.asList(
                             new Menu(chooseMenuName("Send notifications", "Wyślij powiadomienia", currentLang), "/admin/notifications/send", new Permissions[]{Permissions.LIFE_ADVISER_COMMON}, Collections.emptyList())
-                    ))),
-                    new Menu(chooseMenuName("Statistics", "Statystyki", currentLang), "#", new Permissions[]{Permissions.LIFE_ADVISER_COMMON}, new ArrayList<>(Arrays.asList(
-                            new Menu(chooseMenuName("Summary", "Podsumowanie", currentLang), "/admin/statistics/summary", new Permissions[]{Permissions.LIFE_ADVISER_COMMON}, Collections.emptyList()),
-                            new Menu(chooseMenuName("Top Selling Products (For Money)", "Najlepiej Sprzedające Się Produkty (Płatne)", currentLang), "/admin/statistics/top-selling-money", new Permissions[]{Permissions.LIFE_ADVISER_COMMON}, Collections.emptyList()),
-                            new Menu(chooseMenuName("Top Selling Products (For Free)", "Najlepiej Sprzedające Się Produkty (Darmowe)", currentLang), "/admin/statistics/summary", new Permissions[]{Permissions.LIFE_ADVISER_COMMON}, Collections.emptyList()),
-                            new Menu(chooseMenuName("New Customers", "Nowi Klienci", currentLang), "/admin/statistics/new-customers", new Permissions[]{Permissions.LIFE_ADVISER_COMMON}, Collections.emptyList()),
-                            new Menu(chooseMenuName("Visited Landings Count", "Licznik Odwiedzin Landingów", currentLang), "/admin/statistics/visited-landings-count", new Permissions[]{Permissions.LIFE_ADVISER_COMMON}, Collections.emptyList()),
-                            new Menu(chooseMenuName("Courses completion", "Ukończenie kursów", currentLang), "/admin/statistics/courses-completion", new Permissions[]{Permissions.LIFE_ADVISER_COMMON}, Collections.emptyList())
-                            //new Menu("Most active customers", "/admin/statistics/most-active-customers", new Permissions[]{Permissions.LIFE_ADVISER_COMMON}, Collections.emptyList())
-                    ))),
-                    new Menu(chooseMenuName("Student Area", "Strefa kursanta", currentLang), "#", new Permissions[]{Permissions.LIFE_ADVISER_COMMON}, new ArrayList<>(Arrays.asList(
-                            new Menu(chooseMenuName("To do", "Do zrobienia", currentLang), "#", new Permissions[]{Permissions.LIFE_ADVISER_COMMON}, Collections.emptyList())
-                    )))
-            ));
-        } else if (customerAuthoritiesService.hasCustomerAuthority(loggedCustomer, CustomerAuthority.TEACHER)) {
-            return new ArrayList<>(Arrays.asList(
-                    new Menu(chooseMenuName("Management", "Zarządzanie", currentLang), "#", new Permissions[]{Permissions.LIFE_ADVISER_COMMON}, new ArrayList<>(Arrays.asList(
-                            new Menu(chooseMenuName("Courses", "Kursy", currentLang), "/admin/courses", new Permissions[]{Permissions.LIFE_ADVISER_COMMON}, Collections.emptyList()),
-                            new Menu(chooseMenuName("Course Comments", "Komentarze Do Kursów", currentLang), "/admin/course-comments", new Permissions[]{Permissions.LIFE_ADVISER_COMMON}, Collections.emptyList()),
-                            new Menu(chooseMenuName("Lesson Comments", "Komentarze Do Lekcji", currentLang), "/admin/lesson-comments", new Permissions[]{Permissions.LIFE_ADVISER_COMMON}, Collections.emptyList())
                     )))
             ));
         } else {

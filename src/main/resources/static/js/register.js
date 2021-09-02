@@ -20,7 +20,7 @@ function performUserRegistration() {
 
 function sendUserPostRequest(login, password, language) {
    $.ajax({
-           url: "/api/crs/register-customer",
+           url: "/api/scaffolding/register-user",
            method: "post",
            contentType: "application/json",
            data: JSON.stringify(
