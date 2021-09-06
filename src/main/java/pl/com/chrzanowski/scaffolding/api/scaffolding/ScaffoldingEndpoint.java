@@ -2,14 +2,7 @@ package pl.com.chrzanowski.scaffolding.api.scaffolding;
 
 
 import org.springframework.web.bind.annotation.*;
-import pl.com.chrzanowski.scaffolding.api.scaffolding.ScaffTracePostRequest;
-import pl.com.chrzanowski.scaffolding.api.scaffolding.ScaffResetPasswordPutRequest;
-import pl.com.chrzanowski.scaffolding.api.courseplatform.UnseenNotificationsCountRequestGetResponse;
-import pl.com.chrzanowski.scaffolding.domain.scaffoldingapp.ScaffTraceData;
-import pl.com.chrzanowski.scaffolding.domain.scaffoldingapp.ScaffLoggedUserPutRequest;
-import pl.com.chrzanowski.scaffolding.domain.scaffoldingapp.ScaffNotificationData;
-import pl.com.chrzanowski.scaffolding.domain.scaffoldingapp.ScaffNotificationsFilter;
-import pl.com.chrzanowski.scaffolding.domain.scaffoldingapp.ScaffUserData;
+import pl.com.chrzanowski.scaffolding.domain.scaffoldingapp.*;
 import pl.com.chrzanowski.scaffolding.logic.courseplatform.WebUtil;
 import pl.com.chrzanowski.scaffolding.logic.scaffoldingapp.ScaffEmailConfirmService;
 import pl.com.chrzanowski.scaffolding.logic.scaffoldingapp.ScaffPasswordResetTokensService;
@@ -19,7 +12,6 @@ import pl.com.chrzanowski.scaffolding.logic.scaffoldingapp.notifications.ScaffNo
 import pl.com.chrzanowski.scaffolding.logic.scaffoldingapp.notifications.ScaffNotificationsService;
 
 import javax.servlet.http.HttpServletRequest;
-
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -63,12 +55,12 @@ public class ScaffoldingEndpoint {
 
     @PutMapping("/logged-user")
     public void updateLoggedUser(@RequestBody ScaffLoggedUserPutRequest request) {
-        ScaffUserData loggedCustomer = scaffUsersService.getLoggedUser();
+        ScaffUserData loggedUser = scaffUsersService.getLoggedUser();
 
-        if (loggedCustomer == null) {
+        if (loggedUser == null) {
             throw new IllegalArgumentException("Your are logged out. Please log in and retry");
         }
-        scaffUsersService.updateLoggedCustomer(request.getLanguage(), request.getNewsletterAccepted());
+        scaffUsersService.updateLoggedUser(request.getLanguage(), request.getNewsletterAccepted());
     }
 
     @PostMapping("/user/forget-password")
@@ -87,24 +79,24 @@ public class ScaffoldingEndpoint {
     }
 
     @GetMapping("/notifications/count/unseen")
-    public UnseenNotificationsCountRequestGetResponse getUnseenNotifications() {
+    public ScaffUnseenNotificationsCountRequestGetResponse getUnseenNotifications() {
 
-        ScaffUserData customer = scaffUsersService.getLoggedUser();
-        if (customer == null) {
+        ScaffUserData user = scaffUsersService.getLoggedUser();
+        if (user == null) {
             throw new IllegalArgumentException("You must be logged to get your unseen notifications count");
         }
 
-        return new UnseenNotificationsCountRequestGetResponse(scaffNotificationsService.unseenNotificationsCount(customer));
+        return new ScaffUnseenNotificationsCountRequestGetResponse(scaffNotificationsService.unseenNotificationsCount(user));
     }
 
     @GetMapping("/notifications")
     public ScaffNotificationsRequestGetResponse getNotifications() {
-        ScaffUserData customer = scaffUsersService.getLoggedUser();
-        if (customer == null) {
+        ScaffUserData user = scaffUsersService.getLoggedUser();
+        if (user == null) {
             throw new IllegalArgumentException("You must be logged to get your notifications");
         }
 
-        List<ScaffNotificationData> notifications = scaffNotificationsService.find(new ScaffNotificationsFilter(false, customer,
+        List<ScaffNotificationData> notifications = scaffNotificationsService.find(new ScaffNotificationsFilter(false, user,
                 ScaffNotificationType.PLATFORM, 10L));
         scaffNotificationsService.setNotificationsSeen(notifications);
         return new ScaffNotificationsRequestGetResponse(notificationsToResponses(notifications));

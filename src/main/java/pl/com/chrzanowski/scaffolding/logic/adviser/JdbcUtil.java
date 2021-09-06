@@ -77,6 +77,17 @@ public class JdbcUtil {
         }
     }
 
+    public static Integer getInteger(Map<String, Object> rs, String columnLabel) throws SQLException {
+
+        String stringValue = String.valueOf(rs.get(columnLabel));
+
+        if (stringValue.equals("null")) {
+            return null;
+        } else {
+            return Integer.valueOf(stringValue);
+        }
+    }
+
     public static Integer getInteger(ResultSet rs, String columnLabel) throws SQLException {
 
         int number = rs.getInt(columnLabel);
@@ -87,6 +98,7 @@ public class JdbcUtil {
             return number;
         }
     }
+
 
     public static Long getLong(Map<String, Object> row, String columnLabel) {
         String stringValue = String.valueOf(row.get(columnLabel));

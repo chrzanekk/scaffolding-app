@@ -120,10 +120,10 @@ public class ScaffUsersService {
         scaffEmailService.sendAfterPasswordChangeMail(user);
     }
 
-    public void updateLoggedCustomer(String language, Boolean newsletterAccepted) {
+    public void updateLoggedUser(String language, Boolean newsletterAccepted) {
         ScaffUserData loggedUser = getLoggedUser();
-        ScaffUserData updatedCustomer = new ScaffUserData(loggedUser, language, newsletterAccepted);
-        update(updatedCustomer);
+        ScaffUserData updatedUser = new ScaffUserData(loggedUser, language, newsletterAccepted);
+        update(updatedUser);
     }
 
     public List<ScaffUserData> findConfirmEmailNotificationRecipients() {

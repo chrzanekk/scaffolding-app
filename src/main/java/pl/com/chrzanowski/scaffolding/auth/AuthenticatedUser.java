@@ -101,7 +101,7 @@ public class AuthenticatedUser {
             return new ArrayList<>(Arrays.asList(
                     new Menu("Fleet", "#", new Permissions[]{Permissions.LIFE_ADVISER_COMMON},
                             new ArrayList<>(Arrays.asList(
-                                    new Menu(chooseMenuName("Cars", "Samochody", currentLang), "/admin/cars",
+                                    new Menu(chooseMenuName("Cars", "Samochody", currentLang), "/admin/vehicles",
                                             new Permissions[]{Permissions.LIFE_ADVISER_COMMON}, Collections.emptyList())
                             ))),
                     new Menu(chooseMenuName("Scaffolding Logs", "Dziennik rusztowań", currentLang), "#",

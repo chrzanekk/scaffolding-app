@@ -2,16 +2,14 @@ package pl.com.chrzanowski.scaffolding.api.scaffolding;
 
 import org.springframework.web.bind.annotation.*;
 import pl.com.chrzanowski.scaffolding.api.courseplatform.ChangePasswordRequest;
-import pl.com.chrzanowski.scaffolding.api.courseplatform.CustomerPutRequest;
-import pl.com.chrzanowski.scaffolding.domain.courseplatform.CustomerData;
-import pl.com.chrzanowski.scaffolding.domain.scaffoldingapp.ScaffCreateNotificationsParameters;
-import pl.com.chrzanowski.scaffolding.domain.scaffoldingapp.ScaffUserData;
-import pl.com.chrzanowski.scaffolding.domain.scaffoldingapp.ScaffUsersFilter;
+import pl.com.chrzanowski.scaffolding.domain.scaffoldingapp.*;
 import pl.com.chrzanowski.scaffolding.logic.scaffoldingapp.ScaffStatisticService;
 import pl.com.chrzanowski.scaffolding.logic.scaffoldingapp.ScaffUsersService;
+import pl.com.chrzanowski.scaffolding.logic.scaffoldingapp.ScaffVehiclesService;
 import pl.com.chrzanowski.scaffolding.logic.scaffoldingapp.notifications.ScaffNotificationsFromPanelService;
 
 import javax.servlet.http.HttpServletRequest;
+import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -24,21 +22,25 @@ public class ScaffoldingEndpointAdmin {
     private ScaffUsersService scaffUsersService;
     private ScaffNotificationsFromPanelService notificationsFromPanelService;
     private ScaffStatisticService scaffStatisticService;
+    private ScaffVehiclesService scaffVehiclesService;
 
-    public ScaffoldingEndpointAdmin(ScaffUsersService scaffUsersService, ScaffNotificationsFromPanelService notificationsFromPanelService, ScaffStatisticService scaffStatisticService) {
+    public ScaffoldingEndpointAdmin(ScaffUsersService scaffUsersService,
+                                    ScaffNotificationsFromPanelService notificationsFromPanelService,
+                                    ScaffStatisticService scaffStatisticService, ScaffVehiclesService scaffVehiclesService) {
         this.scaffUsersService = scaffUsersService;
         this.notificationsFromPanelService = notificationsFromPanelService;
         this.scaffStatisticService = scaffStatisticService;
+        this.scaffVehiclesService = scaffVehiclesService;
     }
 
     @GetMapping("/users")
-    public List<ScaffUserGetResponse> getCustomers(
+    public List<ScaffUserGetResponse> getUsers(
             @RequestParam(name = "page", required = false, defaultValue = "1") Long page,
             @RequestParam(name = "page_size", required = false, defaultValue = "10") Long pageSize,
             @RequestParam(name = "login", required = false) String loginLike
     ) {
         List<ScaffUserData> users = scaffUsersService.find(new ScaffUsersFilter(loginLike, page, pageSize
-                ));
+        ));
         return customersToResponses(users);
     }
 
@@ -88,12 +90,23 @@ public class ScaffoldingEndpointAdmin {
         notificationsFromPanelService.createNotifications(new ScaffCreateNotificationsParameters(request));
     }
 
+    @GetMapping("/vehicles")
+    public ScaffVehicleRequestGetResponse vehicles(
+            @RequestParam(name = "page", required = false, defaultValue = "1") Long page,
+            @RequestParam(name = "page_size", required = false, defaultValue = "10") Long pageSize,
+            @RequestParam(name = "registration_number", required = false) String registrationNumber) throws SQLException {
+        List<ScaffVehicleData> vehicles = scaffVehiclesService.find(new ScaffVehiclesFilter(page,pageSize));
+        return new ScaffVehicleRequestGetResponse(vehiclesToResponse(vehicles));
+    }
 
 
-
-
-
-
+    private List<ScaffVehicleGetResponse> vehiclesToResponse(List<ScaffVehicleData> vehicles) {
+        List<ScaffVehicleGetResponse> list = new ArrayList<>();
+        for (ScaffVehicleData vehicle : vehicles) {
+            list.add(new ScaffVehicleGetResponse(vehicle));
+        }
+        return list;
+    }
 
     private List<ScaffUserGetResponse> customersToResponses(List<ScaffUserData> users) {
         List<ScaffUserGetResponse> list = new ArrayList<>();

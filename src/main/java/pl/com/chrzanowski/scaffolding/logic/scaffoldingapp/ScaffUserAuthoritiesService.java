@@ -4,12 +4,12 @@ import org.springframework.stereotype.Service;
 import pl.com.chrzanowski.scaffolding.domain.scaffoldingapp.ScaffUserData;
 import pl.com.chrzanowski.scaffolding.domain.scaffoldingapp.ScaffUserAuthoritiesFilter;
 import pl.com.chrzanowski.scaffolding.domain.scaffoldingapp.ScaffUserAuthorityData;
-import pl.com.chrzanowski.scaffolding.logic.scaffoldingapp.ScaffUserAuthority;
 
 import java.util.List;
 
 @Service
 public class ScaffUserAuthoritiesService {
+
     private ScaffUserAuthoritiesJdbcRepository scaffUserAuthoritiesJdbcRepository;
 
     public ScaffUserAuthoritiesService(ScaffUserAuthoritiesJdbcRepository scaffUserAuthoritiesJdbcRepository) {
@@ -19,7 +19,7 @@ public class ScaffUserAuthoritiesService {
     public void deleteAuthorities(ScaffUserData user) {
         scaffUserAuthoritiesJdbcRepository.deleteAuthoritiesFromUser(new ScaffUserAuthoritiesFilter(user.getId()));
     }
-
+//tu zmienie na domyślną rejestracyjną rolę USER. bo implementacja z course_platform sie sypie
     public void validateAndCreateAuthorityForUser(ScaffUserData user, String[] authorities) {
         if (authorities != null) {
             getAuthoritiesWithRoles(authorities);

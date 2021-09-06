@@ -33,8 +33,6 @@ import pl.com.chrzanowski.scaffolding.logic.adviser.AdviserService;
 import pl.com.chrzanowski.scaffolding.logic.adviser.ApplicationsService;
 import pl.com.chrzanowski.scaffolding.logic.adviser.ContextConfigsService;
 import pl.com.chrzanowski.scaffolding.logic.courseplatform.*;
-import pl.com.chrzanowski.scaffolding.logic.courseplatform.EmailConfirmationService;
-import pl.com.chrzanowski.scaffolding.logic.courseplatform.EmailService;
 import pl.com.chrzanowski.scaffolding.logic.scaffoldingapp.LanguagesUtil;
 
 import javax.servlet.http.Cookie;
@@ -111,6 +109,17 @@ public class ApplicationController {
         this.environment = environment;
         this.emailConfirmationService = emailConfirmationService;
     }
+/*
+----------------------------------
+SCAFFOLDING APP CONTROLLER - BEGIN
+----------------------------------
+ */
+
+    @GetMapping({"/register"})
+    public String register(Model model) {
+        model.addAttribute("languagesDict", dictionariesService.getDictionary(DictionaryType.LANGUAGES));
+        return "register";
+    }
 
     @GetMapping("/confirm-email")
     public String confirmEmail(@RequestParam(name = "token") String tokenValue) {
@@ -128,6 +137,120 @@ public class ApplicationController {
             e.printStackTrace();
         }
     }
+
+    @GetMapping({"/reset-password"})
+    public String passwordReset(Model model, @RequestParam String token) {
+        model.addAttribute("token", token);
+        return "reset-password";
+    }
+
+    @GetMapping({"/forget-password"})
+    public String forgetPassword() {
+        return "forget-password";
+    }
+
+    @GetMapping({"/regulation"})
+    public String regulation() {
+        return "regulation";
+    }
+
+    @GetMapping({"/privacy-policy"})
+    public String privacyPolicy() {
+        return "privacy-policy";
+    }
+
+    @GetMapping({"/rodo"})
+    public String rodo() {
+        return "rodo";
+    }
+
+    @GetMapping({"/admin"})
+    public String admin() {
+        return "admin";
+    }
+
+    @GetMapping({"/", "/home"})
+    public String home(Model model) {
+        return "home-page";
+    }
+
+    @GetMapping({"/registered-successfully"})
+    public String registeredSuccessfully() {
+        return "registered-successfully";
+    }
+
+    @GetMapping({"/data-changed-successfully"})
+    public String dataChangedSuccessfully() {
+        return "data-changed-successfully";
+    }
+
+    //do zrobienia formatka + js
+    @GetMapping({"/admin/vehicles"})
+    public String adminVehicles() {
+        return "admin-vehicles";
+    }
+    //do zrobienia formatka + js
+//    @GetMapping({"/admin/users"})
+//    public String adminUsers(Model model) {
+//        Language currentLang = LanguagesUtil.getCurrentLanguage();
+//        model.addAttribute("languagesDict", dictionariesService.getDictionary(DictionaryType.LANGUAGES, currentLang));
+//        model.addAttribute("yesNoDict", dictionariesService.getDictionary(DictionaryType.YES_NO, currentLang));
+//        model.addAttribute("authoritiesDict", dictionariesService.getDictionary(DictionaryType.CUSTOMER_AUTHORITIES, currentLang));
+//
+//        return "users-admin";
+//    }
+//
+//    @GetMapping({"/admin/customer/{id}"})
+//    public String user(Model model, @PathVariable Long id) {
+//        Language currentLang = LanguagesUtil.getCurrentLanguage();
+//        model.addAttribute("customer", new CustomerGetResponse(courseCustomersService.findWithAuthorities(new CustomersFilter(id)).get(0)));
+//        model.addAttribute("authoritiesDict", dictionariesService.getDictionary(DictionaryType.CUSTOMER_AUTHORITIES, currentLang));
+//        model.addAttribute("languagesDict", dictionariesService.getDictionary(DictionaryType.LANGUAGES, currentLang));
+//        model.addAttribute("yesNoDict", dictionariesService.getDictionary(DictionaryType.YES_NO, currentLang));
+//        model.addAttribute("invoiceTypesDict", dictionariesService.getDictionary(DictionaryType.INVOICE_TYPES, currentLang));
+//        model.addAttribute("countriesDict", dictionariesService.getDictionary(DictionaryType.COUNTRIES, currentLang));
+//        return "user-admin";
+//    }
+
+    @GetMapping({"/login"})
+    public String login() {
+        return "login";
+    }
+
+    @GetMapping({"/admin/login"})
+    public String adminLogin() {
+        return "login-admin";
+    }
+
+
+    @GetMapping({"/logout"})
+    public String logout(Model model, HttpServletRequest request, HttpServletResponse response) {
+        model.addAttribute("logout", true);
+        HttpSession session = request.getSession(false);
+        SecurityContextHolder.clearContext();
+        session = request.getSession(false);
+        if (session != null) {
+            session.invalidate();
+        }
+        for (Cookie cookie : request.getCookies()) {
+            cookie.setMaxAge(0);
+        }
+
+        cacheService.invalidateDictionaries();
+        log.debug(CacheType.DICTIONARIES + " cache invalidated");
+        cacheService.invalidateMenu();
+        log.debug(CacheType.MENU + " cache invalidated");
+        return "login";
+    }
+
+
+
+/*
+--------------------------------
+SCAFFOLDING APP CONTROLLER - END
+--------------------------------
+ */
+
 
     @GetMapping("/mentoring")
     public String mentoring() {
@@ -171,31 +294,6 @@ public class ApplicationController {
         return "meme";
     }
 
-    @GetMapping({"/reset-password"})
-    public String passwordReset(Model model, @RequestParam String token) {
-        model.addAttribute("token", token);
-        return "reset-password";
-    }
-
-    @GetMapping({"/forget-password"})
-    public String forgetPassword() {
-        return "forget-password";
-    }
-
-    @GetMapping({"/regulation"})
-    public String regulation() {
-        return "regulation";
-    }
-
-    @GetMapping({"/privacy-policy"})
-    public String privacyPolicy() {
-        return "privacy-policy";
-    }
-
-    @GetMapping({"/rodo"})
-    public String rodo() {
-        return "rodo";
-    }
 
     @GetMapping(
             value = "/get-image/{name}",
@@ -254,11 +352,6 @@ public class ApplicationController {
         return filesService.getInvoice(invoice.getFileName());
     }
 
-    @GetMapping({"/admin"})
-    public String admin() {
-        return "admin";
-    }
-
     @GetMapping({"/payments"})
     public String payments(Model model) {
         model.addAttribute("ordersStatusesDict", dictionariesService.getDictionary(DictionaryType.COURSE_ORDER_STATUSES));
@@ -272,10 +365,6 @@ public class ApplicationController {
         return "home";
     }
 
-    @GetMapping({"/", "/home"})
-    public String home(Model model) {
-        return "home-page";
-    }
 
     @GetMapping({"/buy-our-code"})
     public String buyOurCode(Model model) {
@@ -288,11 +377,7 @@ public class ApplicationController {
         return "thanks-for-shopping";
     }
 
-    @GetMapping({"/register"})
-    public String register(Model model) {
-        model.addAttribute("languagesDict", dictionariesService.getDictionary(DictionaryType.LANGUAGES));
-        return "register";
-    }
+
 
     @GetMapping({"/register-teacher"})
     public String registerTeacher(Model model) {
@@ -320,16 +405,6 @@ public class ApplicationController {
 //        model.addAttribute("countriesDict", dictionariesService.getDictionary(DictionaryType.COUNTRIES));
 //        return "basket";
 //    }
-
-    @GetMapping({"/registered-successfully"})
-    public String registeredSuccessfully() {
-        return "registered-successfully";
-    }
-
-    @GetMapping({"/data-changed-successfully"})
-    public String dataChangedSuccessfully() {
-        return "data-changed-successfully";
-    }
 
 //    @GetMapping({"/account-settings"})
 //    public String myAccount(Model model) {
@@ -1000,36 +1075,6 @@ public class ApplicationController {
     }
 
 
-    @GetMapping({"/login"})
-    public String login() {
-        return "login";
-    }
-
-    @GetMapping({"/admin/login"})
-    public String adminLogin() {
-        return "login-admin";
-    }
-
-
-    @GetMapping({"/logout"})
-    public String logout(Model model, HttpServletRequest request, HttpServletResponse response) {
-        model.addAttribute("logout", true);
-        HttpSession session = request.getSession(false);
-        SecurityContextHolder.clearContext();
-        session = request.getSession(false);
-        if (session != null) {
-            session.invalidate();
-        }
-        for (Cookie cookie : request.getCookies()) {
-            cookie.setMaxAge(0);
-        }
-
-        cacheService.invalidateDictionaries();
-        log.debug(CacheType.DICTIONARIES + " cache invalidated");
-        cacheService.invalidateMenu();
-        log.debug(CacheType.MENU + " cache invalidated");
-        return "login";
-    }
 
     @PostMapping({"/upload"})
     public String upload(Model model, @RequestParam(name = "id", required = false) Long id, @RequestParam("file") MultipartFile file) {

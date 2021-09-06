@@ -2,7 +2,6 @@ package pl.com.chrzanowski.scaffolding.logic.scaffoldingapp;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
-
 import pl.com.chrzanowski.scaffolding.domain.scaffoldingapp.ScaffUserData;
 import pl.com.chrzanowski.scaffolding.domain.scaffoldingapp.ScaffUsersFilter;
 import pl.com.chrzanowski.scaffolding.logic.CommonJdbcRepository;
@@ -135,10 +134,9 @@ public class ScaffUserJdbcRepository {
             query += preparePaginationQuery(filter.getPage(), filter.getPageSize());
 
         }
-
         return prepareUsers(jdbcTemplate.queryForList(query));
-
     }
+
     List<ScaffUserData> findConfirmEmailNotificationRecipients() {
         String query = "SELECT * FROM users " +
                 "WHERE is_enabled = true " +
@@ -149,8 +147,6 @@ public class ScaffUserJdbcRepository {
                 "AND kind = 'e');";
         return prepareUsers(jdbcTemplate.queryForList(query));
     }
-
-
 
 
     private List<ScaffUserData> prepareUsers(List<Map<String, Object>> rows) {

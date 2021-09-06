@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <div th:replace="fragments/head"></div>
+    <script th:src="@{/js/admin-vehicles.js}"></script>
+</head>
+
+<body>
+<div th:replace="fragments/menu :: menu"></div>
+
+<h5>Scaffolding Fleet</h5>
+
+<div id="result-container" class="my-4">
+    <div class="table-responsive mb-0 pb-0">
+        <table class="table bg-light table-bordered table-hover table-sm">
+            <thead class="thead-light">
+            <tr>
+                <th class="align-middle col-sm-3">Lp.</th>
+                <th class="align-middle col-sm-3">Maraka</th>
+                <th class="align-middle col-sm-3">Model</th>
+                <th class="align-middle col-sm-3">Numer Rejestracyjny</th>
+            </tr>
+            </thead>
+            <tbody id="records">
+
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div th:replace="fragments/pagination :: pagination"></div>
+
+</body>
+
+</html>
