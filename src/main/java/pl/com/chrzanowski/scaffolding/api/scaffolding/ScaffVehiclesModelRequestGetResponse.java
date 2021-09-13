@@ -4,13 +4,13 @@ import java.util.List;
 
 public class ScaffVehiclesModelRequestGetResponse {
 
-    private List<ScaffVehiclesModelGetResponse> models;
+    private List<ScaffVehicleModelGetResponse> models;
 
-    public ScaffVehiclesModelRequestGetResponse(List<ScaffVehiclesModelGetResponse> models) {
+    public ScaffVehiclesModelRequestGetResponse(List<ScaffVehicleModelGetResponse> models) {
         this.models = models;
     }
 
-    public List<ScaffVehiclesModelGetResponse> getModels() {
+    public List<ScaffVehicleModelGetResponse> getModels() {
         return models;
     }
 }

@@ -3,6 +3,7 @@ package pl.com.chrzanowski.scaffolding.logic.scaffoldingapp;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
+import pl.com.chrzanowski.scaffolding.domain.scaffoldingapp.ScaffVehicleData;
 import pl.com.chrzanowski.scaffolding.domain.scaffoldingapp.ScaffVehicleModelData;
 import pl.com.chrzanowski.scaffolding.domain.scaffoldingapp.ScaffVehicleModelFilter;
 import pl.com.chrzanowski.scaffolding.logic.CommonJdbcRepository;
@@ -23,6 +24,12 @@ public class ScaffVehiclesModelJdbcRepository {
     public ScaffVehiclesModelJdbcRepository(JdbcTemplate jdbcTemplate, CommonJdbcRepository commonJdbcRepository) {
         this.jdbcTemplate = jdbcTemplate;
         this.commonJdbcRepository = commonJdbcRepository;
+    }
+
+    public Long create(ScaffVehicleData data) {
+        String query = "INSERT INTO vehicle_model (name) VALUES (?)";
+        jdbcTemplate.update(query,data.getModelName());
+        return commonJdbcRepository.getLastInsertedId();
     }
 
     List<ScaffVehicleModelData> find(ScaffVehicleModelFilter filter) {

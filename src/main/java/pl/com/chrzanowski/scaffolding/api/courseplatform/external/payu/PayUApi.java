@@ -82,9 +82,9 @@ public class PayUApi {
                 basket.getTotalPrice().multiply(new BigDecimal(100)).toBigInteger(),
                 new CreateOrderRequestBuyer(loggedCustomer.getLogin(), loggedCustomer.getLanguage()),
                 prepareProducts(basket.getCourses()),
-                applicationConfig.getCoursePlatformUrl() + "/thanks-for-shopping",
+                applicationConfig.getScaffoldingAppUrl() + "/thanks-for-shopping",
                 orderId,
-                applicationConfig.getCoursePlatformUrl() + "/api/crs/payu/notify");
+                applicationConfig.getScaffoldingAppUrl() + "/api/crs/payu/notify");
     }
 
     private List<CreateOrderRequestProduct> prepareProducts(List<CourseData> courses) {

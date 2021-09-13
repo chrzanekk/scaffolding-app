@@ -41,9 +41,9 @@ function showError(text) {
     $("#password-change-error-alert").removeClass('d-none');
 }
 
-function sendLoggedCustomerPutRequest() {
+function sendLoggedUserPutRequest() {
     $.ajax({
-    url: "/api/scaffolding/logged-customer",
+    url: "/api/scaffolding/logged-user",
         method: "PUT",
         contentType: "application/json",
         data: JSON.stringify(

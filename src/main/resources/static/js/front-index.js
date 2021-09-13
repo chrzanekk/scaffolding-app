@@ -226,7 +226,7 @@ $(document).ready(function() {
 // link.clicked
 function trace(what, value) {
     $.ajax({
-        url: "/api/crs/trace",
+        url: "/api/scaffolding/trace",
         method: "post",
         contentType: "application/json",
         data: JSON.stringify({

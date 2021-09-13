@@ -53,7 +53,7 @@ public class BasketService {
 
             purchasedCoursesService.create(basket.getCourses(), courseOrdersService.find(new CourseOrdersFilter(orderId, null)).get(0));
 
-            redirectUrl = applicationConfig.getCoursePlatformUrl() + "/thanks-for-shopping";
+            redirectUrl = applicationConfig.getScaffoldingAppUrl() + "/thanks-for-shopping";
         } else {
             orderId = courseOrdersService.create(new CourseOrderData(UUID.randomUUID().toString(), loggedCustomer, LocalDateTime.now(),
                     basket.getTotalPrice(), OrderStatus.UNPAID.getValue(), billing, PayuIntegrationOrderStatus.BEFORE_AUTH.getStatus()));

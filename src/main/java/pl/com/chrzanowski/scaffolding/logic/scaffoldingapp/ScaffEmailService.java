@@ -42,12 +42,12 @@ public class ScaffEmailService {
 
     public void sendAfterRegistrationMail(ScaffUserData recipient, Locale locale) {
         Context context = new Context(locale);
-        context.setVariable("loginPageUrl", applicationConfig.getCoursePlatformUrl() + "/login");
-        context.setVariable("emailConfirmationLink", applicationConfig.getCoursePlatformUrl() + "/confirm-email/?token=" + scaffTokensService.prepareAndCreate(recipient).getValue());
+        context.setVariable("loginPageUrl", applicationConfig.getScaffoldingAppUrl() + "/login");
+        context.setVariable("emailConfirmationLink", applicationConfig.getScaffoldingAppUrl() + "/confirm-email/?token=" + scaffTokensService.prepareAndCreate(recipient).getValue());
         String content = templateEngine.process("mail-after-registration", context);
         String title = chooseTitle(EmailTitle.AFTER_REGISTRATION, locale);
         sendEmail(recipient.getLogin(), title, content);
-        scaffSentEmailsService.create(new ScaffSentEmailData(null, recipient.getId(), title, content, locale.toLanguageTag(), MailEvent.AFTER_REGISTRATION.getCode()));
+        scaffSentEmailsService.create(new ScaffSentEmailData(recipient.getId(), title, content, locale.toLanguageTag(), MailEvent.AFTER_REGISTRATION.getCode()));
     }
 
 //    public void sendAfterOrderMail(CustomerData recipient, Locale locale, CourseOrderData order, List<CourseData> boughtCourses) {
@@ -64,22 +64,22 @@ public class ScaffEmailService {
     public void sendAfterPasswordChangeMail(ScaffUserData recipient) {
         Locale locale = Locale.forLanguageTag(recipient.getLanguage());
         Context context = new Context(locale);
-        context.setVariable("pageUrl", applicationConfig.getCoursePlatformUrl());
+        context.setVariable("pageUrl", applicationConfig.getScaffoldingAppUrl());
         String content = templateEngine.process("mail-after-password-change", context);
         String title = chooseTitle(EmailTitle.AFTER_PASSWORD_CHANGE, locale);
         sendEmail(recipient.getLogin(), title, content);
-        scaffSentEmailsService.create(new ScaffSentEmailData(null, recipient.getId(), title, content, locale.toLanguageTag(), MailEvent.AFTER_PASSWORD_CHANGE.getCode()));
+        scaffSentEmailsService.create(new ScaffSentEmailData(recipient.getId(), title, content, locale.toLanguageTag(), MailEvent.AFTER_PASSWORD_CHANGE.getCode()));
     }
 
     public void sendPasswordResetMail(ScaffPasswordResetTokenData token) {
         Locale locale = Locale.forLanguageTag(token.getUser().getLanguage());
         Context context = new Context(locale);
-        context.setVariable("passwordRestartUrl", applicationConfig.getCoursePlatformUrl() + "/reset-password?token=" + token.getValue());
+        context.setVariable("passwordRestartUrl", applicationConfig.getScaffoldingAppUrl() + "/reset-password?token=" + token.getValue());
         context.setVariable("tokenValidityTime", applicationConfig.getPasswordResetTokenValidityTimeInMinutes());
         String content = templateEngine.process("mail-password-reset", context);
         String title = chooseTitle(EmailTitle.PASSWORD_RESET, locale);
         sendEmail(token.getUser().getLogin(), title, content);
-        scaffSentEmailsService.create(new ScaffSentEmailData(null, token.getUser().getId(), title, content, locale.toLanguageTag()
+        scaffSentEmailsService.create(new ScaffSentEmailData(token.getUser().getId(), title, content, locale.toLanguageTag()
                 , MailEvent.PASSWORD_RESET.getCode()));
     }
 
@@ -90,23 +90,23 @@ public class ScaffEmailService {
         String content = templateEngine.process("mail-newsletter", context);
         String title = chooseTitle(EmailTitle.NEWSLETTER, locale);
         sendEmail(user.getLogin(), title, content);
-        scaffSentEmailsService.create(new ScaffSentEmailData(null, user.getId(), title, content, locale.toLanguageTag(), MailEvent.NEWSLETTER.getCode()));
+        scaffSentEmailsService.create(new ScaffSentEmailData(user.getId(), title, content, locale.toLanguageTag(), MailEvent.NEWSLETTER.getCode()));
     }
 
-    public void sendEmailConfirmationLink(ScaffUserData customer) {
-        Locale locale = Locale.forLanguageTag(customer.getLanguage());
+    public void sendEmailConfirmationLink(ScaffUserData user) {
+        Locale locale = Locale.forLanguageTag(user.getLanguage());
         Context context = new Context(locale);
-        context.setVariable("emailConfirmationLink", applicationConfig.getCoursePlatformUrl() + "/confirm-email/?token=" + scaffTokensService.prepareAndCreate(customer).getValue());
+        context.setVariable("emailConfirmationLink", applicationConfig.getScaffoldingAppUrl() + "/confirm-email/?token=" + scaffTokensService.prepareAndCreate(user).getValue());
         String content = templateEngine.process("mail-email-confirmation-link", context);
         String title = chooseTitle(EmailTitle.EMAIL_CONFIRMATION_LINK, locale);
-        sendEmail(customer.getLogin(), title, content);
-        scaffSentEmailsService.create(new ScaffSentEmailData(null, customer.getId(), title, content, locale.toLanguageTag(), MailEvent.EMAIL_CONFIRMATION_LINK.getCode()));
-        log.info("Successfully sent email confirmation link to customer with ID {}", customer.getId());
+        sendEmail(user.getLogin(), title, content);
+        scaffSentEmailsService.create(new ScaffSentEmailData(user.getId(), title, content, locale.toLanguageTag(), MailEvent.EMAIL_CONFIRMATION_LINK.getCode()));
+        log.info("Successfully sent email confirmation link to user with ID {}", user.getId());
     }
 
     private Context getContextForNewsletter(ScaffNewsletterData newsletter, Locale locale) {
         Context context = new Context(locale);
-        context.setVariable("loginPageUrl", applicationConfig.getCoursePlatformUrl() + "/login");
+        context.setVariable("loginPageUrl", applicationConfig.getScaffoldingAppUrl() + "/login");
         context.setVariable("title", newsletter.getContent().get(locale.getLanguage()).getTitle());
         context.setVariable("content", newsletter.getContent().get(locale.getLanguage()).getHtml());
         return context;

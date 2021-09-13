@@ -4,7 +4,6 @@ import java.time.LocalDateTime;
 
 public class ScaffSentEmailData {
     private Long id;
-    private Long orderId;
     private Long userId;
     private String title;
     private String content;
@@ -12,8 +11,7 @@ public class ScaffSentEmailData {
     private String event;
     private LocalDateTime createDatetime;
 
-    public ScaffSentEmailData(Long orderId, Long userId, String title, String content, String language, String event) {
-        this.orderId = orderId;
+    public ScaffSentEmailData(Long userId, String title, String content, String language, String event) {
         this.userId = userId;
         this.title = title;
         this.content = content;
@@ -23,7 +21,6 @@ public class ScaffSentEmailData {
 
     public ScaffSentEmailData(ScaffSentEmailData data, LocalDateTime createDatetime) {
         this.id = data.getId();
-        this.orderId = data.getOrderId();
         this.userId = data.getUserId();
         this.title = data.getTitle();
         this.content = data.getContent();
@@ -34,10 +31,6 @@ public class ScaffSentEmailData {
 
     public Long getId() {
         return id;
-    }
-
-    public Long getOrderId() {
-        return orderId;
     }
 
     public Long getUserId() {

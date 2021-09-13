@@ -211,7 +211,7 @@ $(document).ready(function() {
 
 function trace(what, value, who) {
     $.ajax({
-        url: "/api/crs/trace",
+        url: "/api/scaffolding/trace",
         method: "post",
         contentType: "application/json",
         data: JSON.stringify({
@@ -235,7 +235,7 @@ function trace(what, value, who) {
 // link.clicked
 function trace(what, value) {
     $.ajax({
-        url: "/api/crs/trace",
+        url: "/api/scaffolding/trace",
         method: "post",
         contentType: "application/json",
         data: JSON.stringify({

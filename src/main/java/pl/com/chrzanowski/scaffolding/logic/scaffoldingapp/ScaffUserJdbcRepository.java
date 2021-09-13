@@ -31,13 +31,13 @@ public class ScaffUserJdbcRepository {
                 "language, " +
                 "regulation_accepted, " +
                 "newsletter_accepted, " +
-                "is_enabled,  " +
+                "is_enabled, " +
                 "registration_datetime, " +
                 "registration_ip, " +
                 "registration_user_agent, " +
                 "email_confirmed" +
                 ") " +
-                "values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                "values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
         jdbcTemplate.update(query,
                 data.getLogin(),
                 data.getPasswordHash(),
@@ -59,8 +59,8 @@ public class ScaffUserJdbcRepository {
         String query = "UPDATE users SET " +
                 "login=?, " +
                 "password_hash=?, " +
-                "first_name=?" +
-                "second_name=?" +
+                "first_name=?," +
+                "second_name=?," +
                 "language=?, " +
                 "regulation_accepted=?, " +
                 "newsletter_accepted=?, " +

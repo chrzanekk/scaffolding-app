@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <div th:replace="fragments/head"></div>
+    <script th:src="@{/js/admin-vehicle.js}"></script>
+    <script th:inline="javascript">
+            var vehicle = [[${vehicle}]];
+    </script>
+</head>
+
+<body>
+<div th:replace="fragments/menu :: menu"></div>
+
+<div class="container">
+    <div class="text-center">
+        <h4 th:text="#{Vehicle.details}"></h4>
+    </div>
+
+    <form class="bg-light p-5 border">
+        <div class="form-row">
+            <div class="form-group col-md-4 text-center">
+                <label for="brand" th:text="#{vehicle.details.brand}"></label>
+                <input type="text" class="form-control" id="brand" th:value="${vehicle.brandName}">
+            </div>
+            <div class="form-group col-md-4 text-center">
+                <label for="model" th:text="#{vehicle.details.model}"></label>
+                <input type="text" class="form-control" id="model" th:value="${vehicle.modelName}">
+            </div>
+            <div class="form-group col-md-4 text-center">
+                <label for="registrationNumber" th:text="#{vehicle.details.registrationNumber}"></label>
+                <input type="text" class="form-control" id="registrationNumber"
+                       th:value="${vehicle.registrationNumber}">
+            </div>
+            <div class="form-group col-md-4 text-center">
+                <label for="vin" th:text="#{vehicle.details.vin}"></label>
+                <input type="text" class="form-control" id="vin" th:value="${vehicle.vin}">
+            </div>
+            <div class="form-group col-md-4 text-center">
+                <label for="productionYear" th:text="#{vehicle.details.productionYear}"></label>
+                <input type="number" class="form-control" id="productionYear" th:value="${vehicle.productionYear}">
+            </div>
+            <div class="form-group col-md-4 text-center">
+                <label for="firstRegistrationDate" th:text="#{vehicle.details.firstRegistrationDate}"></label>
+                <input type="date" class="form-control" id="firstRegistrationDate"
+                       th:value="${vehicle.firstRegistrationDate}">
+            </div>
+            <div class="form-group col-md-4 text-center">
+                <label for="freePlacesForTechnicalInspections"
+                       th:text="#{vehicle.details.freePlacesForTechnicalInspections}"></label>
+                <input type="number" class="form-control" id="freePlacesForTechnicalInspections"
+                       th:value="${vehicle.freePlacesForTechnicalInspections}">
+            </div>
+            <div class="form-group col-md-4 text-center">
+                <label for="fuelType" th:text="#{vehicle.details.fuelType}"></label>
+                <input type="text" class="form-control" id="fuelType" th:value="${vehicle.fuelType}">
+            </div>
+            <div class="form-group col-md-4 text-center">
+                <label for="vehicleType" th:text="#{vehicle.details.vehicleType}"></label>
+                <input type="text" class="form-control" id="vehicleType" th:value="${vehicle.vehicleType}">
+            </div>
+
+            <!--            to przerobic na fueltype i na vehicle type - dane pobierane z bazy? czy jako dictionary?-->
+            <!--            <div class="form-group col-md-4 text-center">-->
+            <!--                <label for="language" th:text="#{Language}"></label>-->
+            <!--                <select id="language" class="form-control">-->
+            <!--                    <option th:each="language : ${languagesDict}"-->
+            <!--                            th:value="${language.code}"-->
+            <!--                            th:text="${language.value}"-->
+            <!--                            th:selected="(${language.code} == *{course.language})">-->
+            <!--                    </option>-->
+            <!--                </select>-->
+            <!--            </div>-->
+
+            <div class="text-center">
+                <button type="button" class="btn btn-danger mt-3" onclick="showDeleteModal()"
+                        th:text="#{Delete}"></button>
+                <button type="button" class="btn btn-warning mt-3" onclick="history.back()"
+                        th:text="#{Cancel}"></button>
+                <button type="button" class="btn btn-warning mt-3" onclick="sendUpdateRequest()"
+                        th:text="#{Save.changes}"></button>
+            </div>
+        </div>
+    </form>
+
+</div>
+
+<div th:replace="fragments/operation-successful-modal :: modal"></div>
+<div th:replace="fragments/delete-object-modal :: modal"></div>
+</body>
+
+</html>

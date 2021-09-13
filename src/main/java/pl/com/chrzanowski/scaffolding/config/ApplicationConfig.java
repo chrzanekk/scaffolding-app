@@ -100,7 +100,7 @@ public class ApplicationConfig {
     private String companyContactMailto;
 
     @Value("${course-platform.url}")
-    private String coursePlatformUrl;
+    private String scaffoldingAppUrl;
 
     @Value("${payments.payu.url}")
     private String paymentsPayuUrl;
@@ -262,8 +262,8 @@ public class ApplicationConfig {
         return companyContactMailto;
     }
 
-    public String getCoursePlatformUrl() {
-        return coursePlatformUrl;
+    public String getScaffoldingAppUrl() {
+        return scaffoldingAppUrl;
     }
 
     public String getCoursePathToInvoicesFolder() {

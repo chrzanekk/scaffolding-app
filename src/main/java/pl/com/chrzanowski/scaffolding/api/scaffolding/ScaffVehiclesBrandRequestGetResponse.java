@@ -4,13 +4,13 @@ import java.util.List;
 
 public class ScaffVehiclesBrandRequestGetResponse {
 
-    private List<ScaffVehiclesBrandGetResponse> brands;
+    private List<ScaffVehicleBrandGetResponse> brands;
 
-    public ScaffVehiclesBrandRequestGetResponse(List<ScaffVehiclesBrandGetResponse> brands) {
+    public ScaffVehiclesBrandRequestGetResponse(List<ScaffVehicleBrandGetResponse> brands) {
         this.brands = brands;
     }
 
-    public List<ScaffVehiclesBrandGetResponse> getBrands() {
+    public List<ScaffVehicleBrandGetResponse> getBrands() {
         return brands;
     }
 }

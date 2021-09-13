@@ -1,10 +1,10 @@
 package pl.com.chrzanowski.scaffolding.api.scaffolding;
 
-import pl.com.chrzanowski.scaffolding.domain.scaffoldingapp.ScaffVehicleModelData;
+import pl.com.chrzanowski.scaffolding.domain.scaffoldingapp.ScaffVehicleBrandData;
 
 import java.time.LocalDateTime;
 
-public class ScaffVehiclesModelGetResponse {
+public class ScaffVehicleBrandGetResponse {
 
     private Long id;
     private String name;
@@ -12,16 +12,17 @@ public class ScaffVehiclesModelGetResponse {
     private LocalDateTime modifyDate;
     private LocalDateTime removeDate;
 
-    public ScaffVehiclesModelGetResponse(Long id, String name, LocalDateTime createDate, LocalDateTime modifyDate, LocalDateTime removeDate) {
+    public ScaffVehicleBrandGetResponse(Long id, String name, LocalDateTime createDate, LocalDateTime modifyDate, LocalDateTime removeDate) {
         this.id = id;
         this.name = name;
         this.createDate = createDate;
         this.modifyDate = modifyDate;
         this.removeDate = removeDate;
     }
-    public ScaffVehiclesModelGetResponse(ScaffVehicleModelData scaffVehicleModelData) {
-        this.id = scaffVehicleModelData.getId();
-        this.name = scaffVehicleModelData.getName();
+
+    public ScaffVehicleBrandGetResponse(ScaffVehicleBrandData scaffVehicleBrandData) {
+        this.id = scaffVehicleBrandData.getId();
+        this.name = scaffVehicleBrandData.getName();
     }
 
     public Long getId() {

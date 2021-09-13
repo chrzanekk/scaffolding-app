@@ -1,32 +1,22 @@
 package pl.com.chrzanowski.scaffolding.domain.scaffoldingapp;
 
-public class ScaffVehicleModelData {
+public class ScaffFuelTypeFilter {
 
     private Long id;
     private String name;
     private Long page;
     private Long pageSize;
 
-    public ScaffVehicleModelData(Long id, String name, Long page, Long pageSize) {
+    public ScaffFuelTypeFilter(Long id, String name, Long page, Long pageSize) {
         this.id = id;
         this.name = name;
         this.page = page;
         this.pageSize = pageSize;
     }
 
-    public ScaffVehicleModelData(Long id, String name) {
-        this.id = id;
-        this.name = name;
-    }
-
-    public ScaffVehicleModelData(Long id, Long page, Long pageSize) {
-        this.id = id;
+    public ScaffFuelTypeFilter(Long page, Long pageSize) {
         this.page = page;
         this.pageSize = pageSize;
-    }
-
-    public ScaffVehicleModelData(String name) {
-        this.name = name;
     }
 
     public Long getId() {

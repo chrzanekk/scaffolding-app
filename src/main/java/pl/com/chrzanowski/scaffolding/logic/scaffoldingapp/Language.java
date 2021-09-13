@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 public enum Language {
-    ENGLISH("en"),
     POLISH("pl");
     private String code;
 

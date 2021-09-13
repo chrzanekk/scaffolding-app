@@ -2,7 +2,8 @@ package pl.com.chrzanowski.scaffolding.logic.scaffoldingapp;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
-import pl.com.chrzanowski.scaffolding.domain.scaffoldingapp.*;
+import pl.com.chrzanowski.scaffolding.domain.scaffoldingapp.ScaffVehicleData;
+import pl.com.chrzanowski.scaffolding.domain.scaffoldingapp.ScaffVehiclesFilter;
 import pl.com.chrzanowski.scaffolding.logic.CommonJdbcRepository;
 
 import java.sql.SQLException;
@@ -18,6 +19,8 @@ public class ScaffVehiclesJdbcRepository {
     private CommonJdbcRepository commonJdbcRepository;
     private ScaffVehicleBrandJdbcRepository brandJdbcRepository;
     private ScaffVehiclesModelJdbcRepository modelJdbcRepository;
+    private ScaffFuelTypeJdbcRepository fuelTypeJdbcRepository;
+    private ScaffVehicleTypeJdbcRepository vehicleTypeJdbcRepository;
 
     public ScaffVehiclesJdbcRepository(JdbcTemplate jdbcTemplate, CommonJdbcRepository commonJdbcRepository,
                                        ScaffVehicleBrandJdbcRepository brandJdbcRepository,
@@ -28,87 +31,114 @@ public class ScaffVehiclesJdbcRepository {
         this.modelJdbcRepository = modelJdbcRepository;
     }
 
+    public Long create(ScaffVehicleData data) {
+        Long brandId = brandJdbcRepository.create(data);
+        Long modelId = modelJdbcRepository.create(data);
+        Long vehicleTypeId = vehicleTypeJdbcRepository.create(data);
+        Long fuelTypeId = fuelTypeJdbcRepository.create(data);
+
+        String query = "INSERT INTO vehicles (" +
+                "brand_id, " +
+                "model_id, " +
+                "registration_number," +
+                "vin, " +
+                "production_year, " +
+                "first_registration_date, " +
+                "free_places_for_technical_inspections, " +
+                "fuel_type_id, " +
+                "vehicle_type_id) VALUES (" +
+                "" + brandId + ", " +
+                "" + modelId + ", " +
+                "?, " +
+                "?, " +
+                "?, " +
+                "?, " +
+                "?, " +
+                "" + fuelTypeId + ", " +
+                "" + vehicleTypeId + ")";
+        jdbcTemplate.update(query,
+                brandId,
+                modelId,
+                data.getRegistrationNumber(),
+                data.getVin(),
+                data.getProductionYear(),
+                data.getFirstRegistrationDate(),
+                data.getFreePlacesForTechnicalInspections(),
+                fuelTypeId, modelId);
+        return commonJdbcRepository.getLastInsertedId();
+    }
+
+
     List<ScaffVehicleData> find(ScaffVehiclesFilter filter) throws SQLException {
 
-        String query = "SELECT * FROM vehicles";
+        String query = "SELECT \n" +
+                "vehicles.id, \n" +
+                "vehicle_brand.name AS brand, \n" +
+                "vehicle_model.name AS model, \n" +
+                "vehicles.registration_number, \n" +
+                "vehicles.vin, vehicles.production_year, \n" +
+                "vehicles.first_registration_date, \n" +
+                "vehicles.free_places_for_technical_inspections, \n" +
+                "fuel_type.name AS fuel_type, \n" +
+                "vehicle_type.name AS vehicle_type \n" +
+                "FROM vehicles  \n" +
+                "JOIN vehicle_brand ON (vehicles.brand_id = vehicle_brand.id)\n" +
+                "JOIN vehicle_model ON (vehicles.model_id = vehicle_model.id)\n" +
+                "JOIN fuel_type ON (vehicles.fuel_type_id = fuel_type.id)\n" +
+                "JOIN vehicle_type ON (vehicles.vehicle_type_id = vehicle_type.id)";
 
         if (filter != null) {
             query += " WHERE 1+1";
 
-            if (filter.getBrandId() != null) {
-                query += " AND brand_id = '" + filter.getBrandId() + "'";
+            if (filter.getId() != null) {
+                query += " AND vehicles.id = '" + filter.getId() + "'";
             }
-            if (filter.getModelId() != null) {
-                query += " AND model_id = '" + filter.getModelId() + "'";
+
+            if (filter.getPage() != null && filter.getPageSize() != null) {
+                query += preparePaginationQuery(filter.getPage(), filter.getPageSize());
             }
-            if (filter.getRegistrationNumber() != null) {
-                query += " AND registration_number = '" + filter.getRegistrationNumber() + "'";
-            }
-            query+= preparePaginationQuery(filter.getPage(),filter.getPageSize());
         }
-        return prepareVehicles(jdbcTemplate.queryForList(query));
+
+
+        return prepareVehicles(query);
+
     }
 
-//    List<ScaffVehicleData> findMainList(ScaffVehiclesFilter filter) throws SQLException {
-//
-//        String query = "SELECT vb.name, vm.name, vh.registration_number" +
-//                " FROM vehicles AS vh " +
-//                "JOIN vehicle_brand AS vb ON (vh.brand_id = vb.id) " +
-//                "JOIN vehicle_model AS vm ON (vh.model_id = vm.id)";
-//
-////        if (filter != null) {
-////            query += preparePaginationQuery(filter.getPage(), filter.getPageSize());
-////        }
-//        List<Map<String,Object>> rows = jdbcTemplate.queryForList(query);
-//        List<ScaffVehicleData> list = new ArrayList<>();
-//        for (Map<String, Object> row : rows) {
-//            list.add(new ScaffVehicleData(
-//                    getString(row, "vb.name"),
-//                    getString(row, "vm.name"),
-//                    getString(row, "vh.registration_number")
-//            ));
-//        }
-//        return list;
-//    }
+    ScaffVehicleData get(ScaffVehiclesFilter id) throws SQLException {
+        return getVehicle(find(id), id);
+    }
 
-
-    private List<ScaffVehicleData> prepareVehicles(List<Map<String, Object>> rows) throws SQLException {
-
-        List<ScaffVehicleData> vehicles = new ArrayList<>();
-
+    private List<ScaffVehicleData> prepareVehicles(String query) {
+        List<Map<String, Object>> rows = jdbcTemplate.queryForList(query);
+        List<ScaffVehicleData> list = new ArrayList<>();
         for (Map<String, Object> row : rows) {
-
-            Long brandId = getLong(row, "brand_id");
-
-            ScaffVehicleBrandData brand;
-            if (brandId == null) {
-                brand = null;
-            } else {
-                brand = brandJdbcRepository.find(new ScaffVehicleBrandFilter(brandId)).get(0);
-            }
-
-            Long modelId = getLong(row, "model_id");
-
-            ScaffVehicleModelData model;
-            if (modelId == null) {
-                model = null;
-            } else {
-                model = modelJdbcRepository.find(new ScaffVehicleModelFilter(modelId)).get(0);
-            }
-
-            vehicles.add(new ScaffVehicleData(
+            list.add(new ScaffVehicleData(
                     getLong(row, "id"),
-                    brand,
-                    model,
+                    getString(row, "brand"),
+                    getString(row, "model"),
                     getString(row, "registration_number"),
                     getString(row, "vin"),
                     getInteger(row, "production_year"),
                     getDate(row, "first_registration_date"),
-                    getInteger(row, "free_places_for_technical_inspection"),
-                    getLong(row, "fuel_type_id"),
-                    getLong(row, "vehicle_type_id")
+                    getInteger(row, "free_places_for_technical_inspections"),
+                    getString(row, "fuel_type"),
+                    getString(row, "vehicle_type")
             ));
         }
-        return vehicles;
+        return list;
+    }
+
+    private ScaffVehicleData getVehicle(List<ScaffVehicleData> list, ScaffVehiclesFilter filter) {
+
+        ScaffVehicleData vehicle = null;
+
+        for (ScaffVehicleData data : list) {
+            if (filter.getId().equals(data.getId())) {
+                vehicle = data;
+            } else {
+                vehicle = null;
+            }
+        }
+        return vehicle;
     }
 }

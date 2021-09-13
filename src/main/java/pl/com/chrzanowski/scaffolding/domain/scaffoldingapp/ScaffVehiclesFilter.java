@@ -2,7 +2,10 @@ package pl.com.chrzanowski.scaffolding.domain.scaffoldingapp;
 
 public class ScaffVehiclesFilter {
 
+    private Long id;
     private String registrationNumber;
+    private String brandName;
+    private String modelName;
     private Long brandId;
     private Long modelId;
     private Long page;
@@ -13,12 +16,18 @@ public class ScaffVehiclesFilter {
         this.pageSize = pageSize;
     }
 
-    public ScaffVehiclesFilter(String registrationNumber) {
-        this.registrationNumber =registrationNumber;
+    public ScaffVehiclesFilter(Long id, Long page, Long pageSize) {
+        this.id = id;
+        this.page = page;
+        this.pageSize = pageSize;
     }
 
-    public ScaffVehiclesFilter() {
+    public ScaffVehiclesFilter(Long id) {
+        this.id = id;
+    }
 
+    public Long getId() {
+        return id;
     }
 
     public String getRegistrationNumber() {
@@ -39,5 +48,13 @@ public class ScaffVehiclesFilter {
 
     public Long getPageSize() {
         return pageSize;
+    }
+
+    public String getBrandName() {
+        return brandName;
+    }
+
+    public String getModelName() {
+        return modelName;
     }
 }

@@ -4,6 +4,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 import pl.com.chrzanowski.scaffolding.domain.scaffoldingapp.ScaffVehicleBrandData;
 import pl.com.chrzanowski.scaffolding.domain.scaffoldingapp.ScaffVehicleBrandFilter;
+import pl.com.chrzanowski.scaffolding.domain.scaffoldingapp.ScaffVehicleData;
 import pl.com.chrzanowski.scaffolding.logic.CommonJdbcRepository;
 
 import java.util.ArrayList;
@@ -22,6 +23,12 @@ public class ScaffVehicleBrandJdbcRepository {
     public ScaffVehicleBrandJdbcRepository(JdbcTemplate jdbcTemplate, CommonJdbcRepository commonJdbcRepository) {
         this.jdbcTemplate = jdbcTemplate;
         this.commonJdbcRepository = commonJdbcRepository;
+    }
+
+    public Long create(ScaffVehicleData data) {
+        String query = "INSERT INTO vehicle_brand (name) VALUES (?)";
+        jdbcTemplate.update(query,data.getBrandName());
+        return commonJdbcRepository.getLastInsertedId();
     }
 
     List<ScaffVehicleBrandData> find(ScaffVehicleBrandFilter filter) {

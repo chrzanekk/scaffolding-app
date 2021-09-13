@@ -10,8 +10,6 @@ import java.time.LocalDateTime;
 public class ScaffVehicleGetResponse {
 
     private Long id;
-    private ScaffVehicleBrandData brand;
-    private ScaffVehicleModelData model;
     private String registrationNumber;
     private String vin;
     private Integer productionYear;
@@ -23,32 +21,56 @@ public class ScaffVehicleGetResponse {
     private LocalDateTime modifyDate;
     private LocalDateTime removeDate;
 
-    public ScaffVehicleGetResponse(ScaffVehicleData scaffVehicleData) {
-        this.id = scaffVehicleData.getId();
-        this.brand = scaffVehicleData.getBrand();
-        this.model = scaffVehicleData.getModel();
-        this.registrationNumber = scaffVehicleData.getRegistrationNumber();
-        this.vin = scaffVehicleData.getVin();
-        this.productionYear = scaffVehicleData.getProductionYear();
-        this.firstRegistrationDate = scaffVehicleData.getFirstRegistrationDate();
-        this.freePlacesForTechnicalInspections = scaffVehicleData.getFreePlacesForTechnicalInspections();
-        this.fuelTypeId = scaffVehicleData.getFuelTypeId();
-        this.vehicleTypeId = scaffVehicleData.getVehicleTypeId();
-        this.createDate = scaffVehicleData.getCreateDate();
-        this.modifyDate = scaffVehicleData.getModifyDate();
-        this.removeDate = scaffVehicleData.getRemoveDate();
+    private String brandName;
+    private String modelName;
+    private String fuelType;
+    private String vehicleType;
+    private Long brandId;
+    private Long modelId;
+
+    public ScaffVehicleGetResponse(Long id, String brandName, String modelName, String registrationNumber, String vin
+            , Integer productionYear, LocalDate firstRegistrationDate, Integer freePlacesForTechnicalInspections,  String fuelType, String vehicleType) {
+        this.id = id;
+        this.registrationNumber = registrationNumber;
+        this.vin = vin;
+        this.productionYear = productionYear;
+        this.firstRegistrationDate = firstRegistrationDate;
+        this.freePlacesForTechnicalInspections = freePlacesForTechnicalInspections;
+        this.brandName = brandName;
+        this.modelName = modelName;
+        this.fuelType = fuelType;
+        this.vehicleType = vehicleType;
+    }
+
+    public ScaffVehicleGetResponse(Long id, Long brandId, Long modelId, String registrationNumber, String vin,
+                                   Integer productionYear, LocalDate firstRegistrationDate, Integer freePlacesForTechnicalInspections, Long fuelTypeId, Long vehicleTypeId ) {
+        this.id = id;
+        this.registrationNumber = registrationNumber;
+        this.vin = vin;
+        this.productionYear = productionYear;
+        this.firstRegistrationDate = firstRegistrationDate;
+        this.freePlacesForTechnicalInspections = freePlacesForTechnicalInspections;
+        this.fuelTypeId = fuelTypeId;
+        this.vehicleTypeId = vehicleTypeId;
+        this.brandId = brandId;
+        this.modelId = modelId;
+    }
+
+    public ScaffVehicleGetResponse(ScaffVehicleData vehicleData) {
+        this.id = vehicleData.getId();
+        this.registrationNumber = vehicleData.getRegistrationNumber();
+        this.vin = vehicleData.getVin();
+        this.productionYear = vehicleData.getProductionYear();
+        this.firstRegistrationDate = vehicleData.getFirstRegistrationDate();
+        this.freePlacesForTechnicalInspections = vehicleData.getFreePlacesForTechnicalInspections();
+        this.brandName = vehicleData.getBrandName();
+        this.modelName = vehicleData.getModelName();
+        this.fuelType = vehicleData.getFuelType();
+        this.vehicleType = vehicleData.getVehicleType();
     }
 
     public Long getId() {
         return id;
-    }
-
-    public ScaffVehicleBrandData getBrand() {
-        return brand;
-    }
-
-    public ScaffVehicleModelData getModel() {
-        return model;
     }
 
     public String getRegistrationNumber() {
@@ -89,5 +111,29 @@ public class ScaffVehicleGetResponse {
 
     public LocalDateTime getRemoveDate() {
         return removeDate;
+    }
+
+    public String getBrandName() {
+        return brandName;
+    }
+
+    public String getModelName() {
+        return modelName;
+    }
+
+    public String getFuelType() {
+        return fuelType;
+    }
+
+    public String getVehicleType() {
+        return vehicleType;
+    }
+
+    public Long getBrandId() {
+        return brandId;
+    }
+
+    public Long getModelId() {
+        return modelId;
     }
 }

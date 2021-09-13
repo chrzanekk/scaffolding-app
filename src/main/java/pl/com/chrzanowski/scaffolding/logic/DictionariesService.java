@@ -515,10 +515,10 @@ public class DictionariesService {
         List<DictionaryData> list = new ArrayList<>();
 
         if (Language.US == lang || Language.EN == lang) {
-            list.add(new DictionaryData("en", "English", lang.getCode()));
+//            list.add(new DictionaryData("en", "English", lang.getCode()));
             list.add(new DictionaryData("pl", "Polish", lang.getCode()));
         } else if (Language.PL == lang) {
-            list.add(new DictionaryData("en", "Angielski", lang.getCode()));
+//            list.add(new DictionaryData("en", "Angielski", lang.getCode()));
             list.add(new DictionaryData("pl", "Polski", lang.getCode()));
         }
 

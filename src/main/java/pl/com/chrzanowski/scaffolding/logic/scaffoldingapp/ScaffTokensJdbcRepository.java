@@ -7,10 +7,6 @@ import org.springframework.stereotype.Service;
 import pl.com.chrzanowski.scaffolding.domain.scaffoldingapp.ScaffUserData;
 import pl.com.chrzanowski.scaffolding.domain.scaffoldingapp.ScaffTokenData;
 import pl.com.chrzanowski.scaffolding.domain.scaffoldingapp.ScaffUsersFilter;
-//import pl.com.chrzanowski.scaffolding.domain.courseplatform.CustomerData;
-//import pl.com.chrzanowski.scaffolding.domain.courseplatform.CustomersFilter;
-//import pl.com.chrzanowski.scaffolding.domain.courseplatform.TokenData;
-//import pl.com.chrzanowski.scaffolding.logic.courseplatform.CourseCustomersJdbcRepository;
 
 import java.util.List;
 
@@ -47,15 +43,15 @@ public class ScaffTokensJdbcRepository {
                     (rs, rowNum) -> {
 
                         Long userId = getLong(rs, "user_id");
-                        ScaffUserData customer;
+                        ScaffUserData user;
                         if (userId == null) {
-                            customer = null;
+                            user = null;
                         } else {
                             List<ScaffUserData> users = scaffUserJdbcRepository.find(new ScaffUsersFilter(userId));
                             if (users.size() == 1) {
-                                customer = users.get(0);
+                                user = users.get(0);
                             } else {
-                                throw new IllegalArgumentException("Found more than one customer with ID: " + userId);
+                                throw new IllegalArgumentException("Found more than one user with ID: " + userId);
                             }
                         }
 
@@ -63,7 +59,7 @@ public class ScaffTokensJdbcRepository {
                                 getLong(rs, "id"),
                                 getString(rs, "value"),
                                 getDateTime(rs, "expiration_datetime"),
-                                customer
+                                user
                         );
                     });
         } catch (EmptyResultDataAccessException ex) {

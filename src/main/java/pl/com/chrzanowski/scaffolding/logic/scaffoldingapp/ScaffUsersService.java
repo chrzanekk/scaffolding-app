@@ -58,8 +58,12 @@ public class ScaffUsersService {
 
     public void update(ScaffUserData data) {
         validate(data);
-        scaffUserAuthoritiesService.deleteAuthorities(data);
-        scaffUserAuthoritiesService.validateAndCreateAuthorityForUser(data, data.getAuthorities());
+        if(data.getAuthorities() != null) {
+            scaffUserAuthoritiesService.deleteAuthorities(data);
+            scaffUserAuthoritiesService.validateAndCreateAuthorityForUser(data, data.getAuthorities());
+        } else {
+            data = new ScaffUserData(data, scaffUserAuthoritiesService.getAuthoritiesForUser(data));
+        }
         scaffUserJdbcRepository.update(data);
     }
 

@@ -1,16 +1,14 @@
 package pl.com.chrzanowski.scaffolding.api.scaffolding;
 
-import java.util.List;
-
 public class ScaffVehicleRequestGetResponse {
 
-    private List<ScaffVehicleGetResponse> vehicles;
+    private ScaffVehicleGetResponse vehicleGetResponse;
 
-    public ScaffVehicleRequestGetResponse(List<ScaffVehicleGetResponse> vehicles) {
-        this.vehicles = vehicles;
+    public ScaffVehicleRequestGetResponse(ScaffVehicleGetResponse vehicleGetResponse) {
+        this.vehicleGetResponse = vehicleGetResponse;
     }
 
-    public List<ScaffVehicleGetResponse> getVehicles() {
-        return vehicles;
+    public ScaffVehicleGetResponse getVehicleGetResponse() {
+        return vehicleGetResponse;
     }
 }

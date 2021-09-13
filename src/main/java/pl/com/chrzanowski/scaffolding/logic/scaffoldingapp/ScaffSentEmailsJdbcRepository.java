@@ -14,8 +14,7 @@ public class ScaffSentEmailsJdbcRepository {
     }
 
     void create(ScaffSentEmailData data) {
-        String query = "insert into crs_sent_emails (order_id, customer_id, title, content, language, event, create_datetime) values (?, ?, ?, ?, ?, ?, ?);";
-        jdbcTemplate.update(query, data.getOrderId(), data.getUserId(), data.getTitle(), data.getContent(),
-                data.getLanguage(), data.getEvent(), data.getCreateDatetime());
+        String query = "INSERT INTO sent_emails (user_id, title, content, language, event, create_datetime) values (?, ?, ?, ?, ?, ?);";
+        jdbcTemplate.update(query, data.getUserId(), data.getTitle(), data.getContent(), data.getLanguage(), data.getEvent(), data.getCreateDatetime());
     }
 }

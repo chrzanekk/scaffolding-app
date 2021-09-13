@@ -147,19 +147,19 @@ public class ScaffUserData {
         this.authorities = scaffUserData.getAuthorities();
     }
 
-    public ScaffUserData(ScaffUserData scaffUserData, Boolean emailConfirmed) {
-        this.id = scaffUserData.getId();
-        this.login = scaffUserData.getLogin();
-        this.passwordHash = scaffUserData.getPasswordHash();
-        this.language = scaffUserData.getLanguage();
-        this.regulationAccepted = scaffUserData.getRegulationAccepted();
-        this.newsletterAccepted = scaffUserData.getEmailConfirmed();
-        this.isEnabled = scaffUserData.getEnabled();
+    public ScaffUserData(ScaffUserData data, Boolean emailConfirmed) {
+        this.id = data.getId();
+        this.login = data.getLogin();
+        this.passwordHash = data.getPasswordHash();
+        this.language = data.getLanguage();
+        this.regulationAccepted = data.getRegulationAccepted();
+        this.newsletterAccepted = data.getEmailConfirmed();
+        this.isEnabled = data.getEnabled();
         this.emailConfirmed = emailConfirmed;
-        this.registrationDatetime = scaffUserData.getRegistrationDatetime();
-        this.registrationIp = scaffUserData.getRegistrationIp();
-        this.registrationUserAgent = scaffUserData.getRegistrationUserAgent();
-        this.authorities = scaffUserData.getAuthorities();
+        this.registrationDatetime = data.getRegistrationDatetime();
+        this.registrationIp = data.getRegistrationIp();
+        this.registrationUserAgent = data.getRegistrationUserAgent();
+        this.authorities = data.getAuthorities();
     }
 
     public ScaffUserData(String login, String passwordHash, String language, Boolean regulationAccepted,

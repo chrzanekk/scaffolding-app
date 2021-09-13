@@ -8,7 +8,7 @@ CREATE TABLE users(
 		regulation_accepted boolean,
 		newsletter_accepted boolean,
 		is_enabled boolean,
-		registration_datetime datetime,
+		registration_datetime datetime default now(),
 		registration_ip varchar(200),
 		registration_user_agent varchar(1000),
 		email_confirmed boolean not null,

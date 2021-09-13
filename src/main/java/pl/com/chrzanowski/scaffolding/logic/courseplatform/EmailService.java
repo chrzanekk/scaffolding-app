@@ -41,8 +41,8 @@ public class EmailService {
 
     public void sendAfterRegistrationMail(CustomerData recipient, Locale locale) {
         Context context = new Context(locale);
-        context.setVariable("loginPageUrl", applicationConfig.getCoursePlatformUrl() + "/login");
-        context.setVariable("emailConfirmationLink", applicationConfig.getCoursePlatformUrl() + "/confirm-email/?token=" + tokensService.prepareAndCreate(recipient).getValue());
+        context.setVariable("loginPageUrl", applicationConfig.getScaffoldingAppUrl() + "/login");
+        context.setVariable("emailConfirmationLink", applicationConfig.getScaffoldingAppUrl() + "/confirm-email/?token=" + tokensService.prepareAndCreate(recipient).getValue());
         String content = templateEngine.process("mail-after-registration", context);
         String title = chooseTitle(EmailTitle.AFTER_REGISTRATION, locale);
         sendEmail(recipient.getLogin(), title, content);
@@ -51,7 +51,7 @@ public class EmailService {
 
     public void sendAfterOrderMail(CustomerData recipient, Locale locale, CourseOrderData order, List<CourseData> boughtCourses) {
         Context context = new Context(locale);
-        context.setVariable("pageUrl", applicationConfig.getCoursePlatformUrl());
+        context.setVariable("pageUrl", applicationConfig.getScaffoldingAppUrl());
         context.setVariable("order", order);
         context.setVariable("boughtCourses", boughtCourses);
         String content = templateEngine.process("mail-after-order", context);
@@ -63,7 +63,7 @@ public class EmailService {
     public void sendAfterPasswordChangeMail(CustomerData recipient) {
         Locale locale = Locale.forLanguageTag(recipient.getLanguage());
         Context context = new Context(locale);
-        context.setVariable("pageUrl", applicationConfig.getCoursePlatformUrl());
+        context.setVariable("pageUrl", applicationConfig.getScaffoldingAppUrl());
         String content = templateEngine.process("mail-after-password-change", context);
         String title = chooseTitle(EmailTitle.AFTER_PASSWORD_CHANGE, locale);
         sendEmail(recipient.getLogin(), title, content);
@@ -73,7 +73,7 @@ public class EmailService {
     public void sendPasswordResetMail(PasswordResetTokenData token) {
         Locale locale = Locale.forLanguageTag(token.getCustomer().getLanguage());
         Context context = new Context(locale);
-        context.setVariable("passwordRestartUrl", applicationConfig.getCoursePlatformUrl() + "/reset-password?token=" + token.getValue());
+        context.setVariable("passwordRestartUrl", applicationConfig.getScaffoldingAppUrl() + "/reset-password?token=" + token.getValue());
         context.setVariable("tokenValidityTime", applicationConfig.getPasswordResetTokenValidityTimeInMinutes());
         String content = templateEngine.process("mail-password-reset", context);
         String title = chooseTitle(EmailTitle.PASSWORD_RESET, locale);
@@ -94,7 +94,7 @@ public class EmailService {
     public void sendEmailConfirmationLink(CustomerData customer) {
         Locale locale = Locale.forLanguageTag(customer.getLanguage());
         Context context = new Context(locale);
-        context.setVariable("emailConfirmationLink", applicationConfig.getCoursePlatformUrl() + "/confirm-email/?token=" + tokensService.prepareAndCreate(customer).getValue());
+        context.setVariable("emailConfirmationLink", applicationConfig.getScaffoldingAppUrl() + "/confirm-email/?token=" + tokensService.prepareAndCreate(customer).getValue());
         String content = templateEngine.process("mail-email-confirmation-link", context);
         String title = chooseTitle(EmailTitle.EMAIL_CONFIRMATION_LINK, locale);
         sendEmail(customer.getLogin(), title, content);
@@ -104,7 +104,7 @@ public class EmailService {
 
     private Context getContextForNewsletter(NewsletterData newsletter, Locale locale) {
         Context context = new Context(locale);
-        context.setVariable("loginPageUrl", applicationConfig.getCoursePlatformUrl() + "/login");
+        context.setVariable("loginPageUrl", applicationConfig.getScaffoldingAppUrl() + "/login");
         context.setVariable("title", newsletter.getContent().get(locale.getLanguage()).getTitle());
         context.setVariable("content", newsletter.getContent().get(locale.getLanguage()).getHtml());
         return context;

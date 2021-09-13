@@ -51,8 +51,8 @@
 <!--                          class="badge badge-pill bg-danger"><span id="products-in-basket-quantity"></span></span>-->
 <!--                </a>-->
 <!--            </li>-->
-<!--            <span th:if="${@courseCustomersService.isLoggedCustomerUser()}" class="border"></span>-->
-<!--            <li th:if="${@courseCustomersService.isLoggedCustomerUser()}" class="nav-item dropdown">-->
+<!--            <span th:if="${@scaffUsersService.isLoggedUserUser()}" class="border"></span>-->
+<!--            <li th:if="${@scaffUsersService.isLoggedUserUser()}" class="nav-item dropdown">-->
 <!--                <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown">-->
 <!--                    <span><i class="fas fa-database"></i></span>-->
 <!--                    <span th:text="#{navbar.my.products}"></span>-->
@@ -72,7 +72,7 @@
 <!--                    </a>-->
 <!--                </div>-->
 <!--            </li>-->
-            <li th:if="${@scaffUsersService.isLoggedUser()}" class="nav-item dropdown">
+            <li th:if="${@scaffUsersService.isLoggedUser() or @scaffUsersService.isLoggedUserAdmin()}" class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown">
                     <span><i class="fas fa-user-alt"></i></span>
                     <span th:text="#{navbar.my.account}"></span>

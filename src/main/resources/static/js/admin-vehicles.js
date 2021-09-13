@@ -1,7 +1,13 @@
 var url = "/admin/api/scaffolding"
 var vehiclesApiUrl = url + "/vehicles?"
+//todo stworzyć vehicle.html i vehicle.js - sprawdzic co tam powinno się zawierać.
+var vehicleApiUrl = url + "/vehicle"
 
 $(document).ready(function () {
+    $('#create-modal').on('hide.bs.modal', function (e) {
+        clearCreateModal();
+    });
+
 
     findVehicles();
     $("#filter input, #filter select, [form='filter']").on("change", function () {
@@ -28,8 +34,10 @@ function findVehicles() {
 }
 
 function fillResults(vehicles) {
+    let value = 1;
     vehicles.forEach(function(vehicle){
-        fillRow(vehicle);
+        fillRow(vehicle, value);
+        value = value + 1;
     });
 }
 
@@ -37,12 +45,86 @@ function fillRow(vehicle, value) {
     $('#records').append(
         "<tr>" +
             "<td class='align-middle'>" + value + "</td>" +
-            "<td class='align-middle'>" + vehicle.brand.name + "</td>" +
-            "<td class='align-middle'>" + vehicle.model.name + " </td>" +
+            "<td class='align-middle'>" + vehicle.brandName + "</td>" +
+            "<td class='align-middle'>" + vehicle.modelName + " </td>" +
             "<td class='align-middle'>" + vehicle.registrationNumber + "</td>" +
+            "<td class='align-middle'>" + prepareDetailsButton(vehicle.id) + "</td>" +
+            "<td class='align-middle'>notification in development</td>" +
         "</tr>"
     );
 }
 
+function prepareDetailsButton(id) {
+    return '<button type="button" class="btn btn-primary" onclick="goToDetailsPage(' + id + ')">Detale</button>';
+}
+
+function prepareDeleteButton(id) {
+    return '<button type="button" class="btn btn-danger" onclick="setObjectToDeleteIdAndShowModal(' + id + ')">Usuń/Zezłomuj</button>';
+}
+
+function goToDetailsPage(id) {
+    window.location.href = "/admin/vehicle/" + id;
+}
+
+function setObjectToDeleteIdAndShowModal(id) {
+    objToDeleteId = id;
+    $('#delete-object-modal').modal('show');
+}
+
+//todo dowiedzieć się jak zrobić listy rozwijalne do: fuelType i vehicleType
+function clearCreateModal() {
+    $("#create-brand").val('');
+    $("#create-model").val('');
+    $("#create-registration-number").val('');
+    $("#create-vin").val('');
+    $("#create-production-year").val('');
+    $("#create-first-registration-date").val('');
+    $("#create-free-places-for-technical-inspection").val('');
+    $("#create-fuel-type").val('');
+    $("#create-vehicle-type").val('');
+}
+//todo -> cały flow dodawania i usuawnia pojazdu(konstruktory, repozytoria do innych tabel itp)
+function sendCreateRequest() {
+    $.ajax({
+        url: vehicleApiUrl,
+        method: "post",
+        contentType: "application/json",
+        data: JSON.stringify({
+                brand:                              $("#create-brand").val(),
+                model:                              $("#create-model").val(),
+                registrationNumber:                 $("#create-registration-number").val(),
+                vin:                                $("#create-vin").val(),
+                productionYear:                     $("#create-production-year").val(),
+                firstRegistrationDate:              $("#create-first-registration-date").val(),
+                freePlacesForTechnicalInspection:   $("#create-free-places-for-technical-inspection").val(),
+                fuelType:                           $("#create-fuel-type").val(),
+                vehicleType:                        $("#create-vehicle-type").val()
+        })
+    })
+        .done(function () {
+            $("#create-modal").modal('hide');
+            $("#operation-successful-modal").modal('show');
+            findAuthors();
+        })
+        .fail(function (jqxhr, textStatus, errorThrown) {
+            displayErrorInformation(jqxhr.responseText);
+        })
+}
+
+//todo to na koniec, jak już będzie działało dodawanie i edycja
+function sendDeleteRequest(){
+//    $.ajax({
+//        url: "/admin/api/crs/author/" + objToDeleteId,
+//        type: "DELETE"
+//    })
+//        .done(function(response) {
+//            $('#delete-object-modal').modal('hide');
+//            $('#operation-successful-modal').modal('show');
+//            findAuthors();
+//        })
+//        .fail(function(jqxhr, textStatus, errorThrown){
+//            displayErrorInformation(jqxhr.responseText);
+//        });
+}
 
 
