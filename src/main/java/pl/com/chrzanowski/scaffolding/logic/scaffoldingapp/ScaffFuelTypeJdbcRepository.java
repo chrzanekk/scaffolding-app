@@ -55,6 +55,18 @@ public class ScaffFuelTypeJdbcRepository {
         return prepareFuelTypes(query);
     }
 
+    public Long getFuelTypeId(ScaffFuelTypeFilter filter) {
+
+        List<ScaffFuelTypeData> list = find(filter);
+
+        for(ScaffFuelTypeData row : list) {
+            if(row.getName().equals(filter.getName())) {
+                return row.getId();
+            }
+        }
+        return null;
+    }
+
     private List<ScaffFuelTypeData> prepareFuelTypes(String query) {
         List<Map<String, Object>> rows = jdbcTemplate.queryForList(query);
         List<ScaffFuelTypeData> list = new ArrayList<>();

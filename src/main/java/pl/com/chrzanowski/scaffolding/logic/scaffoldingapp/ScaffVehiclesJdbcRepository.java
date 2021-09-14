@@ -2,7 +2,9 @@ package pl.com.chrzanowski.scaffolding.logic.scaffoldingapp;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
+import pl.com.chrzanowski.scaffolding.domain.scaffoldingapp.ScaffFuelTypeFilter;
 import pl.com.chrzanowski.scaffolding.domain.scaffoldingapp.ScaffVehicleData;
+import pl.com.chrzanowski.scaffolding.domain.scaffoldingapp.ScaffVehicleTypeFilter;
 import pl.com.chrzanowski.scaffolding.domain.scaffoldingapp.ScaffVehiclesFilter;
 import pl.com.chrzanowski.scaffolding.logic.CommonJdbcRepository;
 
@@ -34,8 +36,8 @@ public class ScaffVehiclesJdbcRepository {
     public Long create(ScaffVehicleData data) {
         Long brandId = brandJdbcRepository.create(data);
         Long modelId = modelJdbcRepository.create(data);
-        Long vehicleTypeId = vehicleTypeJdbcRepository.create(data);
-        Long fuelTypeId = fuelTypeJdbcRepository.create(data);
+        Long vehicleTypeId = vehicleTypeJdbcRepository.getVehicleTypeId(new ScaffVehicleTypeFilter(data.getVehicleType()));
+        Long fuelTypeId = fuelTypeJdbcRepository.getFuelTypeId(new ScaffFuelTypeFilter(data.getFuelType()));
 
         String query = "INSERT INTO vehicles (" +
                 "brand_id, " +
@@ -104,8 +106,8 @@ public class ScaffVehiclesJdbcRepository {
 
     }
 
-    ScaffVehicleData get(ScaffVehiclesFilter id) throws SQLException {
-        return getVehicle(find(id), id);
+    ScaffVehicleData get(ScaffVehiclesFilter filter) throws SQLException {
+        return getVehicle(find(filter), filter);
     }
 
     private List<ScaffVehicleData> prepareVehicles(String query) {
@@ -135,8 +137,7 @@ public class ScaffVehiclesJdbcRepository {
         for (ScaffVehicleData data : list) {
             if (filter.getId().equals(data.getId())) {
                 vehicle = data;
-            } else {
-                vehicle = null;
+                break;
             }
         }
         return vehicle;

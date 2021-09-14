@@ -3,7 +3,9 @@ package pl.com.chrzanowski.scaffolding.logic.scaffoldingapp;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
-import pl.com.chrzanowski.scaffolding.domain.scaffoldingapp.*;
+import pl.com.chrzanowski.scaffolding.domain.scaffoldingapp.ScaffVehicleData;
+import pl.com.chrzanowski.scaffolding.domain.scaffoldingapp.ScaffVehicleTypeData;
+import pl.com.chrzanowski.scaffolding.domain.scaffoldingapp.ScaffVehicleTypeFilter;
 import pl.com.chrzanowski.scaffolding.logic.CommonJdbcRepository;
 
 import java.util.ArrayList;
@@ -25,7 +27,7 @@ public class ScaffVehicleTypeJdbcRepository {
 
     public Long create(ScaffVehicleData data) {
         String query = "INSERT INTO vehicle_type (name) VALUES (?)";
-        jdbcTemplate.update(query,data.getVehicleType());
+        jdbcTemplate.update(query, data.getVehicleType());
         return commonJdbcRepository.getLastInsertedId();
     }
 
@@ -33,14 +35,14 @@ public class ScaffVehicleTypeJdbcRepository {
 
         String query = "SELECT * FROM fuel_type";
 
-        if(filter != null) {
+        if (filter != null) {
             query += " WHERE 1+1";
 
-            if(filter.getId() != null) {
+            if (filter.getId() != null) {
                 query += " AND id = " + filter.getId();
             }
 
-            if(filter.getName() != null) {
+            if (filter.getName() != null) {
                 query += " AND name = " + filter.getName();
             }
 
@@ -50,6 +52,18 @@ public class ScaffVehicleTypeJdbcRepository {
         }
 
         return prepareVehicleTypes(query);
+    }
+
+    public Long getVehicleTypeId(ScaffVehicleTypeFilter filter) {
+
+        List<ScaffVehicleTypeData> list = find(filter);
+
+        for (ScaffVehicleTypeData row : list) {
+            if (row.getName().equals(filter.getName())) {
+                return row.getId();
+            }
+        }
+        return null;
     }
 
     private List<ScaffVehicleTypeData> prepareVehicleTypes(String query) {
@@ -63,4 +77,6 @@ public class ScaffVehicleTypeJdbcRepository {
         }
         return list;
     }
+
+
 }

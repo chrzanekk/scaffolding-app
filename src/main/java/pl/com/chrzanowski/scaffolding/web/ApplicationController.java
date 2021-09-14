@@ -15,11 +15,13 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.thymeleaf.TemplateEngine;
 import pl.com.chrzanowski.scaffolding.api.adviser.*;
+import pl.com.chrzanowski.scaffolding.api.scaffolding.ScaffFuelTypeRequestGetResponse;
 import pl.com.chrzanowski.scaffolding.api.scaffolding.ScaffUserGetResponse;
 import pl.com.chrzanowski.scaffolding.api.scaffolding.ScaffVehicleGetResponse;
 import pl.com.chrzanowski.scaffolding.auth.AuthenticatedUser;
 import pl.com.chrzanowski.scaffolding.auth.Permissions;
 import pl.com.chrzanowski.scaffolding.config.ApplicationConfig;
+import pl.com.chrzanowski.scaffolding.domain.scaffoldingapp.ScaffFuelTypeFilter;
 import pl.com.chrzanowski.scaffolding.domain.scaffoldingapp.ScaffVehiclesFilter;
 import pl.com.chrzanowski.scaffolding.logic.Language;
 import pl.com.chrzanowski.scaffolding.logic.*;
@@ -67,6 +69,7 @@ public class ApplicationController {
     private Environment environment;
     private ScaffEmailConfirmService emailConfirmationService;
     private ScaffVehiclesService vehiclesService;
+    private ScaffFuelTypeService fuelTypeService;
 
     public ApplicationController(ScaffUsersService scaffUsersService,
                                  OrdersService ordersService,
@@ -86,7 +89,8 @@ public class ApplicationController {
                                  TemplateEngine templateEngine,
                                  Environment environment,
                                  ScaffEmailConfirmService emailConfirmationService,
-                                 ScaffVehiclesService vehiclesService) {
+                                 ScaffVehiclesService vehiclesService,
+                                 ScaffFuelTypeService fuelTypeService) {
         this.scaffUsersService = scaffUsersService;
         this.ordersService = ordersService;
         this.customersService = customersService;
@@ -106,6 +110,8 @@ public class ApplicationController {
         this.environment = environment;
         this.emailConfirmationService = emailConfirmationService;
         this.vehiclesService = vehiclesService;
+        this.fuelTypeService = fuelTypeService;
+
     }
 /*
 ----------------------------------
@@ -202,6 +208,14 @@ SCAFFOLDING APP CONTROLLER - BEGIN
         model.addAttribute("languageDict", dictionariesService.getDictionary(DictionaryType.LANGUAGES,lang));
         return "admin-vehicle";
     }
+
+    @GetMapping({"/admin/fuelTypes"})
+    public String adminFuelTypes(Model model) {
+        model.addAttribute("fuelTypes",fuelTypeService.find(new ScaffFuelTypeFilter()));
+        return "admin-fuel-types";
+    }
+
+
 
 
     //    @GetMapping({"/admin/course/{id}"})

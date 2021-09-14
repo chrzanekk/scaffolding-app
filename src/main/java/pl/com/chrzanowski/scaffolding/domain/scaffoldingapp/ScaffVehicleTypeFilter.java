@@ -25,6 +25,10 @@ public class ScaffVehicleTypeFilter {
         this.pageSize = pageSize;
     }
 
+    public ScaffVehicleTypeFilter(String name) {
+        this.name = name;
+    }
+
     public Long getId() {
         return id;
     }

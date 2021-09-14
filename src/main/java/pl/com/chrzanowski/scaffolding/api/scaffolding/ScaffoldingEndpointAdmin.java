@@ -3,6 +3,7 @@ package pl.com.chrzanowski.scaffolding.api.scaffolding;
 import org.springframework.web.bind.annotation.*;
 import pl.com.chrzanowski.scaffolding.api.courseplatform.ChangePasswordRequest;
 import pl.com.chrzanowski.scaffolding.domain.scaffoldingapp.*;
+import pl.com.chrzanowski.scaffolding.logic.scaffoldingapp.ScaffFuelTypeService;
 import pl.com.chrzanowski.scaffolding.logic.scaffoldingapp.ScaffStatisticService;
 import pl.com.chrzanowski.scaffolding.logic.scaffoldingapp.ScaffUsersService;
 import pl.com.chrzanowski.scaffolding.logic.scaffoldingapp.ScaffVehiclesService;
@@ -23,14 +24,18 @@ public class ScaffoldingEndpointAdmin {
     private ScaffNotificationsFromPanelService notificationsFromPanelService;
     private ScaffStatisticService scaffStatisticService;
     private ScaffVehiclesService scaffVehiclesService;
+    private ScaffFuelTypeService fuelTypeService;
 
     public ScaffoldingEndpointAdmin(ScaffUsersService scaffUsersService,
                                     ScaffNotificationsFromPanelService notificationsFromPanelService,
-                                    ScaffStatisticService scaffStatisticService, ScaffVehiclesService scaffVehiclesService) {
+                                    ScaffStatisticService scaffStatisticService,
+                                    ScaffVehiclesService scaffVehiclesService,
+                                    ScaffFuelTypeService fuelTypeService) {
         this.scaffUsersService = scaffUsersService;
         this.notificationsFromPanelService = notificationsFromPanelService;
         this.scaffStatisticService = scaffStatisticService;
         this.scaffVehiclesService = scaffVehiclesService;
+        this.fuelTypeService = fuelTypeService;
     }
 
     @GetMapping("/users")
@@ -106,6 +111,13 @@ public class ScaffoldingEndpointAdmin {
         return new ScaffVehicleRequestGetResponse(vehicleToResponse(vehicle));
     }
 
+    @GetMapping(path = "/fuel-types", produces = "application/json; charset=UTF-8")
+    public ScaffFuelTypeRequestGetResponse fuelTypes( @RequestParam(name = "page", required = false, defaultValue = "1") Long page,
+                                                      @RequestParam(name = "page_size", required = false, defaultValue = "10") Long pageSize) {
+        List<ScaffFuelTypeData> fuelTypes = fuelTypeService.find(new ScaffFuelTypeFilter(page,pageSize));
+        return new ScaffFuelTypeRequestGetResponse(fuelTypeToResponse(fuelTypes));
+    }
+
 
     private List<ScaffVehicleGetResponse> vehiclesToResponse(List<ScaffVehicleData> vehicles) {
         List<ScaffVehicleGetResponse> list = new ArrayList<>();
@@ -134,6 +146,14 @@ public class ScaffoldingEndpointAdmin {
         return list;
     }
 
+    private List<ScaffFuelTypeGetResponse> fuelTypeToResponse(List<ScaffFuelTypeData> fuelTypeData) {
+        List<ScaffFuelTypeGetResponse> list = new ArrayList<>();
+        for(ScaffFuelTypeData type : fuelTypeData) {
+            list.add(new ScaffFuelTypeGetResponse(type));
+        }
+        return list;
+    }
+
     private ScaffVehicleGetResponse vehicleToResponse(ScaffVehicleData vehicleData) {
         return new ScaffVehicleGetResponse(
                 vehicleData.getId(),
@@ -147,4 +167,6 @@ public class ScaffoldingEndpointAdmin {
                 vehicleData.getFuelType(),
                 vehicleData.getVehicleType());
     }
+
+
 }

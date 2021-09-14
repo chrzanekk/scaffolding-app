@@ -19,6 +19,13 @@ public class ScaffFuelTypeFilter {
         this.pageSize = pageSize;
     }
 
+    public ScaffFuelTypeFilter(String name) {
+        this.name = name;
+    }
+
+    public ScaffFuelTypeFilter() {
+    }
+
     public Long getId() {
         return id;
     }
