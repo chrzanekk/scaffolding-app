@@ -12,6 +12,9 @@ public class ScaffFuelTypeGetResponse {
         this.name = name;
     }
 
+    public ScaffFuelTypeGetResponse() {
+    }
+
     public ScaffFuelTypeGetResponse(Long id) {
         this.id = id;
     }

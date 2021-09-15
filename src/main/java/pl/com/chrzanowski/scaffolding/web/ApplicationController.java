@@ -3,23 +3,15 @@ package pl.com.chrzanowski.scaffolding.web;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.env.Environment;
-import org.springframework.core.io.InputStreamResource;
-import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 import org.thymeleaf.TemplateEngine;
-import pl.com.chrzanowski.scaffolding.api.adviser.*;
-import pl.com.chrzanowski.scaffolding.api.scaffolding.ScaffFuelTypeRequestGetResponse;
+import pl.com.chrzanowski.scaffolding.api.scaffolding.ScaffFuelTypeGetResponse;
 import pl.com.chrzanowski.scaffolding.api.scaffolding.ScaffUserGetResponse;
 import pl.com.chrzanowski.scaffolding.api.scaffolding.ScaffVehicleGetResponse;
 import pl.com.chrzanowski.scaffolding.auth.AuthenticatedUser;
-import pl.com.chrzanowski.scaffolding.auth.Permissions;
 import pl.com.chrzanowski.scaffolding.config.ApplicationConfig;
 import pl.com.chrzanowski.scaffolding.domain.scaffoldingapp.ScaffFuelTypeFilter;
 import pl.com.chrzanowski.scaffolding.domain.scaffoldingapp.ScaffVehiclesFilter;
@@ -42,10 +34,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.List;
 
 @Controller
 public class ApplicationController {
@@ -70,6 +58,7 @@ public class ApplicationController {
     private ScaffEmailConfirmService emailConfirmationService;
     private ScaffVehiclesService vehiclesService;
     private ScaffFuelTypeService fuelTypeService;
+    private ScaffDictionariesService scaffDictionariesService;
 
     public ApplicationController(ScaffUsersService scaffUsersService,
                                  OrdersService ordersService,
@@ -90,7 +79,8 @@ public class ApplicationController {
                                  Environment environment,
                                  ScaffEmailConfirmService emailConfirmationService,
                                  ScaffVehiclesService vehiclesService,
-                                 ScaffFuelTypeService fuelTypeService) {
+                                 ScaffFuelTypeService fuelTypeService,
+                                 ScaffDictionariesService scaffDictionariesService) {
         this.scaffUsersService = scaffUsersService;
         this.ordersService = ordersService;
         this.customersService = customersService;
@@ -111,7 +101,7 @@ public class ApplicationController {
         this.emailConfirmationService = emailConfirmationService;
         this.vehiclesService = vehiclesService;
         this.fuelTypeService = fuelTypeService;
-
+        this.scaffDictionariesService = scaffDictionariesService;
     }
 /*
 ----------------------------------
@@ -206,14 +196,11 @@ SCAFFOLDING APP CONTROLLER - BEGIN
 
         model.addAttribute("vehicle", new ScaffVehicleGetResponse(vehiclesService.findById(new ScaffVehiclesFilter(id))));
         model.addAttribute("languageDict", dictionariesService.getDictionary(DictionaryType.LANGUAGES,lang));
+        model.addAttribute("fuelTypes", fuelTypeService.find(new ScaffFuelTypeFilter()));
         return "admin-vehicle";
     }
 
-    @GetMapping({"/admin/fuelTypes"})
-    public String adminFuelTypes(Model model) {
-        model.addAttribute("fuelTypes",fuelTypeService.find(new ScaffFuelTypeFilter()));
-        return "admin-fuel-types";
-    }
+
 
 
 

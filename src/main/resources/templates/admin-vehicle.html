@@ -5,9 +5,10 @@
 <head>
     <div th:replace="fragments/head"></div>
     <script th:src="@{/js/admin-vehicle.js}"></script>
+    <script th:src="@{/js/admin-fuel-types.js}"></script>
     <script th:inline="javascript">
-            var vehicle = [[${vehicle}]];
-            var fuelTypes = [[${fuelTypes}]];
+<!--            var vehicle = [[${vehicle}]];-->
+
     </script>
 </head>
 
@@ -59,9 +60,9 @@
                 <label for="fuelType" th:text="#{vehicle.details.fuelType}"></label>
                 <select id="fuelType" class= "form-control">
                         <option th:each="fuelType : ${fuelTypes}"
-                                th:value="${fuelType}"
-                                th:text="${fuelType}"
-                                th:selected="(${fuelType} == *{vehicle.FuelType}">
+                                th:value="${fuelType.id}"
+                                th:text="${fuelType.name}"
+                                th:selected="(${fuelType.name} == *{vehicle.FuelType})">
                         </option>
                 </select>
             </div>

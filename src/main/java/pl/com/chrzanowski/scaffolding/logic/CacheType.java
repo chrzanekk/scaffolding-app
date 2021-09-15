@@ -12,4 +12,7 @@ public class CacheType {
 
     public final static String APPLICATIONS = "applications";
     public final static String CATEGORIES = "categories";
+
+    public final static String FUEL_TYPES = "fuel-types";
+    public final static String VEHICLE_TYPES = "vehicle-types";
 }

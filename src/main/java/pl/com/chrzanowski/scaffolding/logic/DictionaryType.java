@@ -43,4 +43,5 @@ public enum DictionaryType {
     LESSON_TYPES,
     MOVIE_LINK_TYPES,
     CUSTOMER_AUTHORITIES
+
 }

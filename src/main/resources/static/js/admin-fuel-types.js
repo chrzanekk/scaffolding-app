@@ -3,20 +3,20 @@ var fuelTypesApiUrl = url + "/fuel-types?"
 
 $(document).ready(function () {
 
-
+    findFuelTypes();
 });
 
 
 function findFuelTypes() {
     $.ajax({
-        url: fuelTypeApiUrl + preparePaginationUrl(),
+        url: fuelTypesApiUrl + preparePaginationUrl(),
         type: "get",
         dataType: "json",
         contentType: "application/json"
     })
     .done(function (fuelTypes) {
         $("#records").empty();
-        fillResults(fuelTypes.fuelTypes);
+        return fuelTypes.fuelTypes;
     })
     .fail(function(jqxhr, textStatus, errorThrown){
         displayErrorInformation(jqxhr.responseText);
