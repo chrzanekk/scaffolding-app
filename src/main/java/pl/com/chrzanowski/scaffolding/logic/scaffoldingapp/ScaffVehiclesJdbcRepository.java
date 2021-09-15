@@ -32,12 +32,12 @@ public class ScaffVehiclesJdbcRepository {
         this.brandJdbcRepository = brandJdbcRepository;
         this.modelJdbcRepository = modelJdbcRepository;
     }
-
+//przemyśleć jak wyciągnąć ID i dlaczego brand i model wstawia nulle zamiast nazw.
     public Long create(ScaffVehicleData data) {
         Long brandId = brandJdbcRepository.create(data);
-        Long modelId = modelJdbcRepository.create(data);
-        Long vehicleTypeId = vehicleTypeJdbcRepository.getVehicleTypeId(new ScaffVehicleTypeFilter(data.getVehicleType()));
-        Long fuelTypeId = fuelTypeJdbcRepository.getFuelTypeId(new ScaffFuelTypeFilter(data.getFuelType()));
+        Long modelId = modelJdbcRepository.create(data, brandId);
+        Long vehicleTypeId = vehicleTypeJdbcRepository.find(new ScaffVehicleTypeFilter(data.getVehicleType())).get(0).getId();
+        Long fuelTypeId = fuelTypeJdbcRepository.find(new ScaffFuelTypeFilter(data.getFuelType())).get(0).getId();
 
         String query = "INSERT INTO vehicles (" +
                 "brand_id, " +

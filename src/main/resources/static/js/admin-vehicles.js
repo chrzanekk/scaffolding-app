@@ -71,7 +71,6 @@ function setObjectToDeleteIdAndShowModal(id) {
     $('#delete-object-modal').modal('show');
 }
 
-//todo dowiedzieć się jak zrobić listy rozwijalne do: fuelType i vehicleType
 function clearCreateModal() {
     $("#create-brand").val('');
     $("#create-model").val('');
@@ -87,24 +86,24 @@ function clearCreateModal() {
 function sendCreateRequest() {
     $.ajax({
         url: vehicleApiUrl,
-        method: "post",
+        method: "POST",
         contentType: "application/json",
         data: JSON.stringify({
-                brand:                              $("#create-brand").val(),
-                model:                              $("#create-model").val(),
-                registrationNumber:                 $("#create-registration-number").val(),
-                vin:                                $("#create-vin").val(),
-                productionYear:                     $("#create-production-year").val(),
-                firstRegistrationDate:              $("#create-first-registration-date").val(),
-                freePlacesForTechnicalInspection:   $("#create-free-places-for-technical-inspection").val(),
-                fuelType:                           $("#create-fuel-type").val(),
-                vehicleType:                        $("#create-vehicle-type").val()
+                brand: $("#create-brand").val(),
+                model: $("#create-model").val(),
+                registrationNumber: $("#create-registration-number").val(),
+                vin: $("#create-vin").val(),
+                productionYear: $("#create-production-year").val(),
+                firstRegistrationDate: $("#create-first-registration-date").val(),
+                freePlacesForTechnicalInspection: $("#create-free-places-for-technical-inspection").val(),
+                fuelType: $("#create-fuel-type").val(),
+                vehicleType: $("#create-vehicle-type").val()
         })
     })
         .done(function () {
             $("#create-modal").modal('hide');
             $("#operation-successful-modal").modal('show');
-            findAuthors();
+            findVehicles();
         })
         .fail(function (jqxhr, textStatus, errorThrown) {
             displayErrorInformation(jqxhr.responseText);

@@ -33,7 +33,7 @@ public class ScaffVehicleTypeJdbcRepository {
 
     public List<ScaffVehicleTypeData> find(ScaffVehicleTypeFilter filter) {
 
-        String query = "SELECT * FROM fuel_type";
+        String query = "SELECT * FROM vehicle_type";
 
         if (filter != null) {
             query += " WHERE 1+1";

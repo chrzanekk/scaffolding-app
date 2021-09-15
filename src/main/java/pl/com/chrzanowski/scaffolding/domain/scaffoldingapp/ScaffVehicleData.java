@@ -100,7 +100,26 @@ public class ScaffVehicleData {
         this.vehicleTypeId = vehicleTypeId;
     }
 
-
+    public ScaffVehicleData(String brandName,
+                            String modelName,
+                            String registrationNumber,
+                            String vin,
+                            Integer productionYear,
+                            LocalDate firstRegistrationDate,
+                            Integer freePlacesForTechnicalInspections,
+                            String fuelType,
+                            String vehicleType) {
+        this.registrationNumber = registrationNumber;
+        this.vin = vin;
+        this.productionYear = productionYear;
+        this.firstRegistrationDate = firstRegistrationDate;
+        this.freePlacesForTechnicalInspections = freePlacesForTechnicalInspections;
+        this.brandName = brandName;
+        this.modelName = modelName;
+        this.fuelType = fuelType;
+        this.vehicleType = vehicleType;
+        this.createDate = LocalDateTime.now();
+    }
 
     public Long getId() {
         return id;

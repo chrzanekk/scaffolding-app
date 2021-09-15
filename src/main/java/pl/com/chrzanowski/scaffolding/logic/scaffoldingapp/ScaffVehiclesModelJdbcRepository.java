@@ -26,9 +26,9 @@ public class ScaffVehiclesModelJdbcRepository {
         this.commonJdbcRepository = commonJdbcRepository;
     }
 
-    public Long create(ScaffVehicleData data) {
-        String query = "INSERT INTO vehicle_model (name) VALUES (?)";
-        jdbcTemplate.update(query,data.getModelName());
+    public Long create(ScaffVehicleData data, Long brandId) {
+        String query = "INSERT INTO vehicle_model (brand_id,name) VALUES (?,?)";
+        jdbcTemplate.update(query, brandId, data.getModelName());
         return commonJdbcRepository.getLastInsertedId();
     }
 

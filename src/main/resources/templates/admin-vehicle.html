@@ -7,8 +7,6 @@
     <script th:src="@{/js/admin-vehicle.js}"></script>
     <script th:src="@{/js/admin-fuel-types.js}"></script>
     <script th:inline="javascript">
-<!--            var vehicle = [[${vehicle}]];-->
-
     </script>
 </head>
 
@@ -17,7 +15,7 @@
 
 <div class="container">
     <div class="text-center">
-        <h4 th:text="#{Vehicle.details}"></h4>
+        <h4 th:text="#{vehicle.details}"></h4>
     </div>
 
     <form class="bg-light p-5 border">
@@ -51,11 +49,10 @@
             <div class="form-group col-md-4 text-center">
                 <label for="freePlacesForTechnicalInspections"
                        th:text="#{vehicle.details.freePlacesForTechnicalInspections}"></label>
-                <input type="number" class="form-control" id="freePlacesForTechnicalInspections"
+                <input type="number" min="1" max ="5" class="form-control" id="freePlacesForTechnicalInspections"
                        th:value="${vehicle.freePlacesForTechnicalInspections}">
             </div>
 
-<!--            tu trzeba przejzec i rozbudowac dictionaryService-->
             <div class="form-group col-md-4 text-center">
                 <label for="fuelType" th:text="#{vehicle.details.fuelType}"></label>
                 <select id="fuelType" class= "form-control">
@@ -68,20 +65,16 @@
             </div>
             <div class="form-group col-md-4 text-center">
                 <label for="vehicleType" th:text="#{vehicle.details.vehicleType}"></label>
-                <input type="text" class="form-control" id="vehicleType" th:value="${vehicle.vehicleType}">
+                <select id="vehicleType" class= "form-control">
+                    <option th:each="vehicleType : ${vehicleTypes}"
+                            th:value="${vehicleType.id}"
+                            th:text="${vehicleType.name}"
+                            th:selected="(${vehicleType.name} == *{vehicle.VehicleType})">
+                    </option>
+                </select>
+            </div>
             </div>
 
-            <!--            to przerobic na fueltype i na vehicle type - dane pobierane z bazy? czy jako dictionary?-->
-            <!--            <div class="form-group col-md-4 text-center">-->
-            <!--                <label for="language" th:text="#{Language}"></label>-->
-            <!--                <select id="language" class="form-control">-->
-            <!--                    <option th:each="language : ${languagesDict}"-->
-            <!--                            th:value="${language.code}"-->
-            <!--                            th:text="${language.value}"-->
-            <!--                            th:selected="(${language.code} == *{course.language})">-->
-            <!--                    </option>-->
-            <!--                </select>-->
-            <!--            </div>-->
 
             <div class="text-center">
                 <button type="button" class="btn btn-danger mt-3" onclick="showDeleteModal()"

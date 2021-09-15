@@ -4,29 +4,31 @@
 
 <head>
     <div th:replace="fragments/head"></div>
-    <script th:src="@{/js/admin-vehicles.js}"></script>
+    <script th:src="@{/js/admin-vehicles.js}">
+        var presentYear = new Date().getFullYear;
+
+    </script>
 </head>
 
 <body>
 <div th:replace="fragments/menu :: menu"></div>
 
-<h5>Flota</h5>
+<h5 th:text="#{vehicle.fleet}"></h5>
 
-<button type="button" class="btn btn-success btn-lg btn-block" data-toggle="modal" data-target="#create-modal">Dodaj
-    pojazd
-</button>
+<button type="button" class="btn btn-success btn-lg btn-block" data-toggle="modal" data-target="#create-modal"
+        th:text="#{vehicle.add.new}"></button>
 
 <div id="result-container" class="my-4">
     <div class="table-responsive mb-0 pb-0">
         <table class="table bg-light table-bordered table-hover table-sm">
             <thead class="thead-light">
             <tr>
-                <th class="align-middle col-sm-1">Lp.</th>
-                <th class="align-middle col-sm-2">Maraka</th>
-                <th class="align-middle col-sm-2">Model</th>
-                <th class="align-middle col-sm-3">Numer Rejestracyjny</th>
-                <th class="align-middle col-sm-2">Szczegóły</th>
-                <th class="align-middle col-sm-2">Ostrzeżenie</th>
+                <th class="align-middle col-sm-1" th:text="#{vehicle.ordinal.number}"></th>
+                <th class="align-middle col-sm-2" th:text="#{vehicle.details.brand}"></th>
+                <th class="align-middle col-sm-2" th:text="#{vehicle.details.model}"></th>
+                <th class="align-middle col-sm-3" th:text="#{vehicle.details.registrationNumber}"></th>
+                <th class="align-middle col-sm-2" th:text="#{vehicle.details}"></th>
+                <th class="align-middle col-sm-2" th:text="#{vehicle.warning}"></th>
 
             </tr>
             </thead>
@@ -38,12 +40,11 @@
 </div>
 
 
-
 <div class="modal fade" id="create-modal" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Dodaj nowy samochód</h5>
+                <h5 class="modal-title" id="exampleModalLabel" th:text="#{vehicle.add.new}"></h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -51,47 +52,61 @@
             <div class="modal-body">
                 <form class="text-center">
                     <div class="form-group">
-                        <label for="create-brand">Marka</label>
+                        <label for="create-brand" th:text="#{vehicle.details.brand}"></label>
                         <input id="create-brand" type="text" class="form-control">
                     </div>
                     <div class="form-group">
-                        <label for="create-model">Model</label>
+                        <label for="create-model" th:text="#{vehicle.details.model}"></label>
                         <input id="create-model" type="text" class="form-control">
                     </div>
                     <div class="form-group">
-                        <label for="create-registration-number">Numer rejestracyjny</label>
+                        <label for="create-registration-number" th:text="#{vehicle.details.registrationNumber}"></label>
                         <input id="create-registration-number" type="text" class="form-control">
                     </div>
                     <div class="form-group">
-                        <label for="create-vin">Numer VIN</label>
+                        <label for="create-vin" th:text="#{vehicle.details.vin}"></label>
                         <input id="create-vin" type="text" class="form-control">
                     </div>
                     <div class="form-group">
-                        <label for="create-production-year">Rok produkcji</label>
-                        <input id="create-production-year" type="number" class="form-control">
+                        <label for="create-production-year" th:text="#{vehicle.details.productionYear}"></label>
+                        <input id="create-production-year" type="number" min="1995" max="2021" class="form-control">
                     </div>
                     <div class="form-group">
-                        <label for="create-first-registration-date">Data pierwszej rejestracji</label>
+                        <label for="create-first-registration-date"
+                               th:text="#{vehicle.details.firstRegistrationDate}"></label>
                         <input id="create-first-registration-date" type="date" class="form-control">
                     </div>
                     <div class="form-group">
-                        <label for="create-free-places-for-technical-inspection">Ilość wolnych miejsc na
-                            przegląd techniczny</label>
-                        <input id="create-free-places-for-technical-inspection" type="text" class="form-control">
+                        <label for="create-free-places-for-technical-inspection"
+                               th:text="#{vehicle.details.freePlacesForTechnicalInspections}"></label>
+                        <input id="create-free-places-for-technical-inspection" type="number" min="1" max="5"
+                               class="form-control">
                     </div>
                     <div class="form-group">
-                        <label for="create-fuel-type">Rodzaj paliwa</label>
-                        <input id="create-fuel-type" type="text" class="form-control">
+                        <label for="create-fuel-type" th:text="#{vehicle.details.fuelType}"></label>
+                        <select id="create-fuel-type" class="form-control">
+                            <option th:each="fuelType : ${fuelTypes}"
+                                    th:value="${fuelType.id}"
+                                    th:text="${fuelType.name}"
+                                    th:selected="(${fuelType.name} == *{fuelType.name})">
+                            </option>
+                        </select>
                     </div>
                     <div class="form-group">
-                        <label for="create-vehicle-type">Typ pojazdu</label>
-                        <input id="create-vehicle-type" type="text" class="form-control">
+                        <label for="create-vehicle-type" th:text="#{vehicle.details.vehicleType}"></label>
+                        <select id="create-vehicle-type" class="form-control">
+                            <option th:each="vehicleType : ${vehicleTypes}"
+                                    th:value="${vehicleType.id}"
+                                    th:text="${vehicleType.name}"
+                                    th:selected="(${vehicleType.name} == *{vehicleType.name})">
+                            </option>
+                        </select>
                     </div>
 
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-success" onclick="">Dodaj</button>
+                <button type="button" class="btn btn-success" onclick="sendCreateRequest()">Dodaj</button>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Anuluj</button>
             </div>
 

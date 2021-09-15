@@ -14,6 +14,7 @@ import pl.com.chrzanowski.scaffolding.api.scaffolding.ScaffVehicleGetResponse;
 import pl.com.chrzanowski.scaffolding.auth.AuthenticatedUser;
 import pl.com.chrzanowski.scaffolding.config.ApplicationConfig;
 import pl.com.chrzanowski.scaffolding.domain.scaffoldingapp.ScaffFuelTypeFilter;
+import pl.com.chrzanowski.scaffolding.domain.scaffoldingapp.ScaffVehicleTypeFilter;
 import pl.com.chrzanowski.scaffolding.domain.scaffoldingapp.ScaffVehiclesFilter;
 import pl.com.chrzanowski.scaffolding.logic.Language;
 import pl.com.chrzanowski.scaffolding.logic.*;
@@ -59,6 +60,7 @@ public class ApplicationController {
     private ScaffVehiclesService vehiclesService;
     private ScaffFuelTypeService fuelTypeService;
     private ScaffDictionariesService scaffDictionariesService;
+    private ScaffVehicleTypeService vehicleTypeService;
 
     public ApplicationController(ScaffUsersService scaffUsersService,
                                  OrdersService ordersService,
@@ -80,6 +82,7 @@ public class ApplicationController {
                                  ScaffEmailConfirmService emailConfirmationService,
                                  ScaffVehiclesService vehiclesService,
                                  ScaffFuelTypeService fuelTypeService,
+                                 ScaffVehicleTypeService vehicleTypeService,
                                  ScaffDictionariesService scaffDictionariesService) {
         this.scaffUsersService = scaffUsersService;
         this.ordersService = ordersService;
@@ -102,6 +105,7 @@ public class ApplicationController {
         this.vehiclesService = vehiclesService;
         this.fuelTypeService = fuelTypeService;
         this.scaffDictionariesService = scaffDictionariesService;
+        this.vehicleTypeService = vehicleTypeService;
     }
 /*
 ----------------------------------
@@ -178,9 +182,21 @@ SCAFFOLDING APP CONTROLLER - BEGIN
         return "data-changed-successfully";
     }
 
-    //do zrobienia formatka + js
+
     @GetMapping({"/admin/vehicles"})
-    public String adminVehicles() {
+    public String adminVehicles(Model model) throws SQLException {
+
+        if(!vehiclesService.hasLoggedUserPermissionToVehicleManagement()) {
+            throw new IllegalArgumentException("Access denied");
+        }
+
+        Language lang = LanguagesUtil.getCurrentLanguage();
+
+        model.addAttribute("vehicles", vehiclesService.find(new ScaffVehiclesFilter()));
+        model.addAttribute("languageDict", dictionariesService.getDictionary(DictionaryType.LANGUAGES,lang));
+        model.addAttribute("fuelTypes", fuelTypeService.find(new ScaffFuelTypeFilter()));
+        model.addAttribute("vehicleTypes", vehicleTypeService.find(new ScaffVehicleTypeFilter()));
+
         return "admin-vehicles";
     }
 
@@ -197,6 +213,7 @@ SCAFFOLDING APP CONTROLLER - BEGIN
         model.addAttribute("vehicle", new ScaffVehicleGetResponse(vehiclesService.findById(new ScaffVehiclesFilter(id))));
         model.addAttribute("languageDict", dictionariesService.getDictionary(DictionaryType.LANGUAGES,lang));
         model.addAttribute("fuelTypes", fuelTypeService.find(new ScaffFuelTypeFilter()));
+        model.addAttribute("vehicleTypes", vehicleTypeService.find(new ScaffVehicleTypeFilter()));
         return "admin-vehicle";
     }
 

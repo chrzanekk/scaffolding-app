@@ -39,4 +39,8 @@ public class ScaffVehiclesService {
 
     }
 
+    public Long add(ScaffVehicleData data) {
+        return scaffVehiclesJdbcRepository.create(data);
+    }
+
 }

@@ -26,6 +26,9 @@ public class ScaffVehiclesFilter {
         this.id = id;
     }
 
+    public ScaffVehiclesFilter() {
+    }
+
     public Long getId() {
         return id;
     }
