@@ -78,7 +78,7 @@ function clearCreateModal() {
     $("#create-vin").val('');
     $("#create-production-year").val('');
     $("#create-first-registration-date").val('');
-    $("#create-free-places-for-technical-inspection").val('');
+    $("#create-free-places-for-technical-inspections").val('');
     $("#create-fuel-type").val('');
     $("#create-vehicle-type").val('');
 }
@@ -89,15 +89,15 @@ function sendCreateRequest() {
         method: "POST",
         contentType: "application/json",
         data: JSON.stringify({
-                brand: $("#create-brand").val(),
-                model: $("#create-model").val(),
+                brandName: $("#create-brand").val(),
+                modelName: $("#create-model").val(),
                 registrationNumber: $("#create-registration-number").val(),
                 vin: $("#create-vin").val(),
                 productionYear: $("#create-production-year").val(),
                 firstRegistrationDate: $("#create-first-registration-date").val(),
-                freePlacesForTechnicalInspection: $("#create-free-places-for-technical-inspection").val(),
-                fuelType: $("#create-fuel-type").val(),
-                vehicleType: $("#create-vehicle-type").val()
+                freePlacesForTechnicalInspections: $("#create-free-places-for-technical-inspections").val(),
+                fuelTypeId: $("#create-fuel-type").val(),
+                vehicleTypeId: $("#create-vehicle-type").val()
         })
     })
         .done(function () {

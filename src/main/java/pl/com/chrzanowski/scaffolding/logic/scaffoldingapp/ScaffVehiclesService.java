@@ -25,7 +25,7 @@ public class ScaffVehiclesService {
     public List<ScaffVehicleData> find(ScaffVehiclesFilter filter) throws SQLException {
         return scaffVehiclesJdbcRepository.find(filter);
     }
-
+//to chyba nie dziala poprawnie - do sprawdzenia
     public ScaffVehicleData findById(ScaffVehiclesFilter filter) throws SQLException {
         return scaffVehiclesJdbcRepository.get(filter);
     }
@@ -41,6 +41,10 @@ public class ScaffVehiclesService {
 
     public Long add(ScaffVehicleData data) {
         return scaffVehiclesJdbcRepository.create(data);
+    }
+
+    public void update(ScaffVehicleData data) {
+        scaffVehiclesJdbcRepository.update(data);
     }
 
 }

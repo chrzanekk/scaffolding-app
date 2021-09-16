@@ -121,16 +121,30 @@ public class ScaffoldingEndpointAdmin {
                 request.getProductionYear(),
                 request.getFirstRegistrationDate(),
                 request.getFreePlacesForTechnicalInspections(),
-                request.getFuelType(),
-                request.getVehicleType()));
+                request.getFuelTypeId(),
+                request.getVehicleTypeId()));
     }
 
-//    @GetMapping(path = "/fuel-types", produces = "application/json; charset=UTF-8")
-//    public ScaffFuelTypeRequestGetResponse fuelTypes( @RequestParam(name = "page", required = false, defaultValue = "1") Long page,
-//                                                      @RequestParam(name = "page_size", required = false, defaultValue = "10") Long pageSize) {
-//        List<ScaffFuelTypeData> fuelTypes = fuelTypeService.find(new ScaffFuelTypeFilter(page,pageSize));
-//        return new ScaffFuelTypeRequestGetResponse(fuelTypeToResponse(fuelTypes));
-//    }
+    @PutMapping(path = "/vehicle/{id} ", produces = "application/json; charset=UTF-8")
+    public void updateVehicle(@PathVariable Long id, @RequestBody ScaffVehiclePutRequest request) {
+        scaffVehiclesService.update(new ScaffVehicleData(
+                request.getBrandName(),
+                request.getModelName(),
+                request.getRegistrationNumber(),
+                request.getVin(),
+                request.getProductionYear(),
+                request.getFirstRegistrationDate(),
+                request.getFreePlacesForTechnicalInspections(),
+                request.getFuelTypeId(),
+                request.getVehicleTypeId()));
+    }
+
+    @GetMapping(path = "/fuel-types", produces = "application/json; charset=UTF-8")
+    public ScaffFuelTypeRequestGetResponse fuelTypes(@RequestParam(name = "page", required = false, defaultValue = "1") Long page,
+                                                     @RequestParam(name = "page_size", required = false, defaultValue = "10") Long pageSize) {
+        List<ScaffFuelTypeData> fuelTypes = fuelTypeService.find(new ScaffFuelTypeFilter(page, pageSize));
+        return new ScaffFuelTypeRequestGetResponse(fuelTypeToResponse(fuelTypes));
+    }
 
 
     private List<ScaffVehicleGetResponse> vehiclesToResponse(List<ScaffVehicleData> vehicles) {
@@ -162,7 +176,7 @@ public class ScaffoldingEndpointAdmin {
 
     private List<ScaffFuelTypeGetResponse> fuelTypeToResponse(List<ScaffFuelTypeData> fuelTypeData) {
         List<ScaffFuelTypeGetResponse> list = new ArrayList<>();
-        for(ScaffFuelTypeData type : fuelTypeData) {
+        for (ScaffFuelTypeData type : fuelTypeData) {
             list.add(new ScaffFuelTypeGetResponse(type));
         }
         return list;

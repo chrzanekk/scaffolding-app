@@ -31,14 +31,15 @@ function sendUpdateRequest() {
         method: "PUT",
         contentType: "application/json",
         data: JSON.stringify({
-            title: $("#title").val(),
-            price: $("#price").val(),
-            language: $('#language').find(":selected").val(),
-            description: $("#description").val(),
-            authorId: $('#author').find(":selected").val(),
-            visibilityStatus : $("#visibility-status").find(":selected").val(),
-            code: $("#code").val(),
-            saleStatus: $("#sale-status").find(":selected").val()
+             brandName: $("#create-brand").val(),
+             modelName: $("#create-model").val(),
+             registrationNumber: $("#create-registration-number").val(),
+             vin: $("#create-vin").val(),
+             productionYear: $("#create-production-year").val(),
+             firstRegistrationDate: $("#create-first-registration-date").val(),
+             freePlacesForTechnicalInspections: $("#create-free-places-for-technical-inspections").val(),
+             fuelTypeId: $("#create-fuel-type").val(),
+             vehicleTypeId: $("#create-vehicle-type").val()
         })
     })
         .done(function () {

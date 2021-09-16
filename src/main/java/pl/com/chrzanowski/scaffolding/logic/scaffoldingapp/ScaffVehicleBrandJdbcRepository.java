@@ -48,6 +48,8 @@ public class ScaffVehicleBrandJdbcRepository {
         return prepareVehiclesBrands(jdbcTemplate.queryForList(query));
     }
 
+
+
     private List<ScaffVehicleBrandData> prepareVehiclesBrands(List<Map<String, Object>> rows) {
 
         List<ScaffVehicleBrandData> brands = new ArrayList<>();

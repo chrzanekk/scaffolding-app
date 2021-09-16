@@ -26,7 +26,7 @@ public class ScaffVehicleTypeJdbcRepository {
     }
 
     public Long create(ScaffVehicleData data) {
-        String query = "INSERT INTO vehicle_type (name) VALUES (?)";
+        String query = "INSERT INTO vehicle_type (name) VALUES (?);";
         jdbcTemplate.update(query, data.getVehicleType());
         return commonJdbcRepository.getLastInsertedId();
     }

@@ -5,7 +5,6 @@
 <head>
     <div th:replace="fragments/head"></div>
     <script th:src="@{/js/admin-vehicles.js}">
-        var presentYear = new Date().getFullYear;
 
     </script>
 </head>
@@ -77,9 +76,9 @@
                         <input id="create-first-registration-date" type="date" class="form-control">
                     </div>
                     <div class="form-group">
-                        <label for="create-free-places-for-technical-inspection"
+                        <label for="create-free-places-for-technical-inspections"
                                th:text="#{vehicle.details.freePlacesForTechnicalInspections}"></label>
-                        <input id="create-free-places-for-technical-inspection" type="number" min="1" max="5"
+                        <input id="create-free-places-for-technical-inspections" type="number" min="1" max="5"
                                class="form-control">
                     </div>
                     <div class="form-group">

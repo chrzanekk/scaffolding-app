@@ -32,32 +32,30 @@ public class ScaffVehiclesJdbcRepository {
         this.brandJdbcRepository = brandJdbcRepository;
         this.modelJdbcRepository = modelJdbcRepository;
     }
-//przemyśleć jak wyciągnąć ID i dlaczego brand i model wstawia nulle zamiast nazw.
+
     public Long create(ScaffVehicleData data) {
         Long brandId = brandJdbcRepository.create(data);
         Long modelId = modelJdbcRepository.create(data, brandId);
-        Long vehicleTypeId = vehicleTypeJdbcRepository.find(new ScaffVehicleTypeFilter(data.getVehicleType())).get(0).getId();
-        Long fuelTypeId = fuelTypeJdbcRepository.find(new ScaffFuelTypeFilter(data.getFuelType())).get(0).getId();
 
         String query = "INSERT INTO vehicles (" +
-                "brand_id, " +
-                "model_id, " +
+                "brand_id," +
+                "model_id," +
                 "registration_number," +
-                "vin, " +
-                "production_year, " +
-                "first_registration_date, " +
-                "free_places_for_technical_inspections, " +
-                "fuel_type_id, " +
+                "vin," +
+                "production_year," +
+                "first_registration_date," +
+                "free_places_for_technical_inspections," +
+                "fuel_type_id," +
                 "vehicle_type_id) VALUES (" +
-                "" + brandId + ", " +
-                "" + modelId + ", " +
                 "?, " +
                 "?, " +
                 "?, " +
                 "?, " +
                 "?, " +
-                "" + fuelTypeId + ", " +
-                "" + vehicleTypeId + ")";
+                "?, " +
+                "?, " +
+                "?, " +
+                "? )";
         jdbcTemplate.update(query,
                 brandId,
                 modelId,
@@ -66,8 +64,23 @@ public class ScaffVehiclesJdbcRepository {
                 data.getProductionYear(),
                 data.getFirstRegistrationDate(),
                 data.getFreePlacesForTechnicalInspections(),
-                fuelTypeId, modelId);
+                data.getFuelTypeId(),
+                data.getVehicleTypeId());
         return commonJdbcRepository.getLastInsertedId();
+    }
+
+    public void update(ScaffVehicleData data) {
+        String query = "UPDATE vehicles SET " +
+                "brand_id = ?," +
+                "model_id = ?," +
+                "registration_number = ?," +
+                "vin = ?," +
+                "production_year = ?," +
+                "first_registration_date = ?," +
+                "free_places_for_technical_inspections = ?," +
+                "fuel_type_id = ?," +
+                "vehicle_type_id = ? WHERE" +
+                "id = ?;";
     }
 
 
