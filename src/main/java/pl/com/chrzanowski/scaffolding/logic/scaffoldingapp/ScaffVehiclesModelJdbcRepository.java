@@ -3,9 +3,7 @@ package pl.com.chrzanowski.scaffolding.logic.scaffoldingapp;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
-import pl.com.chrzanowski.scaffolding.domain.scaffoldingapp.ScaffVehicleData;
-import pl.com.chrzanowski.scaffolding.domain.scaffoldingapp.ScaffVehicleModelData;
-import pl.com.chrzanowski.scaffolding.domain.scaffoldingapp.ScaffVehicleModelFilter;
+import pl.com.chrzanowski.scaffolding.domain.scaffoldingapp.*;
 import pl.com.chrzanowski.scaffolding.logic.CommonJdbcRepository;
 
 import java.util.ArrayList;
@@ -26,10 +24,15 @@ public class ScaffVehiclesModelJdbcRepository {
         this.commonJdbcRepository = commonJdbcRepository;
     }
 
-    public Long create(ScaffVehicleData data, Long brandId) {
-        String query = "INSERT INTO vehicle_model (brand_id,name) VALUES (?,?)";
-        jdbcTemplate.update(query, brandId, data.getModelName());
+    public Long create(ScaffVehicleData data, Long id) {
+        String query = "INSERT INTO vehicle_model (id,name) VALUES (?,?)";
+        jdbcTemplate.update(query, id, data.getModelName());
         return commonJdbcRepository.getLastInsertedId();
+    }
+
+    public void update(ScaffVehicleData data, Long id) {
+        String query = "UPDATE vehicle_model SET name = ? WHERE id = ?;";
+        jdbcTemplate.update(query,data.getModelName(), id);
     }
 
     List<ScaffVehicleModelData> find(ScaffVehicleModelFilter filter) {
@@ -46,6 +49,15 @@ public class ScaffVehiclesModelJdbcRepository {
             }
         }
         return prepareVehiclesModels(jdbcTemplate.queryForList(query));
+    }
+
+    public ScaffVehicleModelData findByName(String name) {
+        List<ScaffVehicleModelData> models = find(new ScaffVehicleModelFilter(name));
+        if(models.size() == 0 ) {
+            throw new IllegalArgumentException("Models not found");
+        } else {
+            return models.get(0);
+        }
     }
 
     private List<ScaffVehicleModelData> prepareVehiclesModels(List<Map<String, Object>> rows) {

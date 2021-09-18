@@ -43,7 +43,7 @@ public class ScaffVehiclesService {
         return scaffVehiclesJdbcRepository.create(data);
     }
 
-    public void update(ScaffVehicleData data) {
+    public void update(ScaffVehicleData data) throws SQLException {
         scaffVehiclesJdbcRepository.update(data);
     }
 

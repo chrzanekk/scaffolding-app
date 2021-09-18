@@ -5,8 +5,8 @@
 <head>
     <div th:replace="fragments/head"></div>
     <script th:src="@{/js/admin-vehicle.js}"></script>
-    <script th:src="@{/js/admin-fuel-types.js}"></script>
     <script th:inline="javascript">
+        var vehicle = [[${vehicle}]];
     </script>
 </head>
 

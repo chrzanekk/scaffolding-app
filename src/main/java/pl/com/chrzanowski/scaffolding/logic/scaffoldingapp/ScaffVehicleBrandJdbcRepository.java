@@ -31,6 +31,11 @@ public class ScaffVehicleBrandJdbcRepository {
         return commonJdbcRepository.getLastInsertedId();
     }
 
+    public void update(ScaffVehicleData data, Long id) {
+        String query = "UPDATE vehicle_brand SET name = ? WHERE id = ?;";
+        jdbcTemplate.update(query,data.getBrandName(),id);
+    }
+
     List<ScaffVehicleBrandData> find(ScaffVehicleBrandFilter filter) {
 
         String query = "SELECT * FROM vehicle_brand";
@@ -47,6 +52,16 @@ public class ScaffVehicleBrandJdbcRepository {
         }
         return prepareVehiclesBrands(jdbcTemplate.queryForList(query));
     }
+
+    public ScaffVehicleBrandData findByName(String name) {
+        List<ScaffVehicleBrandData> brands = find(new ScaffVehicleBrandFilter(name));
+        if(brands.size() == 0 ) {
+            throw new IllegalArgumentException("Brands not found");
+        } else {
+           return brands.get(0);
+        }
+    }
+
 
 
 

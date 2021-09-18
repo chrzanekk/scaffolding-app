@@ -125,9 +125,10 @@ public class ScaffoldingEndpointAdmin {
                 request.getVehicleTypeId()));
     }
 
-    @PutMapping(path = "/vehicle/{id} ", produces = "application/json; charset=UTF-8")
-    public void updateVehicle(@PathVariable Long id, @RequestBody ScaffVehiclePutRequest request) {
+    @PutMapping(path = "/vehicle/{id}")
+    public void updateVehicle(@PathVariable Long id, @RequestBody ScaffVehiclePutRequest request) throws SQLException {
         scaffVehiclesService.update(new ScaffVehicleData(
+                id,
                 request.getBrandName(),
                 request.getModelName(),
                 request.getRegistrationNumber(),

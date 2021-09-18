@@ -2,9 +2,7 @@ package pl.com.chrzanowski.scaffolding.logic.scaffoldingapp;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
-import pl.com.chrzanowski.scaffolding.domain.scaffoldingapp.ScaffFuelTypeFilter;
 import pl.com.chrzanowski.scaffolding.domain.scaffoldingapp.ScaffVehicleData;
-import pl.com.chrzanowski.scaffolding.domain.scaffoldingapp.ScaffVehicleTypeFilter;
 import pl.com.chrzanowski.scaffolding.domain.scaffoldingapp.ScaffVehiclesFilter;
 import pl.com.chrzanowski.scaffolding.logic.CommonJdbcRepository;
 
@@ -68,19 +66,37 @@ public class ScaffVehiclesJdbcRepository {
                 data.getVehicleTypeId());
         return commonJdbcRepository.getLastInsertedId();
     }
+//to trzeba dobrze przemyśleć - multiupdate na pięciu tabelach
+    public void update(ScaffVehicleData data) throws SQLException {
+        String actualBrandName = find(new ScaffVehiclesFilter(data.getId())).get(0).getBrandName();
+        String actualModelName = find(new ScaffVehiclesFilter(data.getId())).get(0).getModelName();
+        Long brandId = brandJdbcRepository.findByName(actualBrandName).getId();
+        Long modelId = modelJdbcRepository.findByName(actualModelName).getId();
+        brandJdbcRepository.update(data, brandId);
+        modelJdbcRepository.update(data, modelId);
 
-    public void update(ScaffVehicleData data) {
         String query = "UPDATE vehicles SET " +
-                "brand_id = ?," +
-                "model_id = ?," +
+//                "brand_id = ?," +
+//                "model_id = ?," +
                 "registration_number = ?," +
                 "vin = ?," +
                 "production_year = ?," +
                 "first_registration_date = ?," +
                 "free_places_for_technical_inspections = ?," +
                 "fuel_type_id = ?," +
-                "vehicle_type_id = ? WHERE" +
+                "vehicle_type_id = ?," +
+                "modify_date = ? WHERE " +
                 "id = ?;";
+        jdbcTemplate.update(query,
+                data.getRegistrationNumber(),
+                data.getVin(),
+                data.getProductionYear(),
+                data.getFirstRegistrationDate(),
+                data.getFreePlacesForTechnicalInspections(),
+                data.getFuelTypeId(),
+                data.getVehicleTypeId(),
+                data.getModifyDate(),
+                data.getId());
     }
 
 

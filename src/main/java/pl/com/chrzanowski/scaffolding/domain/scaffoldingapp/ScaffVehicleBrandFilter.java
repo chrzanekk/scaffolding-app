@@ -18,6 +18,10 @@ public class ScaffVehicleBrandFilter {
         this.id = id;
     }
 
+    public ScaffVehicleBrandFilter(String name) {
+        this.name = name;
+    }
+
     public Long getId() {
         return id;
     }
