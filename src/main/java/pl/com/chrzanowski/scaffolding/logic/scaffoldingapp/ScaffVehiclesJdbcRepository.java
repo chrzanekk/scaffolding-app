@@ -66,7 +66,8 @@ public class ScaffVehiclesJdbcRepository {
                 data.getVehicleTypeId());
         return commonJdbcRepository.getLastInsertedId();
     }
-//to trzeba dobrze przemyśleć - multiupdate na pięciu tabelach
+
+    //to trzeba dobrze przemyśleć - multiupdate na pięciu tabelach
     public void update(ScaffVehicleData data) throws SQLException {
         String actualBrandName = find(new ScaffVehiclesFilter(data.getId())).get(0).getBrandName();
         String actualModelName = find(new ScaffVehiclesFilter(data.getId())).get(0).getModelName();
@@ -123,6 +124,18 @@ public class ScaffVehiclesJdbcRepository {
 
             if (filter.getId() != null) {
                 query += " AND vehicles.id = '" + filter.getId() + "'";
+            }
+
+            if (filter.getRegistrationNumber() != null) {
+                query += " AND vehicles.registration_number = '" + filter.getRegistrationNumber() + "'";
+            }
+
+            if (filter.getBrandName() != null) {
+                query += " AND vehicle_brand.name = '" + filter.getBrandName() + "'";
+            }
+
+            if (filter.getModelName() != null) {
+                query += " AND vehicle_model.name = '" + filter.getModelName() + "'";
             }
 
             if (filter.getPage() != null && filter.getPageSize() != null) {

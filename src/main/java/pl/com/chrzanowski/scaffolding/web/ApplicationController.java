@@ -8,12 +8,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.thymeleaf.TemplateEngine;
-import pl.com.chrzanowski.scaffolding.api.scaffolding.ScaffFuelTypeGetResponse;
-import pl.com.chrzanowski.scaffolding.api.scaffolding.ScaffUserGetResponse;
-import pl.com.chrzanowski.scaffolding.api.scaffolding.ScaffVehicleGetResponse;
+import pl.com.chrzanowski.scaffolding.api.scaffolding.*;
 import pl.com.chrzanowski.scaffolding.auth.AuthenticatedUser;
 import pl.com.chrzanowski.scaffolding.config.ApplicationConfig;
 import pl.com.chrzanowski.scaffolding.domain.scaffoldingapp.ScaffFuelTypeFilter;
+import pl.com.chrzanowski.scaffolding.domain.scaffoldingapp.ScaffServiceActionsFilter;
 import pl.com.chrzanowski.scaffolding.domain.scaffoldingapp.ScaffVehicleTypeFilter;
 import pl.com.chrzanowski.scaffolding.domain.scaffoldingapp.ScaffVehiclesFilter;
 import pl.com.chrzanowski.scaffolding.logic.Language;
@@ -61,6 +60,7 @@ public class ApplicationController {
     private ScaffFuelTypeService fuelTypeService;
     private ScaffDictionariesService scaffDictionariesService;
     private ScaffVehicleTypeService vehicleTypeService;
+    private ScaffServiceActionsService serviceActionsService;
 
     public ApplicationController(ScaffUsersService scaffUsersService,
                                  OrdersService ordersService,
@@ -83,7 +83,8 @@ public class ApplicationController {
                                  ScaffVehiclesService vehiclesService,
                                  ScaffFuelTypeService fuelTypeService,
                                  ScaffVehicleTypeService vehicleTypeService,
-                                 ScaffDictionariesService scaffDictionariesService) {
+                                 ScaffDictionariesService scaffDictionariesService,
+                                 ScaffServiceActionsService serviceActionsService) {
         this.scaffUsersService = scaffUsersService;
         this.ordersService = ordersService;
         this.customersService = customersService;
@@ -106,6 +107,7 @@ public class ApplicationController {
         this.fuelTypeService = fuelTypeService;
         this.scaffDictionariesService = scaffDictionariesService;
         this.vehicleTypeService = vehicleTypeService;
+        this.serviceActionsService = serviceActionsService;
     }
 /*
 ----------------------------------
@@ -217,6 +219,36 @@ SCAFFOLDING APP CONTROLLER - BEGIN
         return "admin-vehicle";
     }
 
+    @GetMapping({"/admin/vehicle-service-actions/{id}"})
+    public String adminVehicleServiceActions(@PathVariable Long id, Model model) throws SQLException {
+
+        if(!vehiclesService.hasLoggedUserPermissionToVehicleManagement()) {
+            throw new IllegalArgumentException("Access denied");
+        }
+
+        Language lang = LanguagesUtil.getCurrentLanguage();
+
+        model.addAttribute("vehicle", new ScaffVehicleGetResponse(vehiclesService.findById(new ScaffVehiclesFilter(id))));
+        model.addAttribute("serviceActions", serviceActionsService.find(new ScaffServiceActionsFilter(id)));
+        model.addAttribute("languageDict", dictionariesService.getDictionary(DictionaryType.LANGUAGES,lang));
+
+        return "admin-vehicle-service-actions";
+    }
+
+//    @GetMapping({"/admin/vehicle-service-action/{id}"})
+//    public String adminVehicleServicesById(@PathVariable Long id, Model model) throws SQLException {
+//
+//        if(!serviceActionsService.hasLoggedUserPermissionToActionsManagement()) {
+//            throw new IllegalArgumentException("Access denied.");
+//        }
+//
+//        Language lang = LanguagesUtil.getCurrentLanguage();
+//
+//        model.addAttribute("serviceAction", new ScaffServiceActionGetResponse(serviceActionsService.findById(new ScaffServiceActionsFilter(id))));
+//        model.addAttribute("languageDict", dictionariesService.getDictionary(DictionaryType.LANGUAGES,lang));
+//
+//        return "admin-vehicle-service-action";
+//    }
 
 
 

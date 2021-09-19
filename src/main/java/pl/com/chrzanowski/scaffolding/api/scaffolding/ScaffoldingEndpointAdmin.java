@@ -3,10 +3,7 @@ package pl.com.chrzanowski.scaffolding.api.scaffolding;
 import org.springframework.web.bind.annotation.*;
 import pl.com.chrzanowski.scaffolding.api.courseplatform.ChangePasswordRequest;
 import pl.com.chrzanowski.scaffolding.domain.scaffoldingapp.*;
-import pl.com.chrzanowski.scaffolding.logic.scaffoldingapp.ScaffFuelTypeService;
-import pl.com.chrzanowski.scaffolding.logic.scaffoldingapp.ScaffStatisticService;
-import pl.com.chrzanowski.scaffolding.logic.scaffoldingapp.ScaffUsersService;
-import pl.com.chrzanowski.scaffolding.logic.scaffoldingapp.ScaffVehiclesService;
+import pl.com.chrzanowski.scaffolding.logic.scaffoldingapp.*;
 import pl.com.chrzanowski.scaffolding.logic.scaffoldingapp.notifications.ScaffNotificationsFromPanelService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -25,17 +22,20 @@ public class ScaffoldingEndpointAdmin {
     private ScaffStatisticService scaffStatisticService;
     private ScaffVehiclesService scaffVehiclesService;
     private ScaffFuelTypeService fuelTypeService;
+    private ScaffServiceActionsService serviceActionsService;
 
     public ScaffoldingEndpointAdmin(ScaffUsersService scaffUsersService,
                                     ScaffNotificationsFromPanelService notificationsFromPanelService,
                                     ScaffStatisticService scaffStatisticService,
                                     ScaffVehiclesService scaffVehiclesService,
-                                    ScaffFuelTypeService fuelTypeService) {
+                                    ScaffFuelTypeService fuelTypeService,
+                                    ScaffServiceActionsService serviceActionsService) {
         this.scaffUsersService = scaffUsersService;
         this.notificationsFromPanelService = notificationsFromPanelService;
         this.scaffStatisticService = scaffStatisticService;
         this.scaffVehiclesService = scaffVehiclesService;
         this.fuelTypeService = fuelTypeService;
+        this.serviceActionsService = serviceActionsService;
     }
 
     @GetMapping("/users")
@@ -147,6 +147,17 @@ public class ScaffoldingEndpointAdmin {
         return new ScaffFuelTypeRequestGetResponse(fuelTypeToResponse(fuelTypes));
     }
 
+    @GetMapping(path = "/vehicle-service-actions/{id}", produces = "application/json; charset=UTF-8")
+    public ScaffServiceActionsRequestGetResponse vehicleServiceActions(
+            @PathVariable Long id,
+            @RequestParam(name = "page", required = false, defaultValue = "1") Long page,
+            @RequestParam(name = "page_size", required = false, defaultValue = "10") Long pageSize)
+            throws SQLException {
+        List<ScaffServiceActionsData> actions = serviceActionsService.find(new ScaffServiceActionsFilter(id, page,
+                pageSize));
+        return new ScaffServiceActionsRequestGetResponse(actionsToResponse(actions));
+    }
+
 
     private List<ScaffVehicleGetResponse> vehiclesToResponse(List<ScaffVehicleData> vehicles) {
         List<ScaffVehicleGetResponse> list = new ArrayList<>();
@@ -183,6 +194,14 @@ public class ScaffoldingEndpointAdmin {
         return list;
     }
 
+    private List<ScaffServiceActionGetResponse> actionsToResponse(List<ScaffServiceActionsData> actions) {
+        List<ScaffServiceActionGetResponse> list = new ArrayList<>();
+        for (ScaffServiceActionsData data : actions) {
+            list.add(new ScaffServiceActionGetResponse(data));
+        }
+        return list;
+    }
+
     private ScaffVehicleGetResponse vehicleToResponse(ScaffVehicleData vehicleData) {
         return new ScaffVehicleGetResponse(
                 vehicleData.getId(),
@@ -196,6 +215,8 @@ public class ScaffoldingEndpointAdmin {
                 vehicleData.getFuelType(),
                 vehicleData.getVehicleType());
     }
+
+
 
 
 }

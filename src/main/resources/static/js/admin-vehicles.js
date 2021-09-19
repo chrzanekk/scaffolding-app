@@ -1,6 +1,5 @@
 var url = "/admin/api/scaffolding"
 var vehiclesApiUrl = url + "/vehicles?"
-//todo stworzyć vehicle.html i vehicle.js - sprawdzic co tam powinno się zawierać.
 var vehicleApiUrl = url + "/vehicle"
 
 $(document).ready(function () {
@@ -49,7 +48,7 @@ function fillRow(vehicle, value) {
             "<td class='align-middle'>" + vehicle.modelName + " </td>" +
             "<td class='align-middle'>" + vehicle.registrationNumber + "</td>" +
             "<td class='align-middle'>" + prepareDetailsButton(vehicle.id) + "</td>" +
-            "<td class='align-middle'>notification in development</td>" +
+            "<td class='align-middle'>" + prepareServicesButton(vehicle.id) + "</td>" +
         "</tr>"
     );
 }
@@ -58,12 +57,19 @@ function prepareDetailsButton(id) {
     return '<button type="button" class="btn btn-primary" onclick="goToDetailsPage(' + id + ')">Detale</button>';
 }
 
+function prepareServicesButton(id) {
+    return '<button type="button" class="btn btn-primary" onclick="goToServicesPage('+ id + ')">Serwis/Naprawa</button>';
+}
+
 function prepareDeleteButton(id) {
     return '<button type="button" class="btn btn-danger" onclick="setObjectToDeleteIdAndShowModal(' + id + ')">Usuń/Zezłomuj</button>';
 }
 
 function goToDetailsPage(id) {
     window.location.href = "/admin/vehicle/" + id;
+}
+function goToServicesPage(id) {
+    window.location.href = "/admin/vehicle-service-actions/" + id;
 }
 
 function setObjectToDeleteIdAndShowModal(id) {

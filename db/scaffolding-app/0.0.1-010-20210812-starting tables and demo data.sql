@@ -24,7 +24,7 @@
 	remove_date datetime,
 	primary key (id));
 	
-	CREATE TABLE servis_action_type (
+	CREATE TABLE service_action_type (
 	id int auto_increment,
 	name varchar(30) not null,
 	description varchar(255) not null,
@@ -116,7 +116,7 @@
 	remove_date datetime,
 	primary key (id),
 	foreign key (vehicle_id) references vehicles(id),
-	foreign key (service_action_type_id) references servis_action_type(id));
+	foreign key (service_action_type_id) references service_action_type(id));
 	
 	
 	INSERT INTO `fuel_type`(`name`) VALUES ('benzyna');
@@ -134,9 +134,9 @@
 	INSERT INTO `vehicle_type`(`name`) VALUES ('SUV');
 	
 	
-	INSERT INTO `servis_action_type`( `name`, `description`) VALUES ('przegląd okresowy' , 'badanie techniczne na stacji diagnostycznej');
-	INSERT INTO `servis_action_type`( `name`, `description`) VALUES ('serwis olejowy' , 'wymiana oleju, filtrów');
-	INSERT INTO `servis_action_type`( `name`, `description`) VALUES ('serwis opon' , 'usunięcie nieszczelności w oponie + wyważenie');
+	INSERT INTO `service_action_type`( `name`, `description`) VALUES ('przegląd okresowy' , 'badanie techniczne na stacji diagnostycznej');
+	INSERT INTO `service_action_type`( `name`, `description`) VALUES ('serwis olejowy' , 'wymiana oleju, filtrów');
+	INSERT INTO `service_action_type`( `name`, `description`) VALUES ('serwis opon' , 'usunięcie nieszczelności w oponie + wyważenie');
 	
 	
 	INSERT INTO `vehicle_brand`(`name`) VALUES ('Renault');
@@ -201,7 +201,7 @@
 			'2020-02-15',
 			'FV/12/03/2020',
 			'Andrzej Nopwak - Usługi Serwisowe',
-			(SELECT id FROM servis_action_type WHERE name = 'serwis olejowy')
+			(SELECT id FROM service_action_type WHERE name = 'serwis olejowy')
 			);
 	INSERT INTO `service_actions`(`vehicle_id`, `car_mileage`, `service_date`, `invoice_no`, `service_workshop`, `service_action_type_id`) 
 	VALUES ((SELECT id FROM vehicles WHERE registration_number = 'LPU 78226'),
@@ -209,7 +209,7 @@
 			'2021-04-15',
 			'FS/348/04/2021',
 			'Renault Auto-Tamex',
-			(SELECT id FROM servis_action_type WHERE name = 'przegląd okresowy')
+			(SELECT id FROM service_action_type WHERE name = 'przegląd okresowy')
 			);
 	INSERT INTO `service_actions`(`vehicle_id`, `car_mileage`, `service_date`, `invoice_no`, `service_workshop`, `service_action_type_id`) 
 	VALUES ((SELECT id FROM vehicles WHERE registration_number = 'LPU 42425'),
@@ -217,7 +217,7 @@
 			'2021-05-22',
 			'FV/12/05/2021',
 			'Serwis Opon - Mizera',
-			(SELECT id FROM servis_action_type WHERE name = 'serwis opon')
+			(SELECT id FROM service_action_type WHERE name = 'serwis opon')
 			);
 	INSERT INTO `service_actions`(`vehicle_id`, `car_mileage`, `service_date`, `invoice_no`, `service_workshop`, `service_action_type_id`) 
 	VALUES ((SELECT id FROM vehicles WHERE registration_number = 'LPU 42425'),
@@ -225,7 +225,7 @@
 			'2021-06-26',
 			'FS/18/06/2021',
 			'Renault Auto Tamex',
-			(SELECT id FROM servis_action_type WHERE name = 'przegląd okresowy')
+			(SELECT id FROM service_action_type WHERE name = 'przegląd okresowy')
 			);
 	
 	

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <div th:replace="fragments/head"></div>
+    <script th:src="@{/js/admin-vehicle-service-actions.js}"></script>
+    <script th:inline="javascript">
+        var vehicle = [[${vehicle}]];
+        var serviceActions = [[${serviceActions}]];
+    </script>
+</head>
+
+<body>
+<div th:replace="fragments/menu :: menu"></div>
+
+<div class="text-center">
+    <h4 th:text="#{vehicle.services}"></h4>
+    <h4 th:text="${vehicle.brandName}"></h4>
+    <h4 th:text="${vehicle.modelName}"></h4>
+    <h4 th:text="${vehicle.registrationNumber}"></h4>
+</div>
+
+<!--<button type="button" class="btn btn-success btn-lg btn-block" data-toggle="modal" data-target="#create-modal"-->
+<!--        th:text="#{vehicle.add.new}"></button>-->
+
+<div id="result-container" class="my-4">
+    <div class="table-responsive mb-0 pb-0">
+        <table class="table bg-light table-bordered table-hover table-sm">
+            <thead class="thead-light">
+            <tr>
+                <th class="align-middle col-sm-1" th:text="#{vehicle.ordinal.number}"></th>
+                <th class="align-middle col-sm-2" th:text="#{vehicle.service.date}"></th>
+                <th class="align-middle col-sm-2" th:text="#{vehicle.service.type}"></th>
+                <th class="align-middle col-sm-3" th:text="#{vehicle.service.workshop}"></th>
+                <th class="align-middle col-sm-2" th:text="#{vehicle.service.details}"></th>
+
+            </tr>
+            </thead>
+            <tbody id="records">
+
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+<!--<div class="modal fade" id="create-modal" tabindex="-1" role="dialog">-->
+<!--    <div class="modal-dialog modal-dialog-centered" role="document">-->
+<!--        <div class="modal-content">-->
+<!--            <div class="modal-header">-->
+<!--                <h5 class="modal-title" id="exampleModalLabel" th:text="#{vehicle.add.new}"></h5>-->
+<!--                <button type="button" class="close" data-dismiss="modal" aria-label="Close">-->
+<!--                    <span aria-hidden="true">&times;</span>-->
+<!--                </button>-->
+<!--            </div>-->
+<!--            <div class="modal-body">-->
+<!--                <form class="text-center">-->
+<!--                    <div class="form-group">-->
+<!--                        <label for="create-brand" th:text="#{vehicle.details.brand}"></label>-->
+<!--                        <input id="create-brand" type="text" class="form-control">-->
+<!--                    </div>-->
+<!--                    <div class="form-group">-->
+<!--                        <label for="create-model" th:text="#{vehicle.details.model}"></label>-->
+<!--                        <input id="create-model" type="text" class="form-control">-->
+<!--                    </div>-->
+<!--                    <div class="form-group">-->
+<!--                        <label for="create-registration-number" th:text="#{vehicle.details.registrationNumber}"></label>-->
+<!--                        <input id="create-registration-number" type="text" class="form-control">-->
+<!--                    </div>-->
+<!--                    <div class="form-group">-->
+<!--                        <label for="create-vin" th:text="#{vehicle.details.vin}"></label>-->
+<!--                        <input id="create-vin" type="text" class="form-control">-->
+<!--                    </div>-->
+<!--                    <div class="form-group">-->
+<!--                        <label for="create-production-year" th:text="#{vehicle.details.productionYear}"></label>-->
+<!--                        <input id="create-production-year" type="number" min="1995" max="2021" class="form-control">-->
+<!--                    </div>-->
+<!--                    <div class="form-group">-->
+<!--                        <label for="create-first-registration-date"-->
+<!--                               th:text="#{vehicle.details.firstRegistrationDate}"></label>-->
+<!--                        <input id="create-first-registration-date" type="date" class="form-control">-->
+<!--                    </div>-->
+<!--                    <div class="form-group">-->
+<!--                        <label for="create-free-places-for-technical-inspections"-->
+<!--                               th:text="#{vehicle.details.freePlacesForTechnicalInspections}"></label>-->
+<!--                        <input id="create-free-places-for-technical-inspections" type="number" min="1" max="5"-->
+<!--                               class="form-control">-->
+<!--                    </div>-->
+<!--                    <div class="form-group">-->
+<!--                        <label for="create-fuel-type" th:text="#{vehicle.details.fuelType}"></label>-->
+<!--                        <select id="create-fuel-type" class="form-control">-->
+<!--                            <option th:each="fuelType : ${fuelTypes}"-->
+<!--                                    th:value="${fuelType.id}"-->
+<!--                                    th:text="${fuelType.name}"-->
+<!--                                    th:selected="(${fuelType.name} == *{fuelType.name})">-->
+<!--                            </option>-->
+<!--                        </select>-->
+<!--                    </div>-->
+<!--                    <div class="form-group">-->
+<!--                        <label for="create-vehicle-type" th:text="#{vehicle.details.vehicleType}"></label>-->
+<!--                        <select id="create-vehicle-type" class="form-control">-->
+<!--                            <option th:each="vehicleType : ${vehicleTypes}"-->
+<!--                                    th:value="${vehicleType.id}"-->
+<!--                                    th:text="${vehicleType.name}"-->
+<!--                                    th:selected="(${vehicleType.name} == *{vehicleType.name})">-->
+<!--                            </option>-->
+<!--                        </select>-->
+<!--                    </div>-->
+
+<!--                </form>-->
+<!--            </div>-->
+<!--            <div class="modal-footer">-->
+<!--                <button type="button" class="btn btn-success" onclick="sendCreateRequest()">Dodaj</button>-->
+<!--                <button type="button" class="btn btn-secondary" data-dismiss="modal">Anuluj</button>-->
+<!--            </div>-->
+
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
+
+<div th:replace="fragments/pagination :: pagination"></div>
+
+</body>
+
+</html>
