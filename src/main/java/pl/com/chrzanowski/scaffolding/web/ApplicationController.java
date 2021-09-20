@@ -6,9 +6,14 @@ import org.springframework.core.env.Environment;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.thymeleaf.TemplateEngine;
-import pl.com.chrzanowski.scaffolding.api.scaffolding.*;
+import pl.com.chrzanowski.scaffolding.api.scaffolding.ScaffServiceActionGetResponse;
+import pl.com.chrzanowski.scaffolding.api.scaffolding.ScaffUserGetResponse;
+import pl.com.chrzanowski.scaffolding.api.scaffolding.ScaffVehicleGetResponse;
 import pl.com.chrzanowski.scaffolding.auth.AuthenticatedUser;
 import pl.com.chrzanowski.scaffolding.config.ApplicationConfig;
 import pl.com.chrzanowski.scaffolding.domain.scaffoldingapp.ScaffFuelTypeFilter;
@@ -21,12 +26,7 @@ import pl.com.chrzanowski.scaffolding.logic.adviser.AccountsService;
 import pl.com.chrzanowski.scaffolding.logic.adviser.AdviserService;
 import pl.com.chrzanowski.scaffolding.logic.adviser.ApplicationsService;
 import pl.com.chrzanowski.scaffolding.logic.adviser.ContextConfigsService;
-import pl.com.chrzanowski.scaffolding.logic.scaffoldingapp.ScaffEmailService;
-import pl.com.chrzanowski.scaffolding.logic.scaffoldingapp.ScaffEmailConfirmService;
-
 import pl.com.chrzanowski.scaffolding.logic.scaffoldingapp.*;
-import pl.com.chrzanowski.scaffolding.logic.scaffoldingapp.LanguagesUtil;
-import pl.com.chrzanowski.scaffolding.logic.scaffoldingapp.ScaffUsersService;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -188,14 +188,14 @@ SCAFFOLDING APP CONTROLLER - BEGIN
     @GetMapping({"/admin/vehicles"})
     public String adminVehicles(Model model) throws SQLException {
 
-        if(!vehiclesService.hasLoggedUserPermissionToVehicleManagement()) {
+        if (!vehiclesService.hasLoggedUserPermissionToVehicleManagement()) {
             throw new IllegalArgumentException("Access denied");
         }
 
         Language lang = LanguagesUtil.getCurrentLanguage();
 
         model.addAttribute("vehicles", vehiclesService.find(new ScaffVehiclesFilter()));
-        model.addAttribute("languageDict", dictionariesService.getDictionary(DictionaryType.LANGUAGES,lang));
+        model.addAttribute("languageDict", dictionariesService.getDictionary(DictionaryType.LANGUAGES, lang));
         model.addAttribute("fuelTypes", fuelTypeService.find(new ScaffFuelTypeFilter()));
         model.addAttribute("vehicleTypes", vehicleTypeService.find(new ScaffVehicleTypeFilter()));
 
@@ -206,52 +206,51 @@ SCAFFOLDING APP CONTROLLER - BEGIN
     @GetMapping({"/admin/vehicle/{id}"})
     public String adminVehicleById(@PathVariable Long id, Model model) throws SQLException {
 
-        if(!vehiclesService.hasLoggedUserPermissionToVehicleManagement()) {
+        if (!vehiclesService.hasLoggedUserPermissionToVehicleManagement()) {
             throw new IllegalArgumentException("Access denied");
         }
 
         Language lang = LanguagesUtil.getCurrentLanguage();
 
         model.addAttribute("vehicle", new ScaffVehicleGetResponse(vehiclesService.findById(new ScaffVehiclesFilter(id))));
-        model.addAttribute("languageDict", dictionariesService.getDictionary(DictionaryType.LANGUAGES,lang));
+        model.addAttribute("languageDict", dictionariesService.getDictionary(DictionaryType.LANGUAGES, lang));
         model.addAttribute("fuelTypes", fuelTypeService.find(new ScaffFuelTypeFilter()));
         model.addAttribute("vehicleTypes", vehicleTypeService.find(new ScaffVehicleTypeFilter()));
         return "admin-vehicle";
     }
 
     @GetMapping({"/admin/vehicle-service-actions/{id}"})
-    public String adminVehicleServiceActions(@PathVariable Long id, Model model) throws SQLException {
-
-        if(!vehiclesService.hasLoggedUserPermissionToVehicleManagement()) {
+    public String adminVehicleServiceActions(@PathVariable Long id, Model model,
+                                             @RequestParam(name = "page", required = false, defaultValue = "1") Long page,
+                                             @RequestParam(name = "page_size", required = false, defaultValue = "10") Long pageSize) throws SQLException
+    {
+        if (!vehiclesService.hasLoggedUserPermissionToVehicleManagement()) {
             throw new IllegalArgumentException("Access denied");
         }
 
         Language lang = LanguagesUtil.getCurrentLanguage();
 
         model.addAttribute("vehicle", new ScaffVehicleGetResponse(vehiclesService.findById(new ScaffVehiclesFilter(id))));
-        model.addAttribute("serviceActions", serviceActionsService.find(new ScaffServiceActionsFilter(id)));
-        model.addAttribute("languageDict", dictionariesService.getDictionary(DictionaryType.LANGUAGES,lang));
+        model.addAttribute("serviceActions", serviceActionsService.find(new ScaffServiceActionsFilter(id, page,pageSize)));
+        model.addAttribute("languageDict", dictionariesService.getDictionary(DictionaryType.LANGUAGES, lang));
 
         return "admin-vehicle-service-actions";
     }
 
-//    @GetMapping({"/admin/vehicle-service-action/{id}"})
-//    public String adminVehicleServicesById(@PathVariable Long id, Model model) throws SQLException {
-//
-//        if(!serviceActionsService.hasLoggedUserPermissionToActionsManagement()) {
-//            throw new IllegalArgumentException("Access denied.");
-//        }
-//
-//        Language lang = LanguagesUtil.getCurrentLanguage();
-//
-//        model.addAttribute("serviceAction", new ScaffServiceActionGetResponse(serviceActionsService.findById(new ScaffServiceActionsFilter(id))));
-//        model.addAttribute("languageDict", dictionariesService.getDictionary(DictionaryType.LANGUAGES,lang));
-//
-//        return "admin-vehicle-service-action";
-//    }
+    @GetMapping({"/admin/vehicle-service-action/{id}"})
+    public String adminVehicleServicesById(@PathVariable Long id, Model model) {
 
+        if (!serviceActionsService.hasLoggedUserPermissionToActionsManagement()) {
+            throw new IllegalArgumentException("Access denied.");
+        }
 
+        Language lang = LanguagesUtil.getCurrentLanguage();
 
+        model.addAttribute("serviceAction", new ScaffServiceActionGetResponse(serviceActionsService.findById(new ScaffServiceActionsFilter(id))));
+        model.addAttribute("languageDict", dictionariesService.getDictionary(DictionaryType.LANGUAGES, lang));
+
+        return "admin-vehicle-service-action";
+    }
 
 
     //    @GetMapping({"/admin/course/{id}"})
@@ -273,7 +272,6 @@ SCAFFOLDING APP CONTROLLER - BEGIN
 //        model.addAttribute("movieLinkTypesDict", dictionariesService.getDictionary(DictionaryType.MOVIE_LINK_TYPES, lang));
 //        return "course";
 //    }
-
 
 
     @GetMapping({"/login"})

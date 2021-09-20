@@ -15,14 +15,18 @@
 <div th:replace="fragments/menu :: menu"></div>
 
 <div class="text-center">
-    <h4 th:text="#{vehicle.services}"></h4>
-    <h4 th:text="${vehicle.brandName}"></h4>
-    <h4 th:text="${vehicle.modelName}"></h4>
-    <h4 th:text="${vehicle.registrationNumber}"></h4>
+    <h3 th:text="#{vehicle.services}"></h3>
+    <h5 th:text="${vehicle.brandName}"></h5>
+    <h5 th:text="${vehicle.modelName}"></h5>
+    <h5 th:text="${vehicle.registrationNumber}"></h5>
+
+    <button type="button" class="btn btn-warning mt-3" onclick="history.back()"
+            th:text="#{Cancel}"></button>
+</div>
+<div class="text-center">
+    <button type="button" class="btn btn-success btn-lg btn-block" data-toggle="modal" data-target="#create-modal" th:text="#{vehicle.service.add}"></button>
 </div>
 
-<!--<button type="button" class="btn btn-success btn-lg btn-block" data-toggle="modal" data-target="#create-modal"-->
-<!--        th:text="#{vehicle.add.new}"></button>-->
 
 <div id="result-container" class="my-4">
     <div class="table-responsive mb-0 pb-0">

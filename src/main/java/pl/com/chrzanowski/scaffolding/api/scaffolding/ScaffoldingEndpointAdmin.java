@@ -152,10 +152,17 @@ public class ScaffoldingEndpointAdmin {
             @PathVariable Long id,
             @RequestParam(name = "page", required = false, defaultValue = "1") Long page,
             @RequestParam(name = "page_size", required = false, defaultValue = "10") Long pageSize)
-            throws SQLException {
+            {
         List<ScaffServiceActionsData> actions = serviceActionsService.find(new ScaffServiceActionsFilter(id, page,
                 pageSize));
         return new ScaffServiceActionsRequestGetResponse(actionsToResponse(actions));
+    }
+
+    @GetMapping(path = "/vehicle-service-action/{id}", produces = "application/json; charset=UTF-8")
+    public ScaffServiceActionRequestGetResponse vehicleServiceActionById(
+            @PathVariable Long id) {
+        ScaffServiceActionsData serviceAction = serviceActionsService.findById(new ScaffServiceActionsFilter(id));
+        return new ScaffServiceActionRequestGetResponse(actionToResponse(serviceAction));
     }
 
 
@@ -214,6 +221,10 @@ public class ScaffoldingEndpointAdmin {
                 vehicleData.getFreePlacesForTechnicalInspections(),
                 vehicleData.getFuelType(),
                 vehicleData.getVehicleType());
+    }
+
+    private ScaffServiceActionGetResponse actionToResponse(ScaffServiceActionsData data) {
+        return new ScaffServiceActionGetResponse(data);
     }
 
 
