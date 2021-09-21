@@ -69,16 +69,17 @@ public class ScaffVehiclesJdbcRepository {
 
 
     public void update(ScaffVehicleData data) throws SQLException {
-        String actualBrandName = find(new ScaffVehiclesFilter(data.getId())).get(0).getBrandName();
-        String actualModelName = find(new ScaffVehiclesFilter(data.getId())).get(0).getModelName();
-        Long brandId = brandJdbcRepository.findByName(actualBrandName).getId();
-        Long modelId = modelJdbcRepository.findByName(actualModelName).getId();
+//        String actualBrandName = find(new ScaffVehiclesFilter(data.getId())).get(0).getBrandName();
+//        String actualModelName = find(new ScaffVehiclesFilter(data.getId())).get(0).getModelName();
+//        Long brandIdOLD = brandJdbcRepository.findByName(actualBrandName).getId();
+//        Long modelIdOLD = modelJdbcRepository.findByName(actualModelName).getId();
+
+        Long brandId = find(new ScaffVehiclesFilter(data.getId())).get(0).getBrandId();
+        Long modelId = find(new ScaffVehiclesFilter(data.getId())).get(0).getModelId();
         brandJdbcRepository.update(data, brandId);
         modelJdbcRepository.update(data, modelId);
 
         String query = "UPDATE vehicles SET " +
-//                "brand_id = ?," +
-//                "model_id = ?," +
                 "registration_number = ?," +
                 "vin = ?," +
                 "production_year = ?," +
@@ -105,7 +106,9 @@ public class ScaffVehiclesJdbcRepository {
 
         String query = "SELECT \n" +
                 "vehicles.id, \n" +
+                "vehicle_brand.id AS brandId, \n" +
                 "vehicle_brand.name AS brand, \n" +
+                "vehicle_model.id AS modelId, \n" +
                 "vehicle_model.name AS model, \n" +
                 "vehicles.registration_number, \n" +
                 "vehicles.vin, vehicles.production_year, \n" +
@@ -158,7 +161,9 @@ public class ScaffVehiclesJdbcRepository {
         for (Map<String, Object> row : rows) {
             list.add(new ScaffVehicleData(
                     getLong(row, "id"),
+                    getLong(row, "brandId"),
                     getString(row, "brand"),
+                    getLong(row, "modelId"),
                     getString(row, "model"),
                     getString(row, "registration_number"),
                     getString(row, "vin"),

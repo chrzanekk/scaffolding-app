@@ -53,19 +53,6 @@ public class ScaffVehicleData {
         this.vehicleTypeId = vehicleTypeId;
     }
 
-    public ScaffVehicleData(Long id, ScaffVehicleBrandData brand, ScaffVehicleModelData model, String registrationNumber, String vin, Integer productionYear, LocalDate firstRegistrationDate, Integer freePlacesForTechnicalInspections, Long fuelTypeId, Long vehicleTypeId) {
-        this.id = id;
-        this.brand = brand;
-        this.model = model;
-        this.registrationNumber = registrationNumber;
-        this.vin = vin;
-        this.productionYear = productionYear;
-        this.firstRegistrationDate = firstRegistrationDate;
-        this.freePlacesForTechnicalInspections = freePlacesForTechnicalInspections;
-        this.fuelTypeId = fuelTypeId;
-        this.vehicleTypeId = vehicleTypeId;
-    }
-
 
     public ScaffVehicleData(String brandName, String modelName, String registrationNumber) {
         this.brandName = brandName;
@@ -73,10 +60,13 @@ public class ScaffVehicleData {
         this.registrationNumber = registrationNumber;
     }
 
-    public ScaffVehicleData(Long id, String brandName, String modelName, String registrationNumber, String vin, Integer productionYear,
+    public ScaffVehicleData(Long id, Long brandId, String brandName, Long modelId, String modelName,
+                            String registrationNumber, String vin, Integer productionYear,
                             LocalDate firstRegistrationDate, Integer freePlacesForTechnicalInspections, String fuelType, String vehicleType) {
         this.id = id;
+        this.brandId = brandId;
         this.brandName = brandName;
+        this.modelId = modelId;
         this.modelName = modelName;
         this.registrationNumber = registrationNumber;
         this.vin = vin;
