@@ -165,6 +165,32 @@ public class ScaffoldingEndpointAdmin {
         return new ScaffServiceActionRequestGetResponse(actionToResponse(serviceAction));
     }
 
+    @PostMapping(path = "/vehicle-service-action", consumes = "application/json; charset=UTF-8")
+    public void addVehicleServiceAction(@RequestBody ScaffServiceActionPostRequest request) {
+        serviceActionsService.add(new ScaffServiceActionsData(
+                request.getVehicleId(),
+                request.getCarMileage(),
+                request.getServiceDate(),
+                request.getInvoiceNumber(),
+                request.getServiceWorkshop(),
+                request.getServiceActionName(),
+                request.getServiceActionDescription()));
+    }
+
+    @PutMapping(path = "/vehicle-service-action/{id}")
+    public void updateServiceAction(@PathVariable Long id, @RequestBody ScaffServiceActionPutRequest request) {
+        serviceActionsService.update(new ScaffServiceActionsData(
+                request.getId(),
+                request.getVehicleId(),
+                request.getCarMileage(),
+                request.getServiceDate(),
+                request.getInvoiceNumber(),
+                request.getServiceWorkshop(),
+                request.getServiceActionName(),
+                request.getServiceActionDescription()
+        ));
+    }
+
 
     private List<ScaffVehicleGetResponse> vehiclesToResponse(List<ScaffVehicleData> vehicles) {
         List<ScaffVehicleGetResponse> list = new ArrayList<>();

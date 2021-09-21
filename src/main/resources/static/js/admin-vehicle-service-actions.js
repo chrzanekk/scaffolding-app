@@ -1,7 +1,7 @@
 var url = "/admin/api/scaffolding"
 var serviceActionsApiUrl = url + "/vehicle-service-actions?"
-var vehicleActionApiUrl = url + "/vehicle-service-action"
 var vehicleServiceActionsApiUrl = url + "/vehicle-service-actions/"
+var vehicleActionApiUrl = url + "/vehicle-service-action"
 
 $(document).ready(function () {
     $('#create-modal').on('hide.bs.modal', function (e) {
@@ -71,45 +71,41 @@ function setObjectToDeleteIdAndShowModal(id) {
     objToDeleteId = id;
     $('#delete-object-modal').modal('show');
 }
-//
-//function clearCreateModal() {
-//    $("#create-brand").val('');
-//    $("#create-model").val('');
-//    $("#create-registration-number").val('');
-//    $("#create-vin").val('');
-//    $("#create-production-year").val('');
-//    $("#create-first-registration-date").val('');
-//    $("#create-free-places-for-technical-inspections").val('');
-//    $("#create-fuel-type").val('');
-//    $("#create-vehicle-type").val('');
-//}
-////todo -> cały flow dodawania i usuawnia pojazdu(konstruktory, repozytoria do innych tabel itp)
-//function sendCreateRequest() {
-//    $.ajax({
-//        url: vehicleActionApiUrl,
-//        method: "POST",
-//        contentType: "application/json",
-//        data: JSON.stringify({
-//                brandName: $("#create-brand").val(),
-//                modelName: $("#create-model").val(),
-//                registrationNumber: $("#create-registration-number").val(),
-//                vin: $("#create-vin").val(),
-//                productionYear: $("#create-production-year").val(),
-//                firstRegistrationDate: $("#create-first-registration-date").val(),
-//                freePlacesForTechnicalInspections: $("#create-free-places-for-technical-inspections").val(),
-//                fuelTypeId: $("#create-fuel-type").val(),
-//                vehicleTypeId: $("#create-vehicle-type").val()
-//        })
-//    })
-//        .done(function () {
-//            $("#create-modal").modal('hide');
-//            $("#operation-successful-modal").modal('show');
-//            findVehicles();
-//        })
-//        .fail(function (jqxhr, textStatus, errorThrown) {
-//            displayErrorInformation(jqxhr.responseText);
-//        })
-//}
+
+function clearCreateModal() {
+    $("#create-invoiceNumber").val('');
+    $("#create-serviceDate").val('');
+    $("#create-serviceWorkshop").val('');
+    $("#create-carMileage").val('');
+    $("#create-serviceActionName").val('');
+    $("#create-serviceActionDescription").val('');
+
+}
+
+function sendCreateRequest() {
+    $.ajax({
+        url: vehicleActionApiUrl,
+        method: "POST",
+        contentType: "application/json",
+        data: JSON.stringify({
+                vehicleId: vehicle.id,
+                carMileage: $("#create-carMileage").val(),
+                serviceDate: $("#create-serviceDate").val(),
+                invoiceNumber: $("#create-invoiceNumber").val(),
+                serviceWorkshop: $("#create-serviceWorkshop").val(),
+                serviceActionName: $("#create-serviceActionName").val(),
+                serviceActionDescription: $("#create-serviceActionDescription").val()
+        })
+    })
+        .done(function () {
+            $("#create-modal").modal('hide');
+            $("#operation-successful-modal").modal('show');
+            findServiceActions();
+        })
+        .fail(function (jqxhr, textStatus, errorThrown) {
+            displayErrorInformation(jqxhr.responseText);
+        })
+}
 
 //todo to na koniec, jak już będzie działało dodawanie i edycja
 //function sendDeleteRequest(){

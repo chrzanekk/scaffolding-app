@@ -17,10 +17,58 @@ public class ScaffServiceActionsJdbcRepository {
 
     private JdbcTemplate jdbcTemplate;
     private CommonJdbcRepository commonJdbcRepository;
+    private ScaffServiceActionTypeJdbcRepository scaffServiceActionTypeJdbcRepository;
 
-    public ScaffServiceActionsJdbcRepository(JdbcTemplate jdbcTemplate, CommonJdbcRepository commonJdbcRepository) {
+    public ScaffServiceActionsJdbcRepository(JdbcTemplate jdbcTemplate, CommonJdbcRepository commonJdbcRepository, ScaffServiceActionTypeJdbcRepository scaffServiceActionTypeJdbcRepository) {
         this.jdbcTemplate = jdbcTemplate;
         this.commonJdbcRepository = commonJdbcRepository;
+        this.scaffServiceActionTypeJdbcRepository = scaffServiceActionTypeJdbcRepository;
+    }
+
+    public Long create(ScaffServiceActionsData data) {
+            Long serviceActonTypeId = scaffServiceActionTypeJdbcRepository.create(data);
+
+            String query = "INSERT INTO service_actions (" +
+                    "vehicle_id," +
+                    "car_mileage," +
+                    "service_date," +
+                    "invoice_no," +
+                    "service_workshop," +
+                    "service_action_type_id) VALUES (" +
+                    "?, " +
+                    "?, " +
+                    "?, " +
+                    "?, " +
+                    "?, " +
+                    "? )";
+            jdbcTemplate.update(query,
+                    data.getVehicleId(),
+                    data.getCarMileage(),
+                    data.getServiceDate(),
+                    data.getInvoiceNumber(),
+                    data.getServiceWorkshop(),
+                    serviceActonTypeId);
+            return commonJdbcRepository.getLastInsertedId();
+    }
+
+    public void update(ScaffServiceActionsData data) {
+        Long serviceActionTypeId = find(new ScaffServiceActionsFilter(data.getId())).get(0).getServiceActionTypeId();
+        scaffServiceActionTypeJdbcRepository.update(data,serviceActionTypeId);
+
+        String query = "UPDATE service_actions SET " +
+                "car_mileage = ?, " +
+                "service_date = ?, " +
+                "invoice_no = ?, " +
+                "service_workshop = ?," +
+                "modify_date = ? WHERE " +
+                "id = ?;";
+        jdbcTemplate.update(query,
+                data.getCarMileage(),
+                data.getServiceDate(),
+                data.getInvoiceNumber(),
+                data.getServiceWorkshop(),
+                data.getModifyDate(),
+                data.getId());
     }
 
     List<ScaffServiceActionsData> find(ScaffServiceActionsFilter filter) {

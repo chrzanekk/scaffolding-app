@@ -35,4 +35,12 @@ public class ScaffServiceActionsService {
         return userAuthoritiesService.hasUserAuthority(loggedUser, ScaffUserAuthority.ADMIN);
 
     }
+
+    public Long add(ScaffServiceActionsData data) {
+        return serviceActionsJdbcRepository.create(data);
+    }
+
+    public void update(ScaffServiceActionsData data) {
+            serviceActionsJdbcRepository.update(data);
+    }
 }

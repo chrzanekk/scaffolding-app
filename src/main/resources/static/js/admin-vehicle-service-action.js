@@ -31,15 +31,14 @@ function sendUpdateRequest() {
         method: "PUT",
         contentType: "application/json",
         data: JSON.stringify({
-             brandName: $("#brand").val(),
-             modelName: $("#model").val(),
-             registrationNumber: $("#registrationNumber").val(),
-             vin: $("#vin").val(),
-             productionYear: $("#productionYear").val(),
-             firstRegistrationDate: $("#firstRegistrationDate").val(),
-             freePlacesForTechnicalInspections: $("#freePlacesForTechnicalInspections").val(),
-             fuelTypeId: $("#fuelType").val(),
-             vehicleTypeId: $("#vehicleType").val()
+             id: serviceAction.id,
+             vehicleId: serviceAction.vehicleId,
+             carMileage: $("#carMileage").val(),
+             serviceDate: $("#serviceDate").val(),
+             invoiceNumber: $("#invoiceNumber").val(),
+             serviceWorkshop: $("#serviceWorkshop").val(),
+             serviceActionName: $("#serviceActionName").val(),
+             serviceActionDescription: $("#serviceActionDescription").val()
         })
     })
         .done(function () {

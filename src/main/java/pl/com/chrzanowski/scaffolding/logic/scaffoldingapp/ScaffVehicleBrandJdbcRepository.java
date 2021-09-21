@@ -32,8 +32,8 @@ public class ScaffVehicleBrandJdbcRepository {
     }
 
     public void update(ScaffVehicleData data, Long id) {
-        String query = "UPDATE vehicle_brand SET name = ? WHERE id = ?;";
-        jdbcTemplate.update(query,data.getBrandName(),id);
+        String query = "UPDATE vehicle_brand SET name = ?, modify_date = ? WHERE id = ?;";
+        jdbcTemplate.update(query,data.getBrandName(), data.getModifyDate() ,id);
     }
 
     List<ScaffVehicleBrandData> find(ScaffVehicleBrandFilter filter) {

@@ -67,7 +67,7 @@ public class ScaffVehiclesJdbcRepository {
         return commonJdbcRepository.getLastInsertedId();
     }
 
-    //to trzeba dobrze przemyśleć - multiupdate na pięciu tabelach
+
     public void update(ScaffVehicleData data) throws SQLException {
         String actualBrandName = find(new ScaffVehiclesFilter(data.getId())).get(0).getBrandName();
         String actualModelName = find(new ScaffVehiclesFilter(data.getId())).get(0).getModelName();

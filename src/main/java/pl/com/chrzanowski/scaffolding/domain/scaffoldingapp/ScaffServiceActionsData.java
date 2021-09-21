@@ -41,6 +41,18 @@ public class ScaffServiceActionsData {
         this.serviceWorkshop = serviceWorkshop;
         this.serviceActionName = serviceActionName;
         this.serviceActionDescription = serviceActionDescription;
+        this.modifyDate = LocalDateTime.now();
+    }
+
+    public ScaffServiceActionsData(Long vehicleId, Integer carMileage, LocalDate serviceDate, String invoiceNumber, String serviceWorkshop, String serviceActionName, String serviceActionDescription) {
+        this.vehicleId = vehicleId;
+        this.carMileage = carMileage;
+        this.serviceDate = serviceDate;
+        this.invoiceNumber = invoiceNumber;
+        this.serviceWorkshop = serviceWorkshop;
+        this.serviceActionName = serviceActionName;
+        this.serviceActionDescription = serviceActionDescription;
+        this.createDate = LocalDateTime.now();
     }
 
     public Long getId() {

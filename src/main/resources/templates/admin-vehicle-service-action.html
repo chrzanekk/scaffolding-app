@@ -6,7 +6,7 @@
     <div th:replace="fragments/head"></div>
     <script th:src="@{/js/admin-vehicle-service-action.js}"></script>
     <script th:inline="javascript">
-
+        var vehicle = [[${vehicle}]];
         var serviceAction = [[${serviceAction}]]
     </script>
 </head>
@@ -16,7 +16,11 @@
 
 <div class="container">
     <div class="text-center">
+        <h3 th:text="#{vehicle.services}"></h3>
         <h4 th:text="#{vehicle.service.details}"></h4>
+        <h5 th:text="${vehicle.brandName}"></h5>
+        <h5 th:text="${vehicle.modelName}"></h5>
+        <h5 th:text="${vehicle.registrationNumber}"></h5>
     </div>
 
     <form class="bg-light p-5 border">
