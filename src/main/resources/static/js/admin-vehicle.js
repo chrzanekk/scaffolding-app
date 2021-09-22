@@ -39,7 +39,10 @@ function sendUpdateRequest() {
              firstRegistrationDate: $("#firstRegistrationDate").val(),
              freePlacesForTechnicalInspections: $("#freePlacesForTechnicalInspections").val(),
              fuelTypeId: $("#fuelType").val(),
-             vehicleTypeId: $("#vehicleType").val()
+             vehicleTypeId: $("#vehicleType").val(),
+             length: $("#length").val(),
+             width: $("#width").val(),
+             height: $("#height").val()
         })
     })
         .done(function () {

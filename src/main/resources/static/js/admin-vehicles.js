@@ -87,6 +87,9 @@ function clearCreateModal() {
     $("#create-free-places-for-technical-inspections").val('');
     $("#create-fuel-type").val('');
     $("#create-vehicle-type").val('');
+    $("#create-length").val('');
+    $("#create-width").val('');
+    $("#create-height").val('');
 }
 //todo -> cały flow dodawania i usuawnia pojazdu(konstruktory, repozytoria do innych tabel itp)
 function sendCreateRequest() {
@@ -103,7 +106,10 @@ function sendCreateRequest() {
                 firstRegistrationDate: $("#create-first-registration-date").val(),
                 freePlacesForTechnicalInspections: $("#create-free-places-for-technical-inspections").val(),
                 fuelTypeId: $("#create-fuel-type").val(),
-                vehicleTypeId: $("#create-vehicle-type").val()
+                vehicleTypeId: $("#create-vehicle-type").val(),
+                length: $("#create-length").val(),
+                width: $("#create-width").val(),
+                height: $("#create-height").val()
         })
     })
         .done(function () {

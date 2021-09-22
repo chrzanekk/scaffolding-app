@@ -44,7 +44,13 @@ public class ScaffVehiclesJdbcRepository {
                 "first_registration_date," +
                 "free_places_for_technical_inspections," +
                 "fuel_type_id," +
-                "vehicle_type_id) VALUES (" +
+                "vehicle_type_id," +
+                "length," +
+                "width," +
+                "height) VALUES (" +
+                "?, " +
+                "?, " +
+                "?, " +
                 "?, " +
                 "?, " +
                 "?, " +
@@ -63,7 +69,10 @@ public class ScaffVehiclesJdbcRepository {
                 data.getFirstRegistrationDate(),
                 data.getFreePlacesForTechnicalInspections(),
                 data.getFuelTypeId(),
-                data.getVehicleTypeId());
+                data.getVehicleTypeId(),
+                data.getLength(),
+                data.getWidth(),
+                data.getHeight());
         return commonJdbcRepository.getLastInsertedId();
     }
 
@@ -87,6 +96,9 @@ public class ScaffVehiclesJdbcRepository {
                 "free_places_for_technical_inspections = ?," +
                 "fuel_type_id = ?," +
                 "vehicle_type_id = ?," +
+                "length = ?," +
+                "width = ?," +
+                "height = ?," +
                 "modify_date = ? WHERE " +
                 "id = ?;";
         jdbcTemplate.update(query,
@@ -97,6 +109,9 @@ public class ScaffVehiclesJdbcRepository {
                 data.getFreePlacesForTechnicalInspections(),
                 data.getFuelTypeId(),
                 data.getVehicleTypeId(),
+                data.getLength(),
+                data.getWidth(),
+                data.getHeight(),
                 data.getModifyDate(),
                 data.getId());
     }
@@ -115,7 +130,10 @@ public class ScaffVehiclesJdbcRepository {
                 "vehicles.first_registration_date, \n" +
                 "vehicles.free_places_for_technical_inspections, \n" +
                 "fuel_type.name AS fuel_type, \n" +
-                "vehicle_type.name AS vehicle_type \n" +
+                "vehicle_type.name AS vehicle_type ,\n" +
+                "vehicles.length AS length, \n" +
+                "vehicles.width AS width, \n" +
+                "vehicles.height AS height \n" +
                 "FROM vehicles  \n" +
                 "JOIN vehicle_brand ON (vehicles.brand_id = vehicle_brand.id)\n" +
                 "JOIN vehicle_model ON (vehicles.model_id = vehicle_model.id)\n" +
@@ -171,7 +189,10 @@ public class ScaffVehiclesJdbcRepository {
                     getDate(row, "first_registration_date"),
                     getInteger(row, "free_places_for_technical_inspections"),
                     getString(row, "fuel_type"),
-                    getString(row, "vehicle_type")
+                    getString(row, "vehicle_type"),
+                    getFloat(row,"length"),
+                    getFloat(row,"width"),
+                    getFloat(row,"height")
             ));
         }
         return list;

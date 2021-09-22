@@ -1,8 +1,6 @@
 package pl.com.chrzanowski.scaffolding.api.scaffolding;
 
-import pl.com.chrzanowski.scaffolding.domain.scaffoldingapp.ScaffVehicleBrandData;
 import pl.com.chrzanowski.scaffolding.domain.scaffoldingapp.ScaffVehicleData;
-import pl.com.chrzanowski.scaffolding.domain.scaffoldingapp.ScaffVehicleModelData;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -17,6 +15,9 @@ public class ScaffVehicleGetResponse {
     private Integer freePlacesForTechnicalInspections;
     private Long fuelTypeId;
     private Long vehicleTypeId;
+    private Float length;
+    private Float width;
+    private Float height;
     private LocalDateTime createDate;
     private LocalDateTime modifyDate;
     private LocalDateTime removeDate;
@@ -28,8 +29,19 @@ public class ScaffVehicleGetResponse {
     private Long brandId;
     private Long modelId;
 
-    public ScaffVehicleGetResponse(Long id, String brandName, String modelName, String registrationNumber, String vin
-            , Integer productionYear, LocalDate firstRegistrationDate, Integer freePlacesForTechnicalInspections,  String fuelType, String vehicleType) {
+    public ScaffVehicleGetResponse(Long id,
+                                   String brandName,
+                                   String modelName,
+                                   String registrationNumber,
+                                   String vin,
+                                   Integer productionYear,
+                                   LocalDate firstRegistrationDate,
+                                   Integer freePlacesForTechnicalInspections,
+                                   String fuelType,
+                                   String vehicleType,
+                                   Float length,
+                                   Float width,
+                                   Float height) {
         this.id = id;
         this.registrationNumber = registrationNumber;
         this.vin = vin;
@@ -40,20 +52,9 @@ public class ScaffVehicleGetResponse {
         this.modelName = modelName;
         this.fuelType = fuelType;
         this.vehicleType = vehicleType;
-    }
-
-    public ScaffVehicleGetResponse(Long id, Long brandId, Long modelId, String registrationNumber, String vin,
-                                   Integer productionYear, LocalDate firstRegistrationDate, Integer freePlacesForTechnicalInspections, Long fuelTypeId, Long vehicleTypeId ) {
-        this.id = id;
-        this.registrationNumber = registrationNumber;
-        this.vin = vin;
-        this.productionYear = productionYear;
-        this.firstRegistrationDate = firstRegistrationDate;
-        this.freePlacesForTechnicalInspections = freePlacesForTechnicalInspections;
-        this.fuelTypeId = fuelTypeId;
-        this.vehicleTypeId = vehicleTypeId;
-        this.brandId = brandId;
-        this.modelId = modelId;
+        this.length = length;
+        this.width = width;
+        this.height = height;
     }
 
     public ScaffVehicleGetResponse(ScaffVehicleData vehicleData) {
@@ -67,6 +68,9 @@ public class ScaffVehicleGetResponse {
         this.modelName = vehicleData.getModelName();
         this.fuelType = vehicleData.getFuelType();
         this.vehicleType = vehicleData.getVehicleType();
+        this.length = vehicleData.getLength();
+        this.width = vehicleData.getWidth();
+        this.height = vehicleData.getHeight();
     }
 
     public Long getId() {
@@ -127,6 +131,18 @@ public class ScaffVehicleGetResponse {
 
     public String getVehicleType() {
         return vehicleType;
+    }
+
+    public Float getLength() {
+        return length;
+    }
+
+    public Float getWidth() {
+        return width;
+    }
+
+    public Float getHeight() {
+        return height;
     }
 
     public Long getBrandId() {

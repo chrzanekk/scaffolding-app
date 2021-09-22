@@ -18,6 +18,9 @@ public class ScaffVehicleData {
     private Integer freePlacesForTechnicalInspections;
     private Long fuelTypeId;
     private Long vehicleTypeId;
+    private Float length;
+    private Float width;
+    private Float height;
     private LocalDateTime createDate;
     private LocalDateTime modifyDate;
     private LocalDateTime removeDate;
@@ -28,41 +31,21 @@ public class ScaffVehicleData {
     private String vehicleType;
 
 
-    public ScaffVehicleData(Long id, String registrationNumber, String vin, Integer productionYear, LocalDate firstRegistrationDate, Integer freePlacesForTechnicalInspections, Long fuelTypeId, Long vehicleTypeId, LocalDateTime createDate, LocalDateTime modifyDate, LocalDateTime removeDate) {
-        this.id = id;
-        this.registrationNumber = registrationNumber;
-        this.vin = vin;
-        this.productionYear = productionYear;
-        this.firstRegistrationDate = firstRegistrationDate;
-        this.freePlacesForTechnicalInspections = freePlacesForTechnicalInspections;
-        this.fuelTypeId = fuelTypeId;
-        this.vehicleTypeId = vehicleTypeId;
-        this.createDate = createDate;
-        this.modifyDate = modifyDate;
-        this.removeDate = removeDate;
-    }
-
-    public ScaffVehicleData(Long id, String registrationNumber, String vin, Integer productionYear, LocalDate firstRegistrationDate, Integer freePlacesForTechnicalInspections, Long fuelTypeId, Long vehicleTypeId) {
-        this.id = id;
-        this.registrationNumber = registrationNumber;
-        this.vin = vin;
-        this.productionYear = productionYear;
-        this.firstRegistrationDate = firstRegistrationDate;
-        this.freePlacesForTechnicalInspections = freePlacesForTechnicalInspections;
-        this.fuelTypeId = fuelTypeId;
-        this.vehicleTypeId = vehicleTypeId;
-    }
-
-
-    public ScaffVehicleData(String brandName, String modelName, String registrationNumber) {
-        this.brandName = brandName;
-        this.modelName = modelName;
-        this.registrationNumber = registrationNumber;
-    }
-
-    public ScaffVehicleData(Long id, Long brandId, String brandName, Long modelId, String modelName,
-                            String registrationNumber, String vin, Integer productionYear,
-                            LocalDate firstRegistrationDate, Integer freePlacesForTechnicalInspections, String fuelType, String vehicleType) {
+    public ScaffVehicleData(Long id,
+                            Long brandId,
+                            String brandName,
+                            Long modelId,
+                            String modelName,
+                            String registrationNumber,
+                            String vin,
+                            Integer productionYear,
+                            LocalDate firstRegistrationDate,
+                            Integer freePlacesForTechnicalInspections,
+                            String fuelType,
+                            String vehicleType,
+                            Float length,
+                            Float width,
+                            Float height) {
         this.id = id;
         this.brandId = brandId;
         this.brandName = brandName;
@@ -75,19 +58,9 @@ public class ScaffVehicleData {
         this.freePlacesForTechnicalInspections = freePlacesForTechnicalInspections;
         this.fuelType = fuelType;
         this.vehicleType = vehicleType;
-    }
-
-    public ScaffVehicleData(Long id, Long brandId, Long modelId, String registrationNumber, String vin, Integer productionYear, LocalDate firstRegistrationDate, Integer freePlacesForTechnicalInspections, Long fuelTypeId, Long vehicleTypeId) {
-        this.id = id;
-        this.brandId = brandId;
-        this.modelId = modelId;
-        this.registrationNumber = registrationNumber;
-        this.vin = vin;
-        this.productionYear = productionYear;
-        this.firstRegistrationDate = firstRegistrationDate;
-        this.freePlacesForTechnicalInspections = freePlacesForTechnicalInspections;
-        this.fuelTypeId = fuelTypeId;
-        this.vehicleTypeId = vehicleTypeId;
+        this.length = length;
+        this.width = width;
+        this.height = height;
     }
 
     public ScaffVehicleData(Long id,
@@ -99,7 +72,10 @@ public class ScaffVehicleData {
                             LocalDate firstRegistrationDate,
                             Integer freePlacesForTechnicalInspections,
                             Long fuelTypeId,
-                            Long vehicleTypeId) {
+                            Long vehicleTypeId,
+                            Float length,
+                            Float width,
+                            Float height) {
         this.id = id;
         this.registrationNumber = registrationNumber;
         this.vin = vin;
@@ -110,6 +86,9 @@ public class ScaffVehicleData {
         this.modelName = modelName;
         this.fuelTypeId = fuelTypeId;
         this.vehicleTypeId = vehicleTypeId;
+        this.length = length;
+        this.width = width;
+        this.height = height;
         this.modifyDate = LocalDateTime.now();
     }
 
@@ -121,7 +100,10 @@ public class ScaffVehicleData {
                             LocalDate firstRegistrationDate,
                             Integer freePlacesForTechnicalInspections,
                             Long fuelTypeId,
-                            Long vehicleTypeId) {
+                            Long vehicleTypeId,
+                            Float length,
+                            Float width,
+                            Float height) {
         this.registrationNumber = registrationNumber;
         this.vin = vin;
         this.productionYear = productionYear;
@@ -131,6 +113,9 @@ public class ScaffVehicleData {
         this.modelName = modelName;
         this.fuelTypeId = fuelTypeId;
         this.vehicleTypeId = vehicleTypeId;
+        this.length = length;
+        this.width = width;
+        this.height = height;
         this.createDate = LocalDateTime.now();
     }
 
@@ -172,6 +157,18 @@ public class ScaffVehicleData {
 
     public Long getVehicleTypeId() {
         return vehicleTypeId;
+    }
+
+    public Float getLength() {
+        return length;
+    }
+
+    public Float getWidth() {
+        return width;
+    }
+
+    public Float getHeight() {
+        return height;
     }
 
     public LocalDateTime getCreateDate() {

@@ -13,6 +13,9 @@ public class ScaffVehiclePutRequest {
     private Integer freePlacesForTechnicalInspections;
     private Long fuelTypeId;
     private Long vehicleTypeId;
+    private Float length;
+    private Float width;
+    private Float height;
     private LocalDateTime createDate;
     private LocalDateTime modifyDate;
     private LocalDateTime removeDate;
@@ -56,6 +59,18 @@ public class ScaffVehiclePutRequest {
 
     public Long getVehicleTypeId() {
         return vehicleTypeId;
+    }
+
+    public Float getLength() {
+        return length;
+    }
+
+    public Float getWidth() {
+        return width;
+    }
+
+    public Float getHeight() {
+        return height;
     }
 
     public LocalDateTime getCreateDate() {

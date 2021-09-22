@@ -66,17 +66,6 @@ public class JdbcUtil {
         return "";
     }
 
-    public static Long getLong(ResultSet rs, String columnLabel) throws SQLException {
-
-        long number = rs.getLong(columnLabel);
-
-        if (rs.wasNull()) {
-            return null;
-        } else {
-            return number;
-        }
-    }
-
     public static Integer getInteger(Map<String, Object> row, String columnLabel)  {
 
         String stringValue = String.valueOf(row.get(columnLabel));
@@ -99,6 +88,38 @@ public class JdbcUtil {
         }
     }
 
+    public static Float getFloat(Map<String,Object> row, String columnLabel) {
+
+        String stringValue = String.valueOf(row.get(columnLabel));
+
+        if(stringValue.equals("null")) {
+            return null;
+        } else {
+            return Float.valueOf(stringValue);
+        }
+    }
+
+    public static Float getFloat(ResultSet rs, String columnLabel) throws SQLException {
+
+        float number = rs.getFloat(columnLabel);
+
+        if(rs.wasNull()) {
+            return null;
+        } else {
+            return number;
+        }
+    }
+
+    public static Long getLong(ResultSet rs, String columnLabel) throws SQLException {
+
+        long number = rs.getLong(columnLabel);
+
+        if (rs.wasNull()) {
+            return null;
+        } else {
+            return number;
+        }
+    }
 
     public static Long getLong(Map<String, Object> row, String columnLabel) {
         String stringValue = String.valueOf(row.get(columnLabel));

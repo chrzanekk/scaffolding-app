@@ -46,7 +46,7 @@ public class ScaffoldingEndpointAdmin {
     ) {
         List<ScaffUserData> users = scaffUsersService.find(new ScaffUsersFilter(loginLike, page, pageSize
         ));
-        return customersToResponses(users);
+        return usersToResponses(users);
     }
 
     @PostMapping("/user")
@@ -122,7 +122,10 @@ public class ScaffoldingEndpointAdmin {
                 request.getFirstRegistrationDate(),
                 request.getFreePlacesForTechnicalInspections(),
                 request.getFuelTypeId(),
-                request.getVehicleTypeId()));
+                request.getVehicleTypeId(),
+                request.getLength(),
+                request.getWidth(),
+                request.getHeight()));
     }
 
     @PutMapping(path = "/vehicle/{id}")
@@ -137,7 +140,11 @@ public class ScaffoldingEndpointAdmin {
                 request.getFirstRegistrationDate(),
                 request.getFreePlacesForTechnicalInspections(),
                 request.getFuelTypeId(),
-                request.getVehicleTypeId()));
+                request.getVehicleTypeId(),
+                request.getLength(),
+                request.getWidth(),
+                request.getHeight())
+        );
     }
 
     @GetMapping(path = "/fuel-types", produces = "application/json; charset=UTF-8")
@@ -151,8 +158,7 @@ public class ScaffoldingEndpointAdmin {
     public ScaffServiceActionsRequestGetResponse vehicleServiceActions(
             @PathVariable Long id,
             @RequestParam(name = "page", required = false, defaultValue = "1") Long page,
-            @RequestParam(name = "page_size", required = false, defaultValue = "10") Long pageSize)
-            {
+            @RequestParam(name = "page_size", required = false, defaultValue = "10") Long pageSize) {
         List<ScaffServiceActionsData> actions = serviceActionsService.find(new ScaffServiceActionsFilter(id, page,
                 pageSize));
         return new ScaffServiceActionsRequestGetResponse(actionsToResponse(actions));
@@ -205,13 +211,33 @@ public class ScaffoldingEndpointAdmin {
                     vehicle.getFirstRegistrationDate(),
                     vehicle.getFreePlacesForTechnicalInspections(),
                     vehicle.getFuelType(),
-                    vehicle.getVehicleType())
+                    vehicle.getVehicleType(),
+                    vehicle.getLength(),
+                    vehicle.getWidth(),
+                    vehicle.getHeight())
             );
         }
         return list;
     }
 
-    private List<ScaffUserGetResponse> customersToResponses(List<ScaffUserData> users) {
+    private ScaffVehicleGetResponse vehicleToResponse(ScaffVehicleData vehicleData) {
+        return new ScaffVehicleGetResponse(
+                vehicleData.getId(),
+                vehicleData.getBrandName(),
+                vehicleData.getModelName(),
+                vehicleData.getRegistrationNumber(),
+                vehicleData.getVin(),
+                vehicleData.getProductionYear(),
+                vehicleData.getFirstRegistrationDate(),
+                vehicleData.getFreePlacesForTechnicalInspections(),
+                vehicleData.getFuelType(),
+                vehicleData.getVehicleType(),
+                vehicleData.getLength(),
+                vehicleData.getWidth(),
+                vehicleData.getHeight());
+    }
+
+    private List<ScaffUserGetResponse> usersToResponses(List<ScaffUserData> users) {
         List<ScaffUserGetResponse> list = new ArrayList<>();
         for (ScaffUserData user : users) {
             list.add(new ScaffUserGetResponse(user));
@@ -235,25 +261,9 @@ public class ScaffoldingEndpointAdmin {
         return list;
     }
 
-    private ScaffVehicleGetResponse vehicleToResponse(ScaffVehicleData vehicleData) {
-        return new ScaffVehicleGetResponse(
-                vehicleData.getId(),
-                vehicleData.getBrandName(),
-                vehicleData.getModelName(),
-                vehicleData.getRegistrationNumber(),
-                vehicleData.getVin(),
-                vehicleData.getProductionYear(),
-                vehicleData.getFirstRegistrationDate(),
-                vehicleData.getFreePlacesForTechnicalInspections(),
-                vehicleData.getFuelType(),
-                vehicleData.getVehicleType());
-    }
-
     private ScaffServiceActionGetResponse actionToResponse(ScaffServiceActionsData data) {
         return new ScaffServiceActionGetResponse(data);
     }
-
-
 
 
 }
