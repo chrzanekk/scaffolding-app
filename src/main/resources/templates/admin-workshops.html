@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <div th:replace="fragments/head"></div>
+    <script th:src="@{/js/admin-workshops.js}">
+
+    </script>
+</head>
+
+<body>
+<div th:replace="fragments/menu :: menu"></div>
+
+<h5 th:text="#{workshop.list}"></h5>
+
+<button type="button" class="btn btn-success btn-lg btn-block" data-toggle="modal" data-target="#create-modal"
+        th:text="#{workshop.add.new}"></button>
+
+<div id="result-container" class="my-4">
+    <div class="table-responsive mb-0 pb-0">
+        <table class="table bg-light table-bordered table-hover table-sm">
+            <thead class="thead-light">
+            <tr>
+                <th class="align-middle col-sm-1" th:text="#{ordinal.number}"></th>
+                <th class="align-middle col-sm-3" th:text="#{workshop.name}"></th>
+                <th class="align-middle col-sm-2" th:text="#{workshop.address}"></th>
+                <th class="align-middle col-sm-1" th:text="#{workshop.postal.code}"></th>
+                <th class="align-middle col-sm-1" th:text="#{workshop.city}"></th>
+                <th class="align-middle col-sm-1" th:text="#{workshop.tax.number}"></th>
+                <th class="align-middle col-sm-1" th:text="#{workshop.edit}"></th>
+
+            </tr>
+            </thead>
+            <tbody id="records">
+
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+<div class="modal fade" id="create-modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel" th:text="#{workshop.add.new}"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form class="text-center">
+                    <div class="form-group">
+                        <label for="create-name" th:text="#{workshop.name}"></label>
+                        <textarea id="create-name" type="text" class="form-control"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="create-street" th:text="#{workshop.street}"></label>
+                        <input id="create-street" type="text" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="create-buildingNo" th:text="#{workshop.building.no}"></label>
+                        <input id="create-buildingNo" type="text" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="create-apartmentNo" th:text="#{workshop.apartment.no}"></label>
+                        <input id="create-apartmentNo" type="text" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="create-postalCode" th:text="#{workshop.postal.code}"></label>
+                        <input id="create-postalCode" type="text" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="create-city" th:text="#{workshop.city}"></label>
+                        <input id="create-city" type="text" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="create-taxNumber" th:text="#{workshop.tax.number}"></label>
+                        <input id="create-taxNumber" type="text" class="form-control">
+                    </div>
+
+
+
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" onclick="sendCreateRequest()">Dodaj</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Anuluj</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div th:replace="fragments/pagination :: pagination"></div>
+
+</body>
+
+</html>

@@ -11,48 +11,72 @@ public class ScaffServiceActionsData {
     private Integer carMileage;
     private LocalDate serviceDate;
     private String invoiceNumber;
-    private String serviceWorkshop;
+    private Long workshopId;
+    private String workshopName;
     private Long serviceActionTypeId;
-    private String serviceActionName;
+    private String serviceActionTypeName;
     private String serviceActionDescription;
     private LocalDateTime createDate;
     private LocalDateTime modifyDate;
     private LocalDateTime removeDate;
 
-    public ScaffServiceActionsData(Long id, Long vehicleId, Integer carMileage, LocalDate serviceDate, String invoiceNumber, String serviceWorkshop, Long serviceActionTypeId, LocalDateTime createDate, LocalDateTime modifyDate, LocalDateTime removeDate) {
-        this.id = id;
-        this.vehicleId = vehicleId;
-        this.carMileage = carMileage;
-        this.serviceDate = serviceDate;
-        this.invoiceNumber = invoiceNumber;
-        this.serviceWorkshop = serviceWorkshop;
-        this.serviceActionTypeId = serviceActionTypeId;
-        this.createDate = createDate;
-        this.modifyDate = modifyDate;
-        this.removeDate = removeDate;
-    }
 
-    public ScaffServiceActionsData(Long id, Long vehicleId, Integer carMileage, LocalDate serviceDate, String invoiceNumber, String serviceWorkshop, String serviceActionName, String serviceActionDescription) {
+    public ScaffServiceActionsData(Long id,
+                                   Long vehicleId,
+                                   Integer carMileage,
+                                   LocalDate serviceDate,
+                                   String invoiceNumber,
+                                   Long workshopId,
+                                   Long serviceActionTypeId,
+                                   String actionTypeName,
+                                   String workshopName,
+                                   String serviceActionDescription) {
         this.id = id;
         this.vehicleId = vehicleId;
         this.carMileage = carMileage;
         this.serviceDate = serviceDate;
         this.invoiceNumber = invoiceNumber;
-        this.serviceWorkshop = serviceWorkshop;
-        this.serviceActionName = serviceActionName;
+        this.workshopId = workshopId;
+        this.workshopName = workshopName;
+        this.serviceActionTypeId = serviceActionTypeId;
+        this.serviceActionTypeName = actionTypeName;
         this.serviceActionDescription = serviceActionDescription;
         this.modifyDate = LocalDateTime.now();
     }
 
-    public ScaffServiceActionsData(Long vehicleId, Integer carMileage, LocalDate serviceDate, String invoiceNumber, String serviceWorkshop, String serviceActionName, String serviceActionDescription) {
+    public ScaffServiceActionsData(Long vehicleId,
+                                   Integer carMileage,
+                                   LocalDate serviceDate,
+                                   String invoiceNumber,
+                                   Long workshopId,
+                                   Long serviceActionTypeId,
+                                   String serviceActionDescription) {
         this.vehicleId = vehicleId;
         this.carMileage = carMileage;
         this.serviceDate = serviceDate;
         this.invoiceNumber = invoiceNumber;
-        this.serviceWorkshop = serviceWorkshop;
-        this.serviceActionName = serviceActionName;
+        this.workshopId = workshopId;
+        this.serviceActionTypeId = serviceActionTypeId;
         this.serviceActionDescription = serviceActionDescription;
         this.createDate = LocalDateTime.now();
+    }
+
+    public ScaffServiceActionsData(Long id,
+                                   Long vehicleId,
+                                   Integer carMileage,
+                                   LocalDate serviceDate,
+                                   String invoiceNumber,
+                                   Long workshopId,
+                                   Long serviceActionTypeId,
+                                   String serviceActionDescription) {
+        this.id = id;
+        this.vehicleId = vehicleId;
+        this.carMileage = carMileage;
+        this.serviceDate = serviceDate;
+        this.invoiceNumber = invoiceNumber;
+        this.workshopId = workshopId;
+        this.serviceActionTypeId = serviceActionTypeId;
+        this.serviceActionDescription = serviceActionDescription;
     }
 
     public Long getId() {
@@ -75,16 +99,20 @@ public class ScaffServiceActionsData {
         return invoiceNumber;
     }
 
-    public String getServiceWorkshop() {
-        return serviceWorkshop;
+    public Long getWorkshopId() {
+        return workshopId;
+    }
+
+    public String getWorkshopName() {
+        return workshopName;
     }
 
     public Long getServiceActionTypeId() {
         return serviceActionTypeId;
     }
 
-    public String getServiceActionName() {
-        return serviceActionName;
+    public String getServiceActionTypeName() {
+        return serviceActionTypeName;
     }
 
     public String getServiceActionDescription() {

@@ -12,6 +12,7 @@ public class ScaffUserAuthoritiesService {
 
     private ScaffUserAuthoritiesJdbcRepository scaffUserAuthoritiesJdbcRepository;
 
+
     public ScaffUserAuthoritiesService(ScaffUserAuthoritiesJdbcRepository scaffUserAuthoritiesJdbcRepository) {
         this.scaffUserAuthoritiesJdbcRepository = scaffUserAuthoritiesJdbcRepository;
     }
@@ -61,4 +62,5 @@ public class ScaffUserAuthoritiesService {
         }
         return authorities;
     }
+
 }

@@ -4,7 +4,6 @@ public class ScaffServiceActionTypeFilter {
 
     private Long id;
     private String name;
-    private String description;
     private Long page;
     private Long pageSize;
 
@@ -17,10 +16,6 @@ public class ScaffServiceActionTypeFilter {
 
     public String getName() {
         return name;
-    }
-
-    public String getDescription() {
-        return description;
     }
 
     public Long getPage() {

@@ -99,16 +99,22 @@ public class AuthenticatedUser {
 
         if (scaffUserAuthoritiesService.hasUserAuthority(loggedUser, ScaffUserAuthority.ADMIN)) {
             return new ArrayList<>(Arrays.asList(
-                    new Menu("Fleet", "#", new Permissions[]{Permissions.LIFE_ADVISER_COMMON},
+                    new Menu("Flota", "#", new Permissions[]{Permissions.LIFE_ADVISER_COMMON},
+                            new ArrayList<>(Arrays.asList(new Menu(chooseMenuName("Cars", "Samochody", currentLang),
+                                    "/admin/vehicles", new Permissions[]{Permissions.LIFE_ADVISER_COMMON}, Collections.emptyList())
+                                    ))),
+                    new Menu(chooseMenuName("Data settings", "Ustawienia danych", currentLang), "#",
+                            new Permissions[]{Permissions.LIFE_ADVISER_COMMON},
                             new ArrayList<>(Arrays.asList(
-                                    new Menu(chooseMenuName("Cars", "Samochody", currentLang), "/admin/vehicles",
-                                            new Permissions[]{Permissions.LIFE_ADVISER_COMMON}, Collections.emptyList())
-                            ))),
-                    new Menu(chooseMenuName("Scaffolding Logs", "Dziennik rusztowań", currentLang), "#",
-                            new Permissions[]{Permissions.LIFE_ADVISER_COMMON}, new ArrayList<>(Arrays.asList(
-                            new Menu(chooseMenuName("Logs", "Dzienniki", currentLang), "/admin/scaffolding-log",
-                                    new Permissions[]{Permissions.LIFE_ADVISER_COMMON}, Collections.emptyList())
-                    ))),
+                                    new Menu(chooseMenuName("Workshops", "Warsztaty", currentLang),
+                                            "/admin/workshops", new Permissions[]{Permissions.LIFE_ADVISER_COMMON}, Collections.emptyList()),
+                                    new Menu(chooseMenuName("Vehicle types", "Typy pojazdów", currentLang),
+                                            "/admin/vehicle-types", new Permissions[]{Permissions.LIFE_ADVISER_COMMON}, Collections.emptyList()),
+                                    new Menu(chooseMenuName("Service actions types", "Typy serwisów", currentLang),
+                                            "/admin/action-service-types", new Permissions[]{Permissions.LIFE_ADVISER_COMMON}, Collections.emptyList())
+                                    )
+                            )
+                    ),
                     new Menu("Marketing", "#", new Permissions[]{Permissions.LIFE_ADVISER_COMMON}, new ArrayList<>(Arrays.asList(
                             new Menu("Newsletter", "/admin/marketing/newsletter", new Permissions[]{Permissions.LIFE_ADVISER_COMMON}, Collections.emptyList())
                     ))),

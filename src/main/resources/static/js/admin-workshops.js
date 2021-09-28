@@ -1,7 +1,6 @@
 var url = "/admin/api/scaffolding"
-var serviceActionsApiUrl = url + "/vehicle-service-actions?"
-var vehicleServiceActionsApiUrl = url + "/vehicle-service-actions/"
-var vehicleActionApiUrl = url + "/vehicle-service-action"
+var workshopsApiUrl = url + "/workshops?"
+var workshopApiUrl = url + "/workshop"
 
 $(document).ready(function () {
     $('#create-modal').on('hide.bs.modal', function (e) {
@@ -9,65 +8,71 @@ $(document).ready(function () {
     });
 
 
-    findServiceActions();
+    findWorkshops();
     $("#filter input, #filter select, [form='filter']").on("change", function () {
-        findServiceActions();
+        findWorkshops();
     });
 
 });
 
 
-function findServiceActions() {
+function findWorkshops() {
     $.ajax({
-        url: vehicleServiceActionsApiUrl + vehicle.id + "?" + preparePaginationUrl(),
+        url: workshopsApiUrl + preparePaginationUrl(),
         type: "get",
         dataType: "json",
         contentType: "application/json"
     })
-    .done(function (actions) {
+    .done(function (workshops) {
         $("#records").empty();
-        fillResults(actions);
+        fillResults(workshops.serviceWorkshopsGetResponse);
     })
     .fail(function(jqxhr, textStatus, errorThrown){
         displayErrorInformation(jqxhr.responseText);
     });
 }
 
-function fillResults(actions) {
+function fillResults(workshops) {
     let value = 1;
-    serviceActions.forEach(function(action){
-        fillRow(action, value);
+    workshops.forEach(function (workshop){
+        fillRow(workshop, value);
         value = value + 1;
     });
 }
 
-
-
-function fillRow(action, value) {
+function fillRow(workshop, value) {
     $('#records').append(
         "<tr>" +
             "<td class='align-middle'>" + value + "</td>" +
-            "<td class='align-middle'>" + action.serviceDate + "</td>" +
-            "<td class='align-middle'>" + action.serviceActionTypeName + " </td>" +
-            "<td class='align-middle'>" + action.workshopName + "</td>" +
-            "<td class='align-middle'>" + prepareDetailsButton(action.id) + "</td>" +
+            "<td class='align-middle'>" + workshop.name + "</td>" +
+            "<td class='align-middle'>" + workshop.street + " "  + workshop.buildingNo + showApartmentNo(workshop.apartmentNo) + "</td>" +
+            "<td class='align-middle'>" + workshop.postalCode +"</td>" +
+            "<td class='align-middle'>" + workshop.city +"</td>" +
+            "<td class='align-middle'>" + workshop.taxNumber +"</td>" +
+            "<td class='align-middle'>" + prepareDetailsButton(workshop.id) + "</td>" +
         "</tr>"
     );
+}
+
+function showApartmentNo(apartmentNo) {
+    var value = "";
+    if (apartmentNo != null && value != undefined) {
+        value = "/" + apartmentNo;
+    }
+    return value;
 }
 
 function prepareDetailsButton(id) {
     return '<button type="button" class="btn btn-primary" onclick="goToDetailsPage(' + id + ')">Detale</button>';
 }
 
-
 function prepareDeleteButton(id) {
     return '<button type="button" class="btn btn-danger" onclick="setObjectToDeleteIdAndShowModal(' + id + ')">Usuń/Zezłomuj</button>';
 }
 
 function goToDetailsPage(id) {
-    window.location.href = "/admin/vehicle-service-action/" + id;
+    window.location.href = "/admin/workshop/" + id;
 }
-
 
 function setObjectToDeleteIdAndShowModal(id) {
     objToDeleteId = id;
@@ -75,34 +80,35 @@ function setObjectToDeleteIdAndShowModal(id) {
 }
 
 function clearCreateModal() {
-    $("#create-invoiceNumber").val('');
-    $("#create-serviceDate").val('');
-    $("#create-workshopId").val('');
-    $("#create-carMileage").val('');
-    $("#create-serviceActionId").val('');
-    $("#create-serviceActionDescription").val('');
+    $("#create-name").val('');
+    $("#create-street").val('');
+    $("#create-buildingNo").val('');
+    $("#create-apartmentNo").val('');
+    $("#create-postalCode").val('');
+    $("#create-city").val('');
+    $("#create-taxNumber").val('');
 
 }
-
+//todo -> cały flow dodawania i usuawnia pojazdu(konstruktory, repozytoria do innych tabel itp)
 function sendCreateRequest() {
     $.ajax({
-        url: vehicleActionApiUrl,
+        url: workshopApiUrl,
         method: "POST",
         contentType: "application/json",
         data: JSON.stringify({
-                vehicleId: vehicle.id,
-                carMileage: $("#create-carMileage").val(),
-                serviceDate: $("#create-serviceDate").val(),
-                invoiceNumber: $("#create-invoiceNumber").val(),
-                serviceWorkshop: $("#create-workshopId").val(),
-                serviceActionName: $("#create-serviceActionId").val(),
-                serviceActionDescription: $("#create-serviceActionDescription").val()
+                name: $("#create-name").val(),
+                street: $("#create-street").val(),
+                buildingNo: $("#create-buildingNo").val(),
+                apartmentNo: $("#create-apartmentNo").val(),
+                postalCode: $("#create-postalCode").val(),
+                city: $("#create-city").val(),
+                taxNumber: $("#create-taxNumber").val()
         })
     })
         .done(function () {
             $("#create-modal").modal('hide');
             $("#operation-successful-modal").modal('show');
-            findServiceActions();
+            findVehicles();
         })
         .fail(function (jqxhr, textStatus, errorThrown) {
             displayErrorInformation(jqxhr.responseText);
@@ -110,7 +116,7 @@ function sendCreateRequest() {
 }
 
 //todo to na koniec, jak już będzie działało dodawanie i edycja
-//function sendDeleteRequest(){
+function sendDeleteRequest(){
 //    $.ajax({
 //        url: "/admin/api/crs/author/" + objToDeleteId,
 //        type: "DELETE"
@@ -123,6 +129,6 @@ function sendCreateRequest() {
 //        .fail(function(jqxhr, textStatus, errorThrown){
 //            displayErrorInformation(jqxhr.responseText);
 //        });
-//}
+}
 
 

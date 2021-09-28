@@ -23,19 +23,22 @@ public class ScaffoldingEndpointAdmin {
     private ScaffVehiclesService scaffVehiclesService;
     private ScaffFuelTypeService fuelTypeService;
     private ScaffServiceActionsService serviceActionsService;
+    private ScaffServiceWorkshopsService workshopsService;
 
     public ScaffoldingEndpointAdmin(ScaffUsersService scaffUsersService,
                                     ScaffNotificationsFromPanelService notificationsFromPanelService,
                                     ScaffStatisticService scaffStatisticService,
                                     ScaffVehiclesService scaffVehiclesService,
                                     ScaffFuelTypeService fuelTypeService,
-                                    ScaffServiceActionsService serviceActionsService) {
+                                    ScaffServiceActionsService serviceActionsService,
+                                    ScaffServiceWorkshopsService workshopsService) {
         this.scaffUsersService = scaffUsersService;
         this.notificationsFromPanelService = notificationsFromPanelService;
         this.scaffStatisticService = scaffStatisticService;
         this.scaffVehiclesService = scaffVehiclesService;
         this.fuelTypeService = fuelTypeService;
         this.serviceActionsService = serviceActionsService;
+        this.workshopsService = workshopsService;
     }
 
     @GetMapping("/users")
@@ -98,16 +101,15 @@ public class ScaffoldingEndpointAdmin {
     @GetMapping(path = "/vehicles", produces = "application/json; charset=UTF-8")
     public ScaffVehiclesRequestGetResponse vehicles(
             @RequestParam(name = "page", required = false, defaultValue = "1") Long page,
-            @RequestParam(name = "page_size", required = false, defaultValue = "10") Long pageSize,
-            @RequestParam(name = "registration_number", required = false) String registrationNumber) throws SQLException {
-        List<ScaffVehicleData> vehicles = scaffVehiclesService.find(new ScaffVehiclesFilter(page, pageSize));
+            @RequestParam(name = "page_size", required = false, defaultValue = "10") Long pageSize) throws SQLException {
+        List<ScaffVehicleData> vehicles = scaffVehiclesService.find(new ScaffVehicleFilter(page, pageSize));
         return new ScaffVehiclesRequestGetResponse(vehiclesToResponse(vehicles));
     }
 
     @GetMapping(path = "/vehicle/{id}", produces = "application/json; charset=UTF-8")
     public ScaffVehicleRequestGetResponse vehicleById(
             @PathVariable Long id) throws SQLException {
-        ScaffVehicleData vehicle = scaffVehiclesService.findById(new ScaffVehiclesFilter(id));
+        ScaffVehicleData vehicle = scaffVehiclesService.findById(new ScaffVehicleFilter(id));
         return new ScaffVehicleRequestGetResponse(vehicleToResponse(vehicle));
     }
 
@@ -178,8 +180,8 @@ public class ScaffoldingEndpointAdmin {
                 request.getCarMileage(),
                 request.getServiceDate(),
                 request.getInvoiceNumber(),
-                request.getServiceWorkshop(),
-                request.getServiceActionName(),
+                request.getWorkshopId(),
+                request.getServiceActionTypeId(),
                 request.getServiceActionDescription()));
     }
 
@@ -191,12 +193,52 @@ public class ScaffoldingEndpointAdmin {
                 request.getCarMileage(),
                 request.getServiceDate(),
                 request.getInvoiceNumber(),
-                request.getServiceWorkshop(),
-                request.getServiceActionName(),
+                request.getWorkshopId(),
+                request.getServiceActionTypeId(),
                 request.getServiceActionDescription()
         ));
     }
 
+    @GetMapping(path = "/workshops", produces = "application/json; charset=UTF-8")
+    public ScaffServiceWorkshopsRequestGetResponse workshops(
+            @RequestParam(name = "page", required = false, defaultValue = "1") Long page,
+            @RequestParam(name = "page_size", required = false, defaultValue = "10") Long pageSize) throws SQLException {
+        List<ScaffServiceWorkshopsData> workshops = workshopsService.find(new ScaffServiceWorkshopsFilter(page, pageSize));
+        return new ScaffServiceWorkshopsRequestGetResponse(workshopsToResponse(workshops));
+    }
+
+    @GetMapping(path = "/workshop/{id}", produces = "application/json; charset=UTF-8")
+    public ScaffServiceWorkshopRequestGetResponse workshopById(
+            @PathVariable Long id) {
+        ScaffServiceWorkshopsData workshop = workshopsService.find(new ScaffServiceWorkshopsFilter(id)).get(0);
+        return new ScaffServiceWorkshopRequestGetResponse(workshopToResponse(workshop));
+    }
+
+    @PostMapping(path = "/workshop", consumes = "application/json; charset=UTF-8")
+    public void addWorkshop(@RequestBody ScaffServiceWorkshopPostRequest request) {
+        workshopsService.add(new ScaffServiceWorkshopsData(
+                request.getName(),
+                request.getTaxNumber(),
+                request.getStreet(),
+                request.getBuildingNo(),
+                request.getApartmentNo(),
+                request.getPostalCode(),
+                request.getCity()));
+    }
+
+
+    @PutMapping(path = "/workshop/{id}", consumes = "application/json; charset=UTF-8")
+    public void updateWorkshop(@PathVariable Long id, @RequestBody ScaffServiceWorkshopPutRequest request) {
+        workshopsService.update(new ScaffServiceWorkshopsData(
+                id,
+                request.getName(),
+                request.getTaxNumber(),
+                request.getStreet(),
+                request.getBuildingNo(),
+                request.getApartmentNo(),
+                request.getPostalCode(),
+                request.getCity()));
+    }
 
     private List<ScaffVehicleGetResponse> vehiclesToResponse(List<ScaffVehicleData> vehicles) {
         List<ScaffVehicleGetResponse> list = new ArrayList<>();
@@ -265,5 +307,33 @@ public class ScaffoldingEndpointAdmin {
         return new ScaffServiceActionGetResponse(data);
     }
 
+    private List<ScaffServiceWorkshopsGetResponse> workshopsToResponse(List<ScaffServiceWorkshopsData> workshops) {
+        List<ScaffServiceWorkshopsGetResponse> list = new ArrayList<>();
+        for (ScaffServiceWorkshopsData workshop : workshops) {
+            list.add(new ScaffServiceWorkshopsGetResponse(
+                    workshop.getId(),
+                    workshop.getName(),
+                    workshop.getTaxNumber(),
+                    workshop.getStreet(),
+                    workshop.getBuildingNo(),
+                    workshop.getApartmentNo(),
+                    workshop.getPostalCode(),
+                    workshop.getCity())
+            );
+        }
+        return list;
+    }
 
+    private ScaffServiceWorkshopsGetResponse workshopToResponse(ScaffServiceWorkshopsData workshop) {
+        return new ScaffServiceWorkshopsGetResponse(
+                workshop.getId(),
+                workshop.getName(),
+                workshop.getTaxNumber(),
+                workshop.getStreet(),
+                workshop.getBuildingNo(),
+                workshop.getApartmentNo(),
+                workshop.getPostalCode(),
+                workshop.getCity()
+        );
+    }
 }

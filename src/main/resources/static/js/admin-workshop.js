@@ -13,12 +13,12 @@ function showDeleteModal() {
 
 function sendDeleteRequest(){
     $.ajax({
-        url: "/admin/api/scaffolding/vehicle-service-action/" + serviceAction.id,
+        url: "/admin/api/scaffolding/vehicle/" + vehicle.id,
         type: "DELETE"
     })
         .done(function(response) {
             $('#delete-object-modal').modal('hide');
-            window.location.href = '/admin/vehicle-service-actions';
+            window.location.href = '/admin/vehicles';
         })
         .fail(function(jqxhr, textStatus, errorThrown){
             displayErrorInformation(jqxhr.responseText);
@@ -27,18 +27,17 @@ function sendDeleteRequest(){
 
 function sendUpdateRequest() {
     $.ajax({
-        url: "/admin/api/scaffolding/vehicle-service-action/" + serviceAction.id,
+        url: "/admin/api/scaffolding/workshop/" + workshop.id,
         method: "PUT",
         contentType: "application/json",
         data: JSON.stringify({
-             id: serviceAction.id,
-             vehicleId: serviceAction.vehicleId,
-             carMileage: $("#carMileage").val(),
-             serviceDate: $("#serviceDate").val(),
-             invoiceNumber: $("#invoiceNumber").val(),
-             workshopId: $("#serviceWorkshop").val(),
-             serviceActionTypeId: $("#serviceActionName").val(),
-             serviceActionDescription: $("#serviceActionDescription").val()
+             name: $("#name").val(),
+             street: $("#street").val(),
+             buildingNo: $("#buildingNo").val(),
+             apartmentNo: $("#apartmentNo").val(),
+             postalCode: $("#postalCode").val(),
+             city: $("#city").val(),
+             taxNumber: $("#taxNumber").val()
         })
     })
         .done(function () {

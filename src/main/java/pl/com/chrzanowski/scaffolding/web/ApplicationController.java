@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.thymeleaf.TemplateEngine;
-import pl.com.chrzanowski.scaffolding.api.scaffolding.ScaffServiceActionGetResponse;
+
 import pl.com.chrzanowski.scaffolding.api.scaffolding.ScaffUserGetResponse;
 import pl.com.chrzanowski.scaffolding.api.scaffolding.ScaffVehicleGetResponse;
 import pl.com.chrzanowski.scaffolding.auth.AuthenticatedUser;
@@ -59,6 +59,7 @@ public class ApplicationController {
     private ScaffVehicleTypeService vehicleTypeService;
     private ScaffServiceActionsService serviceActionsService;
     private ScaffServiceActionTypesService serviceActionTypesService;
+    private ScaffServiceWorkshopsService workshopsService;
 
     public ApplicationController(ScaffUsersService scaffUsersService,
                                  OrdersService ordersService,
@@ -83,7 +84,8 @@ public class ApplicationController {
                                  ScaffVehicleTypeService vehicleTypeService,
                                  ScaffDictionariesService scaffDictionariesService,
                                  ScaffServiceActionsService serviceActionsService,
-                                 ScaffServiceActionTypesService serviceActionTypesService) {
+                                 ScaffServiceActionTypesService serviceActionTypesService,
+                                 ScaffServiceWorkshopsService workshopsService) {
         this.scaffUsersService = scaffUsersService;
         this.ordersService = ordersService;
         this.customersService = customersService;
@@ -108,6 +110,7 @@ public class ApplicationController {
         this.vehicleTypeService = vehicleTypeService;
         this.serviceActionsService = serviceActionsService;
         this.serviceActionTypesService = serviceActionTypesService;
+        this.workshopsService = workshopsService;
     }
 /*
 ----------------------------------
@@ -188,13 +191,13 @@ SCAFFOLDING APP CONTROLLER - BEGIN
     @GetMapping({"/admin/vehicles"})
     public String adminVehicles(Model model) throws SQLException {
 
-        if (!vehiclesService.hasLoggedUserPermissionToVehicleManagement()) {
+        if (!scaffUsersService.isLoggedUserAdmin()) {
             throw new IllegalArgumentException("Access denied");
         }
 
         Language lang = LanguagesUtil.getCurrentLanguage();
 
-        model.addAttribute("vehicles", vehiclesService.find(new ScaffVehiclesFilter()));
+        model.addAttribute("vehicles", vehiclesService.find(new ScaffVehicleFilter()));
         model.addAttribute("languageDict", dictionariesService.getDictionary(DictionaryType.LANGUAGES, lang));
         model.addAttribute("fuelTypes", fuelTypeService.find(new ScaffFuelTypeFilter()));
         model.addAttribute("vehicleTypes", vehicleTypeService.find(new ScaffVehicleTypeFilter()));
@@ -206,13 +209,13 @@ SCAFFOLDING APP CONTROLLER - BEGIN
     @GetMapping({"/admin/vehicle/{id}"})
     public String adminVehicleById(@PathVariable Long id, Model model) throws SQLException {
 
-        if (!vehiclesService.hasLoggedUserPermissionToVehicleManagement()) {
+        if (!scaffUsersService.isLoggedUserAdmin()) {
             throw new IllegalArgumentException("Access denied");
         }
 
         Language lang = LanguagesUtil.getCurrentLanguage();
 
-        model.addAttribute("vehicle", new ScaffVehicleGetResponse(vehiclesService.findById(new ScaffVehiclesFilter(id))));
+        model.addAttribute("vehicle", new ScaffVehicleGetResponse(vehiclesService.findById(new ScaffVehicleFilter(id))));
         model.addAttribute("languageDict", dictionariesService.getDictionary(DictionaryType.LANGUAGES, lang));
         model.addAttribute("fuelTypes", fuelTypeService.find(new ScaffFuelTypeFilter()));
         model.addAttribute("vehicleTypes", vehicleTypeService.find(new ScaffVehicleTypeFilter()));
@@ -224,15 +227,16 @@ SCAFFOLDING APP CONTROLLER - BEGIN
                                              @RequestParam(name = "page", required = false, defaultValue = "1") Long page,
                                              @RequestParam(name = "page_size", required = false, defaultValue = "10") Long pageSize) throws SQLException
     {
-        if (!vehiclesService.hasLoggedUserPermissionToVehicleManagement()) {
+        if (!scaffUsersService.isLoggedUserAdmin()) {
             throw new IllegalArgumentException("Access denied");
         }
 
         Language lang = LanguagesUtil.getCurrentLanguage();
 
-        model.addAttribute("vehicle", new ScaffVehicleGetResponse(vehiclesService.findById(new ScaffVehiclesFilter(id))));
+        model.addAttribute("vehicle", new ScaffVehicleGetResponse(vehiclesService.findById(new ScaffVehicleFilter(id))));
         model.addAttribute("serviceActions", serviceActionsService.find(new ScaffServiceActionsFilter(id, page,pageSize)));
         model.addAttribute("serviceActionTypes", serviceActionTypesService.find(new ScaffServiceActionTypeFilter()));
+        model.addAttribute("workshops", workshopsService.find(new ScaffServiceWorkshopsFilter()));
         model.addAttribute("languageDict", dictionariesService.getDictionary(DictionaryType.LANGUAGES, lang));
 
         return "admin-vehicle-service-actions";
@@ -246,11 +250,43 @@ SCAFFOLDING APP CONTROLLER - BEGIN
         }
 
         Language lang = LanguagesUtil.getCurrentLanguage();
-        model.addAttribute("vehicle",new ScaffVehicleGetResponse(vehiclesService.findById(new ScaffVehiclesFilter(vehicleId))));
-        model.addAttribute("serviceAction", new ScaffServiceActionGetResponse(serviceActionsService.findById(new ScaffServiceActionsFilter(id))));
+        model.addAttribute("vehicle",vehiclesService.findById(new ScaffVehicleFilter(vehicleId)));
+        model.addAttribute("serviceAction", serviceActionsService.findById(new ScaffServiceActionsFilter(id)));
+        model.addAttribute("serviceActionTypes", serviceActionTypesService.find(new ScaffServiceActionTypeFilter()));
+        model.addAttribute("workshops", workshopsService.find(new ScaffServiceWorkshopsFilter()));
         model.addAttribute("languageDict", dictionariesService.getDictionary(DictionaryType.LANGUAGES, lang));
 
         return "admin-vehicle-service-action";
+    }
+
+    @GetMapping({"/admin/workshops"})
+    public String adminWorkshops(Model model) {
+
+        if (!scaffUsersService.isLoggedUserAdmin()) {
+            throw new IllegalArgumentException("Access denied");
+        }
+
+        Language lang = LanguagesUtil.getCurrentLanguage();
+
+        model.addAttribute("workshops", workshopsService.find(new ScaffServiceWorkshopsFilter()));
+        model.addAttribute("languageDict", dictionariesService.getDictionary(DictionaryType.LANGUAGES, lang));
+
+        return "admin-workshops";
+    }
+
+    @GetMapping({"/admin/workshop/{id}"})
+    public String adminWorkshopsById(@PathVariable Long id, Model model) {
+
+        if (!scaffUsersService.isLoggedUserAdmin()) {
+            throw new IllegalArgumentException("Access denied");
+        }
+
+        Language lang = LanguagesUtil.getCurrentLanguage();
+
+        model.addAttribute("workshop", workshopsService.find(new ScaffServiceWorkshopsFilter(id)).get(0));
+        model.addAttribute("languageDict", dictionariesService.getDictionary(DictionaryType.LANGUAGES, lang));
+
+        return "admin-workshop";
     }
 
 

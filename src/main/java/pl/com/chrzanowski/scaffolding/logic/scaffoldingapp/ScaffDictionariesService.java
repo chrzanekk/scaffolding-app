@@ -52,13 +52,7 @@ public class ScaffDictionariesService {
     private List<ScaffDictionaryData> getFuelTypes(Language lang) {
 
         List<ScaffDictionaryData> list = new ArrayList<>();
-        if(Language.PL == lang) {
-            list.add(new ScaffDictionaryData(ScaffFuelType.BENZINE_PL.getType(),lang.getCode()));
-            list.add(new ScaffDictionaryData(ScaffFuelType.DIESEL_PL.getType(),lang.getCode()));
-        } else if(Language.US == lang|| Language.EN == lang) {
-            list.add(new ScaffDictionaryData(ScaffFuelType.BENZINE_EN.getType(),lang.getCode()));
-            list.add(new ScaffDictionaryData(ScaffFuelType.DIESEL_EN.getType(),lang.getCode()));
-        }
+
         return list;
     }
 

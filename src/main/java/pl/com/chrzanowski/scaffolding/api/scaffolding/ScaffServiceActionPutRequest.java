@@ -10,7 +10,8 @@ public class ScaffServiceActionPutRequest {
     private Integer carMileage;
     private LocalDate serviceDate;
     private String invoiceNumber;
-    private String serviceWorkshop;
+    private Long workshopId;
+    private String workshopName;
     private Long serviceActionTypeId;
     private String serviceActionName;
     private String serviceActionDescription;
@@ -41,8 +42,12 @@ public class ScaffServiceActionPutRequest {
         return invoiceNumber;
     }
 
-    public String getServiceWorkshop() {
-        return serviceWorkshop;
+    public Long getWorkshopId() {
+        return workshopId;
+    }
+
+    public String getWorkshopName() {
+        return workshopName;
     }
 
     public Long getServiceActionTypeId() {

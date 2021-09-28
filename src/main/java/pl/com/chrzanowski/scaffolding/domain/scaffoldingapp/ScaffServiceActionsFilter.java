@@ -7,22 +7,18 @@ public class ScaffServiceActionsFilter {
     private Long id;
     private Long vehicleId;
     private LocalDate serviceDate;
-    private String actionType;
+    private String actionTypeName;
+    private Long serviceActionId;
+    private Long workshopId;
     private Long page;
     private Long pageSize;
 
-    public ScaffServiceActionsFilter(Long page, Long pageSize) {
-        this.page = page;
-        this.pageSize = pageSize;
-    }
 
     public ScaffServiceActionsFilter(Long vehicleId, Long page, Long pageSize) {
         this.vehicleId = vehicleId;
         this.page = page;
         this.pageSize = pageSize;
     }
-
-
 
     public ScaffServiceActionsFilter(Long id) {
         this.id = id;
@@ -43,8 +39,16 @@ public class ScaffServiceActionsFilter {
         return serviceDate;
     }
 
-    public String getActionType() {
-        return actionType;
+    public String getActionTypeName() {
+        return actionTypeName;
+    }
+
+    public Long getServiceActionId() {
+        return serviceActionId;
+    }
+
+    public Long getWorkshopId() {
+        return workshopId;
     }
 
     public Long getPage() {

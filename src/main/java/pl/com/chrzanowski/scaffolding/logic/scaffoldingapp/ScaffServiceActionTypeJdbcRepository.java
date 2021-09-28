@@ -25,14 +25,14 @@ public class ScaffServiceActionTypeJdbcRepository {
     }
 
     public Long create(ScaffServiceActionsData data) {
-        String query = "INSERT INTO service_action_type (name, description) VALUES (?, ?);";
-        jdbcTemplate.update(query, data.getServiceActionName(), data.getServiceActionDescription());
+        String query = "INSERT INTO service_action_type (name) VALUES (?);";
+        jdbcTemplate.update(query, data.getServiceActionTypeName());
         return commonJdbcRepository.getLastInsertedId();
     }
 
     public void update(ScaffServiceActionsData data, Long id) {
-        String query = "UPDATE service_action_type SET name = ?, description = ? WHERE id = ?;";
-        jdbcTemplate.update(query, data.getServiceActionName(), data.getServiceActionDescription(), id);
+        String query = "UPDATE service_action_type SET name = ? WHERE id = ?;";
+        jdbcTemplate.update(query, data.getServiceActionTypeName(), id);
     }
 
     public List<ScaffServiceActionTypeData> find(ScaffServiceActionTypeFilter filter) {
@@ -48,9 +48,6 @@ public class ScaffServiceActionTypeJdbcRepository {
             if (filter.getName() != null) {
                 query += " AND name = " + filter.getName();
             }
-            if (filter.getDescription() != null) {
-                query += " AND description = " + filter.getDescription();
-            }
             if (filter.getPage() != null && filter.getPageSize() != null) {
                 query += preparePaginationQuery(filter.getPage(), filter.getPageSize());
             }
@@ -64,8 +61,7 @@ public class ScaffServiceActionTypeJdbcRepository {
         for (Map<String, Object> row : rows) {
             list.add(new ScaffServiceActionTypeData(
                     getLong(row, "id"),
-                    getString(row, "name"),
-                    getString(row, "description")
+                    getString(row, "name")
             ));
         }
         return list;

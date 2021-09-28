@@ -1,6 +1,6 @@
 package pl.com.chrzanowski.scaffolding.domain.scaffoldingapp;
 
-public class ScaffVehiclesFilter {
+public class ScaffVehicleFilter {
 
     private Long id;
     private String registrationNumber;
@@ -11,22 +11,22 @@ public class ScaffVehiclesFilter {
     private Long page;
     private Long pageSize;
 
-    public ScaffVehiclesFilter(Long page, Long pageSize) {
+    public ScaffVehicleFilter(Long page, Long pageSize) {
         this.page = page;
         this.pageSize = pageSize;
     }
 
-    public ScaffVehiclesFilter(Long id, Long page, Long pageSize) {
+    public ScaffVehicleFilter(Long id, Long page, Long pageSize) {
         this.id = id;
         this.page = page;
         this.pageSize = pageSize;
     }
 
-    public ScaffVehiclesFilter(Long id) {
+    public ScaffVehicleFilter(Long id) {
         this.id = id;
     }
 
-    public ScaffVehiclesFilter() {
+    public ScaffVehicleFilter() {
     }
 
     public Long getId() {

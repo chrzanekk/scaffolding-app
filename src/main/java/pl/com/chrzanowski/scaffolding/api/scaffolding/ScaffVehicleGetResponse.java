@@ -21,7 +21,6 @@ public class ScaffVehicleGetResponse {
     private LocalDateTime createDate;
     private LocalDateTime modifyDate;
     private LocalDateTime removeDate;
-
     private String brandName;
     private String modelName;
     private String fuelType;

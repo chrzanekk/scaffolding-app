@@ -3,7 +3,7 @@ package pl.com.chrzanowski.scaffolding.logic.scaffoldingapp;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 import pl.com.chrzanowski.scaffolding.domain.scaffoldingapp.ScaffVehicleData;
-import pl.com.chrzanowski.scaffolding.domain.scaffoldingapp.ScaffVehiclesFilter;
+import pl.com.chrzanowski.scaffolding.domain.scaffoldingapp.ScaffVehicleFilter;
 import pl.com.chrzanowski.scaffolding.logic.CommonJdbcRepository;
 
 import java.sql.SQLException;
@@ -78,13 +78,8 @@ public class ScaffVehiclesJdbcRepository {
 
 
     public void update(ScaffVehicleData data) throws SQLException {
-//        String actualBrandName = find(new ScaffVehiclesFilter(data.getId())).get(0).getBrandName();
-//        String actualModelName = find(new ScaffVehiclesFilter(data.getId())).get(0).getModelName();
-//        Long brandIdOLD = brandJdbcRepository.findByName(actualBrandName).getId();
-//        Long modelIdOLD = modelJdbcRepository.findByName(actualModelName).getId();
-
-        Long brandId = find(new ScaffVehiclesFilter(data.getId())).get(0).getBrandId();
-        Long modelId = find(new ScaffVehiclesFilter(data.getId())).get(0).getModelId();
+        Long brandId = find(new ScaffVehicleFilter(data.getId())).get(0).getBrandId();
+        Long modelId = find(new ScaffVehicleFilter(data.getId())).get(0).getModelId();
         brandJdbcRepository.update(data, brandId);
         modelJdbcRepository.update(data, modelId);
 
@@ -117,7 +112,7 @@ public class ScaffVehiclesJdbcRepository {
     }
 
 
-    List<ScaffVehicleData> find(ScaffVehiclesFilter filter) throws SQLException {
+    List<ScaffVehicleData> find(ScaffVehicleFilter filter) throws SQLException {
 
         String query = "SELECT \n" +
                 "vehicles.id, \n" +
@@ -169,7 +164,7 @@ public class ScaffVehiclesJdbcRepository {
 
     }
 
-    ScaffVehicleData get(ScaffVehiclesFilter filter) throws SQLException {
+    ScaffVehicleData get(ScaffVehicleFilter filter) throws SQLException {
         return getVehicle(find(filter), filter);
     }
 
@@ -198,7 +193,7 @@ public class ScaffVehiclesJdbcRepository {
         return list;
     }
 
-    private ScaffVehicleData getVehicle(List<ScaffVehicleData> list, ScaffVehiclesFilter filter) {
+    private ScaffVehicleData getVehicle(List<ScaffVehicleData> list, ScaffVehicleFilter filter) {
 
         ScaffVehicleData vehicle = null;
 

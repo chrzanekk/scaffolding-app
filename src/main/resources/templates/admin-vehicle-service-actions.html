@@ -9,7 +9,7 @@
         var vehicle = [[${vehicle}]];
         var serviceActions = [[${serviceActions}]];
         var serviceActionTypes = [[${serviceActionTypes}]];
-
+        var workshops = [[${workshops}]];
     </script>
 </head>
 
@@ -73,8 +73,13 @@
                         <input id="create-serviceDate" type="date" class="form-control">
                     </div>
                     <div class="form-group">
-                        <label for="create-serviceWorkshop" th:text="#{vehicle.service.workshop}"></label>
-                        <input id="create-serviceWorkshop" type="text" class="form-control">
+                        <label for="create-workshopId" th:text="#{vehicle.service.workshop}"></label>
+                        <select id="create-workshopId" class="form-control">
+                            <option th:each="workshop : ${workshops}"
+                                    th:value="${workshop.id}"
+                                    th:text="${workshop.name}"
+                                    th:selected="#{list.choose}"></option>
+                        </select>
                     </div>
                     <div class="form-group">
                         <label for="create-carMileage" th:text="#{vehicle.service.car.mileage}"></label>
@@ -86,10 +91,10 @@
                 <h6 class="modal-title" id="exampleModalLabel" th:text="#{vehicle.service.input.service.type}"></h6>
                 <form class="text-center">
                     <div class="form-group">
-                        <label for="create-serviceActionName" th:text="#{vehicle.service.type}"></label>
-                        <select id="create-serviceActionName" class="form-control">
+                        <label for="create-serviceActionId" th:text="#{vehicle.service.type}"></label>
+                        <select id="create-serviceActionId" class="form-control">
                             <option th:each="serviceActionType : ${serviceActionTypes}"
-                                    th:value="${serviceActionType.name}"
+                                    th:value="${serviceActionType.id}"
                                     th:text="${serviceActionType.name}"
                                     th:selected="#{list.choose}"></option>
                         </select>

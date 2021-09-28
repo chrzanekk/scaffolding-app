@@ -13,9 +13,10 @@ public class ScaffServiceActionGetResponse {
     private Integer carMileage;
     private LocalDate serviceDate;
     private String invoiceNumber;
-    private String serviceWorkshop;
+    private Long workshopId;
+    private String workshopName;
     private Long serviceActionTypeId;
-    private String serviceActionName;
+    private String serviceActionTypeName;
     private String serviceActionDescription;
     private LocalDateTime createDate;
     private LocalDateTime modifyDate;
@@ -27,8 +28,10 @@ public class ScaffServiceActionGetResponse {
         this.carMileage = data.getCarMileage();
         this.serviceDate = data.getServiceDate();
         this.invoiceNumber = data.getInvoiceNumber();
-        this.serviceWorkshop = data.getServiceWorkshop();
-        this.serviceActionName = data.getServiceActionName();
+        this.workshopId = data.getWorkshopId();
+        this.workshopName = data.getWorkshopName();
+        this.serviceActionTypeId = data.getServiceActionTypeId();
+        this.serviceActionTypeName = data.getServiceActionTypeName();
         this.serviceActionDescription = data.getServiceActionDescription();
     }
 
@@ -52,16 +55,20 @@ public class ScaffServiceActionGetResponse {
         return invoiceNumber;
     }
 
-    public String getServiceWorkshop() {
-        return serviceWorkshop;
+    public Long getWorkshopId() {
+        return workshopId;
+    }
+
+    public String getWorkshopName() {
+        return workshopName;
     }
 
     public Long getServiceActionTypeId() {
         return serviceActionTypeId;
     }
 
-    public String getServiceActionName() {
-        return serviceActionName;
+    public String getServiceActionTypeName() {
+        return serviceActionTypeName;
     }
 
     public String getServiceActionDescription() {
