@@ -2,7 +2,7 @@ package pl.com.chrzanowski.scaffolding.logic.scaffoldingapp;
 
 import org.springframework.stereotype.Service;
 import pl.com.chrzanowski.scaffolding.domain.scaffoldingapp.ScaffServiceActionTypeData;
-import pl.com.chrzanowski.scaffolding.domain.scaffoldingapp.ScaffServiceActionTypeFilter;
+import pl.com.chrzanowski.scaffolding.domain.scaffoldingapp.ScaffServiceActionTypesFilter;
 
 
 import java.util.List;
@@ -16,8 +16,16 @@ public class ScaffServiceActionTypesService {
         this.serviceActionTypeJdbcRepository = serviceActionTypeJdbcRepository;
     }
 
-    public List<ScaffServiceActionTypeData> find(ScaffServiceActionTypeFilter filter) {
+    public List<ScaffServiceActionTypeData> find(ScaffServiceActionTypesFilter filter) {
         return serviceActionTypeJdbcRepository.find(filter);
+    }
+
+    public Long add(ScaffServiceActionTypeData data) {
+        return serviceActionTypeJdbcRepository.create(data);
+    }
+
+    public void update(ScaffServiceActionTypeData data) {
+        serviceActionTypeJdbcRepository.update(data);
     }
 
 

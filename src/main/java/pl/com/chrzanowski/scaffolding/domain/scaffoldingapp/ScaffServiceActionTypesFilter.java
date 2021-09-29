@@ -1,13 +1,22 @@
 package pl.com.chrzanowski.scaffolding.domain.scaffoldingapp;
 
-public class ScaffServiceActionTypeFilter {
+public class ScaffServiceActionTypesFilter {
 
     private Long id;
     private String name;
     private Long page;
     private Long pageSize;
 
-    public ScaffServiceActionTypeFilter() {
+    public ScaffServiceActionTypesFilter() {
+    }
+
+    public ScaffServiceActionTypesFilter(Long id) {
+        this.id = id;
+    }
+
+    public ScaffServiceActionTypesFilter(Long page, Long pageSize) {
+        this.page = page;
+        this.pageSize = pageSize;
     }
 
     public Long getId() {

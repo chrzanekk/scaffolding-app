@@ -1,22 +1,18 @@
-package pl.com.chrzanowski.scaffolding.domain.scaffoldingapp;
+package pl.com.chrzanowski.scaffolding.api.scaffolding;
+
+
 
 import java.time.LocalDateTime;
 
-public class ScaffServiceActionTypeData {
+public class ScaffServicActionTypesPostRequest {
+
     private Long id;
     private String name;
     private LocalDateTime createDate;
     private LocalDateTime modifyDate;
     private LocalDateTime removeDate;
 
-    public ScaffServiceActionTypeData(Long id, String name) {
-        this.id = id;
-        this.name = name;
-        this.modifyDate = LocalDateTime.now();
-    }
-
-    public ScaffServiceActionTypeData(String name) {
-        this.name = name;
+    public ScaffServicActionTypesPostRequest() {
     }
 
     public Long getId() {

@@ -102,7 +102,7 @@ public class AuthenticatedUser {
                     new Menu("Flota", "#", new Permissions[]{Permissions.LIFE_ADVISER_COMMON},
                             new ArrayList<>(Arrays.asList(new Menu(chooseMenuName("Cars", "Samochody", currentLang),
                                     "/admin/vehicles", new Permissions[]{Permissions.LIFE_ADVISER_COMMON}, Collections.emptyList())
-                                    ))),
+                            ))),
                     new Menu(chooseMenuName("Data settings", "Ustawienia danych", currentLang), "#",
                             new Permissions[]{Permissions.LIFE_ADVISER_COMMON},
                             new ArrayList<>(Arrays.asList(
@@ -110,9 +110,9 @@ public class AuthenticatedUser {
                                             "/admin/workshops", new Permissions[]{Permissions.LIFE_ADVISER_COMMON}, Collections.emptyList()),
                                     new Menu(chooseMenuName("Vehicle types", "Typy pojazdów", currentLang),
                                             "/admin/vehicle-types", new Permissions[]{Permissions.LIFE_ADVISER_COMMON}, Collections.emptyList()),
-                                    new Menu(chooseMenuName("Service actions types", "Typy serwisów", currentLang),
-                                            "/admin/action-service-types", new Permissions[]{Permissions.LIFE_ADVISER_COMMON}, Collections.emptyList())
-                                    )
+                                    new Menu(chooseMenuName("Service actions types", "Typy usług serwisowych", currentLang),
+                                            "/admin/service-action-types", new Permissions[]{Permissions.LIFE_ADVISER_COMMON}, Collections.emptyList())
+                            )
                             )
                     ),
                     new Menu("Marketing", "#", new Permissions[]{Permissions.LIFE_ADVISER_COMMON}, new ArrayList<>(Arrays.asList(

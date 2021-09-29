@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <div th:replace="fragments/head"></div>
+    <script th:src="@{/js/admin-service-action-types.js}">
+
+    </script>
+</head>
+
+<body>
+<div th:replace="fragments/menu :: menu"></div>
+
+<h5 th:text="#{vehicle.service.action.type.list}"></h5>
+
+<button type="button" class="btn btn-success btn-lg btn-block" data-toggle="modal" data-target="#create-modal"
+        th:text="#{vehicle.service.action.type.add}"></button>
+
+<div id="result-container" class="my-4">
+    <div class="table-responsive mb-0 pb-0">
+        <table class="table bg-light table-bordered table-hover table-sm">
+            <thead class="thead-light">
+            <tr>
+                <th class="align-middle col-sm-1" th:text="#{ordinal.number}"></th>
+                <th class="align-middle col-sm-3" th:text="#{vehicle.service.action.type.name}"></th>
+                <th class="align-middle col-sm-1" th:text="#{vehicle.service.action.type.edit}"></th>
+
+            </tr>
+            </thead>
+            <tbody id="records">
+
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+<div class="modal fade" id="create-modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel" th:text="#{workshop.add.new}"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form class="text-center">
+                    <div class="form-group">
+                        <label for="create-name" th:text="#{vehicle.service.action.type.name}"></label>
+                        <input type="text" id="create-name" class="form-control">
+                    </div>
+
+
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" onclick="sendCreateRequest()">Dodaj</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Anuluj</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div th:replace="fragments/pagination :: pagination"></div>
+
+</body>
+
+</html>

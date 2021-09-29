@@ -1,6 +1,6 @@
 var url = "/admin/api/scaffolding"
-var workshopsApiUrl = url + "/workshops?"
-var workshopApiUrl = url + "/workshop"
+var serviceActionTypesApiUrl = url + "/service-action-types?"
+var serviceActionTypeApiUrl = url + "/service-action-type"
 
 $(document).ready(function () {
     $('#create-modal').on('hide.bs.modal', function (e) {
@@ -8,62 +8,51 @@ $(document).ready(function () {
     });
 
 
-    findWorkshops();
+    findServiceActionTypes();
     $("#filter input, #filter select, [form='filter']").on("change", function () {
-        findWorkshops();
+        findServiceActionTypes();
     });
 
 });
 
 
-function findWorkshops() {
+function findServiceActionTypes() {
     $.ajax({
-        url: workshopsApiUrl + preparePaginationUrl(),
+        url: serviceActionTypesApiUrl + preparePaginationUrl(),
         type: "get",
         dataType: "json",
         contentType: "application/json"
     })
-    .done(function (workshops) {
+    .done(function (serviceActionTypes) {
         $("#records").empty();
-        fillResults(workshops.workshops);
+        fillResults(serviceActionTypes.serviceActionTypes);
     })
     .fail(function(jqxhr, textStatus, errorThrown){
         displayErrorInformation(jqxhr.responseText);
     });
 }
 
-function fillResults(workshops) {
+function fillResults(serviceActionTypes) {
     let value = 1;
-    workshops.forEach(function (workshop){
-        fillRow(workshop, value);
+    serviceActionTypes.forEach(function (serviceActionType){
+        fillRow(serviceActionType, value);
         value = value + 1;
     });
 }
 
-function fillRow(workshop, value) {
+function fillRow(serviceActionType, value) {
     $('#records').append(
         "<tr>" +
             "<td class='align-middle'>" + value + "</td>" +
-            "<td class='align-middle'>" + workshop.name + "</td>" +
-            "<td class='align-middle'>" + workshop.street + " "  + workshop.buildingNo + showApartmentNo(workshop.apartmentNo) + "</td>" +
-            "<td class='align-middle'>" + workshop.postalCode +"</td>" +
-            "<td class='align-middle'>" + workshop.city +"</td>" +
-            "<td class='align-middle'>" + workshop.taxNumber +"</td>" +
-            "<td class='align-middle'>" + prepareDetailsButton(workshop.id) + "</td>" +
+            "<td class='align-middle'>" + serviceActionType.name + "</td>" +
+            "<td class='align-middle'>" + prepareDetailsButton(serviceActionType.id) + "</td>" +
         "</tr>"
     );
 }
 
-function showApartmentNo(apartmentNo) {
-    var value = "";
-    if (apartmentNo != null && value != undefined) {
-        value = "/" + apartmentNo;
-    }
-    return value;
-}
 
 function prepareDetailsButton(id) {
-    return '<button type="button" class="btn btn-primary" onclick="goToDetailsPage(' + id + ')">Detale</button>';
+    return '<button type="button" class="btn btn-primary" onclick="goToDetailsPage(' + id + ')">Edytuj</button>';
 }
 
 function prepareDeleteButton(id) {
@@ -71,7 +60,7 @@ function prepareDeleteButton(id) {
 }
 
 function goToDetailsPage(id) {
-    window.location.href = "/admin/workshop/" + id;
+    window.location.href = "/admin/service-action-type/" + id;
 }
 
 function setObjectToDeleteIdAndShowModal(id) {
@@ -81,34 +70,21 @@ function setObjectToDeleteIdAndShowModal(id) {
 
 function clearCreateModal() {
     $("#create-name").val('');
-    $("#create-street").val('');
-    $("#create-buildingNo").val('');
-    $("#create-apartmentNo").val('');
-    $("#create-postalCode").val('');
-    $("#create-city").val('');
-    $("#create-taxNumber").val('');
-
 }
 //todo -> cały flow dodawania i usuawnia pojazdu(konstruktory, repozytoria do innych tabel itp)
 function sendCreateRequest() {
     $.ajax({
-        url: workshopApiUrl,
+        url: serviceActionTypeApiUrl,
         method: "POST",
         contentType: "application/json",
         data: JSON.stringify({
-                name: $("#create-name").val(),
-                street: $("#create-street").val(),
-                buildingNo: $("#create-buildingNo").val(),
-                apartmentNo: $("#create-apartmentNo").val(),
-                postalCode: $("#create-postalCode").val(),
-                city: $("#create-city").val(),
-                taxNumber: $("#create-taxNumber").val()
+                name: $("#create-name").val()
         })
     })
         .done(function () {
             $("#create-modal").modal('hide');
             $("#operation-successful-modal").modal('show');
-            findVehicles();
+            findServiceActionTypes();
         })
         .fail(function (jqxhr, textStatus, errorThrown) {
             displayErrorInformation(jqxhr.responseText);

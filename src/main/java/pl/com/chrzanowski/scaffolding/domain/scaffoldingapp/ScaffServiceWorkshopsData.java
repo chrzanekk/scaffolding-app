@@ -37,6 +37,7 @@ public class ScaffServiceWorkshopsData {
         this.apartmentNo = apartmentNo;
         this.postalCode = postalCode;
         this.city = city;
+        this.modifyDate = LocalDateTime.now();
     }
 
     public ScaffServiceWorkshopsData(String name, String taxNumber, String street, String buildingNo, String apartmentNo, String postalCode, String city) {

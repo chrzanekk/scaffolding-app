@@ -24,6 +24,7 @@ public class ScaffoldingEndpointAdmin {
     private ScaffFuelTypeService fuelTypeService;
     private ScaffServiceActionsService serviceActionsService;
     private ScaffServiceWorkshopsService workshopsService;
+    private ScaffServiceActionTypesService serviceActionTypesService;
 
     public ScaffoldingEndpointAdmin(ScaffUsersService scaffUsersService,
                                     ScaffNotificationsFromPanelService notificationsFromPanelService,
@@ -31,7 +32,8 @@ public class ScaffoldingEndpointAdmin {
                                     ScaffVehiclesService scaffVehiclesService,
                                     ScaffFuelTypeService fuelTypeService,
                                     ScaffServiceActionsService serviceActionsService,
-                                    ScaffServiceWorkshopsService workshopsService) {
+                                    ScaffServiceWorkshopsService workshopsService,
+                                    ScaffServiceActionTypesService serviceActionTypesService) {
         this.scaffUsersService = scaffUsersService;
         this.notificationsFromPanelService = notificationsFromPanelService;
         this.scaffStatisticService = scaffStatisticService;
@@ -39,6 +41,7 @@ public class ScaffoldingEndpointAdmin {
         this.fuelTypeService = fuelTypeService;
         this.serviceActionsService = serviceActionsService;
         this.workshopsService = workshopsService;
+        this.serviceActionTypesService = serviceActionTypesService;
     }
 
     @GetMapping("/users")
@@ -240,6 +243,34 @@ public class ScaffoldingEndpointAdmin {
                 request.getCity()));
     }
 
+
+    @GetMapping(path = "/service-action-types", produces = "application/json; charset=UTF-8")
+    public ScaffServiceActionTypesRequestGetResponse serviceActionTypes(
+            @RequestParam(name = "page", required = false, defaultValue = "1") Long page,
+            @RequestParam(name = "page_size", required = false, defaultValue = "10") Long pageSize) {
+        List<ScaffServiceActionTypeData> serviceActionTypes =
+                serviceActionTypesService.find(new ScaffServiceActionTypesFilter(page, pageSize));
+        return new ScaffServiceActionTypesRequestGetResponse(actionTypesToResponse(serviceActionTypes));
+    }
+
+    @GetMapping(path = "/service-action-type/{id}", produces = "application/json; charset=UTF-8")
+    public ScaffServiceActionTypeRequestGetResponse serviceActionTypesById(
+            @PathVariable Long id) {
+        ScaffServiceActionTypeData serviceActionType = serviceActionTypesService.find(new ScaffServiceActionTypesFilter(id)).get(0);
+        return new ScaffServiceActionTypeRequestGetResponse(actionTypeToResponse(serviceActionType));
+    }
+
+    @PostMapping(path = "/service-action-type", consumes = "application/json; charset=UTF-8")
+    public void addServiceActionType(@RequestBody ScaffServicActionTypesPostRequest request) {
+        serviceActionTypesService.add(new ScaffServiceActionTypeData(request.getName()));
+    }
+
+    @PutMapping(path = "/service-action-type/{id}", consumes = "application/json; charset=UTF-8")
+    public void updateServiceActionType(@PathVariable Long id,
+                                        @RequestBody ScaffServicActionTypesPostRequest request) {
+        serviceActionTypesService.update(new ScaffServiceActionTypeData(id, request.getName()));
+    }
+
     private List<ScaffVehicleGetResponse> vehiclesToResponse(List<ScaffVehicleData> vehicles) {
         List<ScaffVehicleGetResponse> list = new ArrayList<>();
         for (ScaffVehicleData vehicle : vehicles) {
@@ -335,5 +366,20 @@ public class ScaffoldingEndpointAdmin {
                 workshop.getPostalCode(),
                 workshop.getCity()
         );
+    }
+
+    private List<ScaffServiceActionTypesGetResponse> actionTypesToResponse(List<ScaffServiceActionTypeData> actionTypes) {
+        List<ScaffServiceActionTypesGetResponse> list = new ArrayList<>();
+        for (ScaffServiceActionTypeData data : actionTypes) {
+            list.add(new ScaffServiceActionTypesGetResponse(
+                    data.getId(),
+                    data.getName()
+            ));
+        }
+        return list;
+    }
+
+    private ScaffServiceActionTypesGetResponse actionTypeToResponse(ScaffServiceActionTypeData actionType) {
+        return new ScaffServiceActionTypesGetResponse(actionType.getId(), actionType.getName());
     }
 }

@@ -235,7 +235,7 @@ SCAFFOLDING APP CONTROLLER - BEGIN
 
         model.addAttribute("vehicle", new ScaffVehicleGetResponse(vehiclesService.findById(new ScaffVehicleFilter(id))));
         model.addAttribute("serviceActions", serviceActionsService.find(new ScaffServiceActionsFilter(id, page,pageSize)));
-        model.addAttribute("serviceActionTypes", serviceActionTypesService.find(new ScaffServiceActionTypeFilter()));
+        model.addAttribute("serviceActionTypes", serviceActionTypesService.find(new ScaffServiceActionTypesFilter()));
         model.addAttribute("workshops", workshopsService.find(new ScaffServiceWorkshopsFilter()));
         model.addAttribute("languageDict", dictionariesService.getDictionary(DictionaryType.LANGUAGES, lang));
 
@@ -252,7 +252,7 @@ SCAFFOLDING APP CONTROLLER - BEGIN
         Language lang = LanguagesUtil.getCurrentLanguage();
         model.addAttribute("vehicle",vehiclesService.findById(new ScaffVehicleFilter(vehicleId)));
         model.addAttribute("serviceAction", serviceActionsService.findById(new ScaffServiceActionsFilter(id)));
-        model.addAttribute("serviceActionTypes", serviceActionTypesService.find(new ScaffServiceActionTypeFilter()));
+        model.addAttribute("serviceActionTypes", serviceActionTypesService.find(new ScaffServiceActionTypesFilter()));
         model.addAttribute("workshops", workshopsService.find(new ScaffServiceWorkshopsFilter()));
         model.addAttribute("languageDict", dictionariesService.getDictionary(DictionaryType.LANGUAGES, lang));
 
@@ -288,6 +288,39 @@ SCAFFOLDING APP CONTROLLER - BEGIN
 
         return "admin-workshop";
     }
+
+    @GetMapping({"/admin/service-action-types"})
+    public String adminServiceActionTypes(Model model) {
+
+        if (!scaffUsersService.isLoggedUserAdmin()) {
+            throw new IllegalArgumentException("Access denied");
+        }
+
+        Language lang = LanguagesUtil.getCurrentLanguage();
+
+        model.addAttribute("serviceActionTypes", serviceActionTypesService.find(new ScaffServiceActionTypesFilter()));
+        model.addAttribute("languageDict", dictionariesService.getDictionary(DictionaryType.LANGUAGES, lang));
+
+        return "admin-service-action-types";
+    }
+
+    @GetMapping({"/admin/service-action-type/{id}"})
+    public String adminServiceActionTypeById(@PathVariable Long id, Model model) {
+
+        if (!scaffUsersService.isLoggedUserAdmin()) {
+            throw new IllegalArgumentException("Access denied");
+        }
+
+        Language lang = LanguagesUtil.getCurrentLanguage();
+
+        model.addAttribute("serviceActionType",
+                serviceActionTypesService.find(new ScaffServiceActionTypesFilter(id)).get(0));
+        model.addAttribute("languageDict", dictionariesService.getDictionary(DictionaryType.LANGUAGES, lang));
+
+        return "admin-service-action-type";
+    }
+
+
 
 
     //    @GetMapping({"/admin/course/{id}"})

@@ -3,8 +3,7 @@ package pl.com.chrzanowski.scaffolding.logic.scaffoldingapp;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 import pl.com.chrzanowski.scaffolding.domain.scaffoldingapp.ScaffServiceActionTypeData;
-import pl.com.chrzanowski.scaffolding.domain.scaffoldingapp.ScaffServiceActionTypeFilter;
-import pl.com.chrzanowski.scaffolding.domain.scaffoldingapp.ScaffServiceActionsData;
+import pl.com.chrzanowski.scaffolding.domain.scaffoldingapp.ScaffServiceActionTypesFilter;
 import pl.com.chrzanowski.scaffolding.logic.CommonJdbcRepository;
 
 import java.util.ArrayList;
@@ -24,18 +23,18 @@ public class ScaffServiceActionTypeJdbcRepository {
         this.commonJdbcRepository = commonJdbcRepository;
     }
 
-    public Long create(ScaffServiceActionsData data) {
+    public Long create(ScaffServiceActionTypeData data) {
         String query = "INSERT INTO service_action_type (name) VALUES (?);";
-        jdbcTemplate.update(query, data.getServiceActionTypeName());
+        jdbcTemplate.update(query, data.getName());
         return commonJdbcRepository.getLastInsertedId();
     }
 
-    public void update(ScaffServiceActionsData data, Long id) {
-        String query = "UPDATE service_action_type SET name = ? WHERE id = ?;";
-        jdbcTemplate.update(query, data.getServiceActionTypeName(), id);
+    public void update(ScaffServiceActionTypeData data) {
+        String query = "UPDATE service_action_type SET name = ?, modify_date = ? WHERE id = ?;";
+        jdbcTemplate.update(query, data.getName(),data.getModifyDate(), data.getId());
     }
 
-    public List<ScaffServiceActionTypeData> find(ScaffServiceActionTypeFilter filter) {
+    public List<ScaffServiceActionTypeData> find(ScaffServiceActionTypesFilter filter) {
 
         String query = "SELECT * FROM service_action_type";
 

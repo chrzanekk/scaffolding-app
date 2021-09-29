@@ -1,4 +1,4 @@
-package pl.com.chrzanowski.scaffolding.domain.scaffoldingapp;
+package pl.com.chrzanowski.scaffolding.api.scaffolding;
 
 public class ScaffLoggedUserPutRequest {
     private String language;

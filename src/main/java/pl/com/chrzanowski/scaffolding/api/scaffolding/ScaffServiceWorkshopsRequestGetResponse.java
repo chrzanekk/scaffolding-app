@@ -4,13 +4,13 @@ import java.util.List;
 
 public class ScaffServiceWorkshopsRequestGetResponse {
 
-    private List<ScaffServiceWorkshopsGetResponse> serviceWorkshopsGetResponse;
+    private List<ScaffServiceWorkshopsGetResponse> workshops;
 
-    public ScaffServiceWorkshopsRequestGetResponse(List<ScaffServiceWorkshopsGetResponse> serviceWorkshopsGetResponse) {
-        this.serviceWorkshopsGetResponse = serviceWorkshopsGetResponse;
+    public ScaffServiceWorkshopsRequestGetResponse(List<ScaffServiceWorkshopsGetResponse> workshops) {
+        this.workshops = workshops;
     }
 
-    public List<ScaffServiceWorkshopsGetResponse> getServiceWorkshopsGetResponse() {
-        return serviceWorkshopsGetResponse;
+    public List<ScaffServiceWorkshopsGetResponse> getWorkshops() {
+        return workshops;
     }
 }

@@ -60,7 +60,8 @@ public class ScaffServiceWorkshopsJdbcRepository {
                 "building_number = ?," +
                 "apartment_number = ?," +
                 "postal_code = ?," +
-                "city = ? WHERE " +
+                "city = ?," +
+                "modify_date =? WHERE " +
                 "id = ?";
         jdbcTemplate.update(query,
                 data.getName(),
@@ -70,6 +71,7 @@ public class ScaffServiceWorkshopsJdbcRepository {
                 data.getApartmentNo(),
                 data.getPostalCode(),
                 data.getCity(),
+                data.getModifyDate(),
                 data.getId());
     }
 
