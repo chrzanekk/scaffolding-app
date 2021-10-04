@@ -5,9 +5,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import pl.com.chrzanowski.scaffolding.config.ApplicationConfig;
-import pl.com.chrzanowski.scaffolding.domain.GalleryImageKind;
-import pl.com.chrzanowski.scaffolding.domain.ImageData;
-import pl.com.chrzanowski.scaffolding.domain.UploadResult;
+import cleaning.toDelete.domain.GalleryImageKind;
+import cleaning.toDelete.domain.ImageData;
+import cleaning.toDelete.domain.UploadResult;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;

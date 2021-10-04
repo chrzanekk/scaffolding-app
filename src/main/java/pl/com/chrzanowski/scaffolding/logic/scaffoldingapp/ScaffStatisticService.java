@@ -1,9 +1,7 @@
 package pl.com.chrzanowski.scaffolding.logic.scaffoldingapp;
 
 import org.springframework.stereotype.Service;
-import pl.com.chrzanowski.scaffolding.domain.courseplatform.*;
-import pl.com.chrzanowski.scaffolding.logic.scaffoldingapp.ScaffStatisticJdbcRepository;
-import pl.com.chrzanowski.scaffolding.logic.scaffoldingapp.ScaffStatisticType;
+import cleaning.toDelete.domain.courseplatform.*;
 
 import java.util.List;
 

@@ -6,9 +6,9 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import pl.com.chrzanowski.scaffolding.domain.EmailHistoryData;
+import cleaning.toDelete.domain.EmailHistoryData;
 import pl.com.chrzanowski.scaffolding.domain.MailConfigData;
-import pl.com.chrzanowski.scaffolding.domain.TemplateData;
+import cleaning.toDelete.domain.TemplateData;
 
 import java.time.LocalDateTime;
 

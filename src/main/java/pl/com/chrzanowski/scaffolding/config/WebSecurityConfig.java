@@ -24,9 +24,6 @@ import java.util.Arrays;
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    private UserDetailsService userDetailsService;
-
-    @Autowired
     private DataSource dataSource;
 
     @Bean
@@ -83,10 +80,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return authenticationManager();
     }
 
-    @Autowired
-    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
-    }
 
     @Bean
     CorsConfigurationSource corsConfigurationSource() {

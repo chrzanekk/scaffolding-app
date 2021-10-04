@@ -1,7 +1,7 @@
 package pl.com.chrzanowski.scaffolding.api.scaffolding;
 
 import org.springframework.web.bind.annotation.*;
-import pl.com.chrzanowski.scaffolding.api.courseplatform.ChangePasswordRequest;
+import cleaning.toDelete.api.courseplatform.ChangePasswordRequest;
 import pl.com.chrzanowski.scaffolding.domain.scaffoldingapp.*;
 import pl.com.chrzanowski.scaffolding.logic.scaffoldingapp.*;
 import pl.com.chrzanowski.scaffolding.logic.scaffoldingapp.notifications.ScaffNotificationsFromPanelService;
@@ -25,6 +25,7 @@ public class ScaffoldingEndpointAdmin {
     private ScaffServiceActionsService serviceActionsService;
     private ScaffServiceWorkshopsService workshopsService;
     private ScaffServiceActionTypesService serviceActionTypesService;
+    private ScaffMarketingService marketingService;
 
     public ScaffoldingEndpointAdmin(ScaffUsersService scaffUsersService,
                                     ScaffNotificationsFromPanelService notificationsFromPanelService,
@@ -33,7 +34,8 @@ public class ScaffoldingEndpointAdmin {
                                     ScaffFuelTypeService fuelTypeService,
                                     ScaffServiceActionsService serviceActionsService,
                                     ScaffServiceWorkshopsService workshopsService,
-                                    ScaffServiceActionTypesService serviceActionTypesService) {
+                                    ScaffServiceActionTypesService serviceActionTypesService,
+                                    ScaffMarketingService marketingService) {
         this.scaffUsersService = scaffUsersService;
         this.notificationsFromPanelService = notificationsFromPanelService;
         this.scaffStatisticService = scaffStatisticService;
@@ -42,6 +44,7 @@ public class ScaffoldingEndpointAdmin {
         this.serviceActionsService = serviceActionsService;
         this.workshopsService = workshopsService;
         this.serviceActionTypesService = serviceActionTypesService;
+        this.marketingService = marketingService;
     }
 
     @GetMapping("/users")
@@ -99,6 +102,11 @@ public class ScaffoldingEndpointAdmin {
     @PostMapping("/notifications")
     public void createNotifications(@RequestBody ScaffNotificationsPostRequest request) {
         notificationsFromPanelService.createNotifications(new ScaffCreateNotificationsParameters(request));
+    }
+
+    @PostMapping("/marketing/newsletter")
+    public void newsletter(@RequestBody ScaffNewsletterData request) {
+        marketingService.sendNewsletter(request);
     }
 
     @GetMapping(path = "/vehicles", produces = "application/json; charset=UTF-8")

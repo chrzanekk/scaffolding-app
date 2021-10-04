@@ -1,6 +1,6 @@
 package pl.com.chrzanowski.scaffolding.domain.scaffoldingapp;
 
-import pl.com.chrzanowski.scaffolding.logic.courseplatform.WebUtil;
+import cleaning.toDelete.logic.courseplatform.WebUtil;
 
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;

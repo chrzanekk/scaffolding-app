@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.com.chrzanowski.scaffolding.domain.scaffoldingapp.ScaffDictionaryData;
 import pl.com.chrzanowski.scaffolding.logic.CacheType;
-import pl.com.chrzanowski.scaffolding.logic.courseplatform.LanguagesUtil;
+import cleaning.toDelete.logic.courseplatform.LanguagesUtil;
 import pl.com.chrzanowski.scaffolding.logic.Language;
 import java.util.ArrayList;
 import java.util.List;

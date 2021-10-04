@@ -10,8 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import static pl.com.chrzanowski.scaffolding.logic.adviser.JdbcUtil.preparePaginationQuery;
-import static pl.com.chrzanowski.scaffolding.logic.adviser.JdbcUtil.*;
+import static cleaning.toDelete.logic.adviser.JdbcUtil.preparePaginationQuery;
+import static cleaning.toDelete.logic.adviser.JdbcUtil.*;
 
 @Service
 public class ScaffServiceWorkshopsJdbcRepository {

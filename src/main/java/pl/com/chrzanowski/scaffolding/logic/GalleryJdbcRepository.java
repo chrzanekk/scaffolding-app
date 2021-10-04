@@ -5,8 +5,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
-import pl.com.chrzanowski.scaffolding.domain.GalleryImageKind;
-import pl.com.chrzanowski.scaffolding.domain.ImageData;
+import cleaning.toDelete.domain.GalleryImageKind;
+import cleaning.toDelete.domain.ImageData;
 
 import java.util.HashSet;
 import java.util.List;

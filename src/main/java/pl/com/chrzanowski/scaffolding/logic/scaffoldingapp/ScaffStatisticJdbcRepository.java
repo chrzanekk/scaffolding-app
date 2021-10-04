@@ -4,8 +4,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
-import pl.com.chrzanowski.scaffolding.api.courseplatform.StatisticOption;
-import pl.com.chrzanowski.scaffolding.domain.courseplatform.*;
+import cleaning.toDelete.api.courseplatform.StatisticOption;
+import cleaning.toDelete.domain.courseplatform.*;
 
 
 import java.math.BigDecimal;
@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import static pl.com.chrzanowski.scaffolding.logic.adviser.JdbcUtil.*;
+import static cleaning.toDelete.logic.adviser.JdbcUtil.*;
 
 @Service
 public class ScaffStatisticJdbcRepository {

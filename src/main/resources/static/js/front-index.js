@@ -16,7 +16,7 @@ $(".dropdown-menu a.dropdown-toggle").on("click", function (e) {
 
 $(document).ready(function () {
   markActiveMenuItem();
-  updateProductsInBasketQuantity();
+
 });
 
 function markActiveMenuItem() {
@@ -37,30 +37,6 @@ function markActiveMenuItem() {
   }
 }
 
-function updateProductsInBasketQuantity() {
-    $.ajax({
-        url: "/api/crs/basket/courses/quantity",
-        type: "get",
-        dataType: "json",
-        contentType: "application/json"
-    })
-    .done(function (response) {
-        var quantity = response.quantity;
-
-        $("#products-in-basket-quantity").html(quantity);
-
-        if(quantity >= 1) {
-            $("#products-in-basket-counter").show();
-        } else {
-            $("#products-in-basket-counter").hide();
-        }
-
-    })
-    .fail(function(jqxhr, textStatus, errorThrown){
-        displayErrorInformation(jqxhr.responseText);
-    });
-
-}
 
 /* ERROR and SUCCESS */
 function displayErrorInformation(jqxhrResponseText) {

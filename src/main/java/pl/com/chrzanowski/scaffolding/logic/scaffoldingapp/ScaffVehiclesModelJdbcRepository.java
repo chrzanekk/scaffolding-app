@@ -12,8 +12,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import static pl.com.chrzanowski.scaffolding.logic.adviser.JdbcUtil.getLong;
-import static pl.com.chrzanowski.scaffolding.logic.adviser.JdbcUtil.getString;
+import static cleaning.toDelete.logic.adviser.JdbcUtil.getLong;
+import static cleaning.toDelete.logic.adviser.JdbcUtil.getString;
 
 @Service
 public class ScaffVehiclesModelJdbcRepository {

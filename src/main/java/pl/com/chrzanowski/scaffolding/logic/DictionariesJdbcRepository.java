@@ -6,7 +6,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.com.chrzanowski.scaffolding.domain.DictionaryData;
-import pl.com.chrzanowski.scaffolding.logic.adviser.JdbcUtil;
+import cleaning.toDelete.logic.adviser.JdbcUtil;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
