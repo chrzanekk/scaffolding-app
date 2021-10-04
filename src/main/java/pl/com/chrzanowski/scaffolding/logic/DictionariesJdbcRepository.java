@@ -6,8 +6,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.com.chrzanowski.scaffolding.domain.DictionaryData;
-import cleaning.toDelete.logic.adviser.JdbcUtil;
-
+import static pl.com.chrzanowski.scaffolding.logic.JdbcUtil.*;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,22 +22,7 @@ class DictionariesJdbcRepository {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    List<DictionaryData> getPaymentMethods(Language lang) {
-        String query = "SELECT * FROM payment_methods_languages WHERE language = '" + lang.getCode() + "'";
-        //log.trace(query);
-        List<Map<String, Object>> rows = jdbcTemplate.queryForList(query);
-        List<DictionaryData> dictionaryDataList = new ArrayList<>();
-        for (Map row : rows) {
-            DictionaryData dictionaryData = new DictionaryData(
-                    Long.parseLong(String.valueOf(row.get("payment_method_id"))),
-                    (String) row.get("color"),
-                    (String) row.get("name"),
-                    lang.getCode()
-            );
-            dictionaryDataList.add(dictionaryData);
-        }
-        return dictionaryDataList;
-    }
+
 
     List<DictionaryData> getPaymentStatuses(Language lang) {
         String query = "SELECT * FROM order_payment_statues";

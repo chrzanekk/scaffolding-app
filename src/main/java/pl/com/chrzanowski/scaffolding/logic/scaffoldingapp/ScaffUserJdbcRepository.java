@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import static cleaning.toDelete.logic.adviser.JdbcUtil.*;
+import static pl.com.chrzanowski.scaffolding.logic.JdbcUtil.*;
 
 @Service
 public class ScaffUserJdbcRepository {

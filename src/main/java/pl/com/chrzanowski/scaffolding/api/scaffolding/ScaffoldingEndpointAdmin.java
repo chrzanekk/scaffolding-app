@@ -1,7 +1,7 @@
 package pl.com.chrzanowski.scaffolding.api.scaffolding;
 
 import org.springframework.web.bind.annotation.*;
-import cleaning.toDelete.api.courseplatform.ChangePasswordRequest;
+import pl.com.chrzanowski.scaffolding.api.scaffolding.ScaffChangePasswordRequest;
 import pl.com.chrzanowski.scaffolding.domain.scaffoldingapp.*;
 import pl.com.chrzanowski.scaffolding.logic.scaffoldingapp.*;
 import pl.com.chrzanowski.scaffolding.logic.scaffoldingapp.notifications.ScaffNotificationsFromPanelService;
@@ -19,7 +19,6 @@ public class ScaffoldingEndpointAdmin {
 
     private ScaffUsersService scaffUsersService;
     private ScaffNotificationsFromPanelService notificationsFromPanelService;
-    private ScaffStatisticService scaffStatisticService;
     private ScaffVehiclesService scaffVehiclesService;
     private ScaffFuelTypeService fuelTypeService;
     private ScaffServiceActionsService serviceActionsService;
@@ -29,7 +28,6 @@ public class ScaffoldingEndpointAdmin {
 
     public ScaffoldingEndpointAdmin(ScaffUsersService scaffUsersService,
                                     ScaffNotificationsFromPanelService notificationsFromPanelService,
-                                    ScaffStatisticService scaffStatisticService,
                                     ScaffVehiclesService scaffVehiclesService,
                                     ScaffFuelTypeService fuelTypeService,
                                     ScaffServiceActionsService serviceActionsService,
@@ -38,7 +36,6 @@ public class ScaffoldingEndpointAdmin {
                                     ScaffMarketingService marketingService) {
         this.scaffUsersService = scaffUsersService;
         this.notificationsFromPanelService = notificationsFromPanelService;
-        this.scaffStatisticService = scaffStatisticService;
         this.scaffVehiclesService = scaffVehiclesService;
         this.fuelTypeService = fuelTypeService;
         this.serviceActionsService = serviceActionsService;
@@ -95,7 +92,7 @@ public class ScaffoldingEndpointAdmin {
     }
 
     @PutMapping("/user-change-password/{id}")
-    public void changePassword(@PathVariable Long id, @RequestBody ChangePasswordRequest request) {
+    public void changePassword(@PathVariable Long id, @RequestBody ScaffChangePasswordRequest request) {
         scaffUsersService.changePasswordAdmin(id, request.getNewPasswordHash());
     }
 

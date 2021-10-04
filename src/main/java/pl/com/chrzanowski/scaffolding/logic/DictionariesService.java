@@ -6,7 +6,7 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.com.chrzanowski.scaffolding.domain.DictionaryData;
-import cleaning.toDelete.logic.courseplatform.*;
+import pl.com.chrzanowski.scaffolding.logic.scaffoldingapp.*;
 import java.util.*;
 
 
@@ -58,17 +58,11 @@ public class DictionariesService {
         List<DictionaryData> list = new ArrayList<>();
 
         if (Language.US == lang || Language.EN == lang) {
-            list.add(new DictionaryData(CustomerAuthority.ADMIN.getCode(), "Admin", lang.getCode()));
-            list.add(new DictionaryData(CustomerAuthority.USER.getCode(), "User", lang.getCode()));
-            list.add(new DictionaryData(CustomerAuthority.EMPLOYER.getCode(), "Employer", lang.getCode()));
-            list.add(new DictionaryData(CustomerAuthority.TEACHER.getCode(), "Teacher", lang.getCode()));
-            list.add(new DictionaryData(CustomerAuthority.STUDENT.getCode(), "Student", lang.getCode()));
+            list.add(new DictionaryData(ScaffUserAuthority.ADMIN.getCode(), "Admin", lang.getCode()));
+            list.add(new DictionaryData(ScaffUserAuthority.USER.getCode(), "User", lang.getCode()));
         } else if (Language.PL == lang) {
-            list.add(new DictionaryData(CustomerAuthority.ADMIN.getCode(), "Admin", lang.getCode()));
-            list.add(new DictionaryData(CustomerAuthority.USER.getCode(), "Użytkownik", lang.getCode()));
-            list.add(new DictionaryData(CustomerAuthority.EMPLOYER.getCode(), "Pracodawca", lang.getCode()));
-            list.add(new DictionaryData(CustomerAuthority.TEACHER.getCode(), "Nauczyciel", lang.getCode()));
-            list.add(new DictionaryData(CustomerAuthority.STUDENT.getCode(), "Kursant", lang.getCode()));
+            list.add(new DictionaryData(ScaffUserAuthority.ADMIN.getCode(), "Admin", lang.getCode()));
+            list.add(new DictionaryData(ScaffUserAuthority.USER.getCode(), "Użytkownik", lang.getCode()));
         }
 
         return list;

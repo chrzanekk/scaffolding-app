@@ -3,7 +3,7 @@ package pl.com.chrzanowski.scaffolding.api.scaffolding;
 
 import org.springframework.web.bind.annotation.*;
 import pl.com.chrzanowski.scaffolding.domain.scaffoldingapp.*;
-import cleaning.toDelete.logic.courseplatform.WebUtil;
+import pl.com.chrzanowski.scaffolding.logic.scaffoldingapp.WebUtil;
 import pl.com.chrzanowski.scaffolding.logic.scaffoldingapp.*;
 import pl.com.chrzanowski.scaffolding.logic.scaffoldingapp.notifications.ScaffNotificationType;
 import pl.com.chrzanowski.scaffolding.logic.scaffoldingapp.notifications.ScaffNotificationsService;

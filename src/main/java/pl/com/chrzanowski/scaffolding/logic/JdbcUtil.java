@@ -1,4 +1,4 @@
-package cleaning.toDelete.logic.adviser;
+package pl.com.chrzanowski.scaffolding.logic;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;

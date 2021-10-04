@@ -10,7 +10,7 @@ import pl.com.chrzanowski.scaffolding.domain.scaffoldingapp.ScaffUsersFilter;
 
 import java.util.List;
 
-import static cleaning.toDelete.logic.adviser.JdbcUtil.*;
+import static pl.com.chrzanowski.scaffolding.logic.JdbcUtil.*;
 
 @Service
 public class ScaffTokensJdbcRepository {

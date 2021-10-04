@@ -32,7 +32,6 @@ public class ApplicationController {
     private ScaffUsersService scaffUsersService;
     private DictionariesService dictionariesService;
     private CacheService cacheService;
-    private GalleryService galleryService;
     private ApplicationConfig applicationConfig;
     private ScaffEmailService emailService;
     private TemplateEngine templateEngine;
@@ -49,7 +48,6 @@ public class ApplicationController {
     public ApplicationController(ScaffUsersService scaffUsersService,
                                  DictionariesService dictionariesService,
                                  CacheService cacheService,
-                                 GalleryService galleryService,
                                  ApplicationConfig applicationConfig,
                                  ScaffEmailService emailService,
                                  TemplateEngine templateEngine,
@@ -65,7 +63,6 @@ public class ApplicationController {
         this.scaffUsersService = scaffUsersService;
         this.dictionariesService = dictionariesService;
         this.cacheService = cacheService;
-        this.galleryService = galleryService;
         this.applicationConfig = applicationConfig;
         this.emailService = emailService;
         this.templateEngine = templateEngine;
