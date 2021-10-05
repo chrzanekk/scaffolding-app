@@ -1,4 +1,4 @@
-package pl.com.chrzanowski.scaffolding.config.courseplatform;
+package pl.com.chrzanowski.scaffolding.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;

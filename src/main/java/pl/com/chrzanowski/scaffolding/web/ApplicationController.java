@@ -76,11 +76,6 @@ public class ApplicationController {
         this.serviceActionTypesService = serviceActionTypesService;
         this.workshopsService = workshopsService;
     }
-/*
-----------------------------------
-SCAFFOLDING APP CONTROLLER - BEGIN
-----------------------------------
- */
 
     @GetMapping({"/register"})
     public String register(Model model) {
@@ -163,8 +158,8 @@ SCAFFOLDING APP CONTROLLER - BEGIN
 
         model.addAttribute("vehicles", vehiclesService.find(new ScaffVehicleFilter()));
         model.addAttribute("languageDict", dictionariesService.getDictionary(DictionaryType.LANGUAGES, lang));
-        model.addAttribute("fuelTypes", fuelTypeService.find(new ScaffFuelTypeFilter()));
-        model.addAttribute("vehicleTypes", vehicleTypeService.find(new ScaffVehicleTypeFilter()));
+        model.addAttribute("fuelTypes", dictionariesService.getDictionary(DictionaryType.FUEL_TYPES,lang));
+        model.addAttribute("vehicleTypes", dictionariesService.getDictionary(DictionaryType.VEHICLE_TYPES,lang));
 
         return "admin-vehicles";
     }
@@ -184,6 +179,21 @@ SCAFFOLDING APP CONTROLLER - BEGIN
         model.addAttribute("fuelTypes", fuelTypeService.find(new ScaffFuelTypeFilter()));
         model.addAttribute("vehicleTypes", vehicleTypeService.find(new ScaffVehicleTypeFilter()));
         return "admin-vehicle";
+    }
+    @GetMapping({"/admin/vehicle-edit/{id}"})
+    public String adminVehicleEditById(@PathVariable Long id, Model model) throws SQLException {
+
+        if (!scaffUsersService.isLoggedUserAdmin()) {
+            throw new IllegalArgumentException("Access denied");
+        }
+
+        Language lang = LanguagesUtil.getCurrentLanguage();
+
+        model.addAttribute("vehicle", new ScaffVehicleGetResponse(vehiclesService.findById(new ScaffVehicleFilter(id))));
+        model.addAttribute("languageDict", dictionariesService.getDictionary(DictionaryType.LANGUAGES, lang));
+        model.addAttribute("fuelTypes", fuelTypeService.find(new ScaffFuelTypeFilter()));
+        model.addAttribute("vehicleTypes", vehicleTypeService.find(new ScaffVehicleTypeFilter()));
+        return "admin-vehicle-edit";
     }
 
     @GetMapping({"/admin/vehicle-service-actions/{id}"})
@@ -324,16 +334,11 @@ SCAFFOLDING APP CONTROLLER - BEGIN
 
 
 
-/*
---------------------------------
-SCAFFOLDING APP CONTROLLER - END
---------------------------------
- */
 
 
     @GetMapping({"/admin/notifications/send"})
     public String notificationsSending(Model model) {
-        model.addAttribute("languagesDict", dictionariesService.getDictionary(DictionaryType.LANGUAGES, Language.US));
+        model.addAttribute("languagesDict", dictionariesService.getDictionary(DictionaryType.LANGUAGES, Language.PL));
         return "admin-notifications-send";
     }
 
@@ -346,5 +351,6 @@ SCAFFOLDING APP CONTROLLER - END
     public String building(Model model) {
         return "building";
     }
+
 
 }

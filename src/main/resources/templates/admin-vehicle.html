@@ -7,6 +7,9 @@
     <script th:src="@{/js/admin-vehicle.js}"></script>
     <script th:inline="javascript">
         var vehicle = [[${vehicle}]];
+
+
+
     </script>
 </head>
 
@@ -17,88 +20,64 @@
     <div class="text-center">
         <h4 th:text="#{vehicle.details}"></h4>
     </div>
-
     <form class="bg-light p-5 border">
-        <div class="form-row">
-            <div class="form-group col-md-4 text-center">
-                <label for="brand" th:text="#{vehicle.details.brand}"></label>
-                <input type="text" class="form-control" id="brand" th:value="${vehicle.brandName}">
-            </div>
-            <div class="form-group col-md-4 text-center">
-                <label for="model" th:text="#{vehicle.details.model}"></label>
-                <input type="text" class="form-control" id="model" th:value="${vehicle.modelName}">
-            </div>
-            <div class="form-group col-md-4 text-center">
-                <label for="registrationNumber" th:text="#{vehicle.details.registrationNumber}"></label>
-                <input type="text" class="form-control" id="registrationNumber"
-                       th:value="${vehicle.registrationNumber}">
-            </div>
-            <div class="form-group col-md-4 text-center">
-                <label for="vin" th:text="#{vehicle.details.vin}"></label>
-                <input type="text" class="form-control" id="vin" th:value="${vehicle.vin}">
-            </div>
-            <div class="form-group col-md-4 text-center">
-                <label for="productionYear" th:text="#{vehicle.details.productionYear}"></label>
-                <input type="number" class="form-control" id="productionYear" th:value="${vehicle.productionYear}">
-            </div>
-            <div class="form-group col-md-4 text-center">
-                <label for="firstRegistrationDate" th:text="#{vehicle.details.firstRegistrationDate}"></label>
-                <input type="date" class="form-control" id="firstRegistrationDate"
-                       th:value="${vehicle.firstRegistrationDate}">
-            </div>
-            <div class="form-group col-md-4 text-center">
-                <label for="freePlacesForTechnicalInspections"
-                       th:text="#{vehicle.details.freePlacesForTechnicalInspections}"></label>
-                <input type="number" min="1" max="5" class="form-control" id="freePlacesForTechnicalInspections"
-                       th:value="${vehicle.freePlacesForTechnicalInspections}">
-            </div>
+        <div id="result-container" class="my4">
+            <div class="table-responsive mb-0 pb-0">
+                <table class="table bg-light table-bordered table-hover table-sm">
+                    <thead class="thead-light">
+                    <tr>
+                        <th class="align-middle col-sm-1" th:text="#{vehicle.details.brand}"></th>
+                        <th class="align-middle col-sm-1" th:text="#{vehicle.details.model}"></th>
+                        <th class="align-middle col-sm-1" th:text="#{vehicle.details.registrationNumber}"></th>
+                    </tr>
+                    </thead>
+                    <tbody id="first">
 
-            <div class="form-group col-md-4 text-center">
-                <label for="fuelType" th:text="#{vehicle.details.fuelType}"></label>
-                <select id="fuelType" class="form-control">
-                    <option th:each="fuelType : ${fuelTypes}"
-                            th:value="${fuelType.id}"
-                            th:text="${fuelType.name}"
-                            th:selected="(${fuelType.name} == *{vehicle.FuelType})">
-                    </option>
-                </select>
-            </div>
-            <div class="form-group col-md-4 text-center">
-                <label for="vehicleType" th:text="#{vehicle.details.vehicleType}"></label>
-                <select id="vehicleType" class="form-control">
-                    <option th:each="vehicleType : ${vehicleTypes}"
-                            th:value="${vehicleType.id}"
-                            th:text="${vehicleType.name}"
-                            th:selected="(${vehicleType.name} == *{vehicle.VehicleType})">
-                    </option>
-                </select>
-            </div>
-            <div class="form-group col-md-4 text-center">
-                <label for="length" th:text="#{vehicle.details.length}"></label>
-                <input type="number" min="0" max="8" step = 0.1 class="form-control" id="length" th:value="${vehicle.length}">
-            </div>
-            <div class="form-group col-md-4 text-center">
-                <label for="width" th:text="#{vehicle.details.width}"></label>
-                <input type="number" min="0" max="8" step = 0.1 class="form-control" id="width" th:value="${vehicle.width}">
-            </div>
-            <div class="form-group col-md-4 text-center">
-                <label for="height" th:text="#{vehicle.details.height}"></label>
-                <input type="number" min="0" max="8" step = 0.1 class="form-control" id="height" th:value="${vehicle.height}">
-            </div>
+                    </tbody>
+                    <thead class="thead-light">
+                    <tr>
+                        <th class="align-middle col-sm-1" th:text="#{vehicle.details.vin}"></th>
+                        <th class="align-middle col-sm-1" th:text="#{vehicle.details.productionYear}"></th>
+                        <th class="align-middle col-sm-1" th:text="#{vehicle.details.firstRegistrationDate}"></th>
+                    </tr>
+                    </thead>
+                    <tbody id="second">
 
+                    </tbody>
+                    <thead class="thead-light">
+                    <tr>
+                        <th class="align-middle col-sm-1"
+                            th:text="#{vehicle.details.freePlacesForTechnicalInspections}"></th>
+                        <th class="align-middle col-sm-1" th:text="#{vehicle.details.fuelType}"></th>
+                        <th class="align-middle col-sm-1" th:text="#{vehicle.details.vehicleType}"></th>
+                    </tr>
+                    </thead>
+                    <tbody id="third">
+
+                    </tbody>
+                    <thead class="thead-light">
+                    <tr>
+                        <th class="align-middle col-sm-1" th:text="#{vehicle.details.length}"></th>
+                        <th class="align-middle col-sm-1" th:text="#{vehicle.details.width}"></th>
+                        <th class="align-middle col-sm-1" th:text="#{vehicle.details.height}"></th>
+                    </tr>
+                    </thead>
+                    <tbody id="fourth">
+
+                    </tbody>
+
+
+                </table>
+            </div>
         </div>
-
 
         <div class="text-center">
-            <button type="button" class="btn btn-danger mt-3" onclick="showDeleteModal()"
-                    th:text="#{Delete}"></button>
             <button type="button" class="btn btn-warning mt-3" onclick="history.back()"
                     th:text="#{Cancel}"></button>
-            <button type="button" class="btn btn-warning mt-3" onclick="sendUpdateRequest()"
-                    th:text="#{Save.changes}"></button>
+            <button type="button" class="btn btn-warning mt-3" onclick="goToEditPage()"
+                    th:text="#{Edit}"></button>
         </div>
-</div>
-</form>
+    </form>
 
 </div>
 

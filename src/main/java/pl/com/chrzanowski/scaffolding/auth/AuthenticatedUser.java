@@ -50,25 +50,25 @@ public class AuthenticatedUser {
 
         if (scaffUserAuthoritiesService.hasUserAuthority(loggedUser, ScaffUserAuthority.ADMIN)) {
             return new ArrayList<>(Arrays.asList(
-                    new Menu("Flota", "#", new Permissions[]{Permissions.LIFE_ADVISER_COMMON},
+                    new Menu("Flota", "#", new Permissions[]{Permissions.ADMIN},
                             new ArrayList<>(Arrays.asList(new Menu(chooseMenuName("Cars", "Samochody", currentLang),
-                                    "/admin/vehicles", new Permissions[]{Permissions.LIFE_ADVISER_COMMON}, Collections.emptyList())
+                                    "/admin/vehicles", new Permissions[]{Permissions.ADMIN}, Collections.emptyList())
                             ))),
                     new Menu(chooseMenuName("Data settings", "Ustawienia danych", currentLang), "#",
-                            new Permissions[]{Permissions.LIFE_ADVISER_COMMON},
+                            new Permissions[]{Permissions.ADMIN},
                             new ArrayList<>(Arrays.asList(
                                     new Menu(chooseMenuName("Workshops", "Warsztaty", currentLang),
-                                            "/admin/workshops", new Permissions[]{Permissions.LIFE_ADVISER_COMMON}, Collections.emptyList()),
+                                            "/admin/workshops", new Permissions[]{Permissions.ADMIN}, Collections.emptyList()),
                                     new Menu(chooseMenuName("Service actions types", "Typy usług serwisowych", currentLang),
-                                            "/admin/service-action-types", new Permissions[]{Permissions.LIFE_ADVISER_COMMON}, Collections.emptyList())
+                                            "/admin/service-action-types", new Permissions[]{Permissions.ADMIN}, Collections.emptyList())
                             )
                             )
                     ),
-                    new Menu("Marketing", "#", new Permissions[]{Permissions.LIFE_ADVISER_COMMON}, new ArrayList<>(Arrays.asList(
-                            new Menu("Newsletter", "/admin/marketing/newsletter", new Permissions[]{Permissions.LIFE_ADVISER_COMMON}, Collections.emptyList())
+                    new Menu("Marketing", "#", new Permissions[]{Permissions.ADMIN}, new ArrayList<>(Arrays.asList(
+                            new Menu("Newsletter", "/admin/marketing/newsletter", new Permissions[]{Permissions.ADMIN}, Collections.emptyList())
                     ))),
-                    new Menu(chooseMenuName("Notifications", "Powiadomienia", currentLang), "#", new Permissions[]{Permissions.LIFE_ADVISER_COMMON}, new ArrayList<>(Arrays.asList(
-                            new Menu(chooseMenuName("Send notifications", "Wyślij powiadomienia", currentLang), "/admin/notifications/send", new Permissions[]{Permissions.LIFE_ADVISER_COMMON}, Collections.emptyList())
+                    new Menu(chooseMenuName("Notifications", "Powiadomienia", currentLang), "#", new Permissions[]{Permissions.ADMIN}, new ArrayList<>(Arrays.asList(
+                            new Menu(chooseMenuName("Send notifications", "Wyślij powiadomienia", currentLang), "/admin/notifications/send", new Permissions[]{Permissions.ADMIN}, Collections.emptyList())
                     )))
             ));
         } else {

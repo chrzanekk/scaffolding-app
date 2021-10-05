@@ -1,11 +1,16 @@
 package pl.com.chrzanowski.scaffolding.logic;
 
+import org.apache.commons.codec.language.bm.Lang;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.com.chrzanowski.scaffolding.domain.DictionaryData;
+import pl.com.chrzanowski.scaffolding.domain.scaffoldingapp.ScaffVehicleTypeData;
+import pl.com.chrzanowski.scaffolding.domain.scaffoldingapp.ScaffVehicleTypeFilter;
+import pl.com.chrzanowski.scaffolding.domain.scaffoldingapp.ScaffFuelTypeData;
+import pl.com.chrzanowski.scaffolding.domain.scaffoldingapp.ScaffFuelTypeFilter;
 import pl.com.chrzanowski.scaffolding.logic.scaffoldingapp.*;
 import java.util.*;
 
@@ -18,10 +23,16 @@ public class DictionariesService {
     private static final Logger log = LoggerFactory.getLogger(DictionariesService.class);
 
     private DictionariesJdbcRepository dictionariesJdbcRepository;
+    private ScaffVehicleTypeJdbcRepository vehicleTypeJdbcRepository;
+    private ScaffFuelTypeJdbcRepository fuelTypeJdbcRepository;
 
 
-    public DictionariesService(DictionariesJdbcRepository dictionariesJdbcRepository) {
+    public DictionariesService(DictionariesJdbcRepository dictionariesJdbcRepository,
+                               ScaffVehicleTypeJdbcRepository vehicleTypeJdbcRepository,
+                               ScaffFuelTypeJdbcRepository fuelTypeJdbcRepository) {
         this.dictionariesJdbcRepository = dictionariesJdbcRepository;
+        this.vehicleTypeJdbcRepository = vehicleTypeJdbcRepository;
+        this.fuelTypeJdbcRepository = fuelTypeJdbcRepository;
     }
 
     public List<DictionaryData> getDictionary(DictionaryType type) {
@@ -36,13 +47,17 @@ public class DictionariesService {
     public List<DictionaryData> getDictionary(DictionaryType type, Language lang) {
        if (YES_NO == type) {
             return getYesNo(lang);
-        } else if (CUSTOMER_AUTHORITIES == type) {
-            return getCustomerAuthorities(lang);
+        } else if (USER_AUTHORITIES == type) {
+            return getUserAuthorities(lang);
         } else if(LANGUAGES == type) {
             return getLanguages(lang);
         } else if(EMAIL_TITLES == type) {
             return getEmailTitles(lang);
-        }
+        } else if(VEHICLE_TYPES == type) {
+           return getVehicleTypes(lang);
+       } else if(FUEL_TYPES == type) {
+           return getFuelTypes(lang);
+       }
         throw new IllegalArgumentException("Dictionary no defined: " + type + " for language: " + lang);
     }
 
@@ -53,7 +68,7 @@ public class DictionariesService {
                 Arrays.asList(new DictionaryData("true", "Yes", lang.getCode()), new DictionaryData("false", "No", lang.getCode()));
     }
 
-    private List<DictionaryData> getCustomerAuthorities(Language lang) {
+    private List<DictionaryData> getUserAuthorities(Language lang) {
 
         List<DictionaryData> list = new ArrayList<>();
 
@@ -106,5 +121,32 @@ public class DictionariesService {
         return list;
     }
 
+    private List<DictionaryData> getVehicleTypes(Language lang) {
+        List<ScaffVehicleTypeData> vehicleTypes = vehicleTypeJdbcRepository.find(new ScaffVehicleTypeFilter());
+
+        List<DictionaryData> dictionaryDataList = new ArrayList<>();
+
+        for(ScaffVehicleTypeData vehicleType : vehicleTypes) {
+            dictionaryDataList.add(new DictionaryData(
+                    vehicleType.getId(),
+                    vehicleType.getName(),
+                    lang.getCode()));
+        }
+        return dictionaryDataList;
+    }
+
+    private List<DictionaryData> getFuelTypes(Language lang) {
+        List<ScaffFuelTypeData> fuelTypes = fuelTypeJdbcRepository.find(new ScaffFuelTypeFilter());
+
+        List<DictionaryData> dictionaryDataList = new ArrayList<>();
+
+        for(ScaffFuelTypeData fuelType : fuelTypes) {
+            dictionaryDataList.add(new DictionaryData(
+                    fuelType.getId(),
+                    fuelType.getName(),
+                    lang.getCode()));
+        }
+        return dictionaryDataList;
+    }
 
 }

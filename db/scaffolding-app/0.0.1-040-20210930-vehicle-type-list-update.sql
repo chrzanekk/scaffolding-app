@@ -1,0 +1,14 @@
+INSERT INTO `vehicle_type`(`name`) VALUES ('motorower');
+INSERT INTO `vehicle_type`(`name`) VALUES ('motocykl');
+INSERT INTO `vehicle_type`(`name`) VALUES ('autobus');
+INSERT INTO `vehicle_type`(`name`) VALUES ('trolejbus');
+INSERT INTO `vehicle_type`(`name`) VALUES ('samochód specjalny');
+INSERT INTO `vehicle_type`(`name`) VALUES ('ciągnik samochodowy');
+INSERT INTO `vehicle_type`(`name`) VALUES ('ciągnik rolniczy');
+INSERT INTO `vehicle_type`(`name`) VALUES ('przyczepa lekka');
+INSERT INTO `vehicle_type`(`name`) VALUES ('naczepa ciężarowa');
+INSERT INTO `vehicle_type`(`name`) VALUES ('naczepa specjalna');
+INSERT INTO `vehicle_type`(`name`) VALUES ('przyczepa ciężarowa');
+INSERT INTO `vehicle_type`(`name`) VALUES ('przyczepa specjalna');
+INSERT INTO `vehicle_type`(`name`) VALUES ('przyczepa ciężarowa rolnicza');
+INSERT INTO `vehicle_type`(`name`) VALUES ('inny');
