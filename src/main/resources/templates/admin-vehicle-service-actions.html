@@ -18,9 +18,9 @@
 
 <div class="text-center">
     <h3 th:text="#{vehicle.services}"></h3>
-    <h5 th:text="${vehicle.brandName}"></h5>
-    <h5 th:text="${vehicle.modelName}"></h5>
+    <h3 th:text="${vehicle.brandName} +' '+ ${vehicle.modelName}"></h3>
     <h5 th:text="${vehicle.registrationNumber}"></h5>
+
 
     <button type="button" class="btn btn-warning mt-3" onclick="history.back()"
             th:text="#{Cancel}"></button>
