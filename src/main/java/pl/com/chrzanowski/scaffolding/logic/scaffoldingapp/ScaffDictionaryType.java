@@ -5,7 +5,5 @@ public enum ScaffDictionaryType {
     VEHICLE_TYPES,
     YES_NO,
     WORKSHOPS,
-    SERVICE_ACTION_TYPES,
-
-
+    SERVICE_ACTION_TYPES
 }

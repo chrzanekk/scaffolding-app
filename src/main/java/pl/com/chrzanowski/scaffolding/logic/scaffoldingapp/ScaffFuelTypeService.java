@@ -7,7 +7,7 @@ import pl.com.chrzanowski.scaffolding.domain.scaffoldingapp.ScaffFuelTypeFilter;
 import java.util.List;
 
 @Service
-public class ScaffFuelTypeService {
+public class ScaffFuelTypeService implements IFuelType{
 
     private ScaffFuelTypeJdbcRepository fuelTypeJdbcRepository;
 
