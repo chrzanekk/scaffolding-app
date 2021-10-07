@@ -1,17 +1,16 @@
 package pl.com.chrzanowski.scaffolding.logic;
 
-import org.apache.commons.codec.language.bm.Lang;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.com.chrzanowski.scaffolding.domain.DictionaryData;
-import pl.com.chrzanowski.scaffolding.domain.scaffoldingapp.ScaffVehicleTypeData;
-import pl.com.chrzanowski.scaffolding.domain.scaffoldingapp.ScaffVehicleTypeFilter;
-import pl.com.chrzanowski.scaffolding.domain.scaffoldingapp.ScaffFuelTypeData;
-import pl.com.chrzanowski.scaffolding.domain.scaffoldingapp.ScaffFuelTypeFilter;
-import pl.com.chrzanowski.scaffolding.logic.scaffoldingapp.*;
+import pl.com.chrzanowski.scaffolding.domain.VehicleTypeData;
+import pl.com.chrzanowski.scaffolding.domain.VehicleTypeFilter;
+import pl.com.chrzanowski.scaffolding.domain.FuelTypeData;
+import pl.com.chrzanowski.scaffolding.domain.FuelTypeFilter;
+
 import java.util.*;
 
 
@@ -23,13 +22,13 @@ public class DictionariesService {
     private static final Logger log = LoggerFactory.getLogger(DictionariesService.class);
 
     private DictionariesJdbcRepository dictionariesJdbcRepository;
-    private ScaffVehicleTypeJdbcRepository vehicleTypeJdbcRepository;
-    private ScaffFuelTypeJdbcRepository fuelTypeJdbcRepository;
+    private VehicleTypeJdbcRepository vehicleTypeJdbcRepository;
+    private FuelTypeJdbcRepository fuelTypeJdbcRepository;
 
 
     public DictionariesService(DictionariesJdbcRepository dictionariesJdbcRepository,
-                               ScaffVehicleTypeJdbcRepository vehicleTypeJdbcRepository,
-                               ScaffFuelTypeJdbcRepository fuelTypeJdbcRepository) {
+                               VehicleTypeJdbcRepository vehicleTypeJdbcRepository,
+                               FuelTypeJdbcRepository fuelTypeJdbcRepository) {
         this.dictionariesJdbcRepository = dictionariesJdbcRepository;
         this.vehicleTypeJdbcRepository = vehicleTypeJdbcRepository;
         this.fuelTypeJdbcRepository = fuelTypeJdbcRepository;
@@ -73,11 +72,11 @@ public class DictionariesService {
         List<DictionaryData> list = new ArrayList<>();
 
         if (Language.US == lang || Language.EN == lang) {
-            list.add(new DictionaryData(ScaffUserAuthority.ADMIN.getCode(), "Admin", lang.getCode()));
-            list.add(new DictionaryData(ScaffUserAuthority.USER.getCode(), "User", lang.getCode()));
+            list.add(new DictionaryData(UserAuthority.ADMIN.getCode(), "Admin", lang.getCode()));
+            list.add(new DictionaryData(UserAuthority.USER.getCode(), "User", lang.getCode()));
         } else if (Language.PL == lang) {
-            list.add(new DictionaryData(ScaffUserAuthority.ADMIN.getCode(), "Admin", lang.getCode()));
-            list.add(new DictionaryData(ScaffUserAuthority.USER.getCode(), "Użytkownik", lang.getCode()));
+            list.add(new DictionaryData(UserAuthority.ADMIN.getCode(), "Admin", lang.getCode()));
+            list.add(new DictionaryData(UserAuthority.USER.getCode(), "Użytkownik", lang.getCode()));
         }
 
         return list;
@@ -122,11 +121,11 @@ public class DictionariesService {
     }
 
     private List<DictionaryData> getVehicleTypes(Language lang) {
-        List<ScaffVehicleTypeData> vehicleTypes = vehicleTypeJdbcRepository.find(new ScaffVehicleTypeFilter());
+        List<VehicleTypeData> vehicleTypes = vehicleTypeJdbcRepository.find(new VehicleTypeFilter());
 
         List<DictionaryData> dictionaryDataList = new ArrayList<>();
 
-        for(ScaffVehicleTypeData vehicleType : vehicleTypes) {
+        for(VehicleTypeData vehicleType : vehicleTypes) {
             dictionaryDataList.add(new DictionaryData(
                     vehicleType.getId(),
                     vehicleType.getName(),
@@ -136,11 +135,11 @@ public class DictionariesService {
     }
 
     private List<DictionaryData> getFuelTypes(Language lang) {
-        List<ScaffFuelTypeData> fuelTypes = fuelTypeJdbcRepository.find(new ScaffFuelTypeFilter());
+        List<FuelTypeData> fuelTypes = fuelTypeJdbcRepository.find(new FuelTypeFilter());
 
         List<DictionaryData> dictionaryDataList = new ArrayList<>();
 
-        for(ScaffFuelTypeData fuelType : fuelTypes) {
+        for(FuelTypeData fuelType : fuelTypes) {
             dictionaryDataList.add(new DictionaryData(
                     fuelType.getId(),
                     fuelType.getName(),

@@ -4,13 +4,13 @@ import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-import pl.com.chrzanowski.scaffolding.domain.scaffoldingapp.ScaffUserData;
+import pl.com.chrzanowski.scaffolding.domain.UserData;
 import pl.com.chrzanowski.scaffolding.logic.ApplicationConfigService;
 import pl.com.chrzanowski.scaffolding.logic.Language;
-import pl.com.chrzanowski.scaffolding.logic.scaffoldingapp.LanguagesUtil;
-import pl.com.chrzanowski.scaffolding.logic.scaffoldingapp.ScaffUserAuthoritiesService;
-import pl.com.chrzanowski.scaffolding.logic.scaffoldingapp.ScaffUserAuthority;
-import pl.com.chrzanowski.scaffolding.logic.scaffoldingapp.ScaffUsersService;
+import pl.com.chrzanowski.scaffolding.logic.LanguagesUtil;
+import pl.com.chrzanowski.scaffolding.logic.UserAuthoritiesService;
+import pl.com.chrzanowski.scaffolding.logic.UserAuthority;
+import pl.com.chrzanowski.scaffolding.logic.ScaffUsersService;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -20,15 +20,15 @@ import java.util.List;
 @Service
 public class AuthenticatedUser {
     private ApplicationConfigService applicationConfigService;
-    private ScaffUserAuthoritiesService scaffUserAuthoritiesService;
+    private UserAuthoritiesService userAuthoritiesService;
     private ScaffUsersService scaffUsersService;
 
     public AuthenticatedUser(ApplicationConfigService applicationConfigService
             , ScaffUsersService scaffUsersService,
-                             ScaffUserAuthoritiesService scaffUserAuthoritiesService) {
+                             UserAuthoritiesService userAuthoritiesService) {
         this.applicationConfigService = applicationConfigService;
         this.scaffUsersService = scaffUsersService;
-        this.scaffUserAuthoritiesService = scaffUserAuthoritiesService;
+        this.userAuthoritiesService = userAuthoritiesService;
     }
 
     public String getAppVersion() {
@@ -45,10 +45,10 @@ public class AuthenticatedUser {
 
     public List<Menu> getMenu() {
 
-        ScaffUserData loggedUser = scaffUsersService.getLoggedUser();
+        UserData loggedUser = scaffUsersService.getLoggedUser();
         Language currentLang = LanguagesUtil.getCurrentLanguage();
 
-        if (scaffUserAuthoritiesService.hasUserAuthority(loggedUser, ScaffUserAuthority.ADMIN)) {
+        if (userAuthoritiesService.hasUserAuthority(loggedUser, UserAuthority.ADMIN)) {
             return new ArrayList<>(Arrays.asList(
                     new Menu("Flota", "#", new Permissions[]{Permissions.ADMIN},
                             new ArrayList<>(Arrays.asList(new Menu(chooseMenuName("Cars", "Samochody", currentLang),

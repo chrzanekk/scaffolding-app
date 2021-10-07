@@ -8,13 +8,12 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import pl.com.chrzanowski.scaffolding.auth.ShaPasswordEncoder;
-import pl.com.chrzanowski.scaffolding.logic.scaffoldingapp.ScaffUserAuthority;
+import pl.com.chrzanowski.scaffolding.logic.UserAuthority;
 
 import javax.sql.DataSource;
 import java.util.Arrays;
@@ -46,13 +45,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
 
-                .antMatchers("/admin/**").hasAnyRole(ScaffUserAuthority.ADMIN.getCode())
-                .antMatchers("/actuator/**").hasRole(ScaffUserAuthority.ADMIN.getCode())
+                .antMatchers("/admin/**").hasAnyRole(UserAuthority.ADMIN.getCode())
+                .antMatchers("/actuator/**").hasRole(UserAuthority.ADMIN.getCode())
 
-                .antMatchers("/my-account/**").hasRole(ScaffUserAuthority.USER.getCode())
-                .antMatchers("/my-courses").hasRole(ScaffUserAuthority.USER.getCode())
-                .antMatchers("/payments").hasRole(ScaffUserAuthority.USER.getCode())
-                .antMatchers("/watch/**").hasRole(ScaffUserAuthority.USER.getCode())
+                .antMatchers("/my-account/**").hasRole(UserAuthority.USER.getCode())
+                .antMatchers("/my-courses").hasRole(UserAuthority.USER.getCode())
+                .antMatchers("/payments").hasRole(UserAuthority.USER.getCode())
+                .antMatchers("/watch/**").hasRole(UserAuthority.USER.getCode())
 
                 .antMatchers("/api/adviser/**").authenticated()
                 .antMatchers("/api/crs/change-email").authenticated()

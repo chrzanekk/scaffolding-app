@@ -11,13 +11,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.thymeleaf.TemplateEngine;
-import pl.com.chrzanowski.scaffolding.api.scaffolding.ScaffUserGetResponse;
-import pl.com.chrzanowski.scaffolding.api.scaffolding.ScaffVehicleGetResponse;
+import pl.com.chrzanowski.scaffolding.api.UserGetResponse;
+import pl.com.chrzanowski.scaffolding.api.VehicleGetResponse;
 import pl.com.chrzanowski.scaffolding.config.ApplicationConfig;
-import pl.com.chrzanowski.scaffolding.domain.scaffoldingapp.*;
+import pl.com.chrzanowski.scaffolding.domain.*;
 import pl.com.chrzanowski.scaffolding.logic.Language;
 import pl.com.chrzanowski.scaffolding.logic.*;
-import pl.com.chrzanowski.scaffolding.logic.scaffoldingapp.*;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -33,33 +32,31 @@ public class ApplicationController {
     private DictionariesService dictionariesService;
     private CacheService cacheService;
     private ApplicationConfig applicationConfig;
-    private ScaffEmailService emailService;
+    private EmailService emailService;
     private TemplateEngine templateEngine;
     private Environment environment;
-    private ScaffEmailConfirmService emailConfirmationService;
-    private ScaffVehiclesService vehiclesService;
-    private ScaffFuelTypeService fuelTypeService;
-    private ScaffDictionariesService scaffDictionariesService;
-    private ScaffVehicleTypeService vehicleTypeService;
-    private ScaffServiceActionsService serviceActionsService;
-    private ScaffServiceActionTypesService serviceActionTypesService;
-    private ScaffServiceWorkshopsService workshopsService;
+    private EmailConfirmService emailConfirmationService;
+    private VehiclesService vehiclesService;
+    private FuelTypeService fuelTypeService;
+    private VehicleTypeService vehicleTypeService;
+    private ServiceActionsService serviceActionsService;
+    private ServiceActionTypesService serviceActionTypesService;
+    private ServiceWorkshopsService workshopsService;
 
     public ApplicationController(ScaffUsersService scaffUsersService,
                                  DictionariesService dictionariesService,
                                  CacheService cacheService,
                                  ApplicationConfig applicationConfig,
-                                 ScaffEmailService emailService,
+                                 EmailService emailService,
                                  TemplateEngine templateEngine,
                                  Environment environment,
-                                 ScaffEmailConfirmService emailConfirmationService,
-                                 ScaffVehiclesService vehiclesService,
-                                 ScaffFuelTypeService fuelTypeService,
-                                 ScaffVehicleTypeService vehicleTypeService,
-                                 ScaffDictionariesService scaffDictionariesService,
-                                 ScaffServiceActionsService serviceActionsService,
-                                 ScaffServiceActionTypesService serviceActionTypesService,
-                                 ScaffServiceWorkshopsService workshopsService) {
+                                 EmailConfirmService emailConfirmationService,
+                                 VehiclesService vehiclesService,
+                                 FuelTypeService fuelTypeService,
+                                 VehicleTypeService vehicleTypeService,
+                                 ServiceActionsService serviceActionsService,
+                                 ServiceActionTypesService serviceActionTypesService,
+                                 ServiceWorkshopsService workshopsService) {
         this.scaffUsersService = scaffUsersService;
         this.dictionariesService = dictionariesService;
         this.cacheService = cacheService;
@@ -70,7 +67,6 @@ public class ApplicationController {
         this.emailConfirmationService = emailConfirmationService;
         this.vehiclesService = vehiclesService;
         this.fuelTypeService = fuelTypeService;
-        this.scaffDictionariesService = scaffDictionariesService;
         this.vehicleTypeService = vehicleTypeService;
         this.serviceActionsService = serviceActionsService;
         this.serviceActionTypesService = serviceActionTypesService;
@@ -156,7 +152,7 @@ public class ApplicationController {
 
         Language lang = LanguagesUtil.getCurrentLanguage();
 
-        model.addAttribute("vehicles", vehiclesService.find(new ScaffVehicleFilter()));
+        model.addAttribute("vehicles", vehiclesService.find(new VehicleFilter()));
         model.addAttribute("languageDict", dictionariesService.getDictionary(DictionaryType.LANGUAGES, lang));
         model.addAttribute("fuelTypes", dictionariesService.getDictionary(DictionaryType.FUEL_TYPES,lang));
         model.addAttribute("vehicleTypes", dictionariesService.getDictionary(DictionaryType.VEHICLE_TYPES,lang));
@@ -174,10 +170,10 @@ public class ApplicationController {
 
         Language lang = LanguagesUtil.getCurrentLanguage();
 
-        model.addAttribute("vehicle", new ScaffVehicleGetResponse(vehiclesService.findById(new ScaffVehicleFilter(id))));
+        model.addAttribute("vehicle", new VehicleGetResponse(vehiclesService.findById(new VehicleFilter(id))));
         model.addAttribute("languageDict", dictionariesService.getDictionary(DictionaryType.LANGUAGES, lang));
-        model.addAttribute("fuelTypes", fuelTypeService.find(new ScaffFuelTypeFilter()));
-        model.addAttribute("vehicleTypes", vehicleTypeService.find(new ScaffVehicleTypeFilter()));
+        model.addAttribute("fuelTypes", fuelTypeService.find(new FuelTypeFilter()));
+        model.addAttribute("vehicleTypes", vehicleTypeService.find(new VehicleTypeFilter()));
         return "admin-vehicle";
     }
     @GetMapping({"/admin/vehicle-edit/{id}"})
@@ -189,10 +185,10 @@ public class ApplicationController {
 
         Language lang = LanguagesUtil.getCurrentLanguage();
 
-        model.addAttribute("vehicle", new ScaffVehicleGetResponse(vehiclesService.findById(new ScaffVehicleFilter(id))));
+        model.addAttribute("vehicle", new VehicleGetResponse(vehiclesService.findById(new VehicleFilter(id))));
         model.addAttribute("languageDict", dictionariesService.getDictionary(DictionaryType.LANGUAGES, lang));
-        model.addAttribute("fuelTypes", fuelTypeService.find(new ScaffFuelTypeFilter()));
-        model.addAttribute("vehicleTypes", vehicleTypeService.find(new ScaffVehicleTypeFilter()));
+        model.addAttribute("fuelTypes", fuelTypeService.find(new FuelTypeFilter()));
+        model.addAttribute("vehicleTypes", vehicleTypeService.find(new VehicleTypeFilter()));
         return "admin-vehicle-edit";
     }
 
@@ -206,10 +202,10 @@ public class ApplicationController {
 
         Language lang = LanguagesUtil.getCurrentLanguage();
 
-        model.addAttribute("vehicle", new ScaffVehicleGetResponse(vehiclesService.findById(new ScaffVehicleFilter(id))));
-        model.addAttribute("serviceActions", serviceActionsService.find(new ScaffServiceActionsFilter(id, page, pageSize)));
-        model.addAttribute("serviceActionTypes", serviceActionTypesService.find(new ScaffServiceActionTypesFilter()));
-        model.addAttribute("workshops", workshopsService.find(new ScaffServiceWorkshopsFilter()));
+        model.addAttribute("vehicle", new VehicleGetResponse(vehiclesService.findById(new VehicleFilter(id))));
+        model.addAttribute("serviceActions", serviceActionsService.find(new ServiceActionsFilter(id, page, pageSize)));
+        model.addAttribute("serviceActionTypes", serviceActionTypesService.find(new ServiceActionTypesFilter()));
+        model.addAttribute("workshops", workshopsService.find(new ServiceWorkshopsFilter()));
         model.addAttribute("languageDict", dictionariesService.getDictionary(DictionaryType.LANGUAGES, lang));
 
         return "admin-vehicle-service-actions";
@@ -217,16 +213,16 @@ public class ApplicationController {
 
     @GetMapping({"/admin/vehicle-service-action/{id}"})
     public String adminVehicleServicesById(@PathVariable Long id, Model model) throws SQLException {
-        Long vehicleId = serviceActionsService.findById(new ScaffServiceActionsFilter(id)).getVehicleId();
+        Long vehicleId = serviceActionsService.findById(new ServiceActionsFilter(id)).getVehicleId();
         if (!serviceActionsService.hasLoggedUserPermissionToActionsManagement()) {
             throw new IllegalArgumentException("Access denied.");
         }
 
         Language lang = LanguagesUtil.getCurrentLanguage();
-        model.addAttribute("vehicle", vehiclesService.findById(new ScaffVehicleFilter(vehicleId)));
-        model.addAttribute("serviceAction", serviceActionsService.findById(new ScaffServiceActionsFilter(id)));
-        model.addAttribute("serviceActionTypes", serviceActionTypesService.find(new ScaffServiceActionTypesFilter()));
-        model.addAttribute("workshops", workshopsService.find(new ScaffServiceWorkshopsFilter()));
+        model.addAttribute("vehicle", vehiclesService.findById(new VehicleFilter(vehicleId)));
+        model.addAttribute("serviceAction", serviceActionsService.findById(new ServiceActionsFilter(id)));
+        model.addAttribute("serviceActionTypes", serviceActionTypesService.find(new ServiceActionTypesFilter()));
+        model.addAttribute("workshops", workshopsService.find(new ServiceWorkshopsFilter()));
         model.addAttribute("languageDict", dictionariesService.getDictionary(DictionaryType.LANGUAGES, lang));
 
         return "admin-vehicle-service-action";
@@ -241,7 +237,7 @@ public class ApplicationController {
 
         Language lang = LanguagesUtil.getCurrentLanguage();
 
-        model.addAttribute("workshops", workshopsService.find(new ScaffServiceWorkshopsFilter()));
+        model.addAttribute("workshops", workshopsService.find(new ServiceWorkshopsFilter()));
         model.addAttribute("languageDict", dictionariesService.getDictionary(DictionaryType.LANGUAGES, lang));
 
         return "admin-workshops";
@@ -256,7 +252,7 @@ public class ApplicationController {
 
         Language lang = LanguagesUtil.getCurrentLanguage();
 
-        model.addAttribute("workshop", workshopsService.find(new ScaffServiceWorkshopsFilter(id)).get(0));
+        model.addAttribute("workshop", workshopsService.find(new ServiceWorkshopsFilter(id)).get(0));
         model.addAttribute("languageDict", dictionariesService.getDictionary(DictionaryType.LANGUAGES, lang));
 
         return "admin-workshop";
@@ -271,7 +267,7 @@ public class ApplicationController {
 
         Language lang = LanguagesUtil.getCurrentLanguage();
 
-        model.addAttribute("serviceActionTypes", serviceActionTypesService.find(new ScaffServiceActionTypesFilter()));
+        model.addAttribute("serviceActionTypes", serviceActionTypesService.find(new ServiceActionTypesFilter()));
         model.addAttribute("languageDict", dictionariesService.getDictionary(DictionaryType.LANGUAGES, lang));
 
         return "admin-service-action-types";
@@ -287,7 +283,7 @@ public class ApplicationController {
         Language lang = LanguagesUtil.getCurrentLanguage();
 
         model.addAttribute("serviceActionType",
-                serviceActionTypesService.find(new ScaffServiceActionTypesFilter(id)).get(0));
+                serviceActionTypesService.find(new ServiceActionTypesFilter(id)).get(0));
         model.addAttribute("languageDict", dictionariesService.getDictionary(DictionaryType.LANGUAGES, lang));
 
         return "admin-service-action-type";
@@ -328,7 +324,7 @@ public class ApplicationController {
     @GetMapping({"/account-settings"})
     public String myAccount(Model model) {
         model.addAttribute("languagesDict", dictionariesService.getDictionary(DictionaryType.LANGUAGES));
-        model.addAttribute("user", new ScaffUserGetResponse(scaffUsersService.getLoggedUser()));
+        model.addAttribute("user", new UserGetResponse(scaffUsersService.getLoggedUser()));
         return "my-account";
     }
 

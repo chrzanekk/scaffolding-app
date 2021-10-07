@@ -4,8 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
-import pl.com.chrzanowski.scaffolding.domain.scaffoldingapp.ScaffUserData;
-import pl.com.chrzanowski.scaffolding.logic.scaffoldingapp.ScaffUsersService;
+import pl.com.chrzanowski.scaffolding.domain.UserData;
+import pl.com.chrzanowski.scaffolding.logic.ScaffUsersService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -28,7 +28,7 @@ public class ApplicationLocaleResolver extends SessionLocaleResolver {
         super.setLocale(request, response, locale);
     }
 
-    private void setLangPreferredByCustomer(HttpServletRequest request, ScaffUserData user) {
+    private void setLangPreferredByCustomer(HttpServletRequest request, UserData user) {
         if (user != null) {
             setLocale(request, null, Locale.forLanguageTag(user.getLanguage()));
         }
