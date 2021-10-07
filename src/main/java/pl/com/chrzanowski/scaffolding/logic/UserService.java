@@ -11,16 +11,19 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
+
+import static pl.com.chrzanowski.scaffolding.logic.JdbcUtil.*;
 
 @Service
-public class ScaffUsersService {
+public class UserService {
 
     private UserJdbcRepository userJdbcRepository;
     private EmailService emailService;
     private UserAuthoritiesService userAuthoritiesService;
 
-    public ScaffUsersService(UserJdbcRepository userJdbcRepository, EmailService emailService,
-                             UserAuthoritiesService userAuthoritiesService) {
+    public UserService(UserJdbcRepository userJdbcRepository, EmailService emailService,
+                       UserAuthoritiesService userAuthoritiesService) {
         this.userJdbcRepository = userJdbcRepository;
         this.emailService = emailService;
         this.userAuthoritiesService = userAuthoritiesService;
@@ -39,18 +42,18 @@ public class ScaffUsersService {
     }
 
     public List<UserData> find(UsersFilter filter) {
-        return userJdbcRepository.find(filter);
+        return getUsers(userJdbcRepository.find(filter));
     }
 
     public List<UserData> findWithAuthorities(UsersFilter filter) {
-        List<UserData> users = userJdbcRepository.find(filter);
+        List<UserData> users = getUsers(userJdbcRepository.find(filter));
         List<UserData> usersWithRoles = new ArrayList<>();
         if (users == null) {
             usersWithRoles = null;
         } else {
-            for (UserData customer : users) {
+            for (UserData user : users) {
                 usersWithRoles.add(
-                        new UserData(customer, userAuthoritiesService.getAuthoritiesForUser(customer)));
+                        new UserData(user, userAuthoritiesService.getAuthoritiesForUser(user)));
             }
         }
         return usersWithRoles;
@@ -58,7 +61,7 @@ public class ScaffUsersService {
 
     public void update(UserData data) {
         validate(data);
-        if(data.getAuthorities() != null) {
+        if (data.getAuthorities() != null) {
             userAuthoritiesService.deleteAuthorities(data);
             userAuthoritiesService.validateAndCreateAuthorityForUser(data, data.getAuthorities());
         } else {
@@ -85,7 +88,7 @@ public class ScaffUsersService {
 
     public UserData getLoggedUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        List<UserData> list = userJdbcRepository.find(new UsersFilter(authentication.getName()));
+        List<UserData> list = getUsers(userJdbcRepository.find(new UsersFilter(authentication.getName())));
         if (list.size() > 0) {
             return list.get(0);
         } else {
@@ -131,7 +134,7 @@ public class ScaffUsersService {
     }
 
     public List<UserData> findConfirmEmailNotificationRecipients() {
-        return userJdbcRepository.findConfirmEmailNotificationRecipients();
+        return getUsers(userJdbcRepository.findConfirmEmailNotificationRecipients());
     }
 
     private String prepareUserAgent(String userAgent) {
@@ -235,5 +238,25 @@ public class ScaffUsersService {
         }
     }
 
+    private List<UserData> getUsers(List<Map<String, Object>> data) {
+        List<UserData> users = new ArrayList<>();
+
+        for (Map<String, Object> row : data) {
+            users.add(new UserData(
+                    getLong(row, "id"),
+                    getString(row, "login"),
+                    getString(row, "password_hash"),
+                    getString(row, "language"),
+                    getBoolean(row, "regulation_accepted"),
+                    getBoolean(row, "newsletter_accepted"),
+                    getBoolean(row, "is_enabled"),
+                    getDateTime(row, "registration_datetime"),
+                    getString(row, "registration_ip"),
+                    getString(row, "registration_user_agent"),
+                    getBoolean(row, "email_confirmed")
+            ));
+        }
+        return users;
+    }
 
 }

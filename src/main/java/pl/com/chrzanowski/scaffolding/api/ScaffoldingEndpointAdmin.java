@@ -3,7 +3,7 @@ package pl.com.chrzanowski.scaffolding.api;
 import org.springframework.web.bind.annotation.*;
 import pl.com.chrzanowski.scaffolding.domain.*;
 import pl.com.chrzanowski.scaffolding.logic.*;
-import pl.com.chrzanowski.scaffolding.logic.notifications.ScaffNotificationsFromPanelService;
+import pl.com.chrzanowski.scaffolding.logic.notifications.NotificationsFromPanelService;
 
 import javax.servlet.http.HttpServletRequest;
 import java.sql.SQLException;
@@ -16,8 +16,8 @@ import java.util.List;
 @RequestMapping("/admin/api/scaffolding")
 public class ScaffoldingEndpointAdmin {
 
-    private ScaffUsersService scaffUsersService;
-    private ScaffNotificationsFromPanelService notificationsFromPanelService;
+    private UserService userService;
+    private NotificationsFromPanelService notificationsFromPanelService;
     private VehiclesService vehiclesService;
     private FuelTypeService fuelTypeService;
     private ServiceActionsService serviceActionsService;
@@ -25,15 +25,15 @@ public class ScaffoldingEndpointAdmin {
     private ServiceActionTypesService serviceActionTypesService;
     private MarketingService marketingService;
 
-    public ScaffoldingEndpointAdmin(ScaffUsersService scaffUsersService,
-                                    ScaffNotificationsFromPanelService notificationsFromPanelService,
+    public ScaffoldingEndpointAdmin(UserService userService,
+                                    NotificationsFromPanelService notificationsFromPanelService,
                                     VehiclesService vehiclesService,
                                     FuelTypeService fuelTypeService,
                                     ServiceActionsService serviceActionsService,
                                     ServiceWorkshopsService workshopsService,
                                     ServiceActionTypesService serviceActionTypesService,
                                     MarketingService marketingService) {
-        this.scaffUsersService = scaffUsersService;
+        this.userService = userService;
         this.notificationsFromPanelService = notificationsFromPanelService;
         this.vehiclesService = vehiclesService;
         this.fuelTypeService = fuelTypeService;
@@ -49,14 +49,14 @@ public class ScaffoldingEndpointAdmin {
             @RequestParam(name = "page_size", required = false, defaultValue = "10") Long pageSize,
             @RequestParam(name = "login", required = false) String loginLike
     ) {
-        List<UserData> users = scaffUsersService.find(new UsersFilter(loginLike, page, pageSize
+        List<UserData> users = userService.find(new UsersFilter(loginLike, page, pageSize
         ));
         return usersToResponses(users);
     }
 
     @PostMapping("/user")
     public void createUser(@RequestBody UserPostRequest request, HttpServletRequest httpServletRequest) {
-        scaffUsersService.registerUser(
+        userService.registerUser(
                 new UserData(
                         request.getLogin(),
                         request.getPasswordHash(),
@@ -71,9 +71,9 @@ public class ScaffoldingEndpointAdmin {
 
     @PutMapping("/user/{id}")
     public void updateUser(@PathVariable Long id, @RequestBody UserPutRequest request) {
-        UserData data = scaffUsersService.get(id);
+        UserData data = userService.get(id);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        scaffUsersService.update(new UserData(id,
+        userService.update(new UserData(id,
                 request.getLogin(),
                 data.getPasswordHash(),
                 request.getLanguage(),
@@ -87,12 +87,12 @@ public class ScaffoldingEndpointAdmin {
 
     @DeleteMapping("/user/{id}")
     public void deleteUser(@PathVariable Long id) {
-        scaffUsersService.delete(id);
+        userService.delete(id);
     }
 
     @PutMapping("/user-change-password/{id}")
     public void changePassword(@PathVariable Long id, @RequestBody ChangePasswordRequest request) {
-        scaffUsersService.changePasswordAdmin(id, request.getNewPasswordHash());
+        userService.changePasswordAdmin(id, request.getNewPasswordHash());
     }
 
     @PostMapping("/notifications")

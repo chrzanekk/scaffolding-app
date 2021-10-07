@@ -8,11 +8,11 @@ import pl.com.chrzanowski.scaffolding.domain.TraceData;
 public class TraceService {
 
     private TraceJdbcRepository traceJdbcRepository;
-    private ScaffUsersService scaffUsersService;
+    private UserService userService;
 
-    public TraceService(TraceJdbcRepository traceJdbcRepository, ScaffUsersService scaffUsersService) {
+    public TraceService(TraceJdbcRepository traceJdbcRepository, UserService userService) {
         this.traceJdbcRepository = traceJdbcRepository;
-        this.scaffUsersService = scaffUsersService;
+        this.userService = userService;
     }
 
     public void trace(TraceData trace) {
@@ -29,11 +29,11 @@ public class TraceService {
         if (who != null) {
             return who;
         } else {
-            UserData loggedUser = scaffUsersService.getLoggedUser();
+            UserData loggedUser = userService.getLoggedUser();
             if (loggedUser == null || loggedUser.getId() == null) {
                 return null;
             } else {
-                return String.valueOf(scaffUsersService.getLoggedUser().getId());
+                return String.valueOf(userService.getLoggedUser().getId());
             }
         }
     }

@@ -5,27 +5,32 @@ import pl.com.chrzanowski.scaffolding.domain.ServiceActionsData;
 import pl.com.chrzanowski.scaffolding.domain.ServiceActionsFilter;
 import pl.com.chrzanowski.scaffolding.domain.UserData;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+
+import static pl.com.chrzanowski.scaffolding.logic.JdbcUtil.*;
+import static pl.com.chrzanowski.scaffolding.logic.JdbcUtil.getString;
 
 @Service
 public class ServiceActionsService {
 
     private ServiceActionsJdbcRepository serviceActionsJdbcRepository;
-    private ScaffUsersService usersService;
+    private UserService usersService;
     private UserAuthoritiesService userAuthoritiesService;
 
-    public ServiceActionsService(ServiceActionsJdbcRepository serviceActionsJdbcRepository, ScaffUsersService usersService, UserAuthoritiesService userAuthoritiesService) {
+    public ServiceActionsService(ServiceActionsJdbcRepository serviceActionsJdbcRepository, UserService usersService, UserAuthoritiesService userAuthoritiesService) {
         this.serviceActionsJdbcRepository = serviceActionsJdbcRepository;
         this.usersService = usersService;
         this.userAuthoritiesService = userAuthoritiesService;
     }
 
     public List<ServiceActionsData> find(ServiceActionsFilter filter) {
-        return serviceActionsJdbcRepository.find(filter);
+        return getActions(serviceActionsJdbcRepository.find(filter));
     }
 
     public ServiceActionsData findById(ServiceActionsFilter filter) {
-        return serviceActionsJdbcRepository.get(filter);
+        return getActions(serviceActionsJdbcRepository.find(filter)).get(0);
     }
 
     public Boolean hasLoggedUserPermissionToActionsManagement() {
@@ -43,4 +48,28 @@ public class ServiceActionsService {
     public void update(ServiceActionsData data) {
             serviceActionsJdbcRepository.update(data);
     }
+
+
+
+    private List<ServiceActionsData> getActions(List<Map<String, Object>> data) {
+
+        List<ServiceActionsData> list = new ArrayList<>();
+
+        for (Map<String, Object> row : data) {
+            list.add(new ServiceActionsData(
+                    getLong(row, "id"),
+                    getLong(row, "vehicle_id"),
+                    getInteger(row, "car_mileage"),
+                    getDate(row, "service_date"),
+                    getString(row, "invoice_no"),
+                    getLong(row, "workshop_id"),
+                    getLong(row, "service_action_type_id"),
+                    getString(row, "action_type"),
+                    getString(row, "workshop"),
+                    getString(row, "description")
+            ));
+        }
+        return list;
+    }
+
 }

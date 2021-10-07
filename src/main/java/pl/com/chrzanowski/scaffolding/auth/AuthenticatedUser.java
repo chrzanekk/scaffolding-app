@@ -5,12 +5,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import pl.com.chrzanowski.scaffolding.domain.UserData;
-import pl.com.chrzanowski.scaffolding.logic.ApplicationConfigService;
-import pl.com.chrzanowski.scaffolding.logic.Language;
-import pl.com.chrzanowski.scaffolding.logic.LanguagesUtil;
-import pl.com.chrzanowski.scaffolding.logic.UserAuthoritiesService;
-import pl.com.chrzanowski.scaffolding.logic.UserAuthority;
-import pl.com.chrzanowski.scaffolding.logic.ScaffUsersService;
+import pl.com.chrzanowski.scaffolding.logic.*;
+import pl.com.chrzanowski.scaffolding.logic.UserService;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -21,13 +17,13 @@ import java.util.List;
 public class AuthenticatedUser {
     private ApplicationConfigService applicationConfigService;
     private UserAuthoritiesService userAuthoritiesService;
-    private ScaffUsersService scaffUsersService;
+    private UserService userService;
 
     public AuthenticatedUser(ApplicationConfigService applicationConfigService
-            , ScaffUsersService scaffUsersService,
+            , UserService userService,
                              UserAuthoritiesService userAuthoritiesService) {
         this.applicationConfigService = applicationConfigService;
-        this.scaffUsersService = scaffUsersService;
+        this.userService = userService;
         this.userAuthoritiesService = userAuthoritiesService;
     }
 
@@ -45,7 +41,7 @@ public class AuthenticatedUser {
 
     public List<Menu> getMenu() {
 
-        UserData loggedUser = scaffUsersService.getLoggedUser();
+        UserData loggedUser = userService.getLoggedUser();
         Language currentLang = LanguagesUtil.getCurrentLanguage();
 
         if (userAuthoritiesService.hasUserAuthority(loggedUser, UserAuthority.ADMIN)) {

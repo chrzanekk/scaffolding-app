@@ -33,7 +33,7 @@ public class ServiceActionTypeJdbcRepository {
         jdbcTemplate.update(query, data.getName(),data.getModifyDate(), data.getId());
     }
 
-    public List<ServiceActionTypeData> find(ServiceActionTypesFilter filter) {
+    public List<Map<String, Object>> find(ServiceActionTypesFilter filter) {
 
         String query = "SELECT * FROM service_action_type";
 
@@ -50,18 +50,7 @@ public class ServiceActionTypeJdbcRepository {
                 query += preparePaginationQuery(filter.getPage(), filter.getPageSize());
             }
         }
-        return prepareActionTypes(query);
+        return jdbcTemplate.queryForList(query);
     }
 
-    private List<ServiceActionTypeData> prepareActionTypes(String query) {
-        List<Map<String, Object>> rows = jdbcTemplate.queryForList(query);
-        List<ServiceActionTypeData> list = new ArrayList<>();
-        for (Map<String, Object> row : rows) {
-            list.add(new ServiceActionTypeData(
-                    getLong(row, "id"),
-                    getString(row, "name")
-            ));
-        }
-        return list;
-    }
 }

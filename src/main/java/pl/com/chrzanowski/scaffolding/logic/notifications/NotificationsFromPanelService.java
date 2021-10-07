@@ -5,37 +5,37 @@ import pl.com.chrzanowski.scaffolding.domain.CreateNotificationsParameters;
 import pl.com.chrzanowski.scaffolding.domain.NotificationData;
 import pl.com.chrzanowski.scaffolding.domain.UserData;
 import pl.com.chrzanowski.scaffolding.domain.UsersFilter;
-import pl.com.chrzanowski.scaffolding.logic.ScaffUsersService;
+import pl.com.chrzanowski.scaffolding.logic.UserService;
 import pl.com.chrzanowski.scaffolding.logic.Language;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class ScaffNotificationsFromPanelService {
-    private final ScaffUsersService scaffUsersService;
-    private final ScaffNotificationsService scaffNotificationsService;
-    private final ScaffNotificationsValidator scaffNotificationsValidator;
+public class NotificationsFromPanelService {
+    private final UserService userService;
+    private final NotificationsService notificationsService;
+    private final NotificationsValidator notificationsValidator;
 
-    public ScaffNotificationsFromPanelService(ScaffUsersService scaffUsersService, ScaffNotificationsService scaffNotificationsService,
-                                              ScaffNotificationsValidator scaffNotificationsValidator) {
-        this.scaffUsersService = scaffUsersService;
-        this.scaffNotificationsService = scaffNotificationsService;
-        this.scaffNotificationsValidator = scaffNotificationsValidator;
+    public NotificationsFromPanelService(UserService userService, NotificationsService notificationsService,
+                                         NotificationsValidator notificationsValidator) {
+        this.userService = userService;
+        this.notificationsService = notificationsService;
+        this.notificationsValidator = notificationsValidator;
     }
 
     public void createNotifications(CreateNotificationsParameters parameters) {
         validateParameters(parameters);
-        List<UserData> customers = scaffUsersService.find(new UsersFilter(parameters.getLanguage()));
+        List<UserData> customers = userService.find(new UsersFilter(parameters.getLanguage()));
         List<NotificationData> notifications = prepareNotifications(customers, parameters);
-        scaffNotificationsService.validateAndCreate(notifications);
+        notificationsService.validateAndCreate(notifications);
     }
 
     private void validateParameters(CreateNotificationsParameters parameters) {
-        scaffNotificationsValidator.validateTitle(parameters.getTitle());
-        scaffNotificationsValidator.validateContent(parameters.getContent());
-        scaffNotificationsValidator.validateLink(parameters.getLink());
-        scaffNotificationsValidator.validateLanguage(parameters.getLanguage());
+        notificationsValidator.validateTitle(parameters.getTitle());
+        notificationsValidator.validateContent(parameters.getContent());
+        notificationsValidator.validateLink(parameters.getLink());
+        notificationsValidator.validateLanguage(parameters.getLanguage());
     }
 
     private List<NotificationData> prepareNotifications(List<UserData> customers,
@@ -51,9 +51,9 @@ public class ScaffNotificationsFromPanelService {
         String title = parameters.getTitle();
         String content = parameters.getContent();
         String link = parameters.getLink();
-        ScaffNotificationStatus status = ScaffNotificationStatus.SENT;
-        ScaffNotificationType type = ScaffNotificationType.PLATFORM;
-        ScaffNotificationKind kind = ScaffNotificationKind.FROM_PANEL_ADMIN;
+        NotificationStatus status = NotificationStatus.SENT;
+        NotificationType type = NotificationType.PLATFORM;
+        NotificationKind kind = NotificationKind.FROM_PANEL_ADMIN;
         Language language = parameters.getLanguage();
         return new NotificationData(customer, title, content, link, status, type, kind, language);
     }

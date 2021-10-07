@@ -30,7 +30,7 @@ public class VehicleTypeJdbcRepository {
         return commonJdbcRepository.getLastInsertedId();
     }
 
-    public List<VehicleTypeData> find(VehicleTypeFilter filter) {
+    public List<Map<String, Object>> find(VehicleTypeFilter filter) {
 
         String query = "SELECT * FROM vehicle_type";
 
@@ -50,32 +50,9 @@ public class VehicleTypeJdbcRepository {
             }
         }
 
-        return prepareVehicleTypes(query);
+        return jdbcTemplate.queryForList(query);
     }
 
-    public Long getVehicleTypeId(VehicleTypeFilter filter) {
-
-        List<VehicleTypeData> list = find(filter);
-
-        for (VehicleTypeData row : list) {
-            if (row.getName().equals(filter.getName())) {
-                return row.getId();
-            }
-        }
-        return null;
-    }
-
-    private List<VehicleTypeData> prepareVehicleTypes(String query) {
-        List<Map<String, Object>> rows = jdbcTemplate.queryForList(query);
-        List<VehicleTypeData> list = new ArrayList<>();
-        for (Map<String, Object> row : rows) {
-            list.add(new VehicleTypeData(
-                    getLong(row, "id"),
-                    getString(row, "name")
-            ));
-        }
-        return list;
-    }
 
 
 }

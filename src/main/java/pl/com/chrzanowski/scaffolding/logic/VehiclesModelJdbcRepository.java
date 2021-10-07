@@ -35,7 +35,7 @@ public class VehiclesModelJdbcRepository {
         jdbcTemplate.update(query, data.getModelName(), data.getModifyDate(), id);
     }
 
-    List<VehicleModelData> find(VehicleModelFilter filter) {
+    List<Map<String, Object>> find(VehicleModelFilter filter) {
         String query = "SELECT * FROM vehicle_model";
 
         if (filter != null) {
@@ -48,29 +48,7 @@ public class VehiclesModelJdbcRepository {
                 query += " AND name = '" + filter.getName() + "'";
             }
         }
-        return prepareVehiclesModels(jdbcTemplate.queryForList(query));
-    }
-
-    public VehicleModelData findByName(String name) {
-        List<VehicleModelData> models = find(new VehicleModelFilter(name));
-        if (models.size() == 0) {
-            throw new IllegalArgumentException("Models not found");
-        } else {
-            return models.get(0);
-        }
-    }
-
-    private List<VehicleModelData> prepareVehiclesModels(List<Map<String, Object>> rows) {
-
-        List<VehicleModelData> models = new ArrayList<>();
-
-        for (Map<String, Object> row : rows) {
-            models.add(new VehicleModelData(
-                    getLong(row, "id"),
-                    getString(row, "name")
-            ));
-        }
-        return models;
+        return jdbcTemplate.queryForList(query);
     }
 }
 

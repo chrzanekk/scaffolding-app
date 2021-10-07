@@ -18,8 +18,6 @@ public class VehiclesJdbcRepository {
     private CommonJdbcRepository commonJdbcRepository;
     private VehicleBrandJdbcRepository brandJdbcRepository;
     private VehiclesModelJdbcRepository modelJdbcRepository;
-    private FuelTypeJdbcRepository fuelTypeJdbcRepository;
-    private VehicleTypeJdbcRepository vehicleTypeJdbcRepository;
 
     public VehiclesJdbcRepository(JdbcTemplate jdbcTemplate, CommonJdbcRepository commonJdbcRepository,
                                   VehicleBrandJdbcRepository brandJdbcRepository,
@@ -76,9 +74,7 @@ public class VehiclesJdbcRepository {
     }
 
 
-    public void update(VehicleData data) throws SQLException {
-        Long brandId = find(new VehicleFilter(data.getId())).get(0).getBrandId();
-        Long modelId = find(new VehicleFilter(data.getId())).get(0).getModelId();
+    public void update(VehicleData data, Long brandId, Long modelId) throws SQLException {
         brandJdbcRepository.update(data, brandId);
         modelJdbcRepository.update(data, modelId);
 
@@ -111,7 +107,7 @@ public class VehiclesJdbcRepository {
     }
 
 
-    List<VehicleData> find(VehicleFilter filter) throws SQLException {
+    List<Map<String, Object>> find(VehicleFilter filter) throws SQLException {
 
         String query = "SELECT \n" +
                 "vehicles.id, \n" +
@@ -157,51 +153,7 @@ public class VehiclesJdbcRepository {
                 query += preparePaginationQuery(filter.getPage(), filter.getPageSize());
             }
         }
-
-
-        return prepareVehicles(query);
-
+        return jdbcTemplate.queryForList(query);
     }
 
-    VehicleData get(VehicleFilter filter) throws SQLException {
-        return getVehicle(find(filter), filter);
-    }
-
-    private List<VehicleData> prepareVehicles(String query) {
-        List<Map<String, Object>> rows = jdbcTemplate.queryForList(query);
-        List<VehicleData> list = new ArrayList<>();
-        for (Map<String, Object> row : rows) {
-            list.add(new VehicleData(
-                    getLong(row, "id"),
-                    getLong(row, "brandId"),
-                    getString(row, "brand"),
-                    getLong(row, "modelId"),
-                    getString(row, "model"),
-                    getString(row, "registration_number"),
-                    getString(row, "vin"),
-                    getInteger(row, "production_year"),
-                    getDate(row, "first_registration_date"),
-                    getInteger(row, "free_places_for_technical_inspections"),
-                    getString(row, "fuel_type"),
-                    getString(row, "vehicle_type"),
-                    getFloat(row,"length"),
-                    getFloat(row,"width"),
-                    getFloat(row,"height")
-            ));
-        }
-        return list;
-    }
-
-    private VehicleData getVehicle(List<VehicleData> list, VehicleFilter filter) {
-
-        VehicleData vehicle = null;
-
-        for (VehicleData data : list) {
-            if (filter.getId().equals(data.getId())) {
-                vehicle = data;
-                break;
-            }
-        }
-        return vehicle;
-    }
 }

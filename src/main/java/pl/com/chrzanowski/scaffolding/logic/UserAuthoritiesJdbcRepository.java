@@ -35,7 +35,7 @@ public class UserAuthoritiesJdbcRepository {
         jdbcTemplate.update(query);
     }
 
-    List<UserAuthorityData> find(UserAuthoritiesFilter filter) {
+    List<Map<String, Object>> find(UserAuthoritiesFilter filter) {
 
         List<UserAuthorityData> authorities = new ArrayList<>();
 
@@ -55,13 +55,7 @@ public class UserAuthoritiesJdbcRepository {
 
         List<Map<String, Object>> rows = jdbcTemplate.queryForList(query);
 
-        for (Map<String, Object> row : rows) {
-            authorities.add(new UserAuthorityData(
-                    getLong(row, "id"),
-                    userJdbcRepository.find(new UsersFilter(getLong(row, "user_id"))).get(0),
-                    getString(row, "authority")
-            ));
-        }
-        return authorities;
+
+        return jdbcTemplate.queryForList(query);
     }
 }

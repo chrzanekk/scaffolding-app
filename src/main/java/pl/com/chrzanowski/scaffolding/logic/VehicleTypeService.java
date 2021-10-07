@@ -4,7 +4,12 @@ import org.springframework.stereotype.Service;
 import pl.com.chrzanowski.scaffolding.domain.VehicleTypeData;
 import pl.com.chrzanowski.scaffolding.domain.VehicleTypeFilter;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+
+import static pl.com.chrzanowski.scaffolding.logic.JdbcUtil.getLong;
+import static pl.com.chrzanowski.scaffolding.logic.JdbcUtil.getString;
 
 @Service
 public class VehicleTypeService {
@@ -16,8 +21,17 @@ public class VehicleTypeService {
     }
 
     public List<VehicleTypeData> find(VehicleTypeFilter filter) {
-        return vehicleTypeJdbcRepository.find(filter);
+        return getVehicleTypes(vehicleTypeJdbcRepository.find(filter));
     }
 
-
+    private List<VehicleTypeData> getVehicleTypes(List<Map<String, Object>> data) {
+        List<VehicleTypeData> list = new ArrayList<>();
+        for (Map<String, Object> row : data) {
+            list.add(new VehicleTypeData(
+                    getLong(row, "id"),
+                    getString(row, "name")
+            ));
+        }
+        return list;
+    }
 }

@@ -34,7 +34,7 @@ public class VehicleBrandJdbcRepository {
         jdbcTemplate.update(query,data.getBrandName(), data.getModifyDate() ,id);
     }
 
-    List<VehicleBrandData> find(VehicleBrandFilter filter) {
+    List<Map<String, Object>> find(VehicleBrandFilter filter) {
 
         String query = "SELECT * FROM vehicle_brand";
 
@@ -48,31 +48,8 @@ public class VehicleBrandJdbcRepository {
                 query += " AND name = '" + filter.getName() + "'";
             }
         }
-        return prepareVehiclesBrands(jdbcTemplate.queryForList(query));
-    }
-
-    public VehicleBrandData findByName(String name) {
-        List<VehicleBrandData> brands = find(new VehicleBrandFilter(name));
-        if(brands.size() == 0 ) {
-            throw new IllegalArgumentException("Brands not found");
-        } else {
-           return brands.get(0);
-        }
+        return jdbcTemplate.queryForList(query);
     }
 
 
-
-
-    private List<VehicleBrandData> prepareVehiclesBrands(List<Map<String, Object>> rows) {
-
-        List<VehicleBrandData> brands = new ArrayList<>();
-
-        for (Map<String, Object> row : rows) {
-            brands.add(new VehicleBrandData(
-                    getLong(row, "id"),
-                    getString(row, "name")
-            ));
-        }
-        return brands;
-    }
 }

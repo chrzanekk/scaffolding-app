@@ -12,14 +12,14 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class ScaffNotificationsService {
+public class NotificationsService {
 
-    private ScaffNotificationsJdbcRepository scaffNotificationsJdbcRepository;
-    private ScaffNotificationsValidator scaffNotificationsValidator;
+    private NotificationsJdbcRepository notificationsJdbcRepository;
+    private NotificationsValidator notificationsValidator;
 
-    public ScaffNotificationsService(ScaffNotificationsJdbcRepository scaffNotificationsJdbcRepository, ScaffNotificationsValidator scaffNotificationsValidator) {
-        this.scaffNotificationsJdbcRepository = scaffNotificationsJdbcRepository;
-        this.scaffNotificationsValidator = scaffNotificationsValidator;
+    public NotificationsService(NotificationsJdbcRepository notificationsJdbcRepository, NotificationsValidator notificationsValidator) {
+        this.notificationsJdbcRepository = notificationsJdbcRepository;
+        this.notificationsValidator = notificationsValidator;
     }
 
     public void validateAndCreate(NotificationData data) {
@@ -29,21 +29,21 @@ public class ScaffNotificationsService {
         String title = data.getTitle();
         String content = data.getContent();
         String link = data.getLink();
-        ScaffNotificationStatus status = data.getStatus();
-        ScaffNotificationType type = data.getType();
-        ScaffNotificationKind kind = data.getKind();
+        NotificationStatus status = data.getStatus();
+        NotificationType type = data.getType();
+        NotificationKind kind = data.getKind();
         Language language = data.getLanguage();
 
         NotificationData toCreate = new NotificationData(createDatetime, null, null,
                 user, title, content, link, status, type, kind, language);
 
-        scaffNotificationsValidator.validate(toCreate);
-        scaffNotificationsJdbcRepository.create(toCreate);
+        notificationsValidator.validate(toCreate);
+        notificationsJdbcRepository.create(toCreate);
     }
 
     public void validateAndUpdate(NotificationData data) {
-        scaffNotificationsValidator.validate(data);
-        scaffNotificationsJdbcRepository.update(data);
+        notificationsValidator.validate(data);
+        notificationsJdbcRepository.update(data);
     }
 
     @Transactional
@@ -54,11 +54,11 @@ public class ScaffNotificationsService {
     }
 
     public List<NotificationData> find(NotificationsFilter filter) {
-        return scaffNotificationsJdbcRepository.find(filter);
+        return notificationsJdbcRepository.find(filter);
     }
 
     public Long unseenNotificationsCount(UserData customer) {
-        return scaffNotificationsJdbcRepository.unseenNotificationsCount(customer);
+        return notificationsJdbcRepository.unseenNotificationsCount(customer);
     }
 
     @Transactional

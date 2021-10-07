@@ -69,7 +69,7 @@ public class ServiceActionsJdbcRepository {
                 data.getId());
     }
 
-    List<ServiceActionsData> find(ServiceActionsFilter filter) {
+    List<Map<String, Object>> find(ServiceActionsFilter filter) {
 
         String query = "SELECT \n" +
                 "service_actions.id,\n" +
@@ -109,44 +109,8 @@ public class ServiceActionsJdbcRepository {
                 query += preparePaginationQuery(filter.getPage(), filter.getPageSize());
             }
         }
-        return prepareActions(query);
+        return jdbcTemplate.queryForList(query);
     }
 
-    ServiceActionsData get(ServiceActionsFilter filter) {
-        return getAction(find(filter), filter.getId());
-    }
-
-    private List<ServiceActionsData> prepareActions(String query) {
-        List<Map<String, Object>> rows = jdbcTemplate.queryForList(query);
-        List<ServiceActionsData> list = new ArrayList<>();
-        for (Map<String, Object> row : rows) {
-            list.add(new ServiceActionsData(
-                    getLong(row, "id"),
-                    getLong(row, "vehicle_id"),
-                    getInteger(row, "car_mileage"),
-                    getDate(row, "service_date"),
-                    getString(row, "invoice_no"),
-                    getLong(row, "workshop_id"),
-                    getLong(row, "service_action_type_id"),
-                    getString(row, "action_type"),
-                    getString(row, "workshop"),
-                    getString(row, "description")
-            ));
-        }
-        return list;
-    }
-
-    private ServiceActionsData getAction(List<ServiceActionsData> list, Long id) {
-
-        ServiceActionsData action = null;
-
-        for (ServiceActionsData data : list) {
-            if (id.equals(data.getId())) {
-                action = data;
-                break;
-            }
-        }
-        return action;
-    }
 
 }

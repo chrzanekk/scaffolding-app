@@ -73,7 +73,7 @@ public class ServiceWorkshopsJdbcRepository {
                 data.getId());
     }
 
-    public List<ServiceWorkshopsData> find(ServiceWorkshopsFilter filter) {
+    public List<Map<String,Object>> find(ServiceWorkshopsFilter filter) {
 
         String query = "SELECT * FROM service_workshops";
 
@@ -98,24 +98,8 @@ public class ServiceWorkshopsJdbcRepository {
             }
         }
 
-        return prepareWorkshops(query);
+        return jdbcTemplate.queryForList(query);
     }
 
-    private List<ServiceWorkshopsData> prepareWorkshops(String query) {
-        List<Map<String,Object>> rows = jdbcTemplate.queryForList(query);
-        List<ServiceWorkshopsData> list = new ArrayList<>();
-        for (Map<String,Object> row : rows) {
-            list.add(new ServiceWorkshopsData(
-                    getLong(row,"id"),
-                    getString(row,"name"),
-                    getString(row,"tax_number"),
-                    getString(row,"street"),
-                    getString(row,"building_number"),
-                    getString(row, "apartment_number"),
-                    getString(row,"postal_code"),
-                    getString(row,"city")
-            ));
-        }
-        return list;
-    }
+
 }

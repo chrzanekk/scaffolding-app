@@ -6,7 +6,7 @@ import pl.com.chrzanowski.scaffolding.domain.NotificationData;
 import pl.com.chrzanowski.scaffolding.logic.Language;
 
 @Service
-public class ScaffNotificationsValidator {
+public class NotificationsValidator {
 
     public void validate(NotificationData notification) {
         validateIfNull(notification);
@@ -58,19 +58,19 @@ public class ScaffNotificationsValidator {
         }
     }
 
-    public void validateStatus(ScaffNotificationStatus status) {
+    public void validateStatus(NotificationStatus status) {
         if (status == null) {
             throw new IllegalArgumentException("Notification status is empty or incorrect");
         }
     }
 
-    public void validateType(ScaffNotificationType type) {
+    public void validateType(NotificationType type) {
         if (type == null) {
             throw new IllegalArgumentException("Notification type is empty or incorrect");
         }
     }
 
-    public void validateKind(ScaffNotificationKind kind) {
+    public void validateKind(NotificationKind kind) {
         if (kind == null) {
             throw new IllegalArgumentException("Notification kind is empty or incorrect");
         }

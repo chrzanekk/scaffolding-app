@@ -9,13 +9,13 @@ import java.time.LocalDateTime;
 @Service
 public class EmailConfirmService {
 
-    private ScaffUsersService scaffUsersService;
+    private UserService userService;
     private TokensService tokensService;
     private EmailService emailService;
 
-    public EmailConfirmService(TokensService tokensService, ScaffUsersService scaffUsersService, EmailService emailService) {
+    public EmailConfirmService(TokensService tokensService, UserService userService, EmailService emailService) {
         this.tokensService = tokensService;
-        this.scaffUsersService = scaffUsersService;
+        this.userService = userService;
         this.emailService = emailService;
     }
 
@@ -24,7 +24,7 @@ public class EmailConfirmService {
         TokenData token = tokensService.get(tokenValue);
 
         if (token.getExpirationDatetime().isAfter(LocalDateTime.now())) {
-            scaffUsersService.update(new UserData(token.getUser(), true));
+            userService.update(new UserData(token.getUser(), true));
         } else {
             throw new IllegalArgumentException("Token expired");
         }
@@ -32,7 +32,7 @@ public class EmailConfirmService {
     }
 
     public void sendEmailConfirmationLink() {
-        UserData loggedUser = scaffUsersService.getLoggedUser();
+        UserData loggedUser = userService.getLoggedUser();
         emailService.sendEmailConfirmationLink(loggedUser);
     }
 

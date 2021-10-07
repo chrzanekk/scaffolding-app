@@ -3,13 +3,13 @@ package pl.com.chrzanowski.scaffolding.logic.notifications;
 import java.util.HashMap;
 import java.util.Map;
 
-public enum ScaffNotificationStatus {
-    SENT("s"),
-    WAITING("w");
+public enum NotificationKind {
+    EMAIL_CONFIRMATION_REMINDER("e"),
+    FROM_PANEL_ADMIN("p");
 
     private String code;
 
-    ScaffNotificationStatus(String code) {
+    NotificationKind(String code) {
         this.code = code;
     }
 
@@ -17,16 +17,16 @@ public enum ScaffNotificationStatus {
         return code;
     }
 
-    private static final Map<String, ScaffNotificationStatus> codesWithEnums;
+    private static final Map<String, NotificationKind> codesWithEnums;
 
     static {
         codesWithEnums = new HashMap<>();
-        for (ScaffNotificationStatus codeWithEnum : ScaffNotificationStatus.values()) {
+        for (NotificationKind codeWithEnum : NotificationKind.values()) {
             codesWithEnums.put(codeWithEnum.code, codeWithEnum);
         }
     }
 
-    public static ScaffNotificationStatus from(String code) {
+    public static NotificationKind from(String code) {
         return codesWithEnums.get(code);
     }
 }

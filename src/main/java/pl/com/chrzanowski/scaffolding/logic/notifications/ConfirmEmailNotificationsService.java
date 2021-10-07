@@ -6,34 +6,34 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import pl.com.chrzanowski.scaffolding.domain.NotificationData;
 import pl.com.chrzanowski.scaffolding.domain.UserData;
-import pl.com.chrzanowski.scaffolding.logic.ScaffUsersService;
+import pl.com.chrzanowski.scaffolding.logic.UserService;
 import pl.com.chrzanowski.scaffolding.logic.Language;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class ScaffConfirmEmailNotificationsService {
+public class ConfirmEmailNotificationsService {
 
-    private static final Logger log = LoggerFactory.getLogger(ScaffConfirmEmailNotificationsService.class);
+    private static final Logger log = LoggerFactory.getLogger(ConfirmEmailNotificationsService.class);
 
     private static final String LINK = "/account-settings";
 
-    private final ScaffNotificationsService scaffNotificationsService;
-    private final ScaffUsersService scaffUsersService;
+    private final NotificationsService notificationsService;
+    private final UserService userService;
 
-    public ScaffConfirmEmailNotificationsService(ScaffNotificationsService scaffNotificationsService, ScaffUsersService scaffUsersService) {
-        this.scaffNotificationsService = scaffNotificationsService;
-        this.scaffUsersService = scaffUsersService;
+    public ConfirmEmailNotificationsService(NotificationsService notificationsService, UserService userService) {
+        this.notificationsService = notificationsService;
+        this.userService = userService;
     }
 
     @Scheduled(cron = "0 0 4 * * *")
     private void createNotifications() {
         long startTime = System.currentTimeMillis();
         log.info("Start confirm email notifications creating");
-        List<UserData> recipients = scaffUsersService.findConfirmEmailNotificationRecipients();
+        List<UserData> recipients = userService.findConfirmEmailNotificationRecipients();
         List<NotificationData> notifications = prepareNotifications(recipients);
-        scaffNotificationsService.validateAndCreate(notifications);
+        notificationsService.validateAndCreate(notifications);
         long timeTaken = System.currentTimeMillis() - startTime;
         log.info("Successfully created {} confirm email notifications in {} ms", notifications.size(), timeTaken);
     }
@@ -50,9 +50,9 @@ public class ScaffConfirmEmailNotificationsService {
         Language language = Language.from(recipient.getLanguage());
         String title = prepareTitle(language);
         String content = prepareContent(language);
-        ScaffNotificationStatus status = ScaffNotificationStatus.SENT;
-        ScaffNotificationType type = ScaffNotificationType.PLATFORM;
-        ScaffNotificationKind kind = ScaffNotificationKind.EMAIL_CONFIRMATION_REMINDER;
+        NotificationStatus status = NotificationStatus.SENT;
+        NotificationType type = NotificationType.PLATFORM;
+        NotificationKind kind = NotificationKind.EMAIL_CONFIRMATION_REMINDER;
         return new NotificationData(recipient, title, content, LINK, status, type, kind, language);
     }
 

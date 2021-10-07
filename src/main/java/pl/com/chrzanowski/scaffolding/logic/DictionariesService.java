@@ -24,14 +24,17 @@ public class DictionariesService {
     private DictionariesJdbcRepository dictionariesJdbcRepository;
     private VehicleTypeJdbcRepository vehicleTypeJdbcRepository;
     private FuelTypeJdbcRepository fuelTypeJdbcRepository;
+    private FuelTypeService fuelTypeService;
 
 
     public DictionariesService(DictionariesJdbcRepository dictionariesJdbcRepository,
                                VehicleTypeJdbcRepository vehicleTypeJdbcRepository,
-                               FuelTypeJdbcRepository fuelTypeJdbcRepository) {
+                               FuelTypeJdbcRepository fuelTypeJdbcRepository,
+                               FuelTypeService fuelTypeService) {
         this.dictionariesJdbcRepository = dictionariesJdbcRepository;
         this.vehicleTypeJdbcRepository = vehicleTypeJdbcRepository;
         this.fuelTypeJdbcRepository = fuelTypeJdbcRepository;
+        this.fuelTypeService = fuelTypeService;
     }
 
     public List<DictionaryData> getDictionary(DictionaryType type) {
@@ -135,7 +138,7 @@ public class DictionariesService {
     }
 
     private List<DictionaryData> getFuelTypes(Language lang) {
-        List<FuelTypeData> fuelTypes = fuelTypeJdbcRepository.find(new FuelTypeFilter());
+        List<FuelTypeData> fuelTypes = fuelTypeService.find(new FuelTypeFilter());
 
         List<DictionaryData> dictionaryDataList = new ArrayList<>();
 

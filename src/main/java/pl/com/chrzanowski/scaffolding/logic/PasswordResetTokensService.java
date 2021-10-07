@@ -8,22 +8,26 @@ import pl.com.chrzanowski.scaffolding.domain.UserData;
 import pl.com.chrzanowski.scaffolding.domain.UsersFilter;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
+
+import static pl.com.chrzanowski.scaffolding.logic.JdbcUtil.*;
 
 @Service
 public class PasswordResetTokensService {
 
     private PasswordResetTokensJdbcRepository passwordResetTokensJdbcRepository;
-    private ScaffUsersService scaffUsersService;
+    private UserService userService;
     private EmailService emailService;
     private ApplicationConfig applicationConfig;
 
     public PasswordResetTokensService(PasswordResetTokensJdbcRepository passwordResetTokensJdbcRepository,
-                                      ScaffUsersService scaffUsersService, EmailService emailService,
+                                      UserService userService, EmailService emailService,
                                       ApplicationConfig applicationConfig) {
         this.passwordResetTokensJdbcRepository = passwordResetTokensJdbcRepository;
-        this.scaffUsersService = scaffUsersService;
+        this.userService = userService;
         this.emailService = emailService;
         this.applicationConfig = applicationConfig;
     }
@@ -33,7 +37,7 @@ public class PasswordResetTokensService {
     }
 
     public List<PasswordResetTokenData> find(PasswordResetTokensFilter filter) {
-        return passwordResetTokensJdbcRepository.find(filter);
+        return getPasswordResetToken(passwordResetTokensJdbcRepository.find(filter));
     }
 
     public void update(PasswordResetTokenData data) {
@@ -42,7 +46,7 @@ public class PasswordResetTokensService {
 
     public void prepareAndSendToken(String email) {
         try {
-            UserData user = scaffUsersService.find(new UsersFilter(email)).get(0);
+            UserData user = userService.find(new UsersFilter(email)).get(0);
             PasswordResetTokenData token = prepare(user);
             create(token);
             emailService.sendPasswordResetMail(token);
@@ -55,7 +59,7 @@ public class PasswordResetTokensService {
         try {
             PasswordResetTokenData tokenData = find(new PasswordResetTokensFilter(token)).get(0);
             validateTokenBeforeReset(tokenData);
-            scaffUsersService.changePassword(tokenData.getUser(), newPasswordHash);
+            userService.changePassword(tokenData.getUser(), newPasswordHash);
             update(new PasswordResetTokenData(tokenData, true));
         } catch (IndexOutOfBoundsException ex) {
             throw new IllegalArgumentException("Incorrect token!");
@@ -73,5 +77,21 @@ public class PasswordResetTokensService {
         } else if (data.getUsed()) {
             throw new IllegalArgumentException("Token used, can't reset password");
         }
+    }
+
+    private List<PasswordResetTokenData> getPasswordResetToken(List<Map<String, Object>> data) {
+
+        List<PasswordResetTokenData> list = new ArrayList<>();
+
+        for (Map<String, Object> row : data) {
+            list.add(new PasswordResetTokenData(
+                    getLong(row, "id"),
+                    userService.find(new UsersFilter(getLong(row, "user_id"))).get(0),
+                    getString(row, "value"),
+                    getDateTime(row, "expiration_datetime"),
+                    getBoolean(row, "used")
+            ));
+        }
+        return list;
     }
 }

@@ -7,8 +7,8 @@ import pl.com.chrzanowski.scaffolding.domain.NotificationsFilter;
 import pl.com.chrzanowski.scaffolding.domain.TraceData;
 import pl.com.chrzanowski.scaffolding.domain.UserData;
 import pl.com.chrzanowski.scaffolding.logic.*;
-import pl.com.chrzanowski.scaffolding.logic.notifications.ScaffNotificationType;
-import pl.com.chrzanowski.scaffolding.logic.notifications.ScaffNotificationsService;
+import pl.com.chrzanowski.scaffolding.logic.notifications.NotificationType;
+import pl.com.chrzanowski.scaffolding.logic.notifications.NotificationsService;
 
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
@@ -19,18 +19,18 @@ import java.util.List;
 @RequestMapping("/api/scaffolding")
 public class ScaffoldingEndpoint {
 
-    private ScaffUsersService scaffUsersService;
+    private UserService userService;
     private PasswordResetTokensService passwordResetTokensService;
     private TraceService traceService;
     private EmailConfirmService emailConfirmService;
-    private ScaffNotificationsService scaffNotificationsService;
+    private NotificationsService notificationsService;
 
-    public ScaffoldingEndpoint(ScaffUsersService scaffUsersService, PasswordResetTokensService passwordResetTokensService, TraceService traceService, EmailConfirmService emailConfirmService, ScaffNotificationsService scaffNotificationsService) {
-        this.scaffUsersService = scaffUsersService;
+    public ScaffoldingEndpoint(UserService userService, PasswordResetTokensService passwordResetTokensService, TraceService traceService, EmailConfirmService emailConfirmService, NotificationsService notificationsService) {
+        this.userService = userService;
         this.passwordResetTokensService = passwordResetTokensService;
         this.traceService = traceService;
         this.emailConfirmService = emailConfirmService;
-        this.scaffNotificationsService = scaffNotificationsService;
+        this.notificationsService = notificationsService;
     }
 
     @PostMapping("/register-user")
@@ -46,22 +46,22 @@ public class ScaffoldingEndpoint {
                 new String[] {UserAuthority.USER.getCode()},
                 httpServletRequest
                 );
-        scaffUsersService.registerUser(userCreateRequest);
+        userService.registerUser(userCreateRequest);
     }
 
     @PostMapping("/change-password")
     public void changePassword(@RequestBody ChangePasswordRequest request) {
-        scaffUsersService.changeLoggedUsersPassword(request.getActualPasswordHash(), request.getNewPasswordHash());
+        userService.changeLoggedUsersPassword(request.getActualPasswordHash(), request.getNewPasswordHash());
     }
 
     @PutMapping("/logged-user")
     public void updateLoggedUser(@RequestBody LoggedUserPutRequest request) {
-        UserData loggedUser = scaffUsersService.getLoggedUser();
+        UserData loggedUser = userService.getLoggedUser();
 
         if (loggedUser == null) {
             throw new IllegalArgumentException("Your are logged out. Please log in and retry");
         }
-        scaffUsersService.updateLoggedUser(request.getLanguage(), request.getNewsletterAccepted());
+        userService.updateLoggedUser(request.getLanguage(), request.getNewsletterAccepted());
     }
 
     @PostMapping("/user/forget-password")
@@ -82,24 +82,24 @@ public class ScaffoldingEndpoint {
     @GetMapping("/notifications/count/unseen")
     public UnseenNotificationsCountRequestGetResponse getUnseenNotifications() {
 
-        UserData user = scaffUsersService.getLoggedUser();
+        UserData user = userService.getLoggedUser();
         if (user == null) {
             throw new IllegalArgumentException("You must be logged to get your unseen notifications count");
         }
 
-        return new UnseenNotificationsCountRequestGetResponse(scaffNotificationsService.unseenNotificationsCount(user));
+        return new UnseenNotificationsCountRequestGetResponse(notificationsService.unseenNotificationsCount(user));
     }
 
     @GetMapping("/notifications")
     public NotificationsRequestGetResponse getNotifications() {
-        UserData user = scaffUsersService.getLoggedUser();
+        UserData user = userService.getLoggedUser();
         if (user == null) {
             throw new IllegalArgumentException("You must be logged to get your notifications");
         }
 
-        List<NotificationData> notifications = scaffNotificationsService.find(new NotificationsFilter(false, user,
-                ScaffNotificationType.PLATFORM, 10L));
-        scaffNotificationsService.setNotificationsSeen(notifications);
+        List<NotificationData> notifications = notificationsService.find(new NotificationsFilter(false, user,
+                NotificationType.PLATFORM, 10L));
+        notificationsService.setNotificationsSeen(notifications);
         return new NotificationsRequestGetResponse(notificationsToResponses(notifications));
     }
 

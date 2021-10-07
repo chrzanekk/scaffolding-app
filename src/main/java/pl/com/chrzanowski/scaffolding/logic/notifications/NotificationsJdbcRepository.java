@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import pl.com.chrzanowski.scaffolding.domain.NotificationData;
 import pl.com.chrzanowski.scaffolding.domain.NotificationsFilter;
 import pl.com.chrzanowski.scaffolding.domain.UserData;
-import pl.com.chrzanowski.scaffolding.logic.ScaffUsersService;
+import pl.com.chrzanowski.scaffolding.logic.UserService;
 import pl.com.chrzanowski.scaffolding.logic.Language;
 
 import java.util.ArrayList;
@@ -15,14 +15,14 @@ import java.util.Map;
 import static pl.com.chrzanowski.scaffolding.logic.JdbcUtil.*;
 
 @Service
-public class ScaffNotificationsJdbcRepository {
+public class NotificationsJdbcRepository {
 
     private JdbcTemplate jdbcTemplate;
-    private ScaffUsersService scaffUsersService;
+    private UserService userService;
 
-    public ScaffNotificationsJdbcRepository(JdbcTemplate jdbcTemplate, ScaffUsersService scaffUsersService) {
+    public NotificationsJdbcRepository(JdbcTemplate jdbcTemplate, UserService userService) {
         this.jdbcTemplate = jdbcTemplate;
-        this.scaffUsersService = scaffUsersService;
+        this.userService = userService;
     }
 
     void create(NotificationData data) {
@@ -85,9 +85,9 @@ public class ScaffNotificationsJdbcRepository {
                     getString(row, "title"),
                     getString(row, "content"),
                     getString(row, "link"),
-                    ScaffNotificationStatus.from(getString(row, "status")),
-                    ScaffNotificationType.from(getString(row, "type")),
-                    ScaffNotificationKind.from(getString(row, "kind")),
+                    NotificationStatus.from(getString(row, "status")),
+                    NotificationType.from(getString(row, "type")),
+                    NotificationKind.from(getString(row, "kind")),
                     Language.from(getString(row, "language"))
             ));
         }
@@ -150,7 +150,7 @@ public class ScaffNotificationsJdbcRepository {
         if (id == null) {
             return null;
         } else {
-            return scaffUsersService.get(id);
+            return userService.get(id);
         }
     }
 }

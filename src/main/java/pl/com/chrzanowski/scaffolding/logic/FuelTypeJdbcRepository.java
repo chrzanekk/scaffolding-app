@@ -30,7 +30,7 @@ public class FuelTypeJdbcRepository {
         return commonJdbcRepository.getLastInsertedId();
     }
 
-    public List<FuelTypeData> find(FuelTypeFilter filter) {
+    public List<Map<String,Object>> find(FuelTypeFilter filter) {
 
         String query = "SELECT * FROM fuel_type";
 
@@ -50,30 +50,7 @@ public class FuelTypeJdbcRepository {
             }
         }
 
-        return prepareFuelTypes(query);
+        return jdbcTemplate.queryForList(query);
     }
 
-    public Long getFuelTypeId(FuelTypeFilter filter) {
-
-        List<FuelTypeData> list = find(filter);
-
-        for(FuelTypeData row : list) {
-            if(row.getName().equals(filter.getName())) {
-                return row.getId();
-            }
-        }
-        return null;
-    }
-
-    private List<FuelTypeData> prepareFuelTypes(String query) {
-        List<Map<String, Object>> rows = jdbcTemplate.queryForList(query);
-        List<FuelTypeData> list = new ArrayList<>();
-        for (Map<String, Object> row : rows) {
-            list.add(new FuelTypeData(
-                    getLong(row, "id"),
-                    getString(row, "name")
-            ));
-        }
-        return list;
-    }
 }

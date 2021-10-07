@@ -28,7 +28,7 @@ import java.sql.SQLException;
 @Controller
 public class ApplicationController {
     private static final Logger log = LoggerFactory.getLogger(ApplicationController.class);
-    private ScaffUsersService scaffUsersService;
+    private UserService userService;
     private DictionariesService dictionariesService;
     private CacheService cacheService;
     private ApplicationConfig applicationConfig;
@@ -37,13 +37,13 @@ public class ApplicationController {
     private Environment environment;
     private EmailConfirmService emailConfirmationService;
     private VehiclesService vehiclesService;
-    private FuelTypeService fuelTypeService;
+    private IFuelType iFuelType;
     private VehicleTypeService vehicleTypeService;
     private ServiceActionsService serviceActionsService;
     private ServiceActionTypesService serviceActionTypesService;
     private ServiceWorkshopsService workshopsService;
 
-    public ApplicationController(ScaffUsersService scaffUsersService,
+    public ApplicationController(UserService userService,
                                  DictionariesService dictionariesService,
                                  CacheService cacheService,
                                  ApplicationConfig applicationConfig,
@@ -52,12 +52,12 @@ public class ApplicationController {
                                  Environment environment,
                                  EmailConfirmService emailConfirmationService,
                                  VehiclesService vehiclesService,
-                                 FuelTypeService fuelTypeService,
+                                 IFuelType iFuelType,
                                  VehicleTypeService vehicleTypeService,
                                  ServiceActionsService serviceActionsService,
                                  ServiceActionTypesService serviceActionTypesService,
                                  ServiceWorkshopsService workshopsService) {
-        this.scaffUsersService = scaffUsersService;
+        this.userService = userService;
         this.dictionariesService = dictionariesService;
         this.cacheService = cacheService;
         this.applicationConfig = applicationConfig;
@@ -66,7 +66,7 @@ public class ApplicationController {
         this.environment = environment;
         this.emailConfirmationService = emailConfirmationService;
         this.vehiclesService = vehiclesService;
-        this.fuelTypeService = fuelTypeService;
+        this.iFuelType = iFuelType;
         this.vehicleTypeService = vehicleTypeService;
         this.serviceActionsService = serviceActionsService;
         this.serviceActionTypesService = serviceActionTypesService;
@@ -146,7 +146,7 @@ public class ApplicationController {
     @GetMapping({"/admin/vehicles"})
     public String adminVehicles(Model model) throws SQLException {
 
-        if (!scaffUsersService.isLoggedUserAdmin()) {
+        if (!userService.isLoggedUserAdmin()) {
             throw new IllegalArgumentException("Access denied");
         }
 
@@ -164,7 +164,7 @@ public class ApplicationController {
     @GetMapping({"/admin/vehicle/{id}"})
     public String adminVehicleById(@PathVariable Long id, Model model) throws SQLException {
 
-        if (!scaffUsersService.isLoggedUserAdmin()) {
+        if (!userService.isLoggedUserAdmin()) {
             throw new IllegalArgumentException("Access denied");
         }
 
@@ -172,14 +172,14 @@ public class ApplicationController {
 
         model.addAttribute("vehicle", new VehicleGetResponse(vehiclesService.findById(new VehicleFilter(id))));
         model.addAttribute("languageDict", dictionariesService.getDictionary(DictionaryType.LANGUAGES, lang));
-        model.addAttribute("fuelTypes", fuelTypeService.find(new FuelTypeFilter()));
+        model.addAttribute("fuelTypes", iFuelType.find(new FuelTypeFilter()));
         model.addAttribute("vehicleTypes", vehicleTypeService.find(new VehicleTypeFilter()));
         return "admin-vehicle";
     }
     @GetMapping({"/admin/vehicle-edit/{id}"})
     public String adminVehicleEditById(@PathVariable Long id, Model model) throws SQLException {
 
-        if (!scaffUsersService.isLoggedUserAdmin()) {
+        if (!userService.isLoggedUserAdmin()) {
             throw new IllegalArgumentException("Access denied");
         }
 
@@ -187,7 +187,7 @@ public class ApplicationController {
 
         model.addAttribute("vehicle", new VehicleGetResponse(vehiclesService.findById(new VehicleFilter(id))));
         model.addAttribute("languageDict", dictionariesService.getDictionary(DictionaryType.LANGUAGES, lang));
-        model.addAttribute("fuelTypes", fuelTypeService.find(new FuelTypeFilter()));
+        model.addAttribute("fuelTypes", iFuelType.find(new FuelTypeFilter()));
         model.addAttribute("vehicleTypes", vehicleTypeService.find(new VehicleTypeFilter()));
         return "admin-vehicle-edit";
     }
@@ -196,7 +196,7 @@ public class ApplicationController {
     public String adminVehicleServiceActions(@PathVariable Long id, Model model,
                                              @RequestParam(name = "page", required = false, defaultValue = "1") Long page,
                                              @RequestParam(name = "page_size", required = false, defaultValue = "10") Long pageSize) throws SQLException {
-        if (!scaffUsersService.isLoggedUserAdmin()) {
+        if (!userService.isLoggedUserAdmin()) {
             throw new IllegalArgumentException("Access denied");
         }
 
@@ -231,7 +231,7 @@ public class ApplicationController {
     @GetMapping({"/admin/workshops"})
     public String adminWorkshops(Model model) {
 
-        if (!scaffUsersService.isLoggedUserAdmin()) {
+        if (!userService.isLoggedUserAdmin()) {
             throw new IllegalArgumentException("Access denied");
         }
 
@@ -246,7 +246,7 @@ public class ApplicationController {
     @GetMapping({"/admin/workshop/{id}"})
     public String adminWorkshopsById(@PathVariable Long id, Model model) {
 
-        if (!scaffUsersService.isLoggedUserAdmin()) {
+        if (!userService.isLoggedUserAdmin()) {
             throw new IllegalArgumentException("Access denied");
         }
 
@@ -261,7 +261,7 @@ public class ApplicationController {
     @GetMapping({"/admin/service-action-types"})
     public String adminServiceActionTypes(Model model) {
 
-        if (!scaffUsersService.isLoggedUserAdmin()) {
+        if (!userService.isLoggedUserAdmin()) {
             throw new IllegalArgumentException("Access denied");
         }
 
@@ -276,7 +276,7 @@ public class ApplicationController {
     @GetMapping({"/admin/service-action-type/{id}"})
     public String adminServiceActionTypeById(@PathVariable Long id, Model model) {
 
-        if (!scaffUsersService.isLoggedUserAdmin()) {
+        if (!userService.isLoggedUserAdmin()) {
             throw new IllegalArgumentException("Access denied");
         }
 
@@ -324,7 +324,7 @@ public class ApplicationController {
     @GetMapping({"/account-settings"})
     public String myAccount(Model model) {
         model.addAttribute("languagesDict", dictionariesService.getDictionary(DictionaryType.LANGUAGES));
-        model.addAttribute("user", new UserGetResponse(scaffUsersService.getLoggedUser()));
+        model.addAttribute("user", new UserGetResponse(userService.getLoggedUser()));
         return "my-account";
     }
 

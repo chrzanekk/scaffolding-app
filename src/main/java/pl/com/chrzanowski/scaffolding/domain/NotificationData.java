@@ -1,9 +1,9 @@
 package pl.com.chrzanowski.scaffolding.domain;
 
 import pl.com.chrzanowski.scaffolding.logic.Language;
-import pl.com.chrzanowski.scaffolding.logic.notifications.ScaffNotificationKind;
-import pl.com.chrzanowski.scaffolding.logic.notifications.ScaffNotificationStatus;
-import pl.com.chrzanowski.scaffolding.logic.notifications.ScaffNotificationType;
+import pl.com.chrzanowski.scaffolding.logic.notifications.NotificationKind;
+import pl.com.chrzanowski.scaffolding.logic.notifications.NotificationStatus;
+import pl.com.chrzanowski.scaffolding.logic.notifications.NotificationType;
 
 import java.time.LocalDateTime;
 
@@ -16,14 +16,14 @@ public class NotificationData {
     private String title;
     private String content;
     private String link;
-    private ScaffNotificationStatus status;
-    private ScaffNotificationType type;
-    private ScaffNotificationKind kind;
+    private NotificationStatus status;
+    private NotificationType type;
+    private NotificationKind kind;
     private Language language;
 
     public NotificationData(Long id, LocalDateTime createDatetime, LocalDateTime seenDatetime,
                             LocalDateTime deleteDatetime, UserData user, String title, String content, String link,
-                            ScaffNotificationStatus status, ScaffNotificationType type, ScaffNotificationKind kind, Language language) {
+                            NotificationStatus status, NotificationType type, NotificationKind kind, Language language) {
         this.id = id;
         this.createDatetime = createDatetime;
         this.seenDatetime = seenDatetime;
@@ -39,8 +39,8 @@ public class NotificationData {
     }
 
     public NotificationData(LocalDateTime createDatetime, LocalDateTime seenDatetime, LocalDateTime deleteDatetime,
-                            UserData user, String title, String content, String link, ScaffNotificationStatus status,
-                            ScaffNotificationType type, ScaffNotificationKind kind, Language language) {
+                            UserData user, String title, String content, String link, NotificationStatus status,
+                            NotificationType type, NotificationKind kind, Language language) {
         this.createDatetime = createDatetime;
         this.seenDatetime = seenDatetime;
         this.deleteDatetime = deleteDatetime;
@@ -54,7 +54,7 @@ public class NotificationData {
         this.language = language;
     }
 
-    public NotificationData(UserData user, String title, String content, String link, ScaffNotificationStatus status, ScaffNotificationType type, ScaffNotificationKind kind, Language language) {
+    public NotificationData(UserData user, String title, String content, String link, NotificationStatus status, NotificationType type, NotificationKind kind, Language language) {
         this.user = user;
         this.title = title;
         this.content = content;
@@ -112,15 +112,15 @@ public class NotificationData {
         return link;
     }
 
-    public ScaffNotificationStatus getStatus() {
+    public NotificationStatus getStatus() {
         return status;
     }
 
-    public ScaffNotificationType getType() {
+    public NotificationType getType() {
         return type;
     }
 
-    public ScaffNotificationKind getKind() {
+    public NotificationKind getKind() {
         return kind;
     }
 

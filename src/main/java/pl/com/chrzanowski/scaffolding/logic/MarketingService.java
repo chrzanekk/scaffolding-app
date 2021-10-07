@@ -8,14 +8,14 @@ import pl.com.chrzanowski.scaffolding.domain.UsersFilter;
 @Service
 public class MarketingService {
     private MarketingJdbcRepository marketingJdbcRepository;
-    private ScaffUsersService scaffUsersService;
+    private UserService userService;
     private NewsletterService newsletterService;
 
 
-    public MarketingService(MarketingJdbcRepository marketingJdbcRepository, ScaffUsersService scaffUsersService,
+    public MarketingService(MarketingJdbcRepository marketingJdbcRepository, UserService userService,
                             NewsletterService newsletterService) {
         this.marketingJdbcRepository = marketingJdbcRepository;
-        this.scaffUsersService = scaffUsersService;
+        this.userService = userService;
         this.newsletterService = newsletterService;
     }
 
@@ -23,7 +23,7 @@ public class MarketingService {
         if (newsletter == null || newsletter.getContent() == null || newsletter.getContent().size() == 0) {
             throw new IllegalArgumentException("Incorrect content");
         }
-        for (UserData user : scaffUsersService.find(new UsersFilter(true, true, 10000l, true))) {
+        for (UserData user : userService.find(new UsersFilter(true, true, 10000l, true))) {
             newsletterService.sendNewsletterToCustomer(user, newsletter);
         }
     }

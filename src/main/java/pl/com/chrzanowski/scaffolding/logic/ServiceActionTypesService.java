@@ -5,7 +5,12 @@ import pl.com.chrzanowski.scaffolding.domain.ServiceActionTypeData;
 import pl.com.chrzanowski.scaffolding.domain.ServiceActionTypesFilter;
 
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+
+import static pl.com.chrzanowski.scaffolding.logic.JdbcUtil.getLong;
+import static pl.com.chrzanowski.scaffolding.logic.JdbcUtil.getString;
 
 @Service
 public class ServiceActionTypesService {
@@ -17,7 +22,7 @@ public class ServiceActionTypesService {
     }
 
     public List<ServiceActionTypeData> find(ServiceActionTypesFilter filter) {
-        return serviceActionTypeJdbcRepository.find(filter);
+        return getActionTypes(serviceActionTypeJdbcRepository.find(filter));
     }
 
     public Long add(ServiceActionTypeData data) {
@@ -29,6 +34,15 @@ public class ServiceActionTypesService {
     }
 
 
+    private List<ServiceActionTypeData> getActionTypes(List<Map<String, Object>> data) {
 
-
+        List<ServiceActionTypeData> list = new ArrayList<>();
+        for (Map<String, Object> row : data) {
+            list.add(new ServiceActionTypeData(
+                    getLong(row, "id"),
+                    getString(row, "name")
+            ));
+        }
+        return list;
+    }
 }

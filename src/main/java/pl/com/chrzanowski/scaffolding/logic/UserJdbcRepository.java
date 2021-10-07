@@ -87,7 +87,7 @@ public class UserJdbcRepository {
                 data.getId());
     }
 
-    List<UserData> find(UsersFilter filter) {
+    List<Map<String, Object>> find(UsersFilter filter) {
 
         String query = "SELECT * FROM users";
 
@@ -133,10 +133,10 @@ public class UserJdbcRepository {
             query += preparePaginationQuery(filter.getPage(), filter.getPageSize());
 
         }
-        return prepareUsers(jdbcTemplate.queryForList(query));
+        return jdbcTemplate.queryForList(query);
     }
 
-    List<UserData> findConfirmEmailNotificationRecipients() {
+    List<Map<String, Object>>findConfirmEmailNotificationRecipients() {
         String query = "SELECT * FROM users " +
                 "WHERE is_enabled = true " +
                 "AND email_confirmed = false " +
@@ -144,29 +144,7 @@ public class UserJdbcRepository {
                 "SELECT * FROM notifications " +
                 "WHERE user_id = users.id AND seen_datetime IS NULL " +
                 "AND kind = 'e');";
-        return prepareUsers(jdbcTemplate.queryForList(query));
+        return jdbcTemplate.queryForList(query);
     }
 
-
-    private List<UserData> prepareUsers(List<Map<String, Object>> rows) {
-
-        List<UserData> users = new ArrayList<>();
-
-        for (Map<String, Object> row : rows) {
-            users.add(new UserData(
-                    getLong(row, "id"),
-                    getString(row, "login"),
-                    getString(row, "password_hash"),
-                    getString(row, "language"),
-                    getBoolean(row, "regulation_accepted"),
-                    getBoolean(row, "newsletter_accepted"),
-                    getBoolean(row, "is_enabled"),
-                    getDateTime(row, "registration_datetime"),
-                    getString(row, "registration_ip"),
-                    getString(row, "registration_user_agent"),
-                    getBoolean(row, "email_confirmed")
-            ));
-        }
-        return users;
-    }
 }
