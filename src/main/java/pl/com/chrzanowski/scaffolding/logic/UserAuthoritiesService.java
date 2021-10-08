@@ -17,12 +17,13 @@ import static pl.com.chrzanowski.scaffolding.logic.JdbcUtil.getString;
 public class UserAuthoritiesService {
 
     private UserAuthoritiesJdbcRepository userAuthoritiesJdbcRepository;
-    private UserService userService;
+    private UserJdbcRepository userJdbcRepository;
 
 
-    public UserAuthoritiesService(UserAuthoritiesJdbcRepository userAuthoritiesJdbcRepository, UserService userService) {
+    public UserAuthoritiesService(UserAuthoritiesJdbcRepository userAuthoritiesJdbcRepository,
+                                  UserJdbcRepository userJdbcRepository) {
         this.userAuthoritiesJdbcRepository = userAuthoritiesJdbcRepository;
-        this.userService = userService;
+        this.userJdbcRepository = userJdbcRepository;
     }
 
     public void deleteAuthorities(UserData user) {
@@ -77,7 +78,7 @@ public class UserAuthoritiesService {
         for (Map<String, Object> row : data) {
             list.add(new UserAuthorityData(
                     getLong(row, "id"),
-                    userService.find(new UsersFilter(getLong(row, "user_id"))).get(0),
+                    MapToListConverter.getUserList(userJdbcRepository.find(new UsersFilter(getLong(row, "user_id")))).get(0),
                     getString(row, "authority")
             ));
         }

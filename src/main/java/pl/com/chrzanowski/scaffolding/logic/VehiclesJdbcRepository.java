@@ -74,7 +74,7 @@ public class VehiclesJdbcRepository {
     }
 
 
-    public void update(VehicleData data, Long brandId, Long modelId) throws SQLException {
+    public void update(VehicleData data, Long brandId, Long modelId)  {
         brandJdbcRepository.update(data, brandId);
         modelJdbcRepository.update(data, modelId);
 
@@ -107,7 +107,7 @@ public class VehiclesJdbcRepository {
     }
 
 
-    List<Map<String, Object>> find(VehicleFilter filter) throws SQLException {
+    List<Map<String, Object>> find(VehicleFilter filter) {
 
         String query = "SELECT \n" +
                 "vehicles.id, \n" +

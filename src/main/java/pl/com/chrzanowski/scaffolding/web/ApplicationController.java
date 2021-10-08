@@ -15,7 +15,6 @@ import pl.com.chrzanowski.scaffolding.api.UserGetResponse;
 import pl.com.chrzanowski.scaffolding.api.VehicleGetResponse;
 import pl.com.chrzanowski.scaffolding.config.ApplicationConfig;
 import pl.com.chrzanowski.scaffolding.domain.*;
-import pl.com.chrzanowski.scaffolding.logic.Language;
 import pl.com.chrzanowski.scaffolding.logic.*;
 
 import javax.servlet.http.Cookie;
@@ -36,7 +35,7 @@ public class ApplicationController {
     private TemplateEngine templateEngine;
     private Environment environment;
     private EmailConfirmService emailConfirmationService;
-    private VehiclesService vehiclesService;
+    private IVehicle iVehicle;
     private IFuelType iFuelType;
     private VehicleTypeService vehicleTypeService;
     private ServiceActionsService serviceActionsService;
@@ -51,7 +50,7 @@ public class ApplicationController {
                                  TemplateEngine templateEngine,
                                  Environment environment,
                                  EmailConfirmService emailConfirmationService,
-                                 VehiclesService vehiclesService,
+                                 IVehicle iVehicle,
                                  IFuelType iFuelType,
                                  VehicleTypeService vehicleTypeService,
                                  ServiceActionsService serviceActionsService,
@@ -65,8 +64,8 @@ public class ApplicationController {
         this.templateEngine = templateEngine;
         this.environment = environment;
         this.emailConfirmationService = emailConfirmationService;
-        this.vehiclesService = vehiclesService;
         this.iFuelType = iFuelType;
+        this.iVehicle = iVehicle;
         this.vehicleTypeService = vehicleTypeService;
         this.serviceActionsService = serviceActionsService;
         this.serviceActionTypesService = serviceActionTypesService;
@@ -152,10 +151,10 @@ public class ApplicationController {
 
         Language lang = LanguagesUtil.getCurrentLanguage();
 
-        model.addAttribute("vehicles", vehiclesService.find(new VehicleFilter()));
+        model.addAttribute("vehicles", iVehicle.find(new VehicleFilter()));
         model.addAttribute("languageDict", dictionariesService.getDictionary(DictionaryType.LANGUAGES, lang));
-        model.addAttribute("fuelTypes", dictionariesService.getDictionary(DictionaryType.FUEL_TYPES,lang));
-        model.addAttribute("vehicleTypes", dictionariesService.getDictionary(DictionaryType.VEHICLE_TYPES,lang));
+        model.addAttribute("fuelTypes", dictionariesService.getDictionary(DictionaryType.FUEL_TYPES, lang));
+        model.addAttribute("vehicleTypes", dictionariesService.getDictionary(DictionaryType.VEHICLE_TYPES, lang));
 
         return "admin-vehicles";
     }
@@ -170,14 +169,15 @@ public class ApplicationController {
 
         Language lang = LanguagesUtil.getCurrentLanguage();
 
-        model.addAttribute("vehicle", new VehicleGetResponse(vehiclesService.findById(new VehicleFilter(id))));
+        model.addAttribute("vehicle", iVehicle.findById(new VehicleFilter(id)));
         model.addAttribute("languageDict", dictionariesService.getDictionary(DictionaryType.LANGUAGES, lang));
         model.addAttribute("fuelTypes", iFuelType.find(new FuelTypeFilter()));
         model.addAttribute("vehicleTypes", vehicleTypeService.find(new VehicleTypeFilter()));
         return "admin-vehicle";
     }
+
     @GetMapping({"/admin/vehicle-edit/{id}"})
-    public String adminVehicleEditById(@PathVariable Long id, Model model) throws SQLException {
+    public String adminVehicleEditById(@PathVariable Long id, Model model) {
 
         if (!userService.isLoggedUserAdmin()) {
             throw new IllegalArgumentException("Access denied");
@@ -185,7 +185,7 @@ public class ApplicationController {
 
         Language lang = LanguagesUtil.getCurrentLanguage();
 
-        model.addAttribute("vehicle", new VehicleGetResponse(vehiclesService.findById(new VehicleFilter(id))));
+        model.addAttribute("vehicle", iVehicle.findById(new VehicleFilter(id)));
         model.addAttribute("languageDict", dictionariesService.getDictionary(DictionaryType.LANGUAGES, lang));
         model.addAttribute("fuelTypes", iFuelType.find(new FuelTypeFilter()));
         model.addAttribute("vehicleTypes", vehicleTypeService.find(new VehicleTypeFilter()));
@@ -202,7 +202,7 @@ public class ApplicationController {
 
         Language lang = LanguagesUtil.getCurrentLanguage();
 
-        model.addAttribute("vehicle", new VehicleGetResponse(vehiclesService.findById(new VehicleFilter(id))));
+        model.addAttribute("vehicle", iVehicle.findById(new VehicleFilter(id)));
         model.addAttribute("serviceActions", serviceActionsService.find(new ServiceActionsFilter(id, page, pageSize)));
         model.addAttribute("serviceActionTypes", serviceActionTypesService.find(new ServiceActionTypesFilter()));
         model.addAttribute("workshops", workshopsService.find(new ServiceWorkshopsFilter()));
@@ -219,7 +219,7 @@ public class ApplicationController {
         }
 
         Language lang = LanguagesUtil.getCurrentLanguage();
-        model.addAttribute("vehicle", vehiclesService.findById(new VehicleFilter(vehicleId)));
+        model.addAttribute("vehicle", iVehicle.findById(new VehicleFilter(vehicleId)));
         model.addAttribute("serviceAction", serviceActionsService.findById(new ServiceActionsFilter(id)));
         model.addAttribute("serviceActionTypes", serviceActionTypesService.find(new ServiceActionTypesFilter()));
         model.addAttribute("workshops", workshopsService.find(new ServiceWorkshopsFilter()));
@@ -289,7 +289,7 @@ public class ApplicationController {
         return "admin-service-action-type";
     }
 
-    
+
     @GetMapping({"/login"})
     public String login() {
         return "login";
@@ -324,12 +324,9 @@ public class ApplicationController {
     @GetMapping({"/account-settings"})
     public String myAccount(Model model) {
         model.addAttribute("languagesDict", dictionariesService.getDictionary(DictionaryType.LANGUAGES));
-        model.addAttribute("user", new UserGetResponse(userService.getLoggedUser()));
+        model.addAttribute("user", userService.getLoggedUser());
         return "my-account";
     }
-
-
-
 
 
     @GetMapping({"/admin/notifications/send"})

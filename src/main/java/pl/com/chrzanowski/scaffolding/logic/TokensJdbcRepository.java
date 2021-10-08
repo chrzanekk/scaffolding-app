@@ -4,8 +4,8 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
-import pl.com.chrzanowski.scaffolding.domain.UserData;
 import pl.com.chrzanowski.scaffolding.domain.TokenData;
+import pl.com.chrzanowski.scaffolding.domain.UserData;
 import pl.com.chrzanowski.scaffolding.domain.UsersFilter;
 
 import java.util.List;
@@ -47,7 +47,7 @@ public class TokensJdbcRepository {
                         if (userId == null) {
                             user = null;
                         } else {
-                            List<UserData> users = userJdbcRepository.find(new UsersFilter(userId));
+                            List<UserData> users = MapToListConverter.getUserList(userJdbcRepository.find(new UsersFilter(userId)));
                             if (users.size() == 1) {
                                 user = users.get(0);
                             } else {

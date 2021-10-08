@@ -13,7 +13,7 @@ import static pl.com.chrzanowski.scaffolding.logic.JdbcUtil.*;
 import static pl.com.chrzanowski.scaffolding.logic.JdbcUtil.getFloat;
 
 @Service
-public class VehiclesService {
+public class VehiclesService implements IVehicle {
 
     private VehiclesJdbcRepository vehiclesJdbcRepository;
 
@@ -22,11 +22,11 @@ public class VehiclesService {
 
     }
 
-    public List<VehicleData> find(VehicleFilter filter) throws SQLException {
+    public List<VehicleData> find(VehicleFilter filter)  {
         return getVehicles(vehiclesJdbcRepository.find(filter));
     }
 
-    public VehicleData findById(VehicleFilter filter) throws SQLException {
+    public VehicleData findById(VehicleFilter filter)  {
         return getVehicles(vehiclesJdbcRepository.find(filter)).get(0);
     }
 
@@ -35,7 +35,7 @@ public class VehiclesService {
         return vehiclesJdbcRepository.create(data);
     }
 
-    public void update(VehicleData data) throws SQLException {
+    public void update(VehicleData data) {
         vehiclesJdbcRepository.update(
                 data,
                 findById(new VehicleFilter(data.getId())).getBrandId(),
