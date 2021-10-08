@@ -8,11 +8,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import static pl.com.chrzanowski.scaffolding.logic.JdbcUtil.getLong;
-import static pl.com.chrzanowski.scaffolding.logic.JdbcUtil.getString;
+import static pl.com.chrzanowski.scaffolding.logic.JdbcUtil.*;
+
 
 @Service
-public class VehicleBrandService {
+public class VehicleBrandService implements IVehicleBrand {
 
     private VehicleBrandJdbcRepository vehicleBrandJdbcRepository;
 

@@ -22,19 +22,16 @@ public class DictionariesService {
     private static final Logger log = LoggerFactory.getLogger(DictionariesService.class);
 
     private DictionariesJdbcRepository dictionariesJdbcRepository;
-    private VehicleTypeJdbcRepository vehicleTypeJdbcRepository;
-    private FuelTypeJdbcRepository fuelTypeJdbcRepository;
     private FuelTypeService fuelTypeService;
+    private VehicleTypeService vehicleTypeService;
 
 
     public DictionariesService(DictionariesJdbcRepository dictionariesJdbcRepository,
-                               VehicleTypeJdbcRepository vehicleTypeJdbcRepository,
-                               FuelTypeJdbcRepository fuelTypeJdbcRepository,
-                               FuelTypeService fuelTypeService) {
+                               FuelTypeService fuelTypeService,
+                               VehicleTypeService vehicleTypeService) {
         this.dictionariesJdbcRepository = dictionariesJdbcRepository;
-        this.vehicleTypeJdbcRepository = vehicleTypeJdbcRepository;
-        this.fuelTypeJdbcRepository = fuelTypeJdbcRepository;
         this.fuelTypeService = fuelTypeService;
+        this.vehicleTypeService = vehicleTypeService;
     }
 
     public List<DictionaryData> getDictionary(DictionaryType type) {
@@ -124,7 +121,7 @@ public class DictionariesService {
     }
 
     private List<DictionaryData> getVehicleTypes(Language lang) {
-        List<VehicleTypeData> vehicleTypes = vehicleTypeJdbcRepository.find(new VehicleTypeFilter());
+        List<VehicleTypeData> vehicleTypes = vehicleTypeService.find(new VehicleTypeFilter());
 
         List<DictionaryData> dictionaryDataList = new ArrayList<>();
 

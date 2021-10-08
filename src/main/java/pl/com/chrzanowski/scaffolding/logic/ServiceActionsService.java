@@ -13,7 +13,7 @@ import static pl.com.chrzanowski.scaffolding.logic.JdbcUtil.*;
 import static pl.com.chrzanowski.scaffolding.logic.JdbcUtil.getString;
 
 @Service
-public class ServiceActionsService {
+public class ServiceActionsService implements IServiceActions {
 
     private ServiceActionsJdbcRepository serviceActionsJdbcRepository;
     private UserService usersService;
@@ -49,6 +49,8 @@ public class ServiceActionsService {
             serviceActionsJdbcRepository.update(data);
     }
 
+    public void delete(ServiceActionsData data) {
+    }
 
 
     private List<ServiceActionsData> getActions(List<Map<String, Object>> data) {
