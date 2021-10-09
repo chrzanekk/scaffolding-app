@@ -31,14 +31,7 @@ public class WebConfig implements WebMvcConfigurer {
                         "classpath:/static/fonts/",
                         "classpath:/static/js/");
 
-        registry.addResourceHandler("/gallery/**")
-                .addResourceLocations(new File(applicationConfig.getPathToGallery()).toURI().toString());
 
-        registry.addResourceHandler("/course-platform-images/**")
-                .addResourceLocations(new File(applicationConfig.getCoursePathToGallery()).toURI().toString());
-
-        registry.addResourceHandler("/course-platform-invoices/**")
-                .addResourceLocations(new File(applicationConfig.getCoursePathToInvoicesFolder()).toURI().toString());
     }
 
 }

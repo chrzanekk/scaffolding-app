@@ -5,11 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import pl.com.chrzanowski.scaffolding.domain.DictionaryData;
-import pl.com.chrzanowski.scaffolding.domain.VehicleTypeData;
-import pl.com.chrzanowski.scaffolding.domain.VehicleTypeFilter;
-import pl.com.chrzanowski.scaffolding.domain.FuelTypeData;
-import pl.com.chrzanowski.scaffolding.domain.FuelTypeFilter;
+import pl.com.chrzanowski.scaffolding.domain.*;
 
 import java.util.*;
 
@@ -22,16 +18,21 @@ public class DictionariesService {
     private static final Logger log = LoggerFactory.getLogger(DictionariesService.class);
 
     private DictionariesJdbcRepository dictionariesJdbcRepository;
-    private FuelTypeService fuelTypeService;
-    private VehicleTypeService vehicleTypeService;
+    private IFuelType iFuelType;
+    private IVehicleType iVehicleType;
+    private IServiceActonType iServiceActonType;
+
+
 
 
     public DictionariesService(DictionariesJdbcRepository dictionariesJdbcRepository,
-                               FuelTypeService fuelTypeService,
-                               VehicleTypeService vehicleTypeService) {
+                               IVehicleType iVehicleType,
+                               IFuelType iFuelType,
+                               IServiceActonType iServiceActonType) {
         this.dictionariesJdbcRepository = dictionariesJdbcRepository;
-        this.fuelTypeService = fuelTypeService;
-        this.vehicleTypeService = vehicleTypeService;
+        this.iVehicleType = iVehicleType;
+        this.iFuelType = iFuelType;
+        this.iServiceActonType = iServiceActonType;
     }
 
     public List<DictionaryData> getDictionary(DictionaryType type) {
@@ -56,6 +57,8 @@ public class DictionariesService {
            return getVehicleTypes(lang);
        } else if(FUEL_TYPES == type) {
            return getFuelTypes(lang);
+       } else if(SERVICE_ACTION_TYPES == type) {
+           return getActionTypes(lang);
        }
         throw new IllegalArgumentException("Dictionary no defined: " + type + " for language: " + lang);
     }
@@ -87,10 +90,8 @@ public class DictionariesService {
         List<DictionaryData> list = new ArrayList<>();
 
         if (Language.US == lang || Language.EN == lang) {
-//            list.add(new DictionaryData("en", "English", lang.getCode()));
             list.add(new DictionaryData("pl", "Polish", lang.getCode()));
         } else if (Language.PL == lang) {
-//            list.add(new DictionaryData("en", "Angielski", lang.getCode()));
             list.add(new DictionaryData("pl", "Polski", lang.getCode()));
         }
 
@@ -102,7 +103,6 @@ public class DictionariesService {
 
         if (Language.US == lang || Language.EN == lang) {
             list.add(new DictionaryData(EmailTitle.AFTER_REGISTRATION.getCode(), "Registration confirmation", lang.getCode()));
-            list.add(new DictionaryData(EmailTitle.AFTER_ORDER.getCode(), "Order confirmation", lang.getCode()));
             list.add(new DictionaryData(EmailTitle.AFTER_PASSWORD_CHANGE.getCode(), "Password has been changed", lang.getCode()));
             list.add(new DictionaryData(EmailTitle.PASSWORD_RESET.getCode(), "Password reset", lang.getCode()));
             list.add(new DictionaryData(EmailTitle.NEWSLETTER.getCode(), "Newsletter", lang.getCode()));
@@ -110,7 +110,6 @@ public class DictionariesService {
 
         } else if (Language.PL == lang) {
             list.add(new DictionaryData(EmailTitle.AFTER_REGISTRATION.getCode(), "Potwierdzenie rejestracji", lang.getCode()));
-            list.add(new DictionaryData(EmailTitle.AFTER_ORDER.getCode(), "Potwierdzenie złożenia zamówienia", lang.getCode()));
             list.add(new DictionaryData(EmailTitle.AFTER_PASSWORD_CHANGE.getCode(), "Hasło zostało zmienione", lang.getCode()));
             list.add(new DictionaryData(EmailTitle.PASSWORD_RESET.getCode(), "Resetowanie hasła", lang.getCode()));
             list.add(new DictionaryData(EmailTitle.NEWSLETTER.getCode(), "Nowości (Newsletter)", lang.getCode()));
@@ -121,7 +120,7 @@ public class DictionariesService {
     }
 
     private List<DictionaryData> getVehicleTypes(Language lang) {
-        List<VehicleTypeData> vehicleTypes = vehicleTypeService.find(new VehicleTypeFilter());
+        List<VehicleTypeData> vehicleTypes = iVehicleType.find(new VehicleTypeFilter());
 
         List<DictionaryData> dictionaryDataList = new ArrayList<>();
 
@@ -135,7 +134,7 @@ public class DictionariesService {
     }
 
     private List<DictionaryData> getFuelTypes(Language lang) {
-        List<FuelTypeData> fuelTypes = fuelTypeService.find(new FuelTypeFilter());
+        List<FuelTypeData> fuelTypes = iFuelType.find(new FuelTypeFilter());
 
         List<DictionaryData> dictionaryDataList = new ArrayList<>();
 
@@ -144,6 +143,21 @@ public class DictionariesService {
                     fuelType.getId(),
                     fuelType.getName(),
                     lang.getCode()));
+        }
+        return dictionaryDataList;
+    }
+
+    private List<DictionaryData> getActionTypes(Language lang) {
+        List<ServiceActionTypeData> actionTypes = iServiceActonType.find(new ServiceActionTypesFilter());
+
+        List<DictionaryData> dictionaryDataList = new ArrayList<>();
+
+        for(ServiceActionTypeData data : actionTypes) {
+            dictionaryDataList.add(new DictionaryData(
+                    data.getId(),
+                    data.getName(),
+                    lang.getCode()
+            ));
         }
         return dictionaryDataList;
     }

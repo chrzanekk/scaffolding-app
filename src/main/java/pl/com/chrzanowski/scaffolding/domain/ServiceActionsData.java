@@ -13,12 +13,15 @@ public class ServiceActionsData {
     private String invoiceNumber;
     private Long workshopId;
     private String workshopName;
+    private ServiceWorkshopsData workshopsData;
     private Long serviceActionTypeId;
     private String serviceActionTypeName;
     private String serviceActionDescription;
     private LocalDateTime createDate;
     private LocalDateTime modifyDate;
     private LocalDateTime removeDate;
+
+
 
 
     public ServiceActionsData(Long id,
@@ -30,6 +33,7 @@ public class ServiceActionsData {
                               Long serviceActionTypeId,
                               String actionTypeName,
                               String workshopName,
+                              ServiceWorkshopsData workshopsData,
                               String serviceActionDescription) {
         this.id = id;
         this.vehicleId = vehicleId;
@@ -38,6 +42,7 @@ public class ServiceActionsData {
         this.invoiceNumber = invoiceNumber;
         this.workshopId = workshopId;
         this.workshopName = workshopName;
+        this.workshopsData = workshopsData;
         this.serviceActionTypeId = serviceActionTypeId;
         this.serviceActionTypeName = actionTypeName;
         this.serviceActionDescription = serviceActionDescription;
@@ -117,6 +122,10 @@ public class ServiceActionsData {
 
     public String getServiceActionDescription() {
         return serviceActionDescription;
+    }
+
+    public ServiceWorkshopsData getWorkshopsData() {
+        return workshopsData;
     }
 
     public LocalDateTime getCreateDate() {

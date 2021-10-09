@@ -83,7 +83,13 @@ public class ServiceActionsJdbcRepository {
                 "service_action_type.id,\n" +
                 "service_action_type.name AS action_type,\n" +
                 "service_workshops.id,\n" +
-                "service_workshops.name AS workshop\n" +
+                "service_workshops.name AS workshop,\n" +
+                "service_workshops.tax_number AS tax_number,\n" +
+                "service_workshops.street AS street,\n" +
+                "service_workshops.building_number AS building_number,\n" +
+                "service_workshops.apartment_number AS apartment_number,\n" +
+                "service_workshops.postal_code AS postal_code,\n" +
+                "service_workshops.city AS city\n" +
                 "FROM service_actions \n" +
                 "LEFT JOIN service_action_type ON (service_actions.service_action_type_id = service_action_type.id)" +
                 "LEFT JOIN service_workshops ON (service_actions.workshop_id = service_workshops.id)";

@@ -56,7 +56,9 @@ function fillRow(workshop, value) {
 
 function showApartmentNo(apartmentNo) {
     var value = "";
-    if (apartmentNo != null && value != undefined) {
+    if (apartmentNo == "") {
+        value = "";
+    } else {
         value = "/" + apartmentNo;
     }
     return value;
@@ -89,7 +91,7 @@ function clearCreateModal() {
     $("#create-taxNumber").val('');
 
 }
-//todo -> cały flow dodawania i usuawnia pojazdu(konstruktory, repozytoria do innych tabel itp)
+
 function sendCreateRequest() {
     $.ajax({
         url: workshopApiUrl,

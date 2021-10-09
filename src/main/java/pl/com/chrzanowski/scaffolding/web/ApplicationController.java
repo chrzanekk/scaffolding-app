@@ -39,7 +39,9 @@ public class ApplicationController {
     private IFuelType iFuelType;
     private VehicleTypeService vehicleTypeService;
     private ServiceActionsService serviceActionsService;
+    private IServiceActions iServiceActions;
     private ServiceActionTypesService serviceActionTypesService;
+    private IServiceActonType iServiceActonType;
     private ServiceWorkshopsService workshopsService;
 
     public ApplicationController(UserService userService,
@@ -54,7 +56,9 @@ public class ApplicationController {
                                  IFuelType iFuelType,
                                  VehicleTypeService vehicleTypeService,
                                  ServiceActionsService serviceActionsService,
+                                 IServiceActions iServiceActions,
                                  ServiceActionTypesService serviceActionTypesService,
+                                 IServiceActonType iServiceActonType,
                                  ServiceWorkshopsService workshopsService) {
         this.userService = userService;
         this.dictionariesService = dictionariesService;
@@ -69,7 +73,9 @@ public class ApplicationController {
         this.vehicleTypeService = vehicleTypeService;
         this.serviceActionsService = serviceActionsService;
         this.serviceActionTypesService = serviceActionTypesService;
+        this.iServiceActonType = iServiceActonType;
         this.workshopsService = workshopsService;
+        this.iServiceActions = iServiceActions;
     }
 
     @GetMapping({"/register"})
@@ -171,8 +177,8 @@ public class ApplicationController {
 
         model.addAttribute("vehicle", iVehicle.findById(new VehicleFilter(id)));
         model.addAttribute("languageDict", dictionariesService.getDictionary(DictionaryType.LANGUAGES, lang));
-        model.addAttribute("fuelTypes", iFuelType.find(new FuelTypeFilter()));
-        model.addAttribute("vehicleTypes", vehicleTypeService.find(new VehicleTypeFilter()));
+        model.addAttribute("fuelTypes", dictionariesService.getDictionary(DictionaryType.FUEL_TYPES,lang));
+        model.addAttribute("vehicleTypes", dictionariesService.getDictionary(DictionaryType.VEHICLE_TYPES,lang));
         return "admin-vehicle";
     }
 
@@ -187,8 +193,8 @@ public class ApplicationController {
 
         model.addAttribute("vehicle", iVehicle.findById(new VehicleFilter(id)));
         model.addAttribute("languageDict", dictionariesService.getDictionary(DictionaryType.LANGUAGES, lang));
-        model.addAttribute("fuelTypes", iFuelType.find(new FuelTypeFilter()));
-        model.addAttribute("vehicleTypes", vehicleTypeService.find(new VehicleTypeFilter()));
+        model.addAttribute("fuelTypes", dictionariesService.getDictionary(DictionaryType.FUEL_TYPES,lang));
+        model.addAttribute("vehicleTypes", dictionariesService.getDictionary(DictionaryType.VEHICLE_TYPES,lang));
         return "admin-vehicle-edit";
     }
 
@@ -203,8 +209,8 @@ public class ApplicationController {
         Language lang = LanguagesUtil.getCurrentLanguage();
 
         model.addAttribute("vehicle", iVehicle.findById(new VehicleFilter(id)));
-        model.addAttribute("serviceActions", serviceActionsService.find(new ServiceActionsFilter(id, page, pageSize)));
-        model.addAttribute("serviceActionTypes", serviceActionTypesService.find(new ServiceActionTypesFilter()));
+        model.addAttribute("serviceActions", iServiceActions.find(new ServiceActionsFilter(id, page, pageSize)));
+        model.addAttribute("serviceActionTypes", dictionariesService.getDictionary(DictionaryType.SERVICE_ACTION_TYPES,lang));
         model.addAttribute("workshops", workshopsService.find(new ServiceWorkshopsFilter()));
         model.addAttribute("languageDict", dictionariesService.getDictionary(DictionaryType.LANGUAGES, lang));
 
@@ -213,19 +219,35 @@ public class ApplicationController {
 
     @GetMapping({"/admin/vehicle-service-action/{id}"})
     public String adminVehicleServicesById(@PathVariable Long id, Model model) throws SQLException {
-        Long vehicleId = serviceActionsService.findById(new ServiceActionsFilter(id)).getVehicleId();
-        if (!serviceActionsService.hasLoggedUserPermissionToActionsManagement()) {
+        Long vehicleId = iServiceActions.findById(new ServiceActionsFilter(id)).getVehicleId();
+        if (!userService.isLoggedUserAdmin()) {
             throw new IllegalArgumentException("Access denied.");
         }
 
         Language lang = LanguagesUtil.getCurrentLanguage();
         model.addAttribute("vehicle", iVehicle.findById(new VehicleFilter(vehicleId)));
-        model.addAttribute("serviceAction", serviceActionsService.findById(new ServiceActionsFilter(id)));
-        model.addAttribute("serviceActionTypes", serviceActionTypesService.find(new ServiceActionTypesFilter()));
+        model.addAttribute("serviceAction", iServiceActions.findById(new ServiceActionsFilter(id)));
+        model.addAttribute("serviceActionTypes", dictionariesService.getDictionary(DictionaryType.SERVICE_ACTION_TYPES,lang));
         model.addAttribute("workshops", workshopsService.find(new ServiceWorkshopsFilter()));
         model.addAttribute("languageDict", dictionariesService.getDictionary(DictionaryType.LANGUAGES, lang));
 
         return "admin-vehicle-service-action";
+    }
+    @GetMapping({"/admin/vehicle-service-action-edit/{id}"})
+    public String adminVehicleServicesEditById(@PathVariable Long id, Model model) {
+        Long vehicleId = iServiceActions.findById(new ServiceActionsFilter(id)).getVehicleId();
+        if (!userService.isLoggedUserAdmin()) {
+            throw new IllegalArgumentException("Access denied.");
+        }
+
+        Language lang = LanguagesUtil.getCurrentLanguage();
+        model.addAttribute("vehicle", iVehicle.findById(new VehicleFilter(vehicleId)));
+        model.addAttribute("serviceAction", iServiceActions.findById(new ServiceActionsFilter(id)));
+        model.addAttribute("serviceActionTypes", dictionariesService.getDictionary(DictionaryType.SERVICE_ACTION_TYPES,lang));
+        model.addAttribute("workshops", workshopsService.find(new ServiceWorkshopsFilter()));
+        model.addAttribute("languageDict", dictionariesService.getDictionary(DictionaryType.LANGUAGES, lang));
+
+        return "admin-vehicle-service-action-edit";
     }
 
     @GetMapping({"/admin/workshops"})
@@ -267,7 +289,8 @@ public class ApplicationController {
 
         Language lang = LanguagesUtil.getCurrentLanguage();
 
-        model.addAttribute("serviceActionTypes", serviceActionTypesService.find(new ServiceActionTypesFilter()));
+        model.addAttribute("serviceActionTypes",
+                dictionariesService.getDictionary(DictionaryType.SERVICE_ACTION_TYPES,lang));
         model.addAttribute("languageDict", dictionariesService.getDictionary(DictionaryType.LANGUAGES, lang));
 
         return "admin-service-action-types";
@@ -282,8 +305,7 @@ public class ApplicationController {
 
         Language lang = LanguagesUtil.getCurrentLanguage();
 
-        model.addAttribute("serviceActionType",
-                serviceActionTypesService.find(new ServiceActionTypesFilter(id)).get(0));
+        model.addAttribute("serviceActionType", iServiceActonType.find(new ServiceActionTypesFilter(id)).get(0));
         model.addAttribute("languageDict", dictionariesService.getDictionary(DictionaryType.LANGUAGES, lang));
 
         return "admin-service-action-type";

@@ -1,8 +1,7 @@
 
 $(document).ready(function () {
 
-
-
+fillRow(serviceAction);
 });
 
 
@@ -11,40 +10,45 @@ function showDeleteModal() {
     $('#delete-object-modal').modal('show');
 }
 
-function sendDeleteRequest(){
-    $.ajax({
-        url: "/admin/api/scaffolding/vehicle-service-action/" + serviceAction.id,
-        type: "DELETE"
-    })
-        .done(function(response) {
-            $('#delete-object-modal').modal('hide');
-            window.location.href = '/admin/vehicle-service-actions';
-        })
-        .fail(function(jqxhr, textStatus, errorThrown){
-            displayErrorInformation(jqxhr.responseText);
-        });
+function fillRow(serviceAction) {
+var workshop = serviceAction.workshopsData;
+    $('#first').append(
+        "<tr>" +
+            "<td class='align-middle'>" + serviceAction.invoiceNumber + "</td>" +
+            "<td class='align-middle'>" + serviceAction.serviceDate + " </td>" +
+        "</tr>"
+    );
+    $('#second').append(
+        "<tr>" +
+            "<td class='align-middle' colspan='2'>" + workshop.name + "<br>" +
+             workshop.street + " "  + workshop.buildingNo + showApartmentNo(workshop.apartmentNo) + "<br>" +
+             workshop.postalCode + " " + workshop.city + "<br>"
+            + workshop.taxNumber + "</td>" +
+        "</tr>"
+    );
+    $('#third').append(
+        "<tr>" +
+            "<td class='align-middle'>" + serviceAction.carMileage + "</td>" +
+            "<td class='align-middle'>" + serviceAction.serviceActionTypeName + " </td>" +
+        "</tr>"
+    );
+    $('#fourth').append(
+        "<tr>" +
+            "<td class='align-middle' colspan='2'>" + serviceAction.serviceActionDescription + "</td>" +
+        "</tr>"
+    );
 }
 
-function sendUpdateRequest() {
-    $.ajax({
-        url: "/admin/api/scaffolding/vehicle-service-action/" + serviceAction.id,
-        method: "PUT",
-        contentType: "application/json",
-        data: JSON.stringify({
-             id: serviceAction.id,
-             vehicleId: serviceAction.vehicleId,
-             carMileage: $("#carMileage").val(),
-             serviceDate: $("#serviceDate").val(),
-             invoiceNumber: $("#invoiceNumber").val(),
-             workshopId: $("#serviceWorkshop").val(),
-             serviceActionTypeId: $("#serviceActionName").val(),
-             serviceActionDescription: $("#serviceActionDescription").val()
-        })
-    })
-        .done(function () {
-            $("#operation-successful-modal").modal('show');
-        })
-        .fail(function (jqxhr, textStatus, errorThrown) {
-            displayErrorInformation(jqxhr.responseText);
-        })
+function goToEditPage() {
+    window.location.href = "/admin/vehicle-service-action-edit/" + vehicle.id;
+}
+
+function showApartmentNo(apartmentNo) {
+    var value = "";
+    if (apartmentNo == "") {
+        value = "";
+    } else {
+        value = "/" + apartmentNo;
+    }
+    return value;
 }

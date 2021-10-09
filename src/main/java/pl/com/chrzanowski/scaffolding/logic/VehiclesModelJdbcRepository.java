@@ -44,6 +44,9 @@ public class VehiclesModelJdbcRepository {
             if (filter.getId() != null) {
                 query += " AND id = '" + filter.getId() + "'";
             }
+            if (filter.getBrandId() != null) {
+                query += " AND brand_id = '" + filter.getBrandId() + "'";
+            }
             if (filter.getName() != null) {
                 query += " AND name = '" + filter.getName() + "'";
             }

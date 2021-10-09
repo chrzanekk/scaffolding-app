@@ -17,60 +17,6 @@ import java.nio.charset.StandardCharsets;
 @EnableScheduling
 public class ApplicationConfig {
 
-    @Value("${masterdieta-path-to-products-demand-pdf}")
-    private String pathToProductsDemandPdf;
-
-    @Value("${masterdieta-path-to-fonts}")
-    private String pathToFonts;
-
-    @Value("${masterdieta-path-to-gallery}")
-    private String pathToGallery;
-
-    @Value("${course-platform-path-to-gallery}")
-    private String coursePathToGallery;
-
-    @Value("${course-platform-path-to-invoices-folder}")
-    private String coursePathToInvoicesFolder;
-
-    @Value("${course-platform-path-to-memes-folder}")
-    private String coursePathToMemesFolder;
-
-    @Value("${course-platform-path-to-course-attachments-folder}")
-    private String coursePathToCourseAttachmentsFolder;
-
-    @Value("${course-platform-path-to-files-folder}")
-    private String coursePathToFilesFolder;
-
-    @Value("${masterdieta-scheduler-update-order-status-hour}")
-    private Integer schedulerUpdateOrderStatusHour;
-
-    @Value("${masterdieta-scheduler-update-order-status-limit}")
-    private Long schedulerUpdateOrderStatusLimit;
-
-    @Value("${masterdieta-scheduler-update-order-status-disabled}")
-    private Boolean schedulerUpdateOrderStatusDisabled;
-
-
-    @Value("${masterdieta-scheduler-update-order-status-traditional-hour}")
-    private Integer schedulerUpdateOrderStatusTraditionalHour;
-
-    @Value("${masterdieta-scheduler-update-order-status-traditional-limit}")
-    private Long schedulerUpdateOrderStatusTraditionalLimit;
-
-    @Value("${masterdieta-scheduler-update-order-status-traditional-disabled}")
-    private Boolean schedulerUpdateOrderStatusTraditionalDisabled;
-
-    @Value("${masterdieta-scheduler-delivery_delivered-hour}")
-    private Integer schedulerDeliveryDeliveredHour;
-
-    @Value("${masterdieta-scheduler-delivery_delivered-limit}")
-    private Long schedulerDeliveryDelivereLimit;
-
-    @Value("${masterdieta-scheduler-delivery_delivered-disabled}")
-    private Boolean schedulerDeliveryDeliveredDisabled;
-
-    @Value("${masterdieta-scheduler-instagram-sync-disabled}")
-    private Boolean schedulerInstagramSyncDisabled;
 
     @Value("${reply-to-email}")
     private String replyToEmail;
@@ -102,26 +48,8 @@ public class ApplicationConfig {
     @Value("${course-platform.url}")
     private String scaffoldingAppUrl;
 
-    @Value("${payments.payu.url}")
-    private String paymentsPayuUrl;
-
-    @Value("${payments.payu.client.id}")
-    private String paymentsPayuClientId;
-
-    @Value("${payments.payu.client.secret}")
-    private String paymentsPayuClientSecret;
-
-    @Value("${payments.payu.merchant.pos.id}")
-    private String paymentsPayuMerchantPosId;
-
-    @Value("${payments.payu.second.key}")
-    private String paymentsPayuSecondKey;
-
     @Value("${password.reset.token.validity.time.in.minutes}")
     private Long passwordResetTokenValidityTimeInMinutes;
-
-    @Value("${menu.courses.disabled}")
-    private Boolean menuCoursesDisabled;
 
     @Value("${logo.front.path}")
     private String logoFrontPath;
@@ -146,85 +74,6 @@ public class ApplicationConfig {
 
     private String templateNameProductsDemandPdf = "products-demand-pdf.html";
 
-    public String getPathToProductsDemandPdf() {
-        return pathToProductsDemandPdf;
-    }
-
-    public String getTemplateNameProductsDemandPdf() {
-        return templateNameProductsDemandPdf;
-    }
-
-    public String getPathToFonts() {
-        return pathToFonts;
-    }
-
-    public String getPathToGallery() {
-        return pathToGallery;
-    }
-
-    public Integer getSchedulerUpdateOrderStatusHour() {
-        return schedulerUpdateOrderStatusHour;
-    }
-
-    public Long getSchedulerUpdateOrderStatusLimit() {
-        return schedulerUpdateOrderStatusLimit;
-    }
-
-    public Boolean getSchedulerUpdateOrderStatusDisabled() {
-        return schedulerUpdateOrderStatusDisabled;
-    }
-
-    public Integer getSchedulerUpdateOrderStatusTraditionalHour() {
-        return schedulerUpdateOrderStatusTraditionalHour;
-    }
-
-    public Long getSchedulerUpdateOrderStatusTraditionalLimit() {
-        return schedulerUpdateOrderStatusTraditionalLimit;
-    }
-
-    public Boolean getSchedulerUpdateOrderStatusTraditionalDisabled() {
-        return schedulerUpdateOrderStatusTraditionalDisabled;
-    }
-
-    public Integer getSchedulerDeliveryDeliveredHour() {
-        return schedulerDeliveryDeliveredHour;
-    }
-
-    public Long getSchedulerDeliveryDelivereLimit() {
-        return schedulerDeliveryDelivereLimit;
-    }
-
-    public Boolean getSchedulerDeliveryDeliveredDisabled() {
-        return schedulerDeliveryDeliveredDisabled;
-    }
-
-    public Boolean getSchedulerInstagramSyncDisabled() {
-        return schedulerInstagramSyncDisabled;
-    }
-
-    public String getCoursePathToGallery() {
-        return coursePathToGallery;
-    }
-
-    public String getPaymentsPayuUrl() {
-        return paymentsPayuUrl;
-    }
-
-    public String getPaymentsPayuClientId() {
-        return paymentsPayuClientId;
-    }
-
-    public String getPaymentsPayuClientSecret() {
-        return paymentsPayuClientSecret;
-    }
-
-    public String getPaymentsPayuMerchantPosId() {
-        return paymentsPayuMerchantPosId;
-    }
-
-    public String getPaymentsPayuSecondKey() {
-        return paymentsPayuSecondKey;
-    }
 
     public String getReplyToEmail() {
         return replyToEmail;
@@ -266,24 +115,10 @@ public class ApplicationConfig {
         return scaffoldingAppUrl;
     }
 
-    public String getCoursePathToInvoicesFolder() {
-        return coursePathToInvoicesFolder;
-    }
+
 
     public Long getPasswordResetTokenValidityTimeInMinutes() {
         return passwordResetTokenValidityTimeInMinutes;
-    }
-
-    public String getCoursePathToMemesFolder() {
-        return coursePathToMemesFolder;
-    }
-
-    public Boolean getMenuCoursesDisabled() {
-        return menuCoursesDisabled;
-    }
-
-    public String getCoursePathToCourseAttachmentsFolder() {
-        return coursePathToCourseAttachmentsFolder;
     }
 
     public String getLogoFrontPath() {
@@ -314,9 +149,6 @@ public class ApplicationConfig {
         return faviconPath;
     }
 
-    public String getCoursePathToFilesFolder() {
-        return coursePathToFilesFolder;
-    }
 
     @Bean
     RestTemplate restTemplate() {

@@ -95,7 +95,7 @@
                         <select id="create-serviceActionId" class="form-control">
                             <option th:each="serviceActionType : ${serviceActionTypes}"
                                     th:value="${serviceActionType.id}"
-                                    th:text="${serviceActionType.name}"
+                                    th:text="${serviceActionType.value}"
                                     th:selected="#{list.choose}"></option>
                         </select>
                     </div>

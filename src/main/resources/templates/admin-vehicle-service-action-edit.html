@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <div th:replace="fragments/head"></div>
+    <script th:src="@{/js/admin-vehicle-service-action-edit.js}"></script>
+    <script th:inline="javascript">
+        var vehicle = [[${vehicle}]];
+        var serviceAction = [[${serviceAction}]]
+        var serviceActionTypes = [[${serviceActionTypes}]];
+        var workshops = [[${workshops}]];
+    </script>
+</head>
+
+<body>
+<div th:replace="fragments/menu :: menu"></div>
+
+<div class="container">
+    <div class="text-center">
+        <h3 th:text="#{vehicle.service.details}"></h3>
+        <h4 th:text="${vehicle.brandName} +' '+ ${vehicle.modelName}"></h4>
+        <h5 th:text="${vehicle.registrationNumber}"></h5>
+    </div>
+
+    <form class="bg-light p-5 border">
+        <div class="form-row">
+            <div class="form-group col-md-4 text-center">
+                <label for="invoiceNumber" th:text="#{vehicle.service.invoice.no}"></label>
+                <input type="text" class="form-control" id="invoiceNumber" th:value="${serviceAction.invoiceNumber}">
+            </div>
+            <div class="form-group col-md-4 text-center">
+                <label for="serviceDate" th:text="#{vehicle.service.date}"></label>
+                <input type="date" class="form-control" id="serviceDate" th:value="${serviceAction.serviceDate}">
+            </div>
+            <div class="form-group col-md-4 text-center">
+                <label for="serviceWorkshop" th:text="#{vehicle.service.workshop}"></label>
+                <select id="serviceWorkshop" class="form-control">
+                    <option th:each="workshop : ${workshops}"
+                            th:value="${workshop.id}"
+                            th:text="${workshop.name}"
+                            th:selected="#{list.choose}"></option>
+                </select>
+            </div>
+            <div class="form-group col-md-4 text-center">
+                <label for="carMileage" th:text="#{vehicle.service.car.mileage}"></label>
+                <input type="number" class="form-control" id="carMileage" th:value="${serviceAction.carMileage}">
+            </div>
+            <div class="form-group col-md-4 text-center">
+                <label for="serviceActionTypeName" th:text="#{vehicle.service.type}"></label>
+                <select id="serviceActionTypeName" class="form-control">
+                    <option th:each="serviceActionType : ${serviceActionTypes}"
+                            th:value="${serviceActionType.id}"
+                            th:text="${serviceActionType.value}"
+                            th:selected="#{list.choose}"></option>
+                </select>
+            </div>
+            <div class="form-group col-md-4 text-center">
+                <label for="serviceActionDescription" th:text="#{vehicle.service.description}"></label>
+                <input type="text" class="form-control" id="serviceActionDescription" th:value="${serviceAction.serviceActionDescription}">
+            </div>
+
+
+
+        </div>
+
+
+            <div class="text-center">
+                <button type="button" class="btn btn-danger mt-3" onclick="showDeleteModal()"
+                        th:text="#{Delete}"></button>
+                <button type="button" class="btn btn-warning mt-3" onclick="history.back()"
+                        th:text="#{Cancel}"></button>
+                <button type="button" class="btn btn-warning mt-3" onclick="sendUpdateRequest()"
+                        th:text="#{Save.changes}"></button>
+            </div>
+
+    </form>
+
+</div>
+
+<div th:replace="fragments/operation-successful-modal :: modal"></div>
+<div th:replace="fragments/delete-object-modal :: modal"></div>
+</body>
+
+</html>

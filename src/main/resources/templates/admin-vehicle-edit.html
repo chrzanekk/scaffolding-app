@@ -58,8 +58,8 @@
                 <select id="fuelType" class="form-control">
                     <option th:each="fuelType : ${fuelTypes}"
                             th:value="${fuelType.id}"
-                            th:text="${fuelType.name}"
-                            th:selected="(${fuelType.name} == *{vehicle.FuelType})">
+                            th:text="${fuelType.value}"
+                            th:selected="(${fuelType.value} == *{vehicle.FuelType})">
                     </option>
                 </select>
             </div>
@@ -68,8 +68,8 @@
                 <select id="vehicleType" class="form-control">
                     <option th:each="vehicleType : ${vehicleTypes}"
                             th:value="${vehicleType.id}"
-                            th:text="${vehicleType.name}"
-                            th:selected="(${vehicleType.name} == *{vehicle.VehicleType})">
+                            th:text="${vehicleType.value}"
+                            th:selected="(${vehicleType.value} == *{vehicle.VehicleType})">
                     </option>
                 </select>
             </div>
