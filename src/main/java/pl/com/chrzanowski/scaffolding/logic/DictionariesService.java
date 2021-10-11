@@ -7,8 +7,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.com.chrzanowski.scaffolding.domain.*;
 
-import java.util.*;
-
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Locale;
 
 import static pl.com.chrzanowski.scaffolding.logic.DictionaryType.*;
 
@@ -21,18 +23,21 @@ public class DictionariesService {
     private IFuelType iFuelType;
     private IVehicleType iVehicleType;
     private IServiceActonType iServiceActonType;
-
-
-
+    private ITireSeason iTireSeason;
+    private IVehicleBrand iVehicleBrand;
 
     public DictionariesService(DictionariesJdbcRepository dictionariesJdbcRepository,
                                IVehicleType iVehicleType,
                                IFuelType iFuelType,
-                               IServiceActonType iServiceActonType) {
+                               IServiceActonType iServiceActonType,
+                               ITireSeason iTireSeason,
+                               IVehicleBrand iVehicleBrand) {
         this.dictionariesJdbcRepository = dictionariesJdbcRepository;
         this.iVehicleType = iVehicleType;
         this.iFuelType = iFuelType;
         this.iServiceActonType = iServiceActonType;
+        this.iTireSeason = iTireSeason;
+        this.iVehicleBrand = iVehicleBrand;
     }
 
     public List<DictionaryData> getDictionary(DictionaryType type) {
@@ -45,21 +50,25 @@ public class DictionariesService {
 
     @Cacheable(CacheType.DICTIONARIES)
     public List<DictionaryData> getDictionary(DictionaryType type, Language lang) {
-       if (YES_NO == type) {
+        if (YES_NO == type) {
             return getYesNo(lang);
         } else if (USER_AUTHORITIES == type) {
             return getUserAuthorities(lang);
-        } else if(LANGUAGES == type) {
+        } else if (LANGUAGES == type) {
             return getLanguages(lang);
-        } else if(EMAIL_TITLES == type) {
+        } else if (EMAIL_TITLES == type) {
             return getEmailTitles(lang);
-        } else if(VEHICLE_TYPES == type) {
-           return getVehicleTypes(lang);
-       } else if(FUEL_TYPES == type) {
-           return getFuelTypes(lang);
-       } else if(SERVICE_ACTION_TYPES == type) {
-           return getActionTypes(lang);
-       }
+        } else if (VEHICLE_TYPES == type) {
+            return getVehicleTypes(lang);
+        } else if (FUEL_TYPES == type) {
+            return getFuelTypes(lang);
+        } else if (SERVICE_ACTION_TYPES == type) {
+            return getActionTypes(lang);
+        }else if (TIRE_SEASONS == type) {
+            return getTireSeasons(lang);
+        }else if (VEHICLE_BRAND == type) {
+            return getBrands(lang);
+        }
         throw new IllegalArgumentException("Dictionary no defined: " + type + " for language: " + lang);
     }
 
@@ -124,7 +133,7 @@ public class DictionariesService {
 
         List<DictionaryData> dictionaryDataList = new ArrayList<>();
 
-        for(VehicleTypeData vehicleType : vehicleTypes) {
+        for (VehicleTypeData vehicleType : vehicleTypes) {
             dictionaryDataList.add(new DictionaryData(
                     vehicleType.getId(),
                     vehicleType.getName(),
@@ -138,7 +147,7 @@ public class DictionariesService {
 
         List<DictionaryData> dictionaryDataList = new ArrayList<>();
 
-        for(FuelTypeData fuelType : fuelTypes) {
+        for (FuelTypeData fuelType : fuelTypes) {
             dictionaryDataList.add(new DictionaryData(
                     fuelType.getId(),
                     fuelType.getName(),
@@ -152,7 +161,36 @@ public class DictionariesService {
 
         List<DictionaryData> dictionaryDataList = new ArrayList<>();
 
-        for(ServiceActionTypeData data : actionTypes) {
+        for (ServiceActionTypeData data : actionTypes) {
+            dictionaryDataList.add(new DictionaryData(
+                    data.getId(),
+                    data.getName(),
+                    lang.getCode()
+            ));
+        }
+        return dictionaryDataList;
+    }
+
+    private List<DictionaryData> getTireSeasons(Language lang) {
+        List<TireSeasonData> tireSeasons = iTireSeason.find(new TireSeasonFilter());
+
+        List<DictionaryData> dictionaryDataList = new ArrayList<>();
+
+        for (TireSeasonData data : tireSeasons) {
+            dictionaryDataList.add(new DictionaryData(
+                    data.getId(),
+                    data.getName(),
+                    lang.getCode()
+            ));
+        }
+        return dictionaryDataList;
+    }
+
+    private List<DictionaryData> getBrands(Language lang) {
+        List<VehicleBrandData> brands = iVehicleBrand.find(new VehicleBrandFilter());
+
+        List<DictionaryData> dictionaryDataList = new ArrayList<>();
+        for(VehicleBrandData data :brands) {
             dictionaryDataList.add(new DictionaryData(
                     data.getId(),
                     data.getName(),

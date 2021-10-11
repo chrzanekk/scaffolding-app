@@ -24,6 +24,7 @@ public class ScaffoldingEndpointAdmin {
     private ServiceWorkshopsService workshopsService;
     private ServiceActionTypesService serviceActionTypesService;
     private MarketingService marketingService;
+    private ITireSeason iTireSeason;
 
     public ScaffoldingEndpointAdmin(UserService userService,
                                     NotificationsFromPanelService notificationsFromPanelService,
@@ -32,7 +33,8 @@ public class ScaffoldingEndpointAdmin {
                                     ServiceActionsService serviceActionsService,
                                     ServiceWorkshopsService workshopsService,
                                     ServiceActionTypesService serviceActionTypesService,
-                                    MarketingService marketingService) {
+                                    MarketingService marketingService,
+                                    ITireSeason iTireSeason) {
         this.userService = userService;
         this.notificationsFromPanelService = notificationsFromPanelService;
         this.vehiclesService = vehiclesService;
@@ -41,6 +43,7 @@ public class ScaffoldingEndpointAdmin {
         this.workshopsService = workshopsService;
         this.serviceActionTypesService = serviceActionTypesService;
         this.marketingService = marketingService;
+        this.iTireSeason = iTireSeason;
     }
 
     @GetMapping("/users")
@@ -271,8 +274,27 @@ public class ScaffoldingEndpointAdmin {
 
     @PutMapping(path = "/service-action-type/{id}", consumes = "application/json; charset=UTF-8")
     public void updateServiceActionType(@PathVariable Long id,
-                                        @RequestBody ServiceActionTypesPostRequest request) {
+                                        @RequestBody ServiceActionTypesPutRequest request) {
         serviceActionTypesService.update(new ServiceActionTypeData(id, request.getName()));
+    }
+
+    @GetMapping(path = "/tire-seasons", produces = "application/json; charset=UTF-8")
+    public TireSeasonsRequestGetResponse tireSeasons(@RequestParam(name = "page", required = false, defaultValue = "1") Long page,
+                                                     @RequestParam(name = "page_size", required = false, defaultValue = "10") Long pageSize) {
+        List<TireSeasonData> tireSeasons = iTireSeason.find(new TireSeasonFilter(page, pageSize));
+        return new TireSeasonsRequestGetResponse(tireSeasonsToResponse(tireSeasons));
+
+    }
+
+    @PostMapping(path = "/tire-season", consumes = "application/json; charset=UTF-8")
+    public void addTireSeason(@RequestBody TireSeasonPostRequest request) {
+        iTireSeason.add(new TireSeasonData(request.getName()));
+    }
+
+    @PutMapping(path = "/tire-season/{id}", consumes = "application/json; charset=UTF-8")
+    public void updateTireSeason(@PathVariable Long id,
+                                 @RequestBody TireSeasonPutRequest request) {
+        iTireSeason.update(new TireSeasonData(id, request.getName()));
     }
 
     private List<VehicleGetResponse> vehiclesToResponse(List<VehicleData> vehicles) {
@@ -385,5 +407,16 @@ public class ScaffoldingEndpointAdmin {
 
     private ServiceActionTypesGetResponse actionTypeToResponse(ServiceActionTypeData actionType) {
         return new ServiceActionTypesGetResponse(actionType.getId(), actionType.getName());
+    }
+
+    private List<TireSeasonGetResponse> tireSeasonsToResponse(List<TireSeasonData> tireSeasons) {
+        List<TireSeasonGetResponse> list = new ArrayList<>();
+        for (TireSeasonData data : tireSeasons) {
+            list.add(new TireSeasonGetResponse(
+                    data.getId(),
+                    data.getName()
+            ));
+        }
+        return list;
     }
 }

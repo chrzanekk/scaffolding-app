@@ -2,19 +2,18 @@ package pl.com.chrzanowski.scaffolding.domain;
 
 import java.time.LocalDateTime;
 
-public class VehicleTypeData {
-
+public class TireSeasonData {
     private Long id;
     private String name;
     private LocalDateTime modifyDate;
     private LocalDateTime removeDate;
 
-    public VehicleTypeData(Long id, String name) {
+    public TireSeasonData(Long id, String name) {
         this.id = id;
         this.name = name;
     }
 
-    public VehicleTypeData(String name) {
+    public TireSeasonData(String name) {
         this.name = name;
     }
 
