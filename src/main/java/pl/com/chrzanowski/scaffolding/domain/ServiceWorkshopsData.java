@@ -16,10 +16,6 @@ public class ServiceWorkshopsData {
     private LocalDateTime modifyDate;
     private LocalDateTime removeDate;
 
-    public ServiceWorkshopsData(Long id, String name) {
-        this.id = id;
-        this.name = name;
-    }
 
     public ServiceWorkshopsData(Long id,
                                 String name,
@@ -51,8 +47,6 @@ public class ServiceWorkshopsData {
         this.createDate = LocalDateTime.now();
     }
 
-    public ServiceWorkshopsData() {
-    }
 
     public Long getId() {
         return id;

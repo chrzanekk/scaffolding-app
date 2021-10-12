@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 public class TireSeasonData {
     private Long id;
     private String name;
+    private LocalDateTime createDate;
     private LocalDateTime modifyDate;
     private LocalDateTime removeDate;
 
@@ -23,6 +24,10 @@ public class TireSeasonData {
 
     public String getName() {
         return name;
+    }
+
+    public LocalDateTime getCreateDate() {
+        return createDate;
     }
 
     public LocalDateTime getModifyDate() {

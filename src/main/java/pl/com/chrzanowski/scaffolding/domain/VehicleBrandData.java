@@ -1,28 +1,18 @@
 package pl.com.chrzanowski.scaffolding.domain;
 
+import java.time.LocalDateTime;
+
 public class VehicleBrandData {
 
     private Long id;
     private String name;
-    private Long page;
-    private Long pageSize;
-
-    public VehicleBrandData(Long id, String name, Long page, Long pageSize) {
-        this.id = id;
-        this.name = name;
-        this.page = page;
-        this.pageSize = pageSize;
-    }
+    private LocalDateTime createDate;
+    private LocalDateTime modifyDate;
+    private LocalDateTime removeDate;
 
     public VehicleBrandData(Long id, String name) {
         this.id = id;
         this.name = name;
-    }
-
-    public VehicleBrandData(Long id, Long page, Long pageSize) {
-        this.id = id;
-        this.page = page;
-        this.pageSize = pageSize;
     }
 
     public Long getId() {
@@ -33,11 +23,15 @@ public class VehicleBrandData {
         return name;
     }
 
-    public Long getPage() {
-        return page;
+    public LocalDateTime getCreateDate() {
+        return createDate;
     }
 
-    public Long getPageSize() {
-        return pageSize;
+    public LocalDateTime getModifyDate() {
+        return modifyDate;
+    }
+
+    public LocalDateTime getRemoveDate() {
+        return removeDate;
     }
 }
