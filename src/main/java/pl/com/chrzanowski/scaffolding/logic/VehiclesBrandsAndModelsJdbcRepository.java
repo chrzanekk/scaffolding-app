@@ -2,8 +2,7 @@ package pl.com.chrzanowski.scaffolding.logic;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
-import pl.com.chrzanowski.scaffolding.domain.BrandsAndModelsData;
-import pl.com.chrzanowski.scaffolding.domain.BrandsAndModelsFilter;
+import pl.com.chrzanowski.scaffolding.domain.VehiclesBrandsAndModelsFilter;
 
 import java.util.List;
 import java.util.Map;
@@ -11,19 +10,19 @@ import java.util.Map;
 import static pl.com.chrzanowski.scaffolding.logic.JdbcUtil.preparePaginationQuery;
 
 @Service
-public class BrandsAndModelsJdbcRepository {
+public class VehiclesBrandsAndModelsJdbcRepository {
 
     private JdbcTemplate jdbcTemplate;
     private CommonJdbcRepository commonJdbcRepository;
 
-    public BrandsAndModelsJdbcRepository(JdbcTemplate jdbcTemplate, CommonJdbcRepository commonJdbcRepository) {
+    public VehiclesBrandsAndModelsJdbcRepository(JdbcTemplate jdbcTemplate, CommonJdbcRepository commonJdbcRepository) {
         this.jdbcTemplate = jdbcTemplate;
         this.commonJdbcRepository = commonJdbcRepository;
     }
 
 
 
-    List<Map<String,Object>> find(BrandsAndModelsFilter filter) {
+    List<Map<String,Object>> find(VehiclesBrandsAndModelsFilter filter) {
 
         String query = "SELECT " +
                 "vehicle_brand.id AS brandId, " +

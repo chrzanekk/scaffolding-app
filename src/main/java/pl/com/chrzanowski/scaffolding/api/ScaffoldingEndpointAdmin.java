@@ -25,6 +25,7 @@ public class ScaffoldingEndpointAdmin {
     private ServiceActionTypesService serviceActionTypesService;
     private MarketingService marketingService;
     private ITireSeason iTireSeason;
+    private VehiclesBrandsAndModelsService vehiclesBrandsAndModelsService;
 
     public ScaffoldingEndpointAdmin(UserService userService,
                                     NotificationsFromPanelService notificationsFromPanelService,
@@ -34,7 +35,8 @@ public class ScaffoldingEndpointAdmin {
                                     ServiceWorkshopsService workshopsService,
                                     ServiceActionTypesService serviceActionTypesService,
                                     MarketingService marketingService,
-                                    ITireSeason iTireSeason) {
+                                    ITireSeason iTireSeason,
+                                    VehiclesBrandsAndModelsService vehiclesBrandsAndModelsService) {
         this.userService = userService;
         this.notificationsFromPanelService = notificationsFromPanelService;
         this.vehiclesService = vehiclesService;
@@ -44,6 +46,7 @@ public class ScaffoldingEndpointAdmin {
         this.serviceActionTypesService = serviceActionTypesService;
         this.marketingService = marketingService;
         this.iTireSeason = iTireSeason;
+        this.vehiclesBrandsAndModelsService = vehiclesBrandsAndModelsService;
     }
 
     @GetMapping("/users")
@@ -159,7 +162,13 @@ public class ScaffoldingEndpointAdmin {
         );
     }
 
-
+    @GetMapping(path = "/brands-and-models", produces = "application/json; charset=UTF-8")
+    public VehiclesBrandsAndModelsRequestGetResponse brandsAndModels(
+            @RequestParam(name = "page", required = false, defaultValue = "1") Long page,
+            @RequestParam(name = "page_size", required = false, defaultValue = "10") Long pageSize) {
+        List<VehiclesBrandsAndModelsData> brandsAndModels = vehiclesBrandsAndModelsService.find(new VehiclesBrandsAndModelsFilter());
+        return new VehiclesBrandsAndModelsRequestGetResponse(brandsAndModelsToResponse(brandsAndModels));
+    }
 
 
 
@@ -321,6 +330,18 @@ public class ScaffoldingEndpointAdmin {
                     vehicle.getWidth(),
                     vehicle.getHeight())
             );
+        }
+        return list;
+    }
+
+    private List<VehiclesBrandsAndModelsGetResponse> brandsAndModelsToResponse(List<VehiclesBrandsAndModelsData> brandsAndModels) {
+        List<VehiclesBrandsAndModelsGetResponse> list = new ArrayList<>();
+        for (VehiclesBrandsAndModelsData data : brandsAndModels) {
+            list.add(new VehiclesBrandsAndModelsGetResponse(
+                    data.getBrandId(),
+                    data.getModelId(),
+                    data.getBrandName(),
+                    data.getModelName()));
         }
         return list;
     }

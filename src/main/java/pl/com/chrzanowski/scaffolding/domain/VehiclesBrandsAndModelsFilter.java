@@ -1,6 +1,6 @@
 package pl.com.chrzanowski.scaffolding.domain;
 
-public class BrandsAndModelsFilter {
+public class VehiclesBrandsAndModelsFilter {
     private Long brandId;
     private Long modelId;
     private String brandName;
@@ -8,7 +8,7 @@ public class BrandsAndModelsFilter {
     private Long page;
     private Long pageSize;
 
-    public BrandsAndModelsFilter() {
+    public VehiclesBrandsAndModelsFilter() {
     }
 
     public Long getBrandId() {

@@ -2,7 +2,7 @@ package pl.com.chrzanowski.scaffolding.domain;
 
 import java.time.LocalDateTime;
 
-public class BrandsAndModelsData {
+public class VehiclesBrandsAndModelsData {
     private Long brandId;
     private Long modelId;
     private String brandName;
@@ -11,7 +11,7 @@ public class BrandsAndModelsData {
     private LocalDateTime modifyDate;
     private LocalDateTime removeDate;
 
-    public BrandsAndModelsData(Long brandId, Long modelId, String brandName, String modelName) {
+    public VehiclesBrandsAndModelsData(Long brandId, Long modelId, String brandName, String modelName) {
         this.brandId = brandId;
         this.modelId = modelId;
         this.brandName = brandName;

@@ -20,6 +20,14 @@ public class VehicleBrandService implements IVehicleBrand {
         this.vehicleBrandJdbcRepository = vehicleBrandJdbcRepository;
     }
 
+    public Long add(VehicleBrandData data) {
+        if(ValidateDataUtil.isBrandNameExist(data.getName())) {
+            return find(new VehicleBrandFilter(data.getId())).get(0).getId();
+        }
+        return vehicleBrandJdbcRepository.create(data);
+    }
+
+
     public List<VehicleBrandData>find(VehicleBrandFilter filter) {
         return getVehiclesBrands(vehicleBrandJdbcRepository.find(filter));
     }

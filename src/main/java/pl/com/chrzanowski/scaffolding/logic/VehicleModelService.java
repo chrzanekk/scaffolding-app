@@ -20,6 +20,17 @@ public class VehicleModelService implements IVehicleModel{
         this.vehicleModelJdbcRepository = vehicleModelJdbcRepository;
     }
 
+    public Long add(VehicleModelData data) {
+        if(ValidateDataUtil.isModelNameExist(data.getName())){
+            return find(new VehicleModelFilter(data.getId())).get(0).getId();
+        }
+        return vehicleModelJdbcRepository.create(data, data.getBrandId());
+    }
+
+    public void update(VehicleModelData data) {
+        vehicleModelJdbcRepository.update(data,data.getId());
+    }
+
     public List<VehicleModelData> find(VehicleModelFilter filter) {
         return getVehiclesModels(vehicleModelJdbcRepository.find(filter));
     }
