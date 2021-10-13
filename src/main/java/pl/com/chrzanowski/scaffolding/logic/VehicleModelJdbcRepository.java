@@ -7,32 +7,30 @@ import pl.com.chrzanowski.scaffolding.domain.VehicleData;
 import pl.com.chrzanowski.scaffolding.domain.VehicleModelData;
 import pl.com.chrzanowski.scaffolding.domain.VehicleModelFilter;
 
-import java.util.ArrayList;
+
 import java.util.List;
 import java.util.Map;
 
-import static pl.com.chrzanowski.scaffolding.logic.JdbcUtil.*;
-
 @Service
-public class VehiclesModelJdbcRepository {
+public class VehicleModelJdbcRepository {
 
     private JdbcTemplate jdbcTemplate;
     private CommonJdbcRepository commonJdbcRepository;
 
-    public VehiclesModelJdbcRepository(JdbcTemplate jdbcTemplate, CommonJdbcRepository commonJdbcRepository) {
+    public VehicleModelJdbcRepository(JdbcTemplate jdbcTemplate, CommonJdbcRepository commonJdbcRepository) {
         this.jdbcTemplate = jdbcTemplate;
         this.commonJdbcRepository = commonJdbcRepository;
     }
 
-    public Long create(VehicleData data, Long id) {
+    public Long create(VehicleModelData data, Long id) {
         String query = "INSERT INTO vehicle_model (id,name) VALUES (?,?)";
-        jdbcTemplate.update(query, id, data.getModelName());
+        jdbcTemplate.update(query, id, data.getName());
         return commonJdbcRepository.getLastInsertedId();
     }
 
-    public void update(VehicleData data, Long id) {
+    public void update(VehicleModelData data, Long id) {
         String query = "UPDATE vehicle_model SET name = ?, modify_date = ? WHERE id = ?;";
-        jdbcTemplate.update(query, data.getModelName(), data.getModifyDate(), id);
+        jdbcTemplate.update(query, data.getName(), data.getModifyDate(), id);
     }
 
     List<Map<String, Object>> find(VehicleModelFilter filter) {

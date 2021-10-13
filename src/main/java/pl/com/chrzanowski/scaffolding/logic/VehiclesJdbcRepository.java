@@ -2,11 +2,11 @@ package pl.com.chrzanowski.scaffolding.logic;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
+import pl.com.chrzanowski.scaffolding.domain.VehicleBrandData;
 import pl.com.chrzanowski.scaffolding.domain.VehicleData;
 import pl.com.chrzanowski.scaffolding.domain.VehicleFilter;
+import pl.com.chrzanowski.scaffolding.domain.VehicleModelData;
 
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -17,11 +17,11 @@ public class VehiclesJdbcRepository {
     private JdbcTemplate jdbcTemplate;
     private CommonJdbcRepository commonJdbcRepository;
     private VehicleBrandJdbcRepository brandJdbcRepository;
-    private VehiclesModelJdbcRepository modelJdbcRepository;
+    private VehicleModelJdbcRepository modelJdbcRepository;
 
     public VehiclesJdbcRepository(JdbcTemplate jdbcTemplate, CommonJdbcRepository commonJdbcRepository,
                                   VehicleBrandJdbcRepository brandJdbcRepository,
-                                  VehiclesModelJdbcRepository modelJdbcRepository) {
+                                  VehicleModelJdbcRepository modelJdbcRepository) {
         this.jdbcTemplate = jdbcTemplate;
         this.commonJdbcRepository = commonJdbcRepository;
         this.brandJdbcRepository = brandJdbcRepository;
@@ -29,8 +29,8 @@ public class VehiclesJdbcRepository {
     }
 
     public Long create(VehicleData data) {
-        Long brandId = brandJdbcRepository.create(data);
-        Long modelId = modelJdbcRepository.create(data, brandId);
+        Long brandId = brandJdbcRepository.create(new VehicleBrandData(data.getBrandName()));
+        Long modelId = modelJdbcRepository.create(new VehicleModelData(data.getModelName()), brandId);
 
         String query = "INSERT INTO vehicles (" +
                 "brand_id," +
@@ -75,8 +75,8 @@ public class VehiclesJdbcRepository {
 
 
     public void update(VehicleData data, Long brandId, Long modelId)  {
-        brandJdbcRepository.update(data, brandId);
-        modelJdbcRepository.update(data, modelId);
+        brandJdbcRepository.update(new VehicleBrandData(data.getBrandName()), brandId);
+        modelJdbcRepository.update(new VehicleModelData(data.getModelName()), modelId);
 
         String query = "UPDATE vehicles SET " +
                 "registration_number = ?," +

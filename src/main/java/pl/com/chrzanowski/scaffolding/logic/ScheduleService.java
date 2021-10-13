@@ -24,7 +24,7 @@ public class ScheduleService {
         cacheService.invalidateDictionaries();
         cacheService.invalidateMenu();
         cacheService.invalidateUserRole();
-        cacheService.invalidateCustomers();
+        cacheService.invalidateDictionariesById();
         log.debug("Caches invalidated");
     }
 

@@ -118,7 +118,7 @@ public class ScaffoldingEndpointAdmin {
 
     @GetMapping(path = "/vehicle/{id}", produces = "application/json; charset=UTF-8")
     public VehicleRequestGetResponse vehicleById(
-            @PathVariable Long id) throws SQLException {
+            @PathVariable Long id)  {
         VehicleData vehicle = vehiclesService.findById(new VehicleFilter(id));
         return new VehicleRequestGetResponse(vehicleToResponse(vehicle));
     }
@@ -141,7 +141,7 @@ public class ScaffoldingEndpointAdmin {
     }
 
     @PutMapping(path = "/vehicle/{id}")
-    public void updateVehicle(@PathVariable Long id, @RequestBody VehiclePutRequest request) throws SQLException {
+    public void updateVehicle(@PathVariable Long id, @RequestBody VehiclePutRequest request)  {
         vehiclesService.update(new VehicleData(
                 id,
                 request.getBrandName(),
@@ -158,6 +158,12 @@ public class ScaffoldingEndpointAdmin {
                 request.getHeight())
         );
     }
+
+
+
+
+
+
 
     @GetMapping(path = "/fuel-types", produces = "application/json; charset=UTF-8")
     public FuelTypeRequestGetResponse fuelTypes(@RequestParam(name = "page", required = false, defaultValue = "1") Long page,

@@ -11,8 +11,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.thymeleaf.TemplateEngine;
-import pl.com.chrzanowski.scaffolding.api.UserGetResponse;
-import pl.com.chrzanowski.scaffolding.api.VehicleGetResponse;
 import pl.com.chrzanowski.scaffolding.config.ApplicationConfig;
 import pl.com.chrzanowski.scaffolding.domain.*;
 import pl.com.chrzanowski.scaffolding.logic.*;
@@ -36,11 +34,7 @@ public class ApplicationController {
     private Environment environment;
     private EmailConfirmService emailConfirmationService;
     private IVehicle iVehicle;
-    private IFuelType iFuelType;
-    private VehicleTypeService vehicleTypeService;
-    private ServiceActionsService serviceActionsService;
     private IServiceActions iServiceActions;
-    private ServiceActionTypesService serviceActionTypesService;
     private IServiceActonType iServiceActonType;
     private ServiceWorkshopsService workshopsService;
 
@@ -53,11 +47,7 @@ public class ApplicationController {
                                  Environment environment,
                                  EmailConfirmService emailConfirmationService,
                                  IVehicle iVehicle,
-                                 IFuelType iFuelType,
-                                 VehicleTypeService vehicleTypeService,
-                                 ServiceActionsService serviceActionsService,
                                  IServiceActions iServiceActions,
-                                 ServiceActionTypesService serviceActionTypesService,
                                  IServiceActonType iServiceActonType,
                                  ServiceWorkshopsService workshopsService) {
         this.userService = userService;
@@ -68,11 +58,7 @@ public class ApplicationController {
         this.templateEngine = templateEngine;
         this.environment = environment;
         this.emailConfirmationService = emailConfirmationService;
-        this.iFuelType = iFuelType;
         this.iVehicle = iVehicle;
-        this.vehicleTypeService = vehicleTypeService;
-        this.serviceActionsService = serviceActionsService;
-        this.serviceActionTypesService = serviceActionTypesService;
         this.iServiceActonType = iServiceActonType;
         this.workshopsService = workshopsService;
         this.iServiceActions = iServiceActions;
@@ -149,7 +135,7 @@ public class ApplicationController {
 
 
     @GetMapping({"/admin/vehicles"})
-    public String adminVehicles(Model model) throws SQLException {
+    public String adminVehicles(Model model) {
 
         if (!userService.isLoggedUserAdmin()) {
             throw new IllegalArgumentException("Access denied");
@@ -161,6 +147,22 @@ public class ApplicationController {
         model.addAttribute("languageDict", dictionariesService.getDictionary(DictionaryType.LANGUAGES, lang));
         model.addAttribute("fuelTypes", dictionariesService.getDictionary(DictionaryType.FUEL_TYPES, lang));
         model.addAttribute("vehicleTypes", dictionariesService.getDictionary(DictionaryType.VEHICLE_TYPES, lang));
+
+        return "admin-vehicles";
+    }
+
+    @GetMapping({"/admin/brands-and-models"})
+    public String adminBrandsAndModels(Model model) {
+
+        if (!userService.isLoggedUserAdmin()) {
+            throw new IllegalArgumentException("Access denied");
+        }
+
+        Language lang = LanguagesUtil.getCurrentLanguage();
+
+        model.addAttribute("brands", dictionariesService.getDictionary(DictionaryType.VEHICLE_BRANDS,lang));
+        model.addAttribute("models", dictionariesService.getDictionary(DictionaryType.VEHICLE_MODELS,lang));
+        model.addAttribute("languageDict", dictionariesService.getDictionary(DictionaryType.LANGUAGES, lang));
 
         return "admin-vehicles";
     }

@@ -4,7 +4,6 @@ import org.springframework.stereotype.Service;
 import pl.com.chrzanowski.scaffolding.domain.VehicleData;
 import pl.com.chrzanowski.scaffolding.domain.VehicleFilter;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;

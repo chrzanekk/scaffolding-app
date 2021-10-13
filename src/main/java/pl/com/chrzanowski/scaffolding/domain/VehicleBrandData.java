@@ -15,6 +15,10 @@ public class VehicleBrandData {
         this.name = name;
     }
 
+    public VehicleBrandData(String name) {
+        this.name = name;
+    }
+
     public Long getId() {
         return id;
     }

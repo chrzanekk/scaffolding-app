@@ -21,9 +21,13 @@ public class CacheService {
 
     }
 
-    @CacheEvict(value = CacheType.DICTIONARY_CUSTOMER, allEntries = true)
-    public void invalidateCustomers() {
+    @CacheEvict(value = CacheType.DICTIONARY_USER, allEntries = true)
+    public void invalidateUsers() {
 
+    }
+
+    @CacheEvict(value = CacheType.DICTIONARIES_BY_ID, allEntries = true)
+    public void invalidateDictionariesById() {
     }
 
 }

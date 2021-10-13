@@ -6,7 +6,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import pl.com.chrzanowski.scaffolding.domain.UserData;
 import pl.com.chrzanowski.scaffolding.logic.*;
-import pl.com.chrzanowski.scaffolding.logic.UserService;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -47,9 +46,16 @@ public class AuthenticatedUser {
         if (userAuthoritiesService.hasUserAuthority(loggedUser, UserAuthority.ADMIN)) {
             return new ArrayList<>(Arrays.asList(
                     new Menu("Flota", "#", new Permissions[]{Permissions.ADMIN},
-                            new ArrayList<>(Arrays.asList(new Menu(chooseMenuName("Cars", "Samochody", currentLang),
-                                    "/admin/vehicles", new Permissions[]{Permissions.ADMIN}, Collections.emptyList())
-                            ))),
+                            new ArrayList<>(Arrays.asList(
+                                    new Menu(chooseMenuName("List", "Lista samochodów",
+                                            currentLang),
+                                            "/admin/vehicles", new Permissions[]{Permissions.ADMIN}, Collections.emptyList()),
+                                    new Menu(chooseMenuName("Brands and models", "Modele i marki",
+                                            currentLang),
+                                            "/admin/brand-and-models", new Permissions[]{Permissions.ADMIN},
+                                            Collections.emptyList())
+                            ))
+                    ),
                     new Menu(chooseMenuName("Data settings", "Ustawienia danych", currentLang), "#",
                             new Permissions[]{Permissions.ADMIN},
                             new ArrayList<>(Arrays.asList(

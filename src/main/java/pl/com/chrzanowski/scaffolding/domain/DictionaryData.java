@@ -25,12 +25,7 @@ public class DictionaryData {
         this.language = language;
     }
 
-    public DictionaryData(Long id, String value, String language, String extraString, String nothing) {
-        this.id = id;
-        this.value = value;
-        this.language = language;
-        this.extraString = extraString;
-    }
+
 
     public DictionaryData(Long id, String value, String language, BigDecimal extraPrice) {
         this.id = id;

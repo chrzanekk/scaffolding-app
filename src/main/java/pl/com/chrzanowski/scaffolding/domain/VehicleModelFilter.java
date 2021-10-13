@@ -16,6 +16,14 @@ public class VehicleModelFilter {
         this.pageSize = pageSize;
     }
 
+    public VehicleModelFilter(Long id, Long brandId) {
+        this.id = id;
+        this.brandId = brandId;
+    }
+
+    public VehicleModelFilter() {
+    }
+
     public VehicleModelFilter(Long id) {
         this.id = id;
     }

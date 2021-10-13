@@ -16,6 +16,10 @@ public class VehicleModelData {
         this.name = name;
     }
 
+    public VehicleModelData(String name) {
+        this.name = name;
+    }
+
     public Long getId() {
         return id;
     }

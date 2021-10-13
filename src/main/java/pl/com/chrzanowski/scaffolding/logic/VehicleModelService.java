@@ -14,14 +14,14 @@ import static pl.com.chrzanowski.scaffolding.logic.JdbcUtil.getString;
 @Service
 public class VehicleModelService implements IVehicleModel{
 
-    private VehiclesModelJdbcRepository vehiclesModelJdbcRepository;
+    private VehicleModelJdbcRepository vehicleModelJdbcRepository;
 
-    public VehicleModelService(VehiclesModelJdbcRepository vehiclesModelJdbcRepository) {
-        this.vehiclesModelJdbcRepository = vehiclesModelJdbcRepository;
+    public VehicleModelService(VehicleModelJdbcRepository vehicleModelJdbcRepository) {
+        this.vehicleModelJdbcRepository = vehicleModelJdbcRepository;
     }
 
     public List<VehicleModelData> find(VehicleModelFilter filter) {
-        return getVehiclesModels(vehiclesModelJdbcRepository.find(filter));
+        return getVehiclesModels(vehicleModelJdbcRepository.find(filter));
     }
 
     private List<VehicleModelData> getVehiclesModels(List<Map<String, Object>> rows) {

@@ -25,19 +25,22 @@ public class DictionariesService {
     private IServiceActonType iServiceActonType;
     private ITireSeason iTireSeason;
     private IVehicleBrand iVehicleBrand;
+    private IVehicleModel iVehicleModel;
 
     public DictionariesService(DictionariesJdbcRepository dictionariesJdbcRepository,
                                IVehicleType iVehicleType,
                                IFuelType iFuelType,
                                IServiceActonType iServiceActonType,
                                ITireSeason iTireSeason,
-                               IVehicleBrand iVehicleBrand) {
+                               IVehicleBrand iVehicleBrand,
+                               IVehicleModel iVehicleModel) {
         this.dictionariesJdbcRepository = dictionariesJdbcRepository;
         this.iVehicleType = iVehicleType;
         this.iFuelType = iFuelType;
         this.iServiceActonType = iServiceActonType;
         this.iTireSeason = iTireSeason;
         this.iVehicleBrand = iVehicleBrand;
+        this.iVehicleModel = iVehicleModel;
     }
 
     public List<DictionaryData> getDictionary(DictionaryType type) {
@@ -64,13 +67,16 @@ public class DictionariesService {
             return getFuelTypes(lang);
         } else if (SERVICE_ACTION_TYPES == type) {
             return getActionTypes(lang);
-        }else if (TIRE_SEASONS == type) {
+        } else if (TIRE_SEASONS == type) {
             return getTireSeasons(lang);
-        }else if (VEHICLE_BRAND == type) {
+        } else if (VEHICLE_BRANDS == type) {
             return getBrands(lang);
+        } else if (VEHICLE_MODELS == type) {
+            return getModels(lang);
         }
         throw new IllegalArgumentException("Dictionary no defined: " + type + " for language: " + lang);
     }
+
 
 
     private List<DictionaryData> getYesNo(Language lang) {
@@ -93,7 +99,6 @@ public class DictionariesService {
 
         return list;
     }
-
 
     private List<DictionaryData> getLanguages(Language lang) {
         List<DictionaryData> list = new ArrayList<>();
@@ -190,11 +195,26 @@ public class DictionariesService {
         List<VehicleBrandData> brands = iVehicleBrand.find(new VehicleBrandFilter());
 
         List<DictionaryData> dictionaryDataList = new ArrayList<>();
-        for(VehicleBrandData data :brands) {
+        for (VehicleBrandData data : brands) {
             dictionaryDataList.add(new DictionaryData(
                     data.getId(),
                     data.getName(),
                     lang.getCode()
+            ));
+        }
+        return dictionaryDataList;
+    }
+
+    private List<DictionaryData> getModels(Language lang) {
+        List<VehicleModelData> models = iVehicleModel.find(new VehicleModelFilter());
+
+        List<DictionaryData> dictionaryDataList = new ArrayList<>();
+        for (VehicleModelData data : models) {
+            dictionaryDataList.add(new DictionaryData(
+                    data.getId(),
+                    data.getName(),
+                    lang.getCode(),
+                    data.getBrandId()
             ));
         }
         return dictionaryDataList;
