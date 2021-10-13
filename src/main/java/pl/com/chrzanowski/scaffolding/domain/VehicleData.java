@@ -119,9 +119,7 @@ public class VehicleData {
         this.createDate = LocalDateTime.now();
     }
 
-    public VehicleData(String brandName) {
-        this.brandName = brandName;
-    }
+
 
 
 

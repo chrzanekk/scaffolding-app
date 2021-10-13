@@ -11,11 +11,26 @@ public class VehiclesBrandsAndModelsData {
     private LocalDateTime modifyDate;
     private LocalDateTime removeDate;
 
+
     public VehiclesBrandsAndModelsData(Long brandId, Long modelId, String brandName, String modelName) {
         this.brandId = brandId;
         this.modelId = modelId;
         this.brandName = brandName;
         this.modelName = modelName;
+    }
+
+    public VehiclesBrandsAndModelsData(String brandName, String modelName) {
+        this.brandName = brandName;
+        this.modelName = modelName;
+    }
+
+    public VehiclesBrandsAndModelsData(Long brandId, Long modelId, String brandName, String modelName,
+                                       LocalDateTime modifyDate) {
+        this.brandId = brandId;
+        this.modelId = modelId;
+        this.brandName = brandName;
+        this.modelName = modelName;
+        this.modifyDate = modifyDate;
     }
 
     public Long getBrandId() {

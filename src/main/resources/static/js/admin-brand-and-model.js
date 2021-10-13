@@ -25,24 +25,14 @@ function sendDeleteRequest(){
 
 function sendUpdateRequest() {
     $.ajax({
-        url: "/admin/api/scaffolding/vehicle/" + vehicle.id,
+        url: "/admin/api/scaffolding/brand-and-model/" + brandAndModel.brandId,
         method: "PUT",
         contentType: "application/json",
         data: JSON.stringify({
-             brandId: $("#brand").find(":selected").val(),
-             modelId: $("#model").find(":selected").val(),
-             brandName: $("#brand").val(),
-             modelName: $("#model").val(),
-             registrationNumber: $("#registrationNumber").val(),
-             vin: $("#vin").val(),
-             productionYear: $("#productionYear").val(),
-             firstRegistrationDate: $("#firstRegistrationDate").val(),
-             freePlacesForTechnicalInspections: $("#freePlacesForTechnicalInspections").val(),
-             fuelTypeId: $("#fuelType").val(),
-             vehicleTypeId: $("#vehicleType").val(),
-             length: $("#length").val(),
-             width: $("#width").val(),
-             height: $("#height").val()
+            brandId: $("#brand").find(":selected").val(),
+            modelId: $("#model").find(":selected").val(),
+            brandName: $("#brand").val(),
+            modelName: $("#model").val(),
         })
     })
         .done(function () {

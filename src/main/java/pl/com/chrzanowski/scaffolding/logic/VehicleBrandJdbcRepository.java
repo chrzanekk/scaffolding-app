@@ -29,9 +29,9 @@ public class VehicleBrandJdbcRepository {
         return commonJdbcRepository.getLastInsertedId();
     }
 
-    public void update(VehicleBrandData data, Long id) {
+    public void update(VehicleBrandData data) {
         String query = "UPDATE vehicle_brand SET name = ?, modify_date = ? WHERE id = ?;";
-        jdbcTemplate.update(query,data.getName(), data.getModifyDate() ,id);
+        jdbcTemplate.update(query,data.getName(), data.getModifyDate() ,data.getId());
     }
 
     List<Map<String, Object>> find(VehicleBrandFilter filter) {
@@ -50,6 +50,8 @@ public class VehicleBrandJdbcRepository {
         }
         return jdbcTemplate.queryForList(query);
     }
+
+
 
 
 }

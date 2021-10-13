@@ -170,7 +170,24 @@ public class ScaffoldingEndpointAdmin {
         return new VehiclesBrandsAndModelsRequestGetResponse(brandsAndModelsToResponse(brandsAndModels));
     }
 
+    @PostMapping(path = "/brand-and-model", consumes = "application/json; charset=UTF-8")
+    public void addBrandAndModel(@RequestBody VehiclesBrandAndModelPostRequest request) {
+        vehiclesBrandsAndModelsService.addBrandAndModel(new VehiclesBrandsAndModelsData(
+                request.getBrandName(),
+                request.getModelName()
+        ));
+    }
 
+    @PutMapping(path = "/brand-and-model/{id}")
+    public void updateBrandAndModel(@PathVariable Long id, @RequestBody VehiclesBrandAndModelPutRequest request) {
+        vehiclesBrandsAndModelsService.updateBrandAndModel(new VehiclesBrandsAndModelsData(
+                id,
+                request.getModelId(),
+                request.getBrandName(),
+                request.getModelName(),
+                LocalDateTime.now()
+        ));
+    }
 
 
 

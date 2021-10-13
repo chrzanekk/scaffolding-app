@@ -11,6 +11,13 @@ public class VehiclesBrandsAndModelsFilter {
     public VehiclesBrandsAndModelsFilter() {
     }
 
+    public VehiclesBrandsAndModelsFilter(Long brandId, Long modelId, String brandName, String modelName) {
+        this.brandId = brandId;
+        this.modelId = modelId;
+        this.brandName = brandName;
+        this.modelName = modelName;
+    }
+
     public Long getBrandId() {
         return brandId;
     }

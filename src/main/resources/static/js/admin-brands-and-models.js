@@ -1,6 +1,6 @@
 var url = "/admin/api/scaffolding"
-var vehiclesApiUrl = url + "/vehicles?"
-var vehicleApiUrl = url + "/vehicle"
+var brandsAndModelsApiUrl = url + "/brands-and-models?"
+var brandAndModelApiUrl = url + "/brand-and-model"
 
 $(document).ready(function () {
     $('#create-modal').on('hide.bs.modal', function (e) {
@@ -8,47 +8,45 @@ $(document).ready(function () {
     });
 
 
-    findVehicles();
+    findBrandsAndModels();
     $("#filter input, #filter select, [form='filter']").on("change", function () {
-        findVehicles();
+        findBrandsAndModels();
     });
 
 });
 
 
-function findVehicles() {
+function findBrandsAndModels() {
     $.ajax({
-        url: vehiclesApiUrl + preparePaginationUrl(),
+        url: brandsAndModelsApiUrl + preparePaginationUrl(),
         type: "get",
         dataType: "json",
         contentType: "application/json"
     })
-    .done(function (vehicles) {
+    .done(function (brandsAndModels) {
         $("#records").empty();
-        fillResults(vehicles.vehicles);
+        fillResults(brandsAndModels.brandsAndModels);
     })
     .fail(function(jqxhr, textStatus, errorThrown){
         displayErrorInformation(jqxhr.responseText);
     });
 }
 
-function fillResults(vehicles) {
+function fillResults(brandsAndModels) {
     let value = 1;
-    vehicles.forEach(function(vehicle){
-        fillRow(vehicle, value);
+    brandsAndModels.forEach(function(brandAndModel){
+        fillRow(brandAndModel, value);
         value = value + 1;
     });
 }
 
-function fillRow(vehicle, value) {
+function fillRow(brandAndModel, value) {
     $('#records').append(
         "<tr>" +
             "<td class='align-middle'>" + value + "</td>" +
-            "<td class='align-middle'>" + vehicle.brandName + "</td>" +
-            "<td class='align-middle'>" + vehicle.modelName + " </td>" +
-            "<td class='align-middle'>" + vehicle.registrationNumber + "</td>" +
-            "<td class='align-middle'>" + prepareDetailsButton(vehicle.id) + "</td>" +
-            "<td class='align-middle'>" + prepareServicesButton(vehicle.id) + "</td>" +
+            "<td class='align-middle'>" + brandAndModel.brandName + "</td>" +
+            "<td class='align-middle'>" + brandAndModel.modelName + " </td>" +
+            "<td class='align-middle'>" + prepareDetailsButton(brandAndModel.brandId) + "</td>" +
         "</tr>"
     );
 }
@@ -57,20 +55,14 @@ function prepareDetailsButton(id) {
     return '<button type="button" class="btn btn-primary" onclick="goToDetailsPage(' + id + ')">Detale</button>';
 }
 
-function prepareServicesButton(id) {
-    return '<button type="button" class="btn btn-primary" onclick="goToServicesPage('+ id + ')">Serwis/Naprawa</button>';
-}
-
 function prepareDeleteButton(id) {
     return '<button type="button" class="btn btn-danger" onclick="setObjectToDeleteIdAndShowModal(' + id + ')">Usuń/Zezłomuj</button>';
 }
 
 function goToDetailsPage(id) {
-    window.location.href = "/admin/vehicle/" + id;
+    window.location.href = "/admin/brand-and-model/" + id;
 }
-function goToServicesPage(id) {
-    window.location.href = "/admin/vehicle-service-actions/" + id;
-}
+
 
 function setObjectToDeleteIdAndShowModal(id) {
     objToDeleteId = id;
@@ -80,42 +72,22 @@ function setObjectToDeleteIdAndShowModal(id) {
 function clearCreateModal() {
     $("#create-brand").val('');
     $("#create-model").val('');
-    $("#create-registration-number").val('');
-    $("#create-vin").val('');
-    $("#create-production-year").val('');
-    $("#create-first-registration-date").val('');
-    $("#create-free-places-for-technical-inspections").val('');
-    $("#create-fuel-type").val('');
-    $("#create-vehicle-type").val('');
-    $("#create-length").val('');
-    $("#create-width").val('');
-    $("#create-height").val('');
 }
-//todo -> cały flow dodawania i usuawnia pojazdu(konstruktory, repozytoria do innych tabel itp)
+
 function sendCreateRequest() {
     $.ajax({
-        url: vehicleApiUrl,
+        url: brandAndModelApiUrl,
         method: "POST",
         contentType: "application/json",
         data: JSON.stringify({
                 brandName: $("#create-brand").val(),
                 modelName: $("#create-model").val(),
-                registrationNumber: $("#create-registration-number").val(),
-                vin: $("#create-vin").val(),
-                productionYear: $("#create-production-year").val(),
-                firstRegistrationDate: $("#create-first-registration-date").val(),
-                freePlacesForTechnicalInspections: $("#create-free-places-for-technical-inspections").val(),
-                fuelTypeId: $("#create-fuel-type").val(),
-                vehicleTypeId: $("#create-vehicle-type").val(),
-                length: $("#create-length").val(),
-                width: $("#create-width").val(),
-                height: $("#create-height").val()
         })
     })
         .done(function () {
             $("#create-modal").modal('hide');
             $("#operation-successful-modal").modal('show');
-            findVehicles();
+            findBrandsAndModels();
         })
         .fail(function (jqxhr, textStatus, errorThrown) {
             displayErrorInformation(jqxhr.responseText);

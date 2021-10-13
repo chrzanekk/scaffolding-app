@@ -22,15 +22,15 @@ public class VehicleModelJdbcRepository {
         this.commonJdbcRepository = commonJdbcRepository;
     }
 
-    public Long create(VehicleModelData data, Long id) {
-        String query = "INSERT INTO vehicle_model (id,name) VALUES (?,?)";
-        jdbcTemplate.update(query, id, data.getName());
+    public Long create(VehicleModelData data) {
+        String query = "INSERT INTO vehicle_model (brand_id, name) VALUES (?,?)";
+        jdbcTemplate.update(query, data.getBrandId(), data.getName());
         return commonJdbcRepository.getLastInsertedId();
     }
 
-    public void update(VehicleModelData data, Long id) {
+    public void update(VehicleModelData data) {
         String query = "UPDATE vehicle_model SET name = ?, modify_date = ? WHERE id = ?;";
-        jdbcTemplate.update(query, data.getName(), data.getModifyDate(), id);
+        jdbcTemplate.update(query, data.getName(), data.getModifyDate(), data.getId());
     }
 
     List<Map<String, Object>> find(VehicleModelFilter filter) {

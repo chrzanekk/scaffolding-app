@@ -52,7 +52,7 @@ public class AuthenticatedUser {
                                             "/admin/vehicles", new Permissions[]{Permissions.ADMIN}, Collections.emptyList()),
                                     new Menu(chooseMenuName("Brands and models", "Modele i marki",
                                             currentLang),
-                                            "/admin/brand-and-models", new Permissions[]{Permissions.ADMIN},
+                                            "/admin/brands-and-models", new Permissions[]{Permissions.ADMIN},
                                             Collections.emptyList())
                             ))
                     ),

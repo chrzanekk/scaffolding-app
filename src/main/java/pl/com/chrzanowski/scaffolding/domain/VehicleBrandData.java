@@ -19,6 +19,12 @@ public class VehicleBrandData {
         this.name = name;
     }
 
+    public VehicleBrandData(Long id, String name, LocalDateTime modifyDate) {
+        this.id = id;
+        this.name = name;
+        this.modifyDate = modifyDate;
+    }
+
     public Long getId() {
         return id;
     }

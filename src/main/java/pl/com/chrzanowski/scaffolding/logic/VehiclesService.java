@@ -36,9 +36,7 @@ public class VehiclesService implements IVehicle {
 
     public void update(VehicleData data) {
         vehiclesJdbcRepository.update(
-                data,
-                findById(new VehicleFilter(data.getId())).getBrandId(),
-                findById(new VehicleFilter(data.getId())).getModelId());
+                data);
     }
 
     private List<VehicleData> getVehicles(List<Map<String, Object>> data) {

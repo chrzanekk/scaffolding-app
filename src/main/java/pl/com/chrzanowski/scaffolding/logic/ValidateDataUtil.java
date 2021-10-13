@@ -7,17 +7,16 @@ import pl.com.chrzanowski.scaffolding.domain.VehicleModelFilter;
 
 public class ValidateDataUtil {
 
-    private static VehicleBrandJdbcRepository vehicleBrandJdbcRepository;
-    private static VehicleModelJdbcRepository vehicleModelJdbcRepository;
+    private static IVehicleBrand iVehicleBrand;
+    private static IVehicleModel iVehicleModel;
 
-    public ValidateDataUtil() {
-    }
+
 
     public static boolean isBrandNameExist(String brandName) {
-        return !vehicleBrandJdbcRepository.find(new VehicleBrandFilter(brandName)).isEmpty();
+        return !iVehicleBrand.find(new VehicleBrandFilter(brandName)).isEmpty();
     }
 
     public static boolean isModelNameExist(String modelName) {
-        return !vehicleModelJdbcRepository.find(new VehicleModelFilter(modelName)).isEmpty();
+        return !iVehicleModel.find(new VehicleModelFilter(modelName)).isEmpty();
     }
 }

@@ -30,7 +30,7 @@ public class VehiclesJdbcRepository {
 
     public Long create(VehicleData data) {
         Long brandId = brandJdbcRepository.create(new VehicleBrandData(data.getBrandName()));
-        Long modelId = modelJdbcRepository.create(new VehicleModelData(data.getModelName()), brandId);
+        Long modelId = modelJdbcRepository.create(new VehicleModelData(null, brandId, data.getModelName()));
 
         String query = "INSERT INTO vehicles (" +
                 "brand_id," +
@@ -74,10 +74,7 @@ public class VehiclesJdbcRepository {
     }
 
 
-    public void update(VehicleData data, Long brandId, Long modelId)  {
-        brandJdbcRepository.update(new VehicleBrandData(data.getBrandName()), brandId);
-        modelJdbcRepository.update(new VehicleModelData(data.getModelName()), modelId);
-
+    public void update(VehicleData data)  {
         String query = "UPDATE vehicles SET " +
                 "registration_number = ?," +
                 "vin = ?," +
