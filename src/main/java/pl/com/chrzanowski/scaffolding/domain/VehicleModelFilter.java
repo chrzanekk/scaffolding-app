@@ -32,10 +32,6 @@ public class VehicleModelFilter {
         this.name = name;
     }
 
-    public VehicleModelFilter(String name,Long brandId) {
-        this.brandId = brandId;
-        this.name = name;
-    }
 
     public Long getId() {
         return id;

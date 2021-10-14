@@ -150,6 +150,8 @@ public class ApplicationController {
         model.addAttribute("languageDict", dictionariesService.getDictionary(DictionaryType.LANGUAGES, lang));
         model.addAttribute("fuelTypes", dictionariesService.getDictionary(DictionaryType.FUEL_TYPES, lang));
         model.addAttribute("vehicleTypes", dictionariesService.getDictionary(DictionaryType.VEHICLE_TYPES, lang));
+        model.addAttribute("brands", dictionariesService.getDictionary(DictionaryType.VEHICLE_BRANDS,lang));
+        model.addAttribute("models", dictionariesService.getDictionary(DictionaryType.VEHICLE_MODELS,lang));
 
         return "admin-vehicles";
     }
@@ -164,10 +166,14 @@ public class ApplicationController {
         Language lang = LanguagesUtil.getCurrentLanguage();
 
         model.addAttribute("brandsAndModels", vehiclesBrandsAndModelsService.find(new VehiclesBrandsAndModelsFilter()));
+        model.addAttribute("brands", dictionariesService.getDictionary(DictionaryType.VEHICLE_BRANDS,lang));
+        model.addAttribute("models", dictionariesService.getDictionary(DictionaryType.VEHICLE_MODELS,lang));
         model.addAttribute("languageDict", dictionariesService.getDictionary(DictionaryType.LANGUAGES, lang));
 
         return "admin-brands-and-models";
     }
+
+
 
 
     @GetMapping({"/admin/vehicle/{id}"})
@@ -183,6 +189,9 @@ public class ApplicationController {
         model.addAttribute("languageDict", dictionariesService.getDictionary(DictionaryType.LANGUAGES, lang));
         model.addAttribute("fuelTypes", dictionariesService.getDictionary(DictionaryType.FUEL_TYPES, lang));
         model.addAttribute("vehicleTypes", dictionariesService.getDictionary(DictionaryType.VEHICLE_TYPES, lang));
+        model.addAttribute("brands", dictionariesService.getDictionary(DictionaryType.VEHICLE_BRANDS,lang));
+        model.addAttribute("models", dictionariesService.getDictionary(DictionaryType.VEHICLE_MODELS,lang));
+
         return "admin-vehicle";
     }
 

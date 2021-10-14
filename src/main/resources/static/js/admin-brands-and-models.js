@@ -1,6 +1,7 @@
 var url = "/admin/api/scaffolding"
 var brandsAndModelsApiUrl = url + "/brands-and-models?"
 var brandAndModelApiUrl = url + "/brand-and-model"
+var modelsByBrandIdApiUri = url + "/models"
 
 $(document).ready(function () {
     $('#create-modal').on('hide.bs.modal', function (e) {
@@ -9,6 +10,7 @@ $(document).ready(function () {
 
 
     findBrandsAndModels();
+
     $("#filter input, #filter select, [form='filter']").on("change", function () {
         findBrandsAndModels();
     });
@@ -46,7 +48,7 @@ function fillRow(brandAndModel, value) {
             "<td class='align-middle'>" + value + "</td>" +
             "<td class='align-middle'>" + brandAndModel.brandName + "</td>" +
             "<td class='align-middle'>" + brandAndModel.modelName + " </td>" +
-            "<td class='align-middle'>" + prepareDetailsButton(brandAndModel.brandId) + "</td>" +
+            "<td class='align-middle'>" + prepareDetailsButton(brandAndModel.modelId) + "</td>" +
         "</tr>"
     );
 }
@@ -61,6 +63,25 @@ function prepareDeleteButton(id) {
 
 function goToDetailsPage(id) {
     window.location.href = "/admin/brand-and-model/" + id;
+}
+
+function getModelsByBrandId(value) {
+    var id = value.value;
+    var models = "";
+    $.ajax({
+        url: modelsByBrandIdApiUri + "/" + id,
+        type: "get",
+        dataType: "json",
+        contentType: "application/json"
+    })
+    .done(function (models) {
+       alert(JSON.stringify(models));
+       models = JSON.stringify(models);
+    })
+    .fail(function(jqxhr, textStatus, errorThrown){
+        displayErrorInformation(jqxhr.responseText);
+    });
+    return models;
 }
 
 
@@ -91,6 +112,7 @@ function sendCreateRequest() {
         })
         .fail(function (jqxhr, textStatus, errorThrown) {
             displayErrorInformation(jqxhr.responseText);
+            $("#brands.already.exist").modal('show');
         })
 }
 

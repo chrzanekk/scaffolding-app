@@ -43,7 +43,7 @@ public class VehiclesBrandsAndModelsService {
         } else {
             brandId = iVehicleBrand.add(new VehicleBrandData(data.getBrandName()));
         }
-        if (!iVehicleModel.find(new VehicleModelFilter(data.getModelName())).contains(data.getModelName())) {
+        if (iVehicleModel.find(new VehicleModelFilter(data.getModelName())).contains(null)) {
             iVehicleModel.add(new VehicleModelData(null, brandId, data.getModelName()));
         } else {
             throw new IllegalArgumentException("Model" + data.getModelName() + " already exists");

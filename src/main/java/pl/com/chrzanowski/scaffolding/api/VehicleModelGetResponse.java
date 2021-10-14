@@ -1,31 +1,30 @@
 package pl.com.chrzanowski.scaffolding.api;
 
-import pl.com.chrzanowski.scaffolding.domain.VehicleModelData;
 
 import java.time.LocalDateTime;
 
 public class VehicleModelGetResponse {
 
     private Long id;
+    private Long brandId;
     private String name;
     private LocalDateTime createDate;
     private LocalDateTime modifyDate;
     private LocalDateTime removeDate;
 
-    public VehicleModelGetResponse(Long id, String name, LocalDateTime createDate, LocalDateTime modifyDate, LocalDateTime removeDate) {
+
+    public VehicleModelGetResponse(Long id, Long brandId, String name) {
         this.id = id;
+        this.brandId = brandId;
         this.name = name;
-        this.createDate = createDate;
-        this.modifyDate = modifyDate;
-        this.removeDate = removeDate;
-    }
-    public VehicleModelGetResponse(VehicleModelData vehicleModelData) {
-        this.id = vehicleModelData.getId();
-        this.name = vehicleModelData.getName();
     }
 
     public Long getId() {
         return id;
+    }
+
+    public Long getBrandId() {
+        return brandId;
     }
 
     public String getName() {

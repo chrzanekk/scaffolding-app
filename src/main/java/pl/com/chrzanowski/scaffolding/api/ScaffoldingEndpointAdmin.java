@@ -25,6 +25,7 @@ public class ScaffoldingEndpointAdmin {
     private ServiceActionTypesService serviceActionTypesService;
     private MarketingService marketingService;
     private ITireSeason iTireSeason;
+    private IVehicleModel iVehicleModel;
     private VehiclesBrandsAndModelsService vehiclesBrandsAndModelsService;
 
     public ScaffoldingEndpointAdmin(UserService userService,
@@ -36,6 +37,7 @@ public class ScaffoldingEndpointAdmin {
                                     ServiceActionTypesService serviceActionTypesService,
                                     MarketingService marketingService,
                                     ITireSeason iTireSeason,
+                                    IVehicleModel iVehicleModel,
                                     VehiclesBrandsAndModelsService vehiclesBrandsAndModelsService) {
         this.userService = userService;
         this.notificationsFromPanelService = notificationsFromPanelService;
@@ -47,6 +49,7 @@ public class ScaffoldingEndpointAdmin {
         this.marketingService = marketingService;
         this.iTireSeason = iTireSeason;
         this.vehiclesBrandsAndModelsService = vehiclesBrandsAndModelsService;
+        this.iVehicleModel = iVehicleModel;
     }
 
     @GetMapping("/users")
@@ -187,6 +190,12 @@ public class ScaffoldingEndpointAdmin {
                 request.getModelName(),
                 LocalDateTime.now()
         ));
+    }
+
+    @GetMapping(path = "/models/{id}", produces = "application/json; charset=UTF-8")
+    public VehiclesModelRequestGetResponse modelsByBrandId (@PathVariable Long id) {
+        List<VehicleModelData> models = iVehicleModel.find(new VehicleModelFilter(null, id));
+        return new VehiclesModelRequestGetResponse(modelsToResponse(models));
     }
 
 
@@ -458,6 +467,18 @@ public class ScaffoldingEndpointAdmin {
         for (TireSeasonData data : tireSeasons) {
             list.add(new TireSeasonGetResponse(
                     data.getId(),
+                    data.getName()
+            ));
+        }
+        return list;
+    }
+
+    private List<VehicleModelGetResponse> modelsToResponse(List<VehicleModelData> models) {
+        List<VehicleModelGetResponse> list = new ArrayList<>();
+        for (VehicleModelData data : models) {
+            list.add(new VehicleModelGetResponse(
+                    data.getId(),
+                    data.getBrandId(),
                     data.getName()
             ));
         }

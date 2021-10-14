@@ -39,6 +39,7 @@ public class VehicleModelService implements IVehicleModel{
         for (Map<String, Object> row : rows) {
             models.add(new VehicleModelData(
                     getLong(row, "id"),
+                    getLong(row,"brand_id"),
                     getString(row, "name")
             ));
         }
