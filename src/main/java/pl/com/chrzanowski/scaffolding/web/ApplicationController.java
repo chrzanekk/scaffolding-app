@@ -174,8 +174,6 @@ public class ApplicationController {
     }
 
 
-
-
     @GetMapping({"/admin/vehicle/{id}"})
     public String adminVehicleById(@PathVariable Long id, Model model) throws SQLException {
 
@@ -189,8 +187,7 @@ public class ApplicationController {
         model.addAttribute("languageDict", dictionariesService.getDictionary(DictionaryType.LANGUAGES, lang));
         model.addAttribute("fuelTypes", dictionariesService.getDictionary(DictionaryType.FUEL_TYPES, lang));
         model.addAttribute("vehicleTypes", dictionariesService.getDictionary(DictionaryType.VEHICLE_TYPES, lang));
-        model.addAttribute("brands", dictionariesService.getDictionary(DictionaryType.VEHICLE_BRANDS,lang));
-        model.addAttribute("models", dictionariesService.getDictionary(DictionaryType.VEHICLE_MODELS,lang));
+
 
         return "admin-vehicle";
     }
@@ -208,6 +205,8 @@ public class ApplicationController {
         model.addAttribute("languageDict", dictionariesService.getDictionary(DictionaryType.LANGUAGES, lang));
         model.addAttribute("fuelTypes", dictionariesService.getDictionary(DictionaryType.FUEL_TYPES, lang));
         model.addAttribute("vehicleTypes", dictionariesService.getDictionary(DictionaryType.VEHICLE_TYPES, lang));
+        model.addAttribute("brands", dictionariesService.getDictionary(DictionaryType.VEHICLE_BRANDS,lang));
+        model.addAttribute("models", dictionariesService.getDictionary(DictionaryType.VEHICLE_MODELS,lang));
         return "admin-vehicle-edit";
     }
 
