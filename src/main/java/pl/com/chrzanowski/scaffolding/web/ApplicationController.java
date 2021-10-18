@@ -239,6 +239,7 @@ public class ApplicationController {
 
         model.addAttribute("tire", iVehicleTires.findById(new VehicleTiresFilter(id)));
         model.addAttribute("vehicle", iVehicle.findById(new VehicleFilter(vehicleId)));
+        model.addAttribute("yesNoDict", dictionariesService.getDictionary(DictionaryType.YES_NO,lang));
         model.addAttribute("languageDict", dictionariesService.getDictionary(DictionaryType.LANGUAGES, lang));
         return "admin-vehicle-tire";
     }

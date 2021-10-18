@@ -74,7 +74,7 @@ public class DictionariesService {
         } else if (VEHICLE_MODELS == type) {
             return getModels(lang);
         } else if (VEHICLE_TIRES_STATUS == type) {
-            return getModels(lang);
+            return getTireStatus(lang);
         }
         throw new IllegalArgumentException("Dictionary no defined: " + type + " for language: " + lang);
     }
