@@ -222,10 +222,25 @@ public class ApplicationController {
 
         Language lang = LanguagesUtil.getCurrentLanguage();
 
-        model.addAttribute("tires", iVehicleTires.find(new VehicleTiresFilter(id)));
+        model.addAttribute("tires", iVehicleTires.find(new VehicleTiresFilter(null,id)));
         model.addAttribute("vehicle", iVehicle.findById(new VehicleFilter(id)));
         model.addAttribute("languageDict", dictionariesService.getDictionary(DictionaryType.LANGUAGES, lang));
         return "admin-vehicle-tires";
+    }
+
+    @GetMapping(path = "/admin/tire/{id}")
+    public String adminVehicleTire(@PathVariable Long id, Model model) {
+        Long vehicleId = iVehicleTires.find(new VehicleTiresFilter(id)).get(0).getVehicleId();
+        if (!userService.isLoggedUserAdmin()) {
+            throw new IllegalArgumentException("Access denied");
+        }
+
+        Language lang = LanguagesUtil.getCurrentLanguage();
+
+        model.addAttribute("tire", iVehicleTires.findById(new VehicleTiresFilter(id)));
+        model.addAttribute("vehicle", iVehicle.findById(new VehicleFilter(vehicleId)));
+        model.addAttribute("languageDict", dictionariesService.getDictionary(DictionaryType.LANGUAGES, lang));
+        return "admin-vehicle-tire";
     }
 
     @GetMapping({"/admin/vehicle-service-actions/{id}"})
@@ -248,7 +263,7 @@ public class ApplicationController {
     }
 
     @GetMapping({"/admin/vehicle-service-action/{id}"})
-    public String adminVehicleServicesById(@PathVariable Long id, Model model) throws SQLException {
+    public String adminVehicleServicesById(@PathVariable Long id, Model model) {
         Long vehicleId = iServiceActions.findById(new ServiceActionsFilter(id)).getVehicleId();
         if (!userService.isLoggedUserAdmin()) {
             throw new IllegalArgumentException("Access denied.");

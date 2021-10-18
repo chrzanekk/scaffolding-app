@@ -21,7 +21,12 @@ public class VehicleTiresService implements IVehicleTires {
 
     @Override
     public List<VehicleTiresData> find(VehicleTiresFilter filter) {
-        return null;
+        return getTires(tiresJdbcRepository.find(filter));
+    }
+
+    @Override
+    public VehicleTiresData findById(VehicleTiresFilter filter) {
+        return getTires(tiresJdbcRepository.find(filter)).get(0);
     }
 
     private List<VehicleTiresData> getTires(List<Map<String, Object>> data) {
@@ -49,4 +54,6 @@ public class VehicleTiresService implements IVehicleTires {
         }
         return list;
     }
+
+//todo    do sformatowania: status, reinforced, runOnFlat!!
 }

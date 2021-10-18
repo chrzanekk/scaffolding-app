@@ -19,7 +19,7 @@ $(document).ready(function () {
 
 function findTires() {
     $.ajax({
-        url: vehicleTiresApiUrl + tires.vehicleId + preparePaginationUrl(),
+        url: vehicleTiresApiUrl + vehicle.id + "?" + preparePaginationUrl(),
         type: "get",
         dataType: "json",
         contentType: "application/json"
@@ -45,10 +45,10 @@ function fillRow(tire, value) {
     $('#records').append(
         "<tr>" +
             "<td class='align-middle'>" + value + "</td>" +
-            "<td class='align-middle'>" + tire.brandName + "</td>" +
-            "<td class='align-middle'>" + tire.modelName + " </td>" +
+            "<td class='align-middle'>" + tire.brand + "</td>" +
+            "<td class='align-middle'>" + tire.model + " </td>" +
             "<td class='align-middle'>" + tire.seasonName + " </td>" +
-            "<td class='align-middle'>" + prepareDetailsButton(vehicle.id) + "</td>" +
+            "<td class='align-middle'>" + prepareDetailsButton(tire.id) + "</td>" +
         "</tr>"
     );
 }
@@ -62,7 +62,7 @@ function prepareDetailsButton(id) {
 
 
 function goToDetailsPage(id) {
-    window.location.href = "/admin/tires-edit/" + id;
+    window.location.href = "/admin/tire/" + id;
 }
 
 

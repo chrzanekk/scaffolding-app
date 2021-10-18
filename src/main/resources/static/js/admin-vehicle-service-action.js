@@ -40,7 +40,7 @@ var workshop = serviceAction.workshopsData;
 }
 
 function goToEditPage() {
-    window.location.href = "/admin/vehicle-service-action-edit/" + vehicle.id;
+    window.location.href = "/admin/vehicle-service-action-edit/" + serviceAction.id;
 }
 
 function showApartmentNo(apartmentNo) {

@@ -8,4 +8,5 @@ import java.util.List;
 public interface IVehicleTires {
 
     List<VehicleTiresData> find(VehicleTiresFilter filter);
+    VehicleTiresData findById(VehicleTiresFilter filter);
 }

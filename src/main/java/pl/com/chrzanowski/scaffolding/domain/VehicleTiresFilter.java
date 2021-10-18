@@ -27,8 +27,19 @@ public class VehicleTiresFilter {
     private Long page;
     private Long pageSize;
 
-    public VehicleTiresFilter(Long vehicleId) {
+    public VehicleTiresFilter(Long id, Long vehicleId) {
+        this.id = id;
         this.vehicleId = vehicleId;
+    }
+
+    public VehicleTiresFilter(Long id) {
+        this.id = id;
+    }
+
+    public VehicleTiresFilter(Long vehicleId, Long page, Long pageSize) {
+        this.vehicleId = vehicleId;
+        this.page = page;
+        this.pageSize = pageSize;
     }
 
     public VehicleTiresFilter() {

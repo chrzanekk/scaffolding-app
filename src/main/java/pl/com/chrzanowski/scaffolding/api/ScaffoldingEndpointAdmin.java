@@ -202,8 +202,10 @@ public class ScaffoldingEndpointAdmin {
     }
 
     @GetMapping(path = "/tires/{id}", produces = "application/json; charset=UTF-8")
-    public VehicleTiresRequestGetResponse tiresByVehicleId(@PathVariable Long id) {
-        List<VehicleTiresData> tires = iVehicleTires.find(new VehicleTiresFilter(id));
+    public VehicleTiresRequestGetResponse tiresByVehicleId(@PathVariable Long id,
+                                                           @RequestParam(name = "page", required = false, defaultValue = "1") Long page,
+                                                           @RequestParam(name = "page_size", required = false, defaultValue = "10") Long pageSize) {
+        List<VehicleTiresData> tires = iVehicleTires.find(new VehicleTiresFilter(id, page,pageSize));
         return new VehicleTiresRequestGetResponse(tiresToResponse(tires));
     }
 
