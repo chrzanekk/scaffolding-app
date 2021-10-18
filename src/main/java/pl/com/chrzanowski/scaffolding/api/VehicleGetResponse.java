@@ -56,21 +56,6 @@ public class VehicleGetResponse {
         this.height = height;
     }
 
-    public VehicleGetResponse(VehicleData vehicleData) {
-        this.id = vehicleData.getId();
-        this.registrationNumber = vehicleData.getRegistrationNumber();
-        this.vin = vehicleData.getVin();
-        this.productionYear = vehicleData.getProductionYear();
-        this.firstRegistrationDate = vehicleData.getFirstRegistrationDate();
-        this.freePlacesForTechnicalInspections = vehicleData.getFreePlacesForTechnicalInspections();
-        this.brandName = vehicleData.getBrandName();
-        this.modelName = vehicleData.getModelName();
-        this.fuelType = vehicleData.getFuelType();
-        this.vehicleType = vehicleData.getVehicleType();
-        this.length = vehicleData.getLength();
-        this.width = vehicleData.getWidth();
-        this.height = vehicleData.getHeight();
-    }
 
     public Long getId() {
         return id;

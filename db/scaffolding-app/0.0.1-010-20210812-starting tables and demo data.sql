@@ -35,7 +35,7 @@
 	
 	CREATE TABLE vehicle_brand (
 	id int auto_increment,
-	name varchar(30),
+	name varchar(30) UNIQUE,
 	create_date datetime default now(),
 	modify_date datetime,
 	remove_date datetime,
@@ -44,7 +44,7 @@
 	CREATE TABLE vehicle_model (
 	id int auto_increment,
 	brand_id int not null,
-	name varchar(30),
+	name varchar(30) UNIQUE,
 	primary key (id),
 	create_date datetime default now(),
 	modify_date datetime,

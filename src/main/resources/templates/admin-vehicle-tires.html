@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <div th:replace="fragments/head"></div>
+    <script th:src="@{/js/admin-vehicle-tires.js}"></script>
+    <script th:inline="javascript">
+        var vehicle = [[${vehicle}]];
+        var tires = [[${tires}]];
+    </script>
+</head>
+
+<body>
+<div th:replace="fragments/menu :: menu"></div>
+
+<div class="text-center">
+    <h3 th:text="#{vehicle.tires}"></h3>
+    <h3 th:text="${vehicle.brandName} +' '+ ${vehicle.modelName}"></h3>
+    <h5 th:text="${vehicle.registrationNumber}"></h5>
+
+
+    <button type="button" class="btn btn-warning mt-3" onclick="history.back()"
+            th:text="#{Cancel}"></button>
+</div>
+<div class="text-center">
+    <button type="button" class="btn btn-success btn-lg btn-block" data-toggle="modal" data-target="#create-modal"
+            th:text="#{vehicle.tires.add}"></button>
+</div>
+
+
+<div id="result-container" class="my-4">
+    <div class="table-responsive mb-0 pb-0">
+        <table class="table bg-light table-bordered table-hover table-sm">
+            <thead class="thead-light">
+            <tr>
+                <th class="align-middle col-sm-1" th:text="#{vehicle.ordinal.number}"></th>
+                <th class="align-middle col-sm-2" th:text="#{vehicle.tires.brand}"></th>
+                <th class="align-middle col-sm-2" th:text="#{vehicle.tires.model}"></th>
+                <th class="align-middle col-sm-3" th:text="#{vehicle.tires.season}"></th>
+                <th class="align-middle col-sm-2" th:text="#{Details}"></th>
+
+            </tr>
+            </thead>
+            <tbody id="records">
+
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+<div class="modal fade" id="create-modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel" th:text="#{vehicle.service.add}"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <h6 class="modal-title" id="exampleModalLabel" th:text="#{vehicle.service.basics}"></h6>
+                <form class="text-center">
+                    <div class="form-group">
+                        <label for="create-invoiceNumber" th:text="#{vehicle.service.invoice.no}"></label>
+                        <input id="create-invoiceNumber" type="text" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="create-serviceDate" th:text="#{vehicle.service.date}"></label>
+                        <input id="create-serviceDate" type="date" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="create-workshopId" th:text="#{vehicle.service.workshop}"></label>
+                        <select id="create-workshopId" class="form-control">
+                            <option th:each="workshop : ${workshops}"
+                                    th:value="${workshop.id}"
+                                    th:text="${workshop.name}"
+                                    th:selected="#{list.choose}"></option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="create-carMileage" th:text="#{vehicle.service.car.mileage}"></label>
+                        <input id="create-carMileage" type="number" class="form-control">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-body">
+                <h6 class="modal-title" id="exampleModalLabel" th:text="#{vehicle.service.input.service.type}"></h6>
+                <form class="text-center">
+                    <div class="form-group">
+                        <label for="create-serviceActionId" th:text="#{vehicle.service.type}"></label>
+                        <select id="create-serviceActionId" class="form-control">
+                            <option th:each="serviceActionType : ${serviceActionTypes}"
+                                    th:value="${serviceActionType.id}"
+                                    th:text="${serviceActionType.value}"
+                                    th:selected="#{list.choose}"></option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="create-serviceActionDescription"
+                               th:text="#{vehicle.service.description}"></label>
+                        <textarea id="create-serviceActionDescription" type="text" class="form-control" ></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" onclick="sendCreateRequest()"
+                        th:text="#{vehicle.service.add}"></button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Anuluj</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div th:replace="fragments/pagination :: pagination"></div>
+
+</body>
+
+</html>

@@ -27,6 +27,7 @@ public class ScaffoldingEndpointAdmin {
     private ITireSeason iTireSeason;
     private IVehicleModel iVehicleModel;
     private VehiclesBrandsAndModelsService vehiclesBrandsAndModelsService;
+    private IVehicleTires iVehicleTires;
 
     public ScaffoldingEndpointAdmin(UserService userService,
                                     NotificationsFromPanelService notificationsFromPanelService,
@@ -38,7 +39,8 @@ public class ScaffoldingEndpointAdmin {
                                     MarketingService marketingService,
                                     ITireSeason iTireSeason,
                                     IVehicleModel iVehicleModel,
-                                    VehiclesBrandsAndModelsService vehiclesBrandsAndModelsService) {
+                                    VehiclesBrandsAndModelsService vehiclesBrandsAndModelsService,
+                                    IVehicleTires iVehicleTires) {
         this.userService = userService;
         this.notificationsFromPanelService = notificationsFromPanelService;
         this.vehiclesService = vehiclesService;
@@ -50,6 +52,7 @@ public class ScaffoldingEndpointAdmin {
         this.iTireSeason = iTireSeason;
         this.vehiclesBrandsAndModelsService = vehiclesBrandsAndModelsService;
         this.iVehicleModel = iVehicleModel;
+        this.iVehicleTires = iVehicleTires;
     }
 
     @GetMapping("/users")
@@ -196,6 +199,12 @@ public class ScaffoldingEndpointAdmin {
     public VehiclesModelRequestGetResponse modelsByBrandId (@PathVariable Long id) {
         List<VehicleModelData> models = iVehicleModel.find(new VehicleModelFilter(null, id));
         return new VehiclesModelRequestGetResponse(modelsToResponse(models));
+    }
+
+    @GetMapping(path = "/tires/{id}", produces = "application/json; charset=UTF-8")
+    public VehicleTiresRequestGetResponse tiresByVehicleId(@PathVariable Long id) {
+        List<VehicleTiresData> tires = iVehicleTires.find(new VehicleTiresFilter(id));
+        return new VehicleTiresRequestGetResponse(tiresToResponse(tires));
     }
 
 
@@ -480,6 +489,32 @@ public class ScaffoldingEndpointAdmin {
                     data.getId(),
                     data.getBrandId(),
                     data.getName()
+            ));
+        }
+        return list;
+    }
+
+    private List<VehicleTiresGetResponse> tiresToResponse(List<VehicleTiresData> tires) {
+        List<VehicleTiresGetResponse> list = new ArrayList<>();
+        for (VehicleTiresData data : tires) {
+            list.add(new VehicleTiresGetResponse(
+                    data.getId(),
+                    data.getVehicleId(),
+                    data.getTireId(),
+                    data.getStatus(),
+                    data.getProductionYear(),
+                    data.getPurchaseDate(),
+                    data.getBrand(),
+                    data.getModel(),
+                    data.getWidth(),
+                    data.getProfile(),
+                    data.getDiameter(),
+                    data.getSpeedIndex(),
+                    data.getCapacityIndex(),
+                    data.getReinforced(),
+                    data.isRunOnFlat(),
+                    data.getSeasonId(),
+                    data.getSeasonName()
             ));
         }
         return list;

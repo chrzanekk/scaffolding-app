@@ -73,6 +73,8 @@ public class DictionariesService {
             return getBrands(lang);
         } else if (VEHICLE_MODELS == type) {
             return getModels(lang);
+        } else if (VEHICLE_TIRES_STATUS == type) {
+            return getModels(lang);
         }
         throw new IllegalArgumentException("Dictionary no defined: " + type + " for language: " + lang);
     }
@@ -218,6 +220,22 @@ public class DictionariesService {
             ));
         }
         return dictionaryDataList;
+    }
+
+    private List<DictionaryData> getTireStatus(Language lang) {
+
+        List<DictionaryData> list = new ArrayList<>();
+
+        if(Language.PL == lang) {
+            list.add(new DictionaryData(VehicleTiresStatus.MOUNTED.getCode(),"W użytku", lang.getCode()));
+            list.add(new DictionaryData(VehicleTiresStatus.STOKED.getCode(),"W magazynie", lang.getCode()));
+            list.add(new DictionaryData(VehicleTiresStatus.DISPOSED.getCode(),"Zutylizowane", lang.getCode()));
+        } else if (Language.US == lang || Language.EN == lang) {
+            list.add(new DictionaryData(VehicleTiresStatus.MOUNTED.getCode(),"Mounted", lang.getCode()));
+            list.add(new DictionaryData(VehicleTiresStatus.STOKED.getCode(),"Stoked", lang.getCode()));
+            list.add(new DictionaryData(VehicleTiresStatus.DISPOSED.getCode(),"Disposed", lang.getCode()));
+        }
+        return list;
     }
 
 }

@@ -1,6 +1,7 @@
 var url = "/admin/api/scaffolding"
-var vehiclesApiUrl = url + "/vehicles?"
-var vehicleApiUrl = url + "/vehicle"
+var TiresApiUrl = url + "/tires?"
+var vehicleTiresApiUrl = url + "/tires/"
+var tiresApiUrl = url + "/tires"
 
 $(document).ready(function () {
     $('#create-modal').on('hide.bs.modal', function (e) {
@@ -8,79 +9,62 @@ $(document).ready(function () {
     });
 
 
-    findVehicles();
+    findTires();
     $("#filter input, #filter select, [form='filter']").on("change", function () {
-        findVehicles();
+        findTires();
     });
 
 });
 
 
-function findVehicles() {
+function findTires() {
     $.ajax({
-        url: vehiclesApiUrl + preparePaginationUrl(),
+        url: vehicleTiresApiUrl + tires.vehicleId + preparePaginationUrl(),
         type: "get",
         dataType: "json",
         contentType: "application/json"
     })
-    .done(function (vehicles) {
+    .done(function (tires) {
         $("#records").empty();
-        fillResults(vehicles.vehicles);
+        fillResults(tires.tires);
     })
     .fail(function(jqxhr, textStatus, errorThrown){
         displayErrorInformation(jqxhr.responseText);
     });
 }
 
-function fillResults(vehicles) {
+function fillResults(tires) {
     let value = 1;
-    vehicles.forEach(function(vehicle){
-        fillRow(vehicle, value);
+    tires.forEach(function(tire){
+        fillRow(tire, value);
         value = value + 1;
     });
 }
 
-function fillRow(vehicle, value) {
+function fillRow(tire, value) {
     $('#records').append(
         "<tr>" +
             "<td class='align-middle'>" + value + "</td>" +
-            "<td class='align-middle'>" + vehicle.brandName + "</td>" +
-            "<td class='align-middle'>" + vehicle.modelName + " </td>" +
-            "<td class='align-middle'>" + vehicle.registrationNumber + "</td>" +
-            "<td class='align-middle'>" + prepareTiresButton(vehicle.id) + "</td>" +
+            "<td class='align-middle'>" + tire.brandName + "</td>" +
+            "<td class='align-middle'>" + tire.modelName + " </td>" +
+            "<td class='align-middle'>" + tire.seasonName + " </td>" +
             "<td class='align-middle'>" + prepareDetailsButton(vehicle.id) + "</td>" +
-            "<td class='align-middle'>" + prepareServicesButton(vehicle.id) + "</td>" +
         "</tr>"
     );
 }
 
-function prepareTiresButton(id) {
-    return '<button type="button" class="btn btn-primary" onclick="goToTiresPage(' + id + ')">Opony</button>';
-}
+
 
 function prepareDetailsButton(id) {
     return '<button type="button" class="btn btn-primary" onclick="goToDetailsPage(' + id + ')">Detale</button>';
 }
 
-function prepareServicesButton(id) {
-    return '<button type="button" class="btn btn-primary" onclick="goToServicesPage('+ id + ')">Serwis/Naprawa</button>';
-}
 
-function prepareDeleteButton(id) {
-    return '<button type="button" class="btn btn-danger" onclick="setObjectToDeleteIdAndShowModal(' + id + ')">Usuń/Zezłomuj</button>';
-}
-
-function goToTiresPage(id) {
-    window.location.href = "/admin/tires/" + id;
-}
 
 function goToDetailsPage(id) {
-    window.location.href = "/admin/vehicle/" + id;
+    window.location.href = "/admin/tires-edit/" + id;
 }
 
-function goToServicesPage(id) {
-    window.location.href = "/admin/vehicle-service-actions/" + id;
-}
 
 function setObjectToDeleteIdAndShowModal(id) {
     objToDeleteId = id;
@@ -125,7 +109,7 @@ function sendCreateRequest() {
         .done(function () {
             $("#create-modal").modal('hide');
             $("#operation-successful-modal").modal('show');
-            findVehicles();
+            findTires();
         })
         .fail(function (jqxhr, textStatus, errorThrown) {
             displayErrorInformation(jqxhr.responseText);
