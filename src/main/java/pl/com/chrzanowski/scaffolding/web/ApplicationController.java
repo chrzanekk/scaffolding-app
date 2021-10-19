@@ -222,8 +222,13 @@ public class ApplicationController {
 
         Language lang = LanguagesUtil.getCurrentLanguage();
 
-        model.addAttribute("tires", iVehicleTires.find(new VehicleTiresFilter(null,id)));
+        model.addAttribute("tires", iVehicleTires.find(new VehicleTiresFilter(null, id)));
         model.addAttribute("vehicle", iVehicle.findById(new VehicleFilter(id)));
+        model.addAttribute("yesNoDict", dictionariesService.getDictionary(DictionaryType.YES_NO, lang));
+        model.addAttribute("speedIndex", dictionariesService.getDictionary(DictionaryType.TIRE_SPEED_INDEXES, lang));
+        model.addAttribute("loadIndex", dictionariesService.getDictionary(DictionaryType.TIRE_CAPACITY_INDEXES, lang));
+        model.addAttribute("tireSeason", dictionariesService.getDictionary(DictionaryType.TIRE_SEASONS, lang));
+        model.addAttribute("tireStatus", dictionariesService.getDictionary(DictionaryType.TIRE_STATUS, lang));
         model.addAttribute("languageDict", dictionariesService.getDictionary(DictionaryType.LANGUAGES, lang));
         return "admin-vehicle-tires";
     }
@@ -239,7 +244,7 @@ public class ApplicationController {
 
         model.addAttribute("tire", iVehicleTires.findById(new VehicleTiresFilter(id)));
         model.addAttribute("vehicle", iVehicle.findById(new VehicleFilter(vehicleId)));
-        model.addAttribute("yesNoDict", dictionariesService.getDictionary(DictionaryType.YES_NO,lang));
+        model.addAttribute("yesNoDict", dictionariesService.getDictionary(DictionaryType.YES_NO, lang));
         model.addAttribute("languageDict", dictionariesService.getDictionary(DictionaryType.LANGUAGES, lang));
         return "admin-vehicle-tire";
     }

@@ -7,10 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.com.chrzanowski.scaffolding.domain.*;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Locale;
+import java.util.*;
 
 import static pl.com.chrzanowski.scaffolding.logic.DictionaryType.*;
 
@@ -73,8 +70,10 @@ public class DictionariesService {
             return getBrands(lang);
         } else if (VEHICLE_MODELS == type) {
             return getModels(lang);
-        } else if (VEHICLE_TIRES_STATUS == type) {
+        } else if (TIRE_STATUS == type) {
             return getTireStatus(lang);
+        } else if (TIRE_SPEED_INDEXES == type) {
+            return getTireSpeedIndexes(lang);
         }
         throw new IllegalArgumentException("Dictionary no defined: " + type + " for language: " + lang);
     }
@@ -236,6 +235,32 @@ public class DictionariesService {
             list.add(new DictionaryData(VehicleTiresStatus.DISPOSED.getCode(),"Disposed", lang.getCode()));
         }
         return list;
+    }
+
+    private List<DictionaryData> getTireSpeedIndexes(Language lang) {
+        List<DictionaryData> speedIndexesList = new ArrayList<>();
+        Map<String,Integer> speedIndexes = VehicleTireSpeed.SPEED_INDEXES;
+        for(Map.Entry<String,Integer> data : speedIndexes.entrySet()) {
+            speedIndexesList.add(new DictionaryData(
+                    data.getKey(),
+                    data.getValue().toString(),
+                    lang.getCode()
+            ));
+        }
+        return speedIndexesList;
+    }
+
+    private List<DictionaryData> getTireLoadIndexes(Language lang) {
+        List<DictionaryData> loadIndexesList = new ArrayList<>();
+        Map<Integer,Integer> loadIndexesMap = VehicleTireLoadCapacity.LOAD_INDEXES;
+        for(Map.Entry<Integer,Integer> data : loadIndexesMap.entrySet()) {
+            loadIndexesList.add(new DictionaryData(
+                    data.getKey().toString(),
+                    data.getValue().toString(),
+                    lang.getCode()
+            ));
+        }
+        return loadIndexesList;
     }
 
 }

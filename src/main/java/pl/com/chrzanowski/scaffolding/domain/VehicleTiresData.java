@@ -20,13 +20,14 @@ public class VehicleTiresData {
     private String speedIndex;
     private Integer capacityIndex;
     private String reinforced;
-    private Boolean runOnFlat;
+    private Boolean isRunOnFlat;
     private Long seasonId;
     private String seasonName;
 
     private LocalDateTime createDate;
     private LocalDateTime modifyDate;
     private LocalDateTime removeDate;
+    private String runOnFlat;
 
     public VehicleTiresData() {
     }
@@ -34,7 +35,7 @@ public class VehicleTiresData {
     public VehicleTiresData(Long id, Long vehicleId, Long tireId, String status, Integer productionYear,
                             LocalDate purchaseDate, String brand, String model, Integer width, Integer profile,
                             Integer diameter, String speedIndex, Integer capacityIndex, String reinforced,
-                            Boolean runOnFlat, Long seasonId, String seasonName) {
+                            Boolean isRunOnFlat, Long seasonId, String seasonName) {
         this.id = id;
         this.vehicleId = vehicleId;
         this.tireId = tireId;
@@ -49,9 +50,29 @@ public class VehicleTiresData {
         this.speedIndex = speedIndex;
         this.capacityIndex = capacityIndex;
         this.reinforced = reinforced;
-        this.runOnFlat = runOnFlat;
+        this.isRunOnFlat = isRunOnFlat;
         this.seasonId = seasonId;
         this.seasonName = seasonName;
+    }
+
+    public VehicleTiresData(Long id, Long vehicleId, Long tireId, String status, Integer productionYear, LocalDate purchaseDate, String brand, String model, Integer width, Integer profile, Integer diameter, String speedIndex, Integer capacityIndex, String reinforced, Long seasonId, String seasonName, String runOnFlat) {
+        this.id = id;
+        this.vehicleId = vehicleId;
+        this.tireId = tireId;
+        this.status = status;
+        this.productionYear = productionYear;
+        this.purchaseDate = purchaseDate;
+        this.brand = brand;
+        this.model = model;
+        this.width = width;
+        this.profile = profile;
+        this.diameter = diameter;
+        this.speedIndex = speedIndex;
+        this.capacityIndex = capacityIndex;
+        this.reinforced = reinforced;
+        this.seasonId = seasonId;
+        this.seasonName = seasonName;
+        this.runOnFlat = runOnFlat;
     }
 
     public Long getId() {
@@ -110,10 +131,6 @@ public class VehicleTiresData {
         return reinforced;
     }
 
-    public Boolean isRunOnFlat() {
-        return runOnFlat;
-    }
-
     public Long getSeasonId() {
         return seasonId;
     }
@@ -132,5 +149,13 @@ public class VehicleTiresData {
 
     public LocalDateTime getRemoveDate() {
         return removeDate;
+    }
+
+    public Boolean isRunOnFlat() {
+        return isRunOnFlat;
+    }
+
+    public String getRunOnFlat() {
+        return runOnFlat;
     }
 }

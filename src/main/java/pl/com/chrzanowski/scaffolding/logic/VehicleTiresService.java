@@ -1,6 +1,7 @@
 package pl.com.chrzanowski.scaffolding.logic;
 
 import org.springframework.stereotype.Service;
+import pl.com.chrzanowski.scaffolding.domain.DictionaryData;
 import pl.com.chrzanowski.scaffolding.domain.VehicleTiresData;
 import pl.com.chrzanowski.scaffolding.domain.VehicleTiresFilter;
 
@@ -14,9 +15,12 @@ import static pl.com.chrzanowski.scaffolding.logic.JdbcUtil.*;
 public class VehicleTiresService implements IVehicleTires {
 
     private VehicleTiresJdbcRepository tiresJdbcRepository;
+    private DictionariesService dictionariesService;
 
-    public VehicleTiresService(VehicleTiresJdbcRepository tiresJdbcRepository) {
+    public VehicleTiresService(VehicleTiresJdbcRepository tiresJdbcRepository,
+                               DictionariesService dictionariesService) {
         this.tiresJdbcRepository = tiresJdbcRepository;
+        this.dictionariesService = dictionariesService;
     }
 
     @Override
@@ -31,29 +35,52 @@ public class VehicleTiresService implements IVehicleTires {
 
     private List<VehicleTiresData> getTires(List<Map<String, Object>> data) {
         List<VehicleTiresData> list = new ArrayList<>();
-        for (Map<String,Object> row : data) {
+        for (Map<String, Object> row : data) {
             list.add(new VehicleTiresData(
-                    getLong(row,"id"),
+                    getLong(row, "id"),
                     getLong(row, "vehicleId"),
                     getLong(row, "tireId"),
-                    getString(row, "status"),
-                    getInteger(row,"productionYear"),
-                    getDate(row,"purchaseDate"),
+                    convertTireStatus(getString(row, "status")),
+                    getInteger(row, "productionYear"),
+                    getDate(row, "purchaseDate"),
                     getString(row, "brand"),
                     getString(row, "model"),
-                    getInteger(row,"width"),
-                    getInteger(row,"profile"),
-                    getInteger(row,"diameter"),
+                    getInteger(row, "width"),
+                    getInteger(row, "profile"),
+                    getInteger(row, "diameter"),
                     getString(row, "speedIndex"),
                     getInteger(row, "capacityIndex"),
                     getString(row, "reinforced"),
-                    getBoolean(row, "runOnFlat"),
-                    getLong(row,"seasonId"),
-                    getString(row, "seasonName")
-            ));
+                    getLong(row, "seasonId"),
+                    getString(row, "seasonName"),
+                    convertRunOnFlat(getBoolean(row, "runOnFlat"))
+                    ));
         }
         return list;
     }
 
-//todo    do sformatowania: status, reinforced, runOnFlat!!
+    //todo    do sformatowania: reinforced,
+    private String convertRunOnFlat(Boolean condition) {
+        Language lang = LanguagesUtil.getCurrentLanguage();
+        List<DictionaryData> yesNo = dictionariesService.getDictionary(DictionaryType.YES_NO,lang);
+        String result = "";
+        if (condition.equals(true)) {
+            result = yesNo.get(0).getValue();
+        } else {
+            result = yesNo.get(1).getValue();
+        }
+        return result;
+    }
+
+    private String convertTireStatus(String status) {
+        String result = "";
+        List<DictionaryData> tireStatus = dictionariesService.getDictionary(DictionaryType.TIRE_STATUS,LanguagesUtil.getCurrentLanguage());
+        for(DictionaryData data : tireStatus) {
+            if(data.getCode().equals(status)) {
+                result = data.getValue();
+            }
+        }
+        return result;
+    }
+
 }
