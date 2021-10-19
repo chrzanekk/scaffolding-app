@@ -8,6 +8,14 @@
     <script th:inline="javascript">
         var vehicle = [[${vehicle}]];
         var tires = [[${tires}]];
+        var yesNoDict = [[${yesNoDict}]];
+        var speedIndex = [[${speedIndex}]];
+        var loadIndex = [[${loadIndex}]];
+        var tireSeason = [[${tireSeason}]];
+        var tireStatus = [[${tireStatus}]];
+        var reinforced = [[${reinforced}]];
+
+
     </script>
 </head>
 
@@ -54,59 +62,106 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel" th:text="#{vehicle.service.add}"></h5>
+                <h5 class="modal-title" id="exampleModalLabel" th:text="#{vehicle.tires.add}"></h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <h6 class="modal-title" id="exampleModalLabel" th:text="#{vehicle.service.basics}"></h6>
                 <form class="text-center">
                     <div class="form-group">
-                        <label for="create-invoiceNumber" th:text="#{vehicle.service.invoice.no}"></label>
-                        <input id="create-invoiceNumber" type="text" class="form-control">
+                        <label for="create-brand" th:text="#{vehicle.tires.brand}"></label>
+                        <input id="create-brand" type="text" class="form-control">
                     </div>
                     <div class="form-group">
-                        <label for="create-serviceDate" th:text="#{vehicle.service.date}"></label>
-                        <input id="create-serviceDate" type="date" class="form-control">
+                        <label for="create-model" th:text="#{vehicle.tires.model}"></label>
+                        <input id="create-model" type="text" class="form-control">
                     </div>
                     <div class="form-group">
-                        <label for="create-workshopId" th:text="#{vehicle.service.workshop}"></label>
-                        <select id="create-workshopId" class="form-control">
-                            <option th:each="workshop : ${workshops}"
-                                    th:value="${workshop.id}"
-                                    th:text="${workshop.name}"
+                        <label for="create-production-year" th:text="#{vehicle.tires.production.year}"></label>
+                        <input id="create-production-year" type="number" min="2020" max="2021" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="create-purchased-date" th:text="#{vehicle.tires.purchased.date}"></label>
+                        <input id="create-purchased-date" type="date" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="create-width" th:text="#{vehicle.tires.width}"></label>
+                        <input id="create-width" type="number" min="125" max="355" step=10 class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="create-profile" th:text="#{vehicle.tires.profile}"></label>
+                        <input id="create-profile" type="number" min="30" max="85" step=5 class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="create-diameter" th:text="#{vehicle.tires.diameter}"></label>
+                        <input id="create-diameter" type="number" min="10" max="24" step=0 class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="create-speedIndex" th:text="#{vehicle.tires.speed.index}"></label>
+                        <input id="create-speedIndex" class="form-control" type="search" list="speed-index-list">
+                        <datalist id="speed-index-list">
+                            <option th:each="index : ${speedIndex}"
+                                    th:value="${index.value}"
+                                    th:text="${index.code}"
                                     th:selected="#{list.choose}"></option>
+                        </datalist>
+                    </div>
+                    <div class="form-group">
+                        <label for="create-loadIndex" th:text="#{vehicle.tires.load.index}"></label>
+                        <input id="create-loadIndex" class="form-control" type="search" list="load-index-list">
+                        <datalist id="load-index-list">
+                            <option th:each="index : ${loadIndex}"
+                                    th:value="${index.value}"
+                                    th:text="${index.code}"
+                                    th:selected="#{list.choose}"></option>
+                        </datalist>
+                    </div>
+                    <div class="form-group">
+                        <label for="create-reinforced" th:text="#{vehicle.tires.reinforced}"></label>
+                        <input id="create-reinforced" class="form-control" type="search" list="reinforced-list">
+                        <datalist id="reinforced-list">
+                            <option th:each="type : ${reinforced}"
+                                    th:value="${type.code}"
+                                    th:text="${type.value}"
+                                    th:selected="#{list.choose}"></option>
+                        </datalist>
+                    </div>
+                    <div class="form-group">
+                        <label for="create-runOnFlat" th:text="#{vehicle.tires.run.on.flat}"></label>
+                        <select id="create-runOnFlat" class="form-control">
+                            <option th:each="option : ${yesNoDict}"
+                                    th:value="${option.code}"
+                                    th:text="${option.value}"
+                                    th:selected="#{list.choose}">
+                            </option>
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="create-carMileage" th:text="#{vehicle.service.car.mileage}"></label>
-                        <input id="create-carMileage" type="number" class="form-control">
-                    </div>
-                </form>
-            </div>
-            <div class="modal-body">
-                <h6 class="modal-title" id="exampleModalLabel" th:text="#{vehicle.service.input.service.type}"></h6>
-                <form class="text-center">
-                    <div class="form-group">
-                        <label for="create-serviceActionId" th:text="#{vehicle.service.type}"></label>
-                        <select id="create-serviceActionId" class="form-control">
-                            <option th:each="serviceActionType : ${serviceActionTypes}"
-                                    th:value="${serviceActionType.id}"
-                                    th:text="${serviceActionType.value}"
-                                    th:selected="#{list.choose}"></option>
+                        <label for="create-season" th:text="#{vehicle.tires.season}"></label>
+                        <select id="create-season" class="form-control">
+                            <option th:each="option : ${tireSeason}"
+                                    th:value="${option.code}"
+                                    th:text="${option.value}"
+                                    th:selected="#{list.choose}">
+                            </option>
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="create-serviceActionDescription"
-                               th:text="#{vehicle.service.description}"></label>
-                        <textarea id="create-serviceActionDescription" type="text" class="form-control" ></textarea>
+                        <label for="create-status" th:text="#{vehicle.tires.status}"></label>
+                        <select id="create-status" class="form-control">
+                            <option th:each="option : ${tireStatus}"
+                                    th:value="${option.code}"
+                                    th:text="${option.value}"
+                                    th:selected="#{list.choose}">
+                            </option>
+                        </select>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-success" onclick="sendCreateRequest()"
-                        th:text="#{vehicle.service.add}"></button>
+                        th:text="#{vehicle.tires.add}"></button>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Anuluj</button>
             </div>
 

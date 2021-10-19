@@ -74,10 +74,13 @@ public class DictionariesService {
             return getTireStatus(lang);
         } else if (TIRE_SPEED_INDEXES == type) {
             return getTireSpeedIndexes(lang);
+        } else if (TIRE_CAPACITY_INDEXES == type) {
+            return getTireLoadIndexes(lang);
+        } else if (TIRE_REINFORCED == type) {
+            return getReinforced(lang);
         }
         throw new IllegalArgumentException("Dictionary no defined: " + type + " for language: " + lang);
     }
-
 
 
     private List<DictionaryData> getYesNo(Language lang) {
@@ -225,22 +228,22 @@ public class DictionariesService {
 
         List<DictionaryData> list = new ArrayList<>();
 
-        if(Language.PL == lang) {
-            list.add(new DictionaryData(VehicleTiresStatus.MOUNTED.getCode(),"W użytku", lang.getCode()));
-            list.add(new DictionaryData(VehicleTiresStatus.STOKED.getCode(),"W magazynie", lang.getCode()));
-            list.add(new DictionaryData(VehicleTiresStatus.DISPOSED.getCode(),"Zutylizowane", lang.getCode()));
+        if (Language.PL == lang) {
+            list.add(new DictionaryData(VehicleTiresStatus.MOUNTED.getCode(), "W użytku", lang.getCode()));
+            list.add(new DictionaryData(VehicleTiresStatus.STOKED.getCode(), "W magazynie", lang.getCode()));
+            list.add(new DictionaryData(VehicleTiresStatus.DISPOSED.getCode(), "Zutylizowane", lang.getCode()));
         } else if (Language.US == lang || Language.EN == lang) {
-            list.add(new DictionaryData(VehicleTiresStatus.MOUNTED.getCode(),"Mounted", lang.getCode()));
-            list.add(new DictionaryData(VehicleTiresStatus.STOKED.getCode(),"Stoked", lang.getCode()));
-            list.add(new DictionaryData(VehicleTiresStatus.DISPOSED.getCode(),"Disposed", lang.getCode()));
+            list.add(new DictionaryData(VehicleTiresStatus.MOUNTED.getCode(), "Mounted", lang.getCode()));
+            list.add(new DictionaryData(VehicleTiresStatus.STOKED.getCode(), "Stoked", lang.getCode()));
+            list.add(new DictionaryData(VehicleTiresStatus.DISPOSED.getCode(), "Disposed", lang.getCode()));
         }
         return list;
     }
 
     private List<DictionaryData> getTireSpeedIndexes(Language lang) {
         List<DictionaryData> speedIndexesList = new ArrayList<>();
-        Map<String,Integer> speedIndexes = VehicleTireSpeed.SPEED_INDEXES;
-        for(Map.Entry<String,Integer> data : speedIndexes.entrySet()) {
+        Map<String, Integer> speedIndexes = VehicleTireSpeed.SPEED_INDEXES;
+        for (Map.Entry<String, Integer> data : speedIndexes.entrySet()) {
             speedIndexesList.add(new DictionaryData(
                     data.getKey(),
                     data.getValue().toString(),
@@ -252,8 +255,8 @@ public class DictionariesService {
 
     private List<DictionaryData> getTireLoadIndexes(Language lang) {
         List<DictionaryData> loadIndexesList = new ArrayList<>();
-        Map<Integer,Integer> loadIndexesMap = VehicleTireLoadCapacity.LOAD_INDEXES;
-        for(Map.Entry<Integer,Integer> data : loadIndexesMap.entrySet()) {
+        Map<Integer, Integer> loadIndexesMap = VehicleTireLoadCapacity.LOAD_INDEXES;
+        for (Map.Entry<Integer, Integer> data : loadIndexesMap.entrySet()) {
             loadIndexesList.add(new DictionaryData(
                     data.getKey().toString(),
                     data.getValue().toString(),
@@ -261,6 +264,18 @@ public class DictionariesService {
             ));
         }
         return loadIndexesList;
+    }
+
+    private List<DictionaryData> getReinforced(Language lang) {
+        return Language.PL == lang ?
+                Arrays.asList(new DictionaryData("XL", "XL - Opona wzmacniana", lang.getCode()),
+                            new DictionaryData("RF", "RF - Opona wzmacniana", lang.getCode()),
+                            new DictionaryData("C", "C - Opona dostawcza", lang.getCode()),
+                            new DictionaryData("SL", "SL - Opona standardowa", lang.getCode())) :
+                Arrays.asList(new DictionaryData("XL", "XL - Extra Load Tire", lang.getCode()),
+                            new DictionaryData("RF", "RF - Reinforced Tire", lang.getCode()),
+                            new DictionaryData("C", "C - Commercial Tire", lang.getCode()),
+                            new DictionaryData("SL", "SL - Standard Tire", lang.getCode()));
     }
 
 }

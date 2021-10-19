@@ -30,7 +30,7 @@ function fillRow(tire) {
     );
     $('#fourth').append(
         "<tr>" +
-            "<td class='align-middle col-sm-6' colspan='6'>" + tire.width + " / " + tire.profile + " / " + tire.diameter + " " + tire.speedIndex + " " + tire.capacityIndex +  "</td>" +
+            "<td class='align-middle col-sm-6' colspan='6'>" + tire.width + " / " + tire.profile + " / " + tire.diameter + " " + tire.speedIndex +  tire.capacityIndex +  "</td>" +
         "</tr>"
     );
     $('#fifth').append(
