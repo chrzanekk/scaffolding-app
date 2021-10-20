@@ -119,9 +119,32 @@ public class VehicleData {
         this.createDate = LocalDateTime.now();
     }
 
-
-
-
+    public VehicleData(Long brandId,
+                       Long modelId,
+                       String registrationNumber,
+                       String vin,
+                       Integer productionYear,
+                       LocalDate firstRegistrationDate,
+                       Integer freePlacesForTechnicalInspections,
+                       Long fuelTypeId,
+                       Long vehicleTypeId,
+                       Float length,
+                       Float width,
+                       Float height) {
+        this.brandId = brandId;
+        this.modelId = modelId;
+        this.registrationNumber = registrationNumber;
+        this.vin = vin;
+        this.productionYear = productionYear;
+        this.firstRegistrationDate = firstRegistrationDate;
+        this.freePlacesForTechnicalInspections = freePlacesForTechnicalInspections;
+        this.fuelTypeId = fuelTypeId;
+        this.vehicleTypeId = vehicleTypeId;
+        this.length = length;
+        this.width = width;
+        this.height = height;
+        this.createDate = LocalDateTime.now();
+    }
 
     public Long getId() {
         return id;

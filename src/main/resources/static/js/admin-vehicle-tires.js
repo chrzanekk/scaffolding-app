@@ -74,36 +74,38 @@ function setObjectToDeleteIdAndShowModal(id) {
 function clearCreateModal() {
     $("#create-brand").val('');
     $("#create-model").val('');
-    $("#create-registration-number").val('');
-    $("#create-vin").val('');
     $("#create-production-year").val('');
-    $("#create-first-registration-date").val('');
-    $("#create-free-places-for-technical-inspections").val('');
-    $("#create-fuel-type").val('');
-    $("#create-vehicle-type").val('');
-    $("#create-length").val('');
+    $("#create-purchased-date").val('');
     $("#create-width").val('');
-    $("#create-height").val('');
+    $("#create-profile").val('');
+    $("#create-diameter").val('');
+    $("#create-speedIndex").val('');
+    $("#create-loadIndex").val('');
+    $("#create-reinforced").val('');
+    $("#create-runOnFlat").val('');
+    $("#create-season").val('');
+    $("#create-status").val('');
 }
 
 function sendCreateRequest() {
     $.ajax({
-        url: vehicleApiUrl,
+        url: tiresApiUrl,
         method: "POST",
         contentType: "application/json",
         data: JSON.stringify({
-                brandName: $("#create-brand").val(),
-                modelName: $("#create-model").val(),
-                registrationNumber: $("#create-registration-number").val(),
-                vin: $("#create-vin").val(),
+                vehicleId : vehicle.id,
+                brand: $("#create-brand").val(),
+                model: $("#create-model").val(),
                 productionYear: $("#create-production-year").val(),
-                firstRegistrationDate: $("#create-first-registration-date").val(),
-                freePlacesForTechnicalInspections: $("#create-free-places-for-technical-inspections").val(),
-                fuelTypeId: $("#create-fuel-type").val(),
-                vehicleTypeId: $("#create-vehicle-type").val(),
-                length: $("#create-length").val(),
+                purchaseDate: $("#create-purchase-date").val(),
                 width: $("#create-width").val(),
-                height: $("#create-height").val()
+                profile: $("#create-profile").val(),
+                diameter: $("#create-diameter").val(),
+                speedIndex: $("#create-speedIndex").val(),
+                loadIndex: $("#create-loadIndex").val(),
+                reinforced: $("#create-reinforced").val(),
+                seasonName: $("#create-season").val()
+                status: $("#create-status").val(),
         })
     })
         .done(function () {

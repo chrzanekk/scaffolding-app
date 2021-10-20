@@ -512,7 +512,7 @@ public class ScaffoldingEndpointAdmin {
                     data.getProfile(),
                     data.getDiameter(),
                     data.getSpeedIndex(),
-                    data.getCapacityIndex(),
+                    data.getLoadIndex(),
                     data.getReinforced(),
                     data.isRunOnFlat(),
                     data.getSeasonId(),

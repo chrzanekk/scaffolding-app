@@ -58,7 +58,7 @@
                         <input id="create-brand" class="form-control" type="search" list="brand-list">
                         <datalist id="brand-list">
                             <option th:each="brand : ${brands}"
-                                    th:value="${brand.id}"
+                                    th:value="${brand.value}"
                                     th:text="${brand.value}"
                                     th:selected="(${brand.value} == *{brand.value})">
                             </option>

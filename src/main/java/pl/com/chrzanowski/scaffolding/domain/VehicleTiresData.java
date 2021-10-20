@@ -18,7 +18,7 @@ public class VehicleTiresData {
     private Integer profile;
     private Integer diameter;
     private String speedIndex;
-    private Integer capacityIndex;
+    private Integer loadIndex;
     private String reinforced;
     private Boolean isRunOnFlat;
     private Long seasonId;
@@ -32,30 +32,24 @@ public class VehicleTiresData {
     public VehicleTiresData() {
     }
 
-    public VehicleTiresData(Long id, Long vehicleId, Long tireId, String status, Integer productionYear,
-                            LocalDate purchaseDate, String brand, String model, Integer width, Integer profile,
-                            Integer diameter, String speedIndex, Integer capacityIndex, String reinforced,
-                            Boolean isRunOnFlat, Long seasonId, String seasonName) {
-        this.id = id;
-        this.vehicleId = vehicleId;
-        this.tireId = tireId;
-        this.status = status;
-        this.productionYear = productionYear;
-        this.purchaseDate = purchaseDate;
-        this.brand = brand;
-        this.model = model;
-        this.width = width;
-        this.profile = profile;
-        this.diameter = diameter;
-        this.speedIndex = speedIndex;
-        this.capacityIndex = capacityIndex;
-        this.reinforced = reinforced;
-        this.isRunOnFlat = isRunOnFlat;
-        this.seasonId = seasonId;
-        this.seasonName = seasonName;
-    }
 
-    public VehicleTiresData(Long id, Long vehicleId, Long tireId, String status, Integer productionYear, LocalDate purchaseDate, String brand, String model, Integer width, Integer profile, Integer diameter, String speedIndex, Integer capacityIndex, String reinforced, Long seasonId, String seasonName, String runOnFlat) {
+    public VehicleTiresData(Long id,
+                            Long vehicleId,
+                            Long tireId,
+                            String status,
+                            Integer productionYear,
+                            LocalDate purchaseDate,
+                            String brand,
+                            String model,
+                            Integer width,
+                            Integer profile,
+                            Integer diameter,
+                            String speedIndex,
+                            Integer loadIndex,
+                            String reinforced,
+                            Long seasonId,
+                            String seasonName,
+                            String runOnFlat) {
         this.id = id;
         this.vehicleId = vehicleId;
         this.tireId = tireId;
@@ -68,7 +62,7 @@ public class VehicleTiresData {
         this.profile = profile;
         this.diameter = diameter;
         this.speedIndex = speedIndex;
-        this.capacityIndex = capacityIndex;
+        this.loadIndex = loadIndex;
         this.reinforced = reinforced;
         this.seasonId = seasonId;
         this.seasonName = seasonName;
@@ -123,8 +117,8 @@ public class VehicleTiresData {
         return speedIndex;
     }
 
-    public Integer getCapacityIndex() {
-        return capacityIndex;
+    public Integer getLoadIndex() {
+        return loadIndex;
     }
 
     public String getReinforced() {

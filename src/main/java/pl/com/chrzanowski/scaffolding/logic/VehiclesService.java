@@ -1,8 +1,10 @@
 package pl.com.chrzanowski.scaffolding.logic;
 
 import org.springframework.stereotype.Service;
+import pl.com.chrzanowski.scaffolding.domain.VehicleBrandFilter;
 import pl.com.chrzanowski.scaffolding.domain.VehicleData;
 import pl.com.chrzanowski.scaffolding.domain.VehicleFilter;
+import pl.com.chrzanowski.scaffolding.domain.VehicleModelFilter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,9 +17,15 @@ import static pl.com.chrzanowski.scaffolding.logic.JdbcUtil.getFloat;
 public class VehiclesService implements IVehicle {
 
     private VehiclesJdbcRepository vehiclesJdbcRepository;
+    private IVehicleBrand iVehicleBrand;
+    private IVehicleModel iVehicleModel;
 
-    public VehiclesService(VehiclesJdbcRepository vehiclesJdbcRepository) {
+    public VehiclesService(VehiclesJdbcRepository vehiclesJdbcRepository,
+                           IVehicleBrand iVehicleBrand,
+                           IVehicleModel iVehicleModel) {
         this.vehiclesJdbcRepository = vehiclesJdbcRepository;
+        this.iVehicleBrand = iVehicleBrand;
+        this.iVehicleModel = iVehicleModel;
 
     }
 
@@ -31,7 +39,22 @@ public class VehiclesService implements IVehicle {
 
 
     public Long add(VehicleData data) {
-        return vehiclesJdbcRepository.create(data);
+        Long brandId = iVehicleBrand.find(new VehicleBrandFilter(data.getBrandName())).get(0).getId();
+        Long modelId = iVehicleModel.find(new VehicleModelFilter(data.getModelName())).get(0).getId();
+        return vehiclesJdbcRepository.create(new VehicleData(
+                brandId,
+                modelId,
+                data.getRegistrationNumber(),
+                data.getVin(),
+                data.getProductionYear(),
+                data.getFirstRegistrationDate(),
+                data.getFreePlacesForTechnicalInspections(),
+                data.getFuelTypeId(),
+                data.getVehicleTypeId(),
+                data.getLength(),
+                data.getWidth(),
+                data.getHeight()
+                ));
     }
 
     public void update(VehicleData data) {

@@ -2,10 +2,7 @@ package pl.com.chrzanowski.scaffolding.logic;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
-import pl.com.chrzanowski.scaffolding.domain.VehicleBrandData;
-import pl.com.chrzanowski.scaffolding.domain.VehicleData;
-import pl.com.chrzanowski.scaffolding.domain.VehicleFilter;
-import pl.com.chrzanowski.scaffolding.domain.VehicleModelData;
+import pl.com.chrzanowski.scaffolding.domain.*;
 
 import java.util.List;
 import java.util.Map;
@@ -29,8 +26,7 @@ public class VehiclesJdbcRepository {
     }
 
     public Long create(VehicleData data) {
-        Long brandId = brandJdbcRepository.create(new VehicleBrandData(data.getBrandName()));
-        Long modelId = modelJdbcRepository.create(new VehicleModelData(null, brandId, data.getModelName()));
+
 
         String query = "INSERT INTO vehicles (" +
                 "brand_id," +
@@ -58,8 +54,8 @@ public class VehiclesJdbcRepository {
                 "?, " +
                 "? )";
         jdbcTemplate.update(query,
-                brandId,
-                modelId,
+                data.getBrandId(),
+                data.getModelId(),
                 data.getRegistrationNumber(),
                 data.getVin(),
                 data.getProductionYear(),
