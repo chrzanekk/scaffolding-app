@@ -6,7 +6,7 @@ import pl.com.chrzanowski.scaffolding.domain.ServiceActionTypesFilter;
 import java.util.List;
 import java.util.Map;
 
-public interface IServiceActonType {
+public interface IServiceActonTypes {
 
     Long add(ServiceActionTypeData data);
     void update(ServiceActionTypeData data);

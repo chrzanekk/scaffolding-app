@@ -5,6 +5,6 @@ import pl.com.chrzanowski.scaffolding.domain.FuelTypeFilter;
 
 import java.util.List;
 
-public interface IFuelType {
+public interface IFuelTypes {
     List<FuelTypeData> find(FuelTypeFilter filter);
 }

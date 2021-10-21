@@ -1,7 +1,6 @@
 var url = "/admin/api/scaffolding"
-var brandsAndModelsApiUrl = url + "/brands-and-models?"
-var brandAndModelApiUrl = url + "/brand-and-model"
-var modelsByBrandIdApiUri = url + "/models"
+var brandsApiUrl = url + "/brands?"
+var brandApiUrl = url + "/brands"
 
 $(document).ready(function () {
     $('#create-modal').on('hide.bs.modal', function (e) {
@@ -9,46 +8,46 @@ $(document).ready(function () {
     });
 
 
-    findBrandsAndModels();
+    findBrands();
 
     $("#filter input, #filter select, [form='filter']").on("change", function () {
-        findBrandsAndModels();
+        findBrands();
     });
 
 });
 
 
-function findBrandsAndModels() {
+function findBrands() {
     $.ajax({
-        url: brandsAndModelsApiUrl + preparePaginationUrl(),
+        url: brandsApiUrl + preparePaginationUrl(),
         type: "get",
         dataType: "json",
         contentType: "application/json"
     })
-    .done(function (brandsAndModels) {
+    .done(function (brands) {
         $("#records").empty();
-        fillResults(brandsAndModels.brandsAndModels);
+        fillResults(brands.brands);
     })
     .fail(function(jqxhr, textStatus, errorThrown){
         displayErrorInformation(jqxhr.responseText);
     });
 }
 
-function fillResults(brandsAndModels) {
+function fillResults(brands) {
     let value = 1;
-    brandsAndModels.forEach(function(brandAndModel){
-        fillRow(brandAndModel, value);
+    brands.forEach(function(brand){
+        fillRow(brand, value);
         value = value + 1;
     });
 }
 
-function fillRow(brandAndModel, value) {
+function fillRow(brand, value) {
     $('#records').append(
         "<tr>" +
             "<td class='align-middle'>" + value + "</td>" +
-            "<td class='align-middle'>" + brandAndModel.brandName + "</td>" +
-            "<td class='align-middle'>" + brandAndModel.modelName + " </td>" +
-            "<td class='align-middle'>" + prepareDetailsButton(brandAndModel.modelId) + "</td>" +
+            "<td class='align-middle'>" + brand.name + "</td>" +
+            "<td class='align-middle'>" + prepareDetailsButton(brand.id) + "</td>" +
+            "<td class='align-middle'>" + prepareModelsListButton(brand.id) + "</td>" +
         "</tr>"
     );
 }
@@ -57,12 +56,19 @@ function prepareDetailsButton(id) {
     return '<button type="button" class="btn btn-primary" onclick="goToDetailsPage(' + id + ')">Detale</button>';
 }
 
+function prepareModelsListButton(id) {
+    return '<button type="button" class="btn btn-primary" onclick="goToModelListPage(' + id + ')">Lista modeli</button>';
+}
+
 function prepareDeleteButton(id) {
     return '<button type="button" class="btn btn-danger" onclick="setObjectToDeleteIdAndShowModal(' + id + ')">Usuń/Zezłomuj</button>';
 }
 
 function goToDetailsPage(id) {
-    window.location.href = "/admin/brand-and-model/" + id;
+    window.location.href = "/admin/brands/" + id;
+}
+function goToModelListPage(id) {
+    window.location.href = "/admin/brands/" + id + "/models";
 }
 
 function getModelsByBrandId(value) {
@@ -92,17 +98,15 @@ function setObjectToDeleteIdAndShowModal(id) {
 
 function clearCreateModal() {
     $("#create-brand").val('');
-    $("#create-model").val('');
 }
 
 function sendCreateRequest() {
     $.ajax({
-        url: brandAndModelApiUrl,
+        url: brandApiUrl,
         method: "POST",
         contentType: "application/json",
         data: JSON.stringify({
                 brandName: $("#create-brand").val(),
-                modelName: $("#create-model").val(),
         })
     })
         .done(function () {

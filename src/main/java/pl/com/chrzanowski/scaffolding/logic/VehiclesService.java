@@ -1,10 +1,8 @@
 package pl.com.chrzanowski.scaffolding.logic;
 
 import org.springframework.stereotype.Service;
-import pl.com.chrzanowski.scaffolding.domain.VehicleBrandFilter;
 import pl.com.chrzanowski.scaffolding.domain.VehicleData;
 import pl.com.chrzanowski.scaffolding.domain.VehicleFilter;
-import pl.com.chrzanowski.scaffolding.domain.VehicleModelFilter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,19 +12,12 @@ import static pl.com.chrzanowski.scaffolding.logic.JdbcUtil.*;
 import static pl.com.chrzanowski.scaffolding.logic.JdbcUtil.getFloat;
 
 @Service
-public class VehiclesService implements IVehicle {
+public class VehiclesService implements IVehicles {
 
     private VehiclesJdbcRepository vehiclesJdbcRepository;
-    private IVehicleBrand iVehicleBrand;
-    private IVehicleModel iVehicleModel;
 
-    public VehiclesService(VehiclesJdbcRepository vehiclesJdbcRepository,
-                           IVehicleBrand iVehicleBrand,
-                           IVehicleModel iVehicleModel) {
+    public VehiclesService(VehiclesJdbcRepository vehiclesJdbcRepository) {
         this.vehiclesJdbcRepository = vehiclesJdbcRepository;
-        this.iVehicleBrand = iVehicleBrand;
-        this.iVehicleModel = iVehicleModel;
-
     }
 
     public List<VehicleData> find(VehicleFilter filter)  {
@@ -37,13 +28,10 @@ public class VehiclesService implements IVehicle {
         return getVehicles(vehiclesJdbcRepository.find(filter)).get(0);
     }
 
-
     public Long add(VehicleData data) {
-        Long brandId = iVehicleBrand.find(new VehicleBrandFilter(data.getBrandName())).get(0).getId();
-        Long modelId = iVehicleModel.find(new VehicleModelFilter(data.getModelName())).get(0).getId();
         return vehiclesJdbcRepository.create(new VehicleData(
-                brandId,
-                modelId,
+                data.getBrandId(),
+                data.getModelId(),
                 data.getRegistrationNumber(),
                 data.getVin(),
                 data.getProductionYear(),

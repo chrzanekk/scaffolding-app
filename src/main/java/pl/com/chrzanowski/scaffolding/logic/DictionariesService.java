@@ -17,27 +17,27 @@ public class DictionariesService {
     private static final Logger log = LoggerFactory.getLogger(DictionariesService.class);
 
     private DictionariesJdbcRepository dictionariesJdbcRepository;
-    private IFuelType iFuelType;
-    private IVehicleType iVehicleType;
-    private IServiceActonType iServiceActonType;
-    private ITireSeason iTireSeason;
-    private IVehicleBrand iVehicleBrand;
-    private IVehicleModel iVehicleModel;
+    private IFuelTypes iFuelTypes;
+    private IVehicleTypes iVehicleTypes;
+    private IServiceActonTypes iServiceActonTypes;
+    private ITireSeasons iTireSeasons;
+    private IVehicleBrands iVehicleBrands;
+    private IVehicleModels iVehicleModels;
 
     public DictionariesService(DictionariesJdbcRepository dictionariesJdbcRepository,
-                               IVehicleType iVehicleType,
-                               IFuelType iFuelType,
-                               IServiceActonType iServiceActonType,
-                               ITireSeason iTireSeason,
-                               IVehicleBrand iVehicleBrand,
-                               IVehicleModel iVehicleModel) {
+                               IVehicleTypes iVehicleTypes,
+                               IFuelTypes iFuelTypes,
+                               IServiceActonTypes iServiceActonTypes,
+                               ITireSeasons iTireSeasons,
+                               IVehicleBrands iVehicleBrands,
+                               IVehicleModels iVehicleModels) {
         this.dictionariesJdbcRepository = dictionariesJdbcRepository;
-        this.iVehicleType = iVehicleType;
-        this.iFuelType = iFuelType;
-        this.iServiceActonType = iServiceActonType;
-        this.iTireSeason = iTireSeason;
-        this.iVehicleBrand = iVehicleBrand;
-        this.iVehicleModel = iVehicleModel;
+        this.iVehicleTypes = iVehicleTypes;
+        this.iFuelTypes = iFuelTypes;
+        this.iServiceActonTypes = iServiceActonTypes;
+        this.iTireSeasons = iTireSeasons;
+        this.iVehicleBrands = iVehicleBrands;
+        this.iVehicleModels = iVehicleModels;
     }
 
     public List<DictionaryData> getDictionary(DictionaryType type) {
@@ -138,7 +138,7 @@ public class DictionariesService {
     }
 
     private List<DictionaryData> getVehicleTypes(Language lang) {
-        List<VehicleTypeData> vehicleTypes = iVehicleType.find(new VehicleTypeFilter());
+        List<VehicleTypeData> vehicleTypes = iVehicleTypes.find(new VehicleTypeFilter());
 
         List<DictionaryData> dictionaryDataList = new ArrayList<>();
 
@@ -152,7 +152,7 @@ public class DictionariesService {
     }
 
     private List<DictionaryData> getFuelTypes(Language lang) {
-        List<FuelTypeData> fuelTypes = iFuelType.find(new FuelTypeFilter());
+        List<FuelTypeData> fuelTypes = iFuelTypes.find(new FuelTypeFilter());
 
         List<DictionaryData> dictionaryDataList = new ArrayList<>();
 
@@ -166,7 +166,7 @@ public class DictionariesService {
     }
 
     private List<DictionaryData> getActionTypes(Language lang) {
-        List<ServiceActionTypeData> actionTypes = iServiceActonType.find(new ServiceActionTypesFilter());
+        List<ServiceActionTypeData> actionTypes = iServiceActonTypes.find(new ServiceActionTypesFilter());
 
         List<DictionaryData> dictionaryDataList = new ArrayList<>();
 
@@ -181,7 +181,7 @@ public class DictionariesService {
     }
 
     private List<DictionaryData> getTireSeasons(Language lang) {
-        List<TireSeasonData> tireSeasons = iTireSeason.find(new TireSeasonFilter());
+        List<TireSeasonData> tireSeasons = iTireSeasons.find(new TireSeasonFilter());
 
         List<DictionaryData> dictionaryDataList = new ArrayList<>();
 
@@ -196,7 +196,7 @@ public class DictionariesService {
     }
 
     private List<DictionaryData> getBrands(Language lang) {
-        List<VehicleBrandData> brands = iVehicleBrand.find(new VehicleBrandFilter());
+        List<VehicleBrandData> brands = iVehicleBrands.find(new VehicleBrandFilter());
 
         List<DictionaryData> dictionaryDataList = new ArrayList<>();
         for (VehicleBrandData data : brands) {
@@ -210,7 +210,7 @@ public class DictionariesService {
     }
 
     private List<DictionaryData> getModels(Language lang) {
-        List<VehicleModelData> models = iVehicleModel.find(new VehicleModelFilter());
+        List<VehicleModelData> models = iVehicleModels.find(new VehicleModelFilter());
 
         List<DictionaryData> dictionaryDataList = new ArrayList<>();
         for (VehicleModelData data : models) {

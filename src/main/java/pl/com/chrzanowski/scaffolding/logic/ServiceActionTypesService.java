@@ -13,7 +13,7 @@ import static pl.com.chrzanowski.scaffolding.logic.JdbcUtil.getLong;
 import static pl.com.chrzanowski.scaffolding.logic.JdbcUtil.getString;
 
 @Service
-public class ServiceActionTypesService implements IServiceActonType{
+public class ServiceActionTypesService implements IServiceActonTypes {
 
     private ServiceActionTypeJdbcRepository serviceActionTypeJdbcRepository;
 

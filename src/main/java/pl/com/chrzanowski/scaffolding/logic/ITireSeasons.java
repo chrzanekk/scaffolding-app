@@ -5,7 +5,7 @@ import pl.com.chrzanowski.scaffolding.domain.TireSeasonFilter;
 
 import java.util.List;
 
-public interface ITireSeason {
+public interface ITireSeasons {
 
     Long add(TireSeasonData data);
     void update(TireSeasonData data);

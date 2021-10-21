@@ -4,21 +4,19 @@
 
 <head>
     <div th:replace="fragments/head"></div>
-    <script th:src="@{/js/admin-brands-and-models.js}">
-        var brandsAndModels = [[${brandsAndModels}]];
-        var brands = [[${brands}]];
+    <script th:src="@{/js/admin-models.js}">
+        var brand = [[${brand}]];
         var models = [[${models}]];
-
     </script>
 </head>
 
 <body>
 <div th:replace="fragments/menu :: menu"></div>
 
-<h5 th:text="#{brands.and.models.list}"></h5>
+<h5 th:text="#{models.list}"></h5>
 
 <button type="button" class="btn btn-success btn-lg btn-block" data-toggle="modal" data-target="#create-modal"
-        th:text="#{brands.and.models.add}"></button>
+        th:text="#{models.add}"></button>
 
 <div id="result-container" class="my-4">
     <div class="table-responsive mb-0 pb-0">
@@ -26,10 +24,8 @@
             <thead class="thead-light">
             <tr>
                 <th class="align-middle col-sm-1" th:text="#{vehicle.ordinal.number}"></th>
-                <th class="align-middle col-sm-2" th:text="#{vehicle.details.brand}"></th>
                 <th class="align-middle col-sm-2" th:text="#{vehicle.details.model}"></th>
                 <th class="align-middle col-sm-2" th:text="#{Edit}"></th>
-
             </tr>
             </thead>
             <tbody id="records">
@@ -44,7 +40,7 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel" th:text="#{brands.and.models.add}"></h5>
+                <h5 class="modal-title" id="exampleModalLabel" th:text="#{brands.add}"></h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -52,27 +48,8 @@
             <div class="modal-body">
                 <form class="text-center">
                     <div class="form-group">
-                        <label for="create-brand" th:text="#{vehicle.details.brand}"></label>
-                        <input id="create-brand" class="form-control" type="search" list="brand-list">
-                        <datalist id="brand-list">
-                            <option th:each="brand : ${brands}"
-                                    th:value="${brand.value}"
-                                    th:text="${brand.value}"
-                                    th:selected="(${brand.value} == *{brand.value})">
-                            </option>
-                        </datalist>
-
-                    </div>
-                    <div class="form-group">
                         <label for="create-model" th:text="#{vehicle.details.model}"></label>
-                        <input id="create-model" type="search" class="form-control" list="model-list">
-                        <datalist id="model-list">
-                            <option th:each="model : ${models}"
-                                    th:value="${model.value}"
-                                    th:text="${model.value}"
-                                    th:selected="(${model.value} == *{model.value})">
-                            </option>
-                        </datalist>
+                        <input id="create-model" class="form-control" type="text">
                     </div>
 
                 </form>

@@ -12,19 +12,23 @@ import static pl.com.chrzanowski.scaffolding.logic.JdbcUtil.*;
 
 
 @Service
-public class VehicleBrandService implements IVehicleBrand {
+public class VehicleBrandsService implements IVehicleBrands {
 
     private VehicleBrandJdbcRepository vehicleBrandJdbcRepository;
 
-    public VehicleBrandService(VehicleBrandJdbcRepository vehicleBrandJdbcRepository) {
+    public VehicleBrandsService(VehicleBrandJdbcRepository vehicleBrandJdbcRepository) {
         this.vehicleBrandJdbcRepository = vehicleBrandJdbcRepository;
     }
 
     public Long add(VehicleBrandData data) {
-        if(ValidateDataUtil.isBrandNameExist(data.getName())) {
+        if(isBrandNameExist(data.getName())) {
             return find(new VehicleBrandFilter(data.getId())).get(0).getId();
         }
         return vehicleBrandJdbcRepository.create(data);
+    }
+
+    public void update(VehicleBrandData data) {
+        vehicleBrandJdbcRepository.update(data);
     }
 
 
@@ -43,5 +47,9 @@ public class VehicleBrandService implements IVehicleBrand {
             ));
         }
         return brands;
+    }
+
+    private boolean isBrandNameExist(String brandName) {
+        return !find(new VehicleBrandFilter(brandName)).isEmpty();
     }
 }

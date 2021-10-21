@@ -15,20 +15,20 @@ public class VehiclesBrandsAndModelsService {
     private VehiclesBrandsAndModelsJdbcRepository vehiclesBrandsAndModelsJdbcRepository;
     private VehicleBrandJdbcRepository brandJdbcRepository;
     private VehicleModelJdbcRepository modelJdbcRepository;
-    private IVehicleBrand iVehicleBrand;
-    private IVehicleModel iVehicleModel;
+    private IVehicleBrands iVehicleBrands;
+    private IVehicleModels iVehicleModels;
 
     public VehiclesBrandsAndModelsService(VehiclesBrandsAndModelsJdbcRepository vehiclesBrandsAndModelsJdbcRepository,
                                           VehicleBrandJdbcRepository brandJdbcRepository,
                                           VehicleModelJdbcRepository modelJdbcRepository,
-                                          IVehicleBrand iVehicleBrand,
-                                          IVehicleModel iVehicleModel) {
+                                          IVehicleBrands iVehicleBrands,
+                                          IVehicleModels iVehicleModels) {
 
         this.vehiclesBrandsAndModelsJdbcRepository = vehiclesBrandsAndModelsJdbcRepository;
         this.brandJdbcRepository = brandJdbcRepository;
         this.modelJdbcRepository = modelJdbcRepository;
-        this.iVehicleBrand = iVehicleBrand;
-        this.iVehicleModel = iVehicleModel;
+        this.iVehicleBrands = iVehicleBrands;
+        this.iVehicleModels = iVehicleModels;
     }
 
 
@@ -38,13 +38,13 @@ public class VehiclesBrandsAndModelsService {
 
     public void addBrandAndModel(VehiclesBrandsAndModelsData data) {
         Long brandId;
-        if (data.getBrandName().equals(iVehicleBrand.find(new VehicleBrandFilter(data.getBrandName())).get(0).getName())) {
-            brandId = iVehicleBrand.find(new VehicleBrandFilter(data.getBrandName())).get(0).getId();
+        if (data.getBrandName().equals(iVehicleBrands.find(new VehicleBrandFilter(data.getBrandName())).get(0).getName())) {
+            brandId = iVehicleBrands.find(new VehicleBrandFilter(data.getBrandName())).get(0).getId();
         } else {
-            brandId = iVehicleBrand.add(new VehicleBrandData(data.getBrandName()));
+            brandId = iVehicleBrands.add(new VehicleBrandData(data.getBrandName()));
         }
-        if (iVehicleModel.find(new VehicleModelFilter(data.getModelName())).contains(null)) {
-            iVehicleModel.add(new VehicleModelData(null, brandId, data.getModelName()));
+        if (iVehicleModels.find(new VehicleModelFilter(data.getModelName())).contains(null)) {
+            iVehicleModels.add(new VehicleModelData(null, brandId, data.getModelName()));
         } else {
             throw new IllegalArgumentException("Model" + data.getModelName() + " already exists");
         }

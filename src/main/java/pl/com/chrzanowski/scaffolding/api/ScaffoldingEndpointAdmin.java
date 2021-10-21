@@ -18,41 +18,44 @@ public class ScaffoldingEndpointAdmin {
 
     private UserService userService;
     private NotificationsFromPanelService notificationsFromPanelService;
-    private VehiclesService vehiclesService;
-    private FuelTypeService fuelTypeService;
-    private ServiceActionsService serviceActionsService;
+    private IVehicles vehicles;
+    private IFuelTypes fuelTypes;
+    private IServiceActions serviceActions;
     private ServiceWorkshopsService workshopsService;
-    private ServiceActionTypesService serviceActionTypesService;
+    private IServiceActonTypes serviceActonTypes;
     private MarketingService marketingService;
-    private ITireSeason iTireSeason;
-    private IVehicleModel iVehicleModel;
+    private ITireSeasons tireSeason;
+    private IVehicleModels vehicleModels;
+    private IVehicleBrands vehicleBrands;
     private VehiclesBrandsAndModelsService vehiclesBrandsAndModelsService;
-    private IVehicleTires iVehicleTires;
+    private IVehicleTires vehicleTires;
 
     public ScaffoldingEndpointAdmin(UserService userService,
                                     NotificationsFromPanelService notificationsFromPanelService,
-                                    VehiclesService vehiclesService,
-                                    FuelTypeService fuelTypeService,
-                                    ServiceActionsService serviceActionsService,
+                                    IVehicles vehicles,
+                                    IFuelTypes fuelTypes,
+                                    IServiceActions serviceActions,
                                     ServiceWorkshopsService workshopsService,
-                                    ServiceActionTypesService serviceActionTypesService,
+                                    IServiceActonTypes serviceActonTypes,
                                     MarketingService marketingService,
-                                    ITireSeason iTireSeason,
-                                    IVehicleModel iVehicleModel,
+                                    ITireSeasons tireSeason,
+                                    IVehicleModels vehicleModels,
+                                    IVehicleBrands vehicleBrands,
                                     VehiclesBrandsAndModelsService vehiclesBrandsAndModelsService,
-                                    IVehicleTires iVehicleTires) {
+                                    IVehicleTires vehicleTires) {
         this.userService = userService;
         this.notificationsFromPanelService = notificationsFromPanelService;
-        this.vehiclesService = vehiclesService;
-        this.fuelTypeService = fuelTypeService;
-        this.serviceActionsService = serviceActionsService;
+        this.vehicles = vehicles;
+        this.fuelTypes = fuelTypes;
+        this.serviceActions = serviceActions;
         this.workshopsService = workshopsService;
-        this.serviceActionTypesService = serviceActionTypesService;
+        this.serviceActonTypes = serviceActonTypes;
         this.marketingService = marketingService;
-        this.iTireSeason = iTireSeason;
+        this.tireSeason = tireSeason;
         this.vehiclesBrandsAndModelsService = vehiclesBrandsAndModelsService;
-        this.iVehicleModel = iVehicleModel;
-        this.iVehicleTires = iVehicleTires;
+        this.vehicleModels = vehicleModels;
+        this.vehicleBrands = vehicleBrands;
+        this.vehicleTires = vehicleTires;
     }
 
     @GetMapping("/users")
@@ -121,22 +124,22 @@ public class ScaffoldingEndpointAdmin {
     public VehiclesRequestGetResponse vehicles(
             @RequestParam(name = "page", required = false, defaultValue = "1") Long page,
             @RequestParam(name = "page_size", required = false, defaultValue = "10") Long pageSize) throws SQLException {
-        List<VehicleData> vehicles = vehiclesService.find(new VehicleFilter(page, pageSize));
+        List<VehicleData> vehicles = this.vehicles.find(new VehicleFilter(page, pageSize));
         return new VehiclesRequestGetResponse(vehiclesToResponse(vehicles));
     }
 
     @GetMapping(path = "/vehicle/{id}", produces = "application/json; charset=UTF-8")
     public VehicleRequestGetResponse vehicleById(
-            @PathVariable Long id)  {
-        VehicleData vehicle = vehiclesService.findById(new VehicleFilter(id));
+            @PathVariable Long id) {
+        VehicleData vehicle = vehicles.findById(new VehicleFilter(id));
         return new VehicleRequestGetResponse(vehicleToResponse(vehicle));
     }
 
     @PostMapping(path = "/vehicle", consumes = "application/json; charset=UTF-8")
     public void addVehicle(@RequestBody VehiclePostRequest request) {
-        vehiclesService.add(new VehicleData(
-                request.getBrandName(),
-                request.getModelName(),
+        vehicles.add(new VehicleData(
+                request.getBrandId(),
+                request.getModelId(),
                 request.getRegistrationNumber(),
                 request.getVin(),
                 request.getProductionYear(),
@@ -150,8 +153,8 @@ public class ScaffoldingEndpointAdmin {
     }
 
     @PutMapping(path = "/vehicle/{id}")
-    public void updateVehicle(@PathVariable Long id, @RequestBody VehiclePutRequest request)  {
-        vehiclesService.update(new VehicleData(
+    public void updateVehicle(@PathVariable Long id, @RequestBody VehiclePutRequest request) {
+        vehicles.update(new VehicleData(
                 id,
                 request.getBrandName(),
                 request.getModelName(),
@@ -168,51 +171,60 @@ public class ScaffoldingEndpointAdmin {
         );
     }
 
-    @GetMapping(path = "/brands-and-models", produces = "application/json; charset=UTF-8")
-    public VehiclesBrandsAndModelsRequestGetResponse brandsAndModels(
+    @GetMapping(path = "/brands", produces = "application/json; charset=UTF-8")
+    public VehicleBrandsRequestGetResponse brands(
             @RequestParam(name = "page", required = false, defaultValue = "1") Long page,
             @RequestParam(name = "page_size", required = false, defaultValue = "10") Long pageSize) {
-        List<VehiclesBrandsAndModelsData> brandsAndModels = vehiclesBrandsAndModelsService.find(new VehiclesBrandsAndModelsFilter());
-        return new VehiclesBrandsAndModelsRequestGetResponse(brandsAndModelsToResponse(brandsAndModels));
+        List<VehicleBrandData> brands =
+                vehicleBrands.find(new VehicleBrandFilter());
+        return new VehicleBrandsRequestGetResponse(brandsToResponse(brands));
     }
 
-    @PostMapping(path = "/brand-and-model", consumes = "application/json; charset=UTF-8")
-    public void addBrandAndModel(@RequestBody VehiclesBrandAndModelPostRequest request) {
-        vehiclesBrandsAndModelsService.addBrandAndModel(new VehiclesBrandsAndModelsData(
-                request.getBrandName(),
-                request.getModelName()
+    @GetMapping(path = "/brands/{id}", produces = "application/json; charset=UTF-8")
+    public VehicleBrandRequestGetResponse brandById(
+            @PathVariable Long id,
+            @RequestParam(name = "page", required = false, defaultValue = "1") Long page,
+            @RequestParam(name = "page_size", required = false, defaultValue = "10") Long pageSize) {
+        VehicleBrandData brand = vehicleBrands.find(new VehicleBrandFilter(id)).get(0);
+        return new VehicleBrandRequestGetResponse(brandToResponse(brand));
+    }
+
+    @PostMapping(path = "/brands", consumes = "application/json; charset=UTF-8")
+    public void addBrand(@RequestBody VehiclesBrandsPostRequest request) {
+        vehicleBrands.add(new VehicleBrandData(
+                request.getBrandName()
         ));
     }
 
-    @PutMapping(path = "/brand-and-model/{id}")
-    public void updateBrandAndModel(@PathVariable Long id, @RequestBody VehiclesBrandAndModelPutRequest request) {
-        vehiclesBrandsAndModelsService.updateBrandAndModel(new VehiclesBrandsAndModelsData(
+    @PutMapping(path = "/brands/{id}")
+    public void updateBrand(@PathVariable Long id, @RequestBody VehiclesBrandsPutRequest request) {
+        vehicleBrands.update(new VehicleBrandData(
                 id,
-                request.getModelId(),
                 request.getBrandName(),
-                request.getModelName(),
                 LocalDateTime.now()
         ));
     }
 
-    @GetMapping(path = "/models/{id}", produces = "application/json; charset=UTF-8")
-    public VehiclesModelRequestGetResponse modelsByBrandId (@PathVariable Long id) {
-        List<VehicleModelData> models = iVehicleModel.find(new VehicleModelFilter(null, id));
+    @GetMapping(path = "/brands/{id}/models", produces = "application/json; charset=UTF-8")
+    public VehiclesModelRequestGetResponse modelsByBrandId(@PathVariable Long id) {
+        List<VehicleModelData> models = vehicleModels.find(new VehicleModelFilter(null, id));
         return new VehiclesModelRequestGetResponse(modelsToResponse(models));
     }
+
+
 
     @GetMapping(path = "/tires/{id}", produces = "application/json; charset=UTF-8")
     public VehicleTiresRequestGetResponse tiresByVehicleId(@PathVariable Long id,
                                                            @RequestParam(name = "page", required = false, defaultValue = "1") Long page,
                                                            @RequestParam(name = "page_size", required = false, defaultValue = "10") Long pageSize) {
-        List<VehicleTiresData> tires = iVehicleTires.find(new VehicleTiresFilter(id, page,pageSize));
+        List<VehicleTiresData> tires = vehicleTires.find(new VehicleTiresFilter(id, page, pageSize));
         return new VehicleTiresRequestGetResponse(tiresToResponse(tires));
     }
 
     @GetMapping(path = "/fuel-types", produces = "application/json; charset=UTF-8")
     public FuelTypeRequestGetResponse fuelTypes(@RequestParam(name = "page", required = false, defaultValue = "1") Long page,
                                                 @RequestParam(name = "page_size", required = false, defaultValue = "10") Long pageSize) {
-        List<FuelTypeData> fuelTypes = fuelTypeService.find(new FuelTypeFilter(page, pageSize));
+        List<FuelTypeData> fuelTypes = this.fuelTypes.find(new FuelTypeFilter(page, pageSize));
         return new FuelTypeRequestGetResponse(fuelTypeToResponse(fuelTypes));
     }
 
@@ -221,7 +233,7 @@ public class ScaffoldingEndpointAdmin {
             @PathVariable Long id,
             @RequestParam(name = "page", required = false, defaultValue = "1") Long page,
             @RequestParam(name = "page_size", required = false, defaultValue = "10") Long pageSize) {
-        List<ServiceActionsData> actions = serviceActionsService.find(new ServiceActionsFilter(id, page,
+        List<ServiceActionsData> actions = serviceActions.find(new ServiceActionsFilter(id, page,
                 pageSize));
         return new ServiceActionsRequestGetResponse(actionsToResponse(actions));
     }
@@ -229,13 +241,13 @@ public class ScaffoldingEndpointAdmin {
     @GetMapping(path = "/vehicle-service-action/{id}", produces = "application/json; charset=UTF-8")
     public ServiceActionRequestGetResponse vehicleServiceActionById(
             @PathVariable Long id) {
-        ServiceActionsData serviceAction = serviceActionsService.findById(new ServiceActionsFilter(id));
+        ServiceActionsData serviceAction = serviceActions.findById(new ServiceActionsFilter(id));
         return new ServiceActionRequestGetResponse(actionToResponse(serviceAction));
     }
 
     @PostMapping(path = "/vehicle-service-action", consumes = "application/json; charset=UTF-8")
     public void addVehicleServiceAction(@RequestBody ServiceActionPostRequest request) {
-        serviceActionsService.add(new ServiceActionsData(
+        serviceActions.add(new ServiceActionsData(
                 request.getVehicleId(),
                 request.getCarMileage(),
                 request.getServiceDate(),
@@ -247,7 +259,7 @@ public class ScaffoldingEndpointAdmin {
 
     @PutMapping(path = "/vehicle-service-action/{id}")
     public void updateServiceAction(@PathVariable Long id, @RequestBody ServiceActionPutRequest request) {
-        serviceActionsService.update(new ServiceActionsData(
+        serviceActions.update(new ServiceActionsData(
                 request.getId(),
                 request.getVehicleId(),
                 request.getCarMileage(),
@@ -306,45 +318,45 @@ public class ScaffoldingEndpointAdmin {
             @RequestParam(name = "page", required = false, defaultValue = "1") Long page,
             @RequestParam(name = "page_size", required = false, defaultValue = "10") Long pageSize) {
         List<ServiceActionTypeData> serviceActionTypes =
-                serviceActionTypesService.find(new ServiceActionTypesFilter(page, pageSize));
+                serviceActonTypes.find(new ServiceActionTypesFilter(page, pageSize));
         return new ServiceActionTypesRequestGetResponse(actionTypesToResponse(serviceActionTypes));
     }
 
     @GetMapping(path = "/service-action-type/{id}", produces = "application/json; charset=UTF-8")
     public ServiceActionTypeRequestGetResponse serviceActionTypesById(
             @PathVariable Long id) {
-        ServiceActionTypeData serviceActionType = serviceActionTypesService.find(new ServiceActionTypesFilter(id)).get(0);
+        ServiceActionTypeData serviceActionType = serviceActonTypes.find(new ServiceActionTypesFilter(id)).get(0);
         return new ServiceActionTypeRequestGetResponse(actionTypeToResponse(serviceActionType));
     }
 
     @PostMapping(path = "/service-action-type", consumes = "application/json; charset=UTF-8")
     public void addServiceActionType(@RequestBody ServiceActionTypesPostRequest request) {
-        serviceActionTypesService.add(new ServiceActionTypeData(request.getName()));
+        serviceActonTypes.add(new ServiceActionTypeData(request.getName()));
     }
 
     @PutMapping(path = "/service-action-type/{id}", consumes = "application/json; charset=UTF-8")
     public void updateServiceActionType(@PathVariable Long id,
                                         @RequestBody ServiceActionTypesPutRequest request) {
-        serviceActionTypesService.update(new ServiceActionTypeData(id, request.getName()));
+        serviceActonTypes.update(new ServiceActionTypeData(id, request.getName()));
     }
 
     @GetMapping(path = "/tire-seasons", produces = "application/json; charset=UTF-8")
     public TireSeasonsRequestGetResponse tireSeasons(@RequestParam(name = "page", required = false, defaultValue = "1") Long page,
                                                      @RequestParam(name = "page_size", required = false, defaultValue = "10") Long pageSize) {
-        List<TireSeasonData> tireSeasons = iTireSeason.find(new TireSeasonFilter(page, pageSize));
+        List<TireSeasonData> tireSeasons = tireSeason.find(new TireSeasonFilter(page, pageSize));
         return new TireSeasonsRequestGetResponse(tireSeasonsToResponse(tireSeasons));
 
     }
 
     @PostMapping(path = "/tire-season", consumes = "application/json; charset=UTF-8")
     public void addTireSeason(@RequestBody TireSeasonPostRequest request) {
-        iTireSeason.add(new TireSeasonData(request.getName()));
+        tireSeason.add(new TireSeasonData(request.getName()));
     }
 
     @PutMapping(path = "/tire-season/{id}", consumes = "application/json; charset=UTF-8")
     public void updateTireSeason(@PathVariable Long id,
                                  @RequestBody TireSeasonPutRequest request) {
-        iTireSeason.update(new TireSeasonData(id, request.getName()));
+        tireSeason.update(new TireSeasonData(id, request.getName()));
     }
 
     private List<VehicleGetResponse> vehiclesToResponse(List<VehicleData> vehicles) {
@@ -365,18 +377,6 @@ public class ScaffoldingEndpointAdmin {
                     vehicle.getWidth(),
                     vehicle.getHeight())
             );
-        }
-        return list;
-    }
-
-    private List<VehiclesBrandsAndModelsGetResponse> brandsAndModelsToResponse(List<VehiclesBrandsAndModelsData> brandsAndModels) {
-        List<VehiclesBrandsAndModelsGetResponse> list = new ArrayList<>();
-        for (VehiclesBrandsAndModelsData data : brandsAndModels) {
-            list.add(new VehiclesBrandsAndModelsGetResponse(
-                    data.getBrandId(),
-                    data.getModelId(),
-                    data.getBrandName(),
-                    data.getModelName()));
         }
         return list;
     }
@@ -494,6 +494,17 @@ public class ScaffoldingEndpointAdmin {
         return list;
     }
 
+    private List<VehicleBrandGetResponse> brandsToResponse(List<VehicleBrandData> brands) {
+        List<VehicleBrandGetResponse> list = new ArrayList<>();
+        for (VehicleBrandData data : brands) {
+            list.add(new VehicleBrandGetResponse(
+                    data.getId(),
+                    data.getName()
+            ));
+        }
+        return list;
+    }
+
     private List<VehicleTiresGetResponse> tiresToResponse(List<VehicleTiresData> tires) {
         List<VehicleTiresGetResponse> list = new ArrayList<>();
         for (VehicleTiresData data : tires) {
@@ -518,5 +529,9 @@ public class ScaffoldingEndpointAdmin {
             ));
         }
         return list;
+    }
+
+    private VehicleBrandGetResponse brandToResponse(VehicleBrandData brand) {
+        return new VehicleBrandGetResponse(brand.getId(), brand.getName());
     }
 }

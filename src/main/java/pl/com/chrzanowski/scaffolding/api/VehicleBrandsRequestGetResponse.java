@@ -2,11 +2,11 @@ package pl.com.chrzanowski.scaffolding.api;
 
 import java.util.List;
 
-public class VehiclesBrandRequestGetResponse {
+public class VehicleBrandsRequestGetResponse {
 
     private List<VehicleBrandGetResponse> brands;
 
-    public VehiclesBrandRequestGetResponse(List<VehicleBrandGetResponse> brands) {
+    public VehicleBrandsRequestGetResponse(List<VehicleBrandGetResponse> brands) {
         this.brands = brands;
     }
 

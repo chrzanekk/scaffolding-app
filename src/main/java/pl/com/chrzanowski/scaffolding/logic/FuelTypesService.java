@@ -12,11 +12,11 @@ import static pl.com.chrzanowski.scaffolding.logic.JdbcUtil.getLong;
 import static pl.com.chrzanowski.scaffolding.logic.JdbcUtil.getString;
 
 @Service
-public class FuelTypeService implements IFuelType{
+public class FuelTypesService implements IFuelTypes {
 
     private FuelTypeJdbcRepository fuelTypeJdbcRepository;
 
-    public FuelTypeService(FuelTypeJdbcRepository fuelTypeJdbcRepository) {
+    public FuelTypesService(FuelTypeJdbcRepository fuelTypeJdbcRepository) {
         this.fuelTypeJdbcRepository = fuelTypeJdbcRepository;
     }
 

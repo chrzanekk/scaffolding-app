@@ -5,7 +5,7 @@ import pl.com.chrzanowski.scaffolding.domain.VehicleModelFilter;
 
 import java.util.List;
 
-public interface IVehicleModel {
+public interface IVehicleModels {
     Long add(VehicleModelData filter);
     List<VehicleModelData> find(VehicleModelFilter filter);
 }

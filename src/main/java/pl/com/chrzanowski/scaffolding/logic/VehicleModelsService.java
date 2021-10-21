@@ -12,11 +12,11 @@ import static pl.com.chrzanowski.scaffolding.logic.JdbcUtil.getLong;
 import static pl.com.chrzanowski.scaffolding.logic.JdbcUtil.getString;
 
 @Service
-public class VehicleModelService implements IVehicleModel{
+public class VehicleModelsService implements IVehicleModels {
 
     private VehicleModelJdbcRepository vehicleModelJdbcRepository;
 
-    public VehicleModelService(VehicleModelJdbcRepository vehicleModelJdbcRepository) {
+    public VehicleModelsService(VehicleModelJdbcRepository vehicleModelJdbcRepository) {
         this.vehicleModelJdbcRepository = vehicleModelJdbcRepository;
     }
 

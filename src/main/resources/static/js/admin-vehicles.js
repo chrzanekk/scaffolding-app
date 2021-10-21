@@ -108,8 +108,8 @@ function sendCreateRequest() {
         method: "POST",
         contentType: "application/json",
         data: JSON.stringify({
-                brandName: $("#create-brand").val(),
-                modelName: $("#create-model").val(),
+                brandId: $("#create-brand").val(),
+                modelId: $("#create-model").val(),
                 registrationNumber: $("#create-registration-number").val(),
                 vin: $("#create-vin").val(),
                 productionYear: $("#create-production-year").val(),

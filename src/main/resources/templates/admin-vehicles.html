@@ -55,25 +55,23 @@
                 <form class="text-center">
                     <div class="form-group">
                         <label for="create-brand" th:text="#{vehicle.details.brand}"></label>
-                        <input id="create-brand" class="form-control" type="search" list="brand-list">
-                        <datalist id="brand-list">
+                        <select id="create-brand" class="form-control">
                             <option th:each="brand : ${brands}"
                                     th:value="${brand.id}"
                                     th:text="${brand.value}"
                                     th:selected="${brand.value}">
                             </option>
-                        </datalist>
+                        </select>
                     </div>
                     <div class="form-group">
                         <label for="create-model" th:text="#{vehicle.details.model}"></label>
-                        <input id="create-model" type="search" class="form-control" list="model-list">
-                        <datalist id="model-list">
+                        <select id="create-model" type="search" class="form-control">
                             <option th:each="model : ${models}"
-                                    th:value="${model.value}"
+                                    th:value="${model.id}"
                                     th:text="${model.value}"
-                                    th:selected="(${model.value} == *{model.value})">
+                                    th:selected="${model.value}">
                             </option>
-                        </datalist>
+                        </select>
                     </div>
                     <div class="form-group">
                         <label for="create-registration-number" th:text="#{vehicle.details.registrationNumber}"></label>

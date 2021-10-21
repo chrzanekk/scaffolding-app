@@ -13,11 +13,11 @@ import static pl.com.chrzanowski.scaffolding.logic.JdbcUtil.getString;
 
 
 @Service
-public class TireSeasonService implements ITireSeason {
+public class TireSeasonsService implements ITireSeasons {
 
     private TireSeasonJdbcRepository tireSeasonJdbcRepository;
 
-    public TireSeasonService(TireSeasonJdbcRepository tireSeasonJdbcRepository) {
+    public TireSeasonsService(TireSeasonJdbcRepository tireSeasonJdbcRepository) {
         this.tireSeasonJdbcRepository = tireSeasonJdbcRepository;
     }
 
