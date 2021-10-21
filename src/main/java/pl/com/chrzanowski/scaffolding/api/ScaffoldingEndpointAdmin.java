@@ -209,8 +209,6 @@ public class ScaffoldingEndpointAdmin {
         return new VehicleTiresRequestGetResponse(tiresToResponse(tires));
     }
 
-
-
     @GetMapping(path = "/fuel-types", produces = "application/json; charset=UTF-8")
     public FuelTypeRequestGetResponse fuelTypes(@RequestParam(name = "page", required = false, defaultValue = "1") Long page,
                                                 @RequestParam(name = "page_size", required = false, defaultValue = "10") Long pageSize) {

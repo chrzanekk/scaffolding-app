@@ -20,7 +20,7 @@ public class VehicleTiresFilter {
     private String speedIndex;
     private Integer capacityIndex;
     private String reinforced;
-    private boolean runOnFlat;
+    private Boolean runOnFlat;
     private Long seasonId;
     private String seasonName;
 
@@ -101,7 +101,7 @@ public class VehicleTiresFilter {
         return reinforced;
     }
 
-    public boolean isRunOnFlat() {
+    public Boolean isRunOnFlat() {
         return runOnFlat;
     }
 
@@ -120,4 +120,5 @@ public class VehicleTiresFilter {
     public Long getPageSize() {
         return pageSize;
     }
+
 }

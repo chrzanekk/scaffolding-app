@@ -178,7 +178,7 @@ public class ApplicationController {
 
 
     @GetMapping({"/admin/vehicle/{id}"})
-    public String adminVehicleById(@PathVariable Long id, Model model) throws SQLException {
+    public String adminVehicleById(@PathVariable Long id, Model model) {
 
         if (!userService.isLoggedUserAdmin()) {
             throw new IllegalArgumentException("Access denied");

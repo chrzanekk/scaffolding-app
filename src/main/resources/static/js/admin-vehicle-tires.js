@@ -1,5 +1,5 @@
 var url = "/admin/api/scaffolding"
-var TiresApiUrl = url + "/tires?"
+var tiresApiUrl = url + "/tires?"
 var vehicleTiresApiUrl = url + "/tires/"
 var tiresApiUrl = url + "/tires"
 
@@ -104,7 +104,7 @@ function sendCreateRequest() {
                 speedIndex: $("#create-speedIndex").val(),
                 loadIndex: $("#create-loadIndex").val(),
                 reinforced: $("#create-reinforced").val(),
-                seasonName: $("#create-season").val()
+                seasonName: $("#create-season").val(),
                 status: $("#create-status").val(),
         })
     })
