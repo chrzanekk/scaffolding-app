@@ -196,7 +196,7 @@ public class ScaffoldingEndpointAdmin {
         ));
     }
 
-    @PutMapping(path = "/brands/{id}")
+    @PutMapping(path = "/brands/{id}", produces = "application/json; charset=UTF-8")
     public void updateBrand(@PathVariable Long id, @RequestBody VehiclesBrandsPutRequest request) {
         vehicleBrands.update(new VehicleBrandData(
                 id,
@@ -206,9 +206,16 @@ public class ScaffoldingEndpointAdmin {
     }
 
     @GetMapping(path = "/brands/{id}/models", produces = "application/json; charset=UTF-8")
-    public VehiclesModelRequestGetResponse modelsByBrandId(@PathVariable Long id) {
+    public VehicleModelsRequestGetResponse modelsByBrandId(@PathVariable Long id) {
         List<VehicleModelData> models = vehicleModels.find(new VehicleModelFilter(null, id));
-        return new VehiclesModelRequestGetResponse(modelsToResponse(models));
+        return new VehicleModelsRequestGetResponse(modelsToResponse(models));
+    }
+
+    @GetMapping(path = "/brands/{brandId}/models/{modelId}", produces = "application/json; charset=UTF-8")
+    public VehicleModelRequestGetResponse modelById(@PathVariable Long brandId,
+                                                    @PathVariable Long modelId) {
+        VehicleModelData model = vehicleModels.find(new VehicleModelFilter(modelId, brandId)).get(0);
+        return new VehicleModelRequestGetResponse(modelToResponse(model));
     }
 
 
@@ -533,5 +540,8 @@ public class ScaffoldingEndpointAdmin {
 
     private VehicleBrandGetResponse brandToResponse(VehicleBrandData brand) {
         return new VehicleBrandGetResponse(brand.getId(), brand.getName());
+    }
+    private VehicleModelGetResponse modelToResponse(VehicleModelData model) {
+        return new VehicleModelGetResponse(model.getId(), model.getBrandId(),model.getName());
     }
 }

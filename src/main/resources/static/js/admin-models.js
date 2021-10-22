@@ -1,7 +1,7 @@
 var url = "/admin/api/scaffolding"
-var brandsApiUrl = url + "brands/"
+var brandsApiUrl = url + "/brands/"
 var modelsApiUrl = "/models?"
-var brandApiUrl = url + "brands/"
+var brandApiUrl = url + "/brands/"
 var modelApiUrl = "/models"
 
 $(document).ready(function () {
@@ -48,18 +48,15 @@ function fillRow(model, value) {
         "<tr>" +
             "<td class='align-middle'>" + value + "</td>" +
             "<td class='align-middle'>" + model.name + "</td>" +
-            "<td class='align-middle'>" + prepareDetailsButton(model.id) + "</td>" +
+            "<td class='align-middle'>" + prepareDetailsButton(brand.id, model.id) + "</td>" +
         "</tr>"
     );
 }
 
-function prepareDetailsButton(id) {
-    return '<button type="button" class="btn btn-primary" onclick="goToDetailsPage(' + id + ')">Detale</button>';
+function prepareDetailsButton(brandId, modelId) {
+    return '<button type="button" class="btn btn-primary" onclick="goToDetailsPage(' + brandId + ',' + modelId + ')">Detale</button>';
 }
 
-function prepareModelsListButton(id) {
-    return '<button type="button" class="btn btn-primary" onclick="goToModelListPage(' + id + ')">Lista modeli</button>';
-}
 
 function prepareDeleteButton(id) {
     return '<button type="button" class="btn btn-danger" onclick="setObjectToDeleteIdAndShowModal(' + id + ')">Usuń/Zezłomuj</button>';

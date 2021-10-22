@@ -211,6 +211,24 @@ public class ApplicationController {
         return "admin-models";
     }
 
+    @GetMapping({"/admin/brands/{brandId}/models/{modelId}"})
+    public String adminModelById(@PathVariable Long brandId,
+                                 @PathVariable Long modelId, Model model) {
+
+        if (!userService.isLoggedUserAdmin()) {
+            throw new IllegalArgumentException("Access denied");
+        }
+
+        Language lang = LanguagesUtil.getCurrentLanguage();
+
+        model.addAttribute("brand", vehicleBrands.find(new VehicleBrandFilter(brandId)).get(0));
+        model.addAttribute("brands", dictionariesService.getDictionary(DictionaryType.VEHICLE_BRANDS, lang));
+        model.addAttribute("model", vehicleModels.find(new VehicleModelFilter(modelId,brandId)).get(0));
+        model.addAttribute("languageDict", dictionariesService.getDictionary(DictionaryType.LANGUAGES, lang));
+
+        return "admin-model";
+    }
+
 
     @GetMapping({"/admin/vehicle/{id}"})
     public String adminVehicleById(@PathVariable Long id, Model model) {

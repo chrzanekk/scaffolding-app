@@ -33,7 +33,7 @@ function findNotificationsCount() {
         contentType: "application/json"
     })
         .done(function (response) {
-            fillNotificationsCounter(response.count);
+            fillNotificationsCounter(response.response.count);
             setTimeout(() => {findNotificationsCount();}, 30000);
         })
         .fail(function(jqxhr, textStatus, errorThrown){

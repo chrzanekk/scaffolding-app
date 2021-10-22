@@ -9,19 +9,19 @@ function showDeleteModal() {
     $('#delete-object-modal').modal('show');
 }
 
-function sendDeleteRequest(){
-    $.ajax({
-        url: "/admin/api/scaffolding/vehicle/" + vehicle.id,
-        type: "DELETE"
-    })
-        .done(function(response) {
-            $('#delete-object-modal').modal('hide');
-            window.location.href = '/admin/vehicles';
-        })
-        .fail(function(jqxhr, textStatus, errorThrown){
-            displayErrorInformation(jqxhr.responseText);
-        });
-}
+//function sendDeleteRequest(){
+//    $.ajax({
+//        url: "/admin/api/scaffolding/vehicle/" + vehicle.id,
+//        type: "DELETE"
+//    })
+//        .done(function(response) {
+//            $('#delete-object-modal').modal('hide');
+//            window.location.href = '/admin/vehicles';
+//        })
+//        .fail(function(jqxhr, textStatus, errorThrown){
+//            displayErrorInformation(jqxhr.responseText);
+//        });
+//}
 
 function sendUpdateRequest() {
     $.ajax({
