@@ -4,7 +4,7 @@
 
 <head>
     <div th:replace="fragments/head"></div>
-    <script th:src="@{/js/admin-vehicle-model.js}"></script>
+    <script th:src="@{/js/admin-model.js}"></script>
     <script th:inline="javascript">
         var model = [[${model}]];
         var brand = [[${brand}]];
@@ -26,10 +26,10 @@
             <div class="form-group col-md-4 text-center">
                 <label for="brand" th:text="#{vehicle.details.brand}"></label>
                 <select class="form-control" id="brand">
-                    <option th:each="brand : ${brands}"
-                            th:value="${brand.id}"
-                            th:text="${brand.value}"
-                            th:selected="(${brand.value})">
+                    <option th:each="element : ${brands}"
+                            th:value="${element.id}"
+                            th:text="${element.name}"
+                            th:selected="(${element.name} == *{brand.name})">
                     </option>
                 </select>
             </div>

@@ -29,8 +29,8 @@ public class VehicleModelJdbcRepository {
     }
 
     public void update(VehicleModelData data) {
-        String query = "UPDATE vehicle_model SET name = ?, modify_date = ? WHERE id = ?;";
-        jdbcTemplate.update(query, data.getName(), data.getModifyDate(), data.getId());
+        String query = "UPDATE vehicle_model SET name = ?, brand_id = ?, modify_date = ? WHERE id = ?;";
+        jdbcTemplate.update(query, data.getName(), data.getBrandId(),data.getModifyDate(), data.getId());
     }
 
     List<Map<String, Object>> find(VehicleModelFilter filter) {

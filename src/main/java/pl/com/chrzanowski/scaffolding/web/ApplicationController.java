@@ -174,7 +174,7 @@ public class ApplicationController {
 
         Language lang = LanguagesUtil.getCurrentLanguage();
 
-        model.addAttribute("brands", dictionariesService.getDictionary(DictionaryType.VEHICLE_BRANDS, lang));
+        model.addAttribute("brands", vehicleBrands.find(new VehicleBrandFilter()));
         model.addAttribute("languageDict", dictionariesService.getDictionary(DictionaryType.LANGUAGES, lang));
 
         return "admin-brands";
@@ -222,7 +222,7 @@ public class ApplicationController {
         Language lang = LanguagesUtil.getCurrentLanguage();
 
         model.addAttribute("brand", vehicleBrands.find(new VehicleBrandFilter(brandId)).get(0));
-        model.addAttribute("brands", dictionariesService.getDictionary(DictionaryType.VEHICLE_BRANDS, lang));
+        model.addAttribute("brands", vehicleBrands.find(new VehicleBrandFilter()));
         model.addAttribute("model", vehicleModels.find(new VehicleModelFilter(modelId,brandId)).get(0));
         model.addAttribute("languageDict", dictionariesService.getDictionary(DictionaryType.LANGUAGES, lang));
 

@@ -190,14 +190,14 @@ public class ScaffoldingEndpointAdmin {
     }
 
     @PostMapping(path = "/brands", consumes = "application/json; charset=UTF-8")
-    public void addBrand(@RequestBody VehiclesBrandsPostRequest request) {
+    public void addBrand(@RequestBody VehicleBrandsPostRequest request) {
         vehicleBrands.add(new VehicleBrandData(
                 request.getBrandName()
         ));
     }
 
-    @PutMapping(path = "/brands/{id}", produces = "application/json; charset=UTF-8")
-    public void updateBrand(@PathVariable Long id, @RequestBody VehiclesBrandsPutRequest request) {
+    @PutMapping(path = "/brands/{id}", consumes = "application/json; charset=UTF-8")
+    public void updateBrand(@PathVariable Long id, @RequestBody VehicleBrandsPutRequest request) {
         vehicleBrands.update(new VehicleBrandData(
                 id,
                 request.getBrandName(),
@@ -218,7 +218,25 @@ public class ScaffoldingEndpointAdmin {
         return new VehicleModelRequestGetResponse(modelToResponse(model));
     }
 
+    @PostMapping(path = "/brands/{id}/models", consumes = "application/json; charset=UTF-8")
+    public void addModel(@PathVariable Long id, @RequestBody VehicleModelsPostRequest request) {
+        vehicleModels.add(new VehicleModelData(
+                request.getModelName(),
+                id
+        ));
+    }
 
+    @PutMapping(path = "/brands/{brandId}/models/{modelId}", consumes = "application/json; charset=UTF-8")
+    public void updateModel(@PathVariable Long brandId,
+                            @PathVariable Long modelId,
+                            @RequestBody VehicleModelsPutRequest request) {
+        vehicleModels.update(new VehicleModelData(
+                modelId,
+                request.getBrandId(),
+                request.getModelName(),
+                LocalDateTime.now()
+        ));
+    }
 
     @GetMapping(path = "/tires/{id}", produces = "application/json; charset=UTF-8")
     public VehicleTiresRequestGetResponse tiresByVehicleId(@PathVariable Long id,
@@ -541,7 +559,8 @@ public class ScaffoldingEndpointAdmin {
     private VehicleBrandGetResponse brandToResponse(VehicleBrandData brand) {
         return new VehicleBrandGetResponse(brand.getId(), brand.getName());
     }
+
     private VehicleModelGetResponse modelToResponse(VehicleModelData model) {
-        return new VehicleModelGetResponse(model.getId(), model.getBrandId(),model.getName());
+        return new VehicleModelGetResponse(model.getId(), model.getBrandId(), model.getName());
     }
 }

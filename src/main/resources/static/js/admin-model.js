@@ -1,3 +1,8 @@
+var url = "/admin/api/scaffolding"
+var brandsApiUrl = url + "/brands/"
+var modelsApiUrl = "/models?"
+var brandApiUrl = url + "/brands/"
+var modelApiUrl = "/models/"
 
 $(document).ready(function () {
 
@@ -23,22 +28,20 @@ function showDeleteModal() {
 //        });
 //}
 
-//function sendUpdateRequest() {
-//    $.ajax({
-//        url: "/admin/api/scaffolding/brand-and-model/" + brandAndModel.brandId,
-//        method: "PUT",
-//        contentType: "application/json",
-//        data: JSON.stringify({
-//            brandId: $("#brand").find(":selected").val(),
-//            modelId: $("#model").find(":selected").val(),
-//            brandName: $("#brand").val(),
-//            modelName: $("#model").val(),
-//        })
-//    })
-//        .done(function () {
-//            $("#operation-successful-modal").modal('show');
-//        })
-//        .fail(function (jqxhr, textStatus, errorThrown) {
-//            displayErrorInformation(jqxhr.responseText);
-//        })
-//}
+function sendUpdateRequest() {
+    $.ajax({
+        url: brandApiUrl + brand.id + modelApiUrl + model.id,
+        method: "PUT",
+        contentType: "application/json",
+        data: JSON.stringify({
+            modelName: $("#model").val(),
+            brandId: $("#brand").val(),
+        })
+    })
+        .done(function () {
+            $("#operation-successful-modal").modal('show');
+        })
+        .fail(function (jqxhr, textStatus, errorThrown) {
+            displayErrorInformation(jqxhr.responseText);
+        })
+}

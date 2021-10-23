@@ -16,6 +16,11 @@ public class VehicleModelData {
         this.name = name;
     }
 
+    public VehicleModelData(String name, Long brandId) {
+        this.name = name;
+        this.brandId = brandId;
+    }
+
     public VehicleModelData(String name) {
         this.name = name;
     }
@@ -24,6 +29,13 @@ public class VehicleModelData {
         this.id = id;
         this.brandId = brandId;
         this.name = name;
+    }
+
+    public VehicleModelData(Long id, Long brandId, String name, LocalDateTime modifyDate) {
+        this.id = id;
+        this.brandId = brandId;
+        this.name = name;
+        this.modifyDate = modifyDate;
     }
 
     public VehicleModelData(Long id, String name, LocalDateTime modifyDate) {

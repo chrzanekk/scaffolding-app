@@ -71,26 +71,6 @@ function goToModelListPage(id) {
     window.location.href = "/admin/brands/" + id + "/models";
 }
 
-function getModelsByBrandId(value) {
-    var id = value.value;
-    var models = "";
-    $.ajax({
-        url: modelsByBrandIdApiUri + "/" + id,
-        type: "get",
-        dataType: "json",
-        contentType: "application/json"
-    })
-    .done(function (models) {
-       alert(JSON.stringify(models));
-       models = JSON.stringify(models);
-    })
-    .fail(function(jqxhr, textStatus, errorThrown){
-        displayErrorInformation(jqxhr.responseText);
-    });
-    return models;
-}
-
-
 function setObjectToDeleteIdAndShowModal(id) {
     objToDeleteId = id;
     $('#delete-object-modal').modal('show');
@@ -112,7 +92,7 @@ function sendCreateRequest() {
         .done(function () {
             $("#create-modal").modal('hide');
             $("#operation-successful-modal").modal('show');
-            findBrandsAndModels();
+            findBrands();
         })
         .fail(function (jqxhr, textStatus, errorThrown) {
             displayErrorInformation(jqxhr.responseText);

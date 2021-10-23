@@ -10,16 +10,16 @@ $(document).ready(function () {
     });
 
 
-    findModels(brand);
+    findModels();
 
     $("#filter input, #filter select, [form='filter']").on("change", function () {
-        findModels(brand);
+        findModels();
     });
 
 });
 
 
-function findModels(brand) {
+function findModels() {
     $.ajax({
         url: brandsApiUrl + brand.id + modelsApiUrl + preparePaginationUrl(),
         type: "get",
@@ -79,18 +79,18 @@ function clearCreateModal() {
 
 function sendCreateRequest() {
     $.ajax({
-        url: modelApiUrl,
+        url: brandApiUrl + brand.id + modelApiUrl,
         method: "POST",
         contentType: "application/json",
         data: JSON.stringify({
-                modelName: $("#create-brand").val(),
+                modelName: $("#create-model").val(),
                 brandId: brand.id
         })
     })
         .done(function () {
             $("#create-modal").modal('hide');
             $("#operation-successful-modal").modal('show');
-            findBrandsAndModels();
+            findModels();
         })
         .fail(function (jqxhr, textStatus, errorThrown) {
             displayErrorInformation(jqxhr.responseText);

@@ -1,11 +1,11 @@
 package pl.com.chrzanowski.scaffolding.api;
 
-public class VehiclesBrandsPostRequest {
+public class VehicleBrandsPostRequest {
 
     private String brandName;
 
 
-    public VehiclesBrandsPostRequest() {
+    public VehicleBrandsPostRequest() {
     }
 
     public String getBrandName() {
