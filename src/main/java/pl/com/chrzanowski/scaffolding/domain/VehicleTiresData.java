@@ -29,9 +29,6 @@ public class VehicleTiresData {
     private LocalDateTime removeDate;
     private String runOnFlat;
 
-    public VehicleTiresData() {
-    }
-
 
     public VehicleTiresData(Long id,
                             Long vehicleId,
@@ -67,6 +64,37 @@ public class VehicleTiresData {
         this.seasonId = seasonId;
         this.seasonName = seasonName;
         this.runOnFlat = runOnFlat;
+    }
+
+    public VehicleTiresData(Long vehicleId,
+                            String brand,
+                            String model,
+                            Integer productionYear,
+                            LocalDate purchaseDate,
+                            Integer width,
+                            Integer profile,
+                            Integer diameter,
+                            String speedIndex,
+                            Integer loadIndex,
+                            String reinforced,
+                            Boolean isRunOnFlat,
+                            Long seasonId,
+                            String status
+    ) {
+        this.vehicleId = vehicleId;
+        this.status = status;
+        this.productionYear = productionYear;
+        this.purchaseDate = purchaseDate;
+        this.brand = brand;
+        this.model = model;
+        this.width = width;
+        this.profile = profile;
+        this.diameter = diameter;
+        this.speedIndex = speedIndex;
+        this.loadIndex = loadIndex;
+        this.reinforced = reinforced;
+        this.isRunOnFlat = isRunOnFlat;
+        this.seasonId = seasonId;
     }
 
     public Long getId() {

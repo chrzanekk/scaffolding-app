@@ -97,14 +97,15 @@ function sendCreateRequest() {
                 brand: $("#create-brand").val(),
                 model: $("#create-model").val(),
                 productionYear: $("#create-production-year").val(),
-                purchaseDate: $("#create-purchase-date").val(),
+                purchaseDate: $("#create-purchased-date").val(),
                 width: $("#create-width").val(),
                 profile: $("#create-profile").val(),
                 diameter: $("#create-diameter").val(),
                 speedIndex: $("#create-speedIndex").val(),
-                loadIndex: $("#create-loadIndex").val(),
+                capacityIndex: $("#create-loadIndex").val(),
                 reinforced: $("#create-reinforced").val(),
-                seasonName: $("#create-season").val(),
+                runOnFlat: $("#create-runOnFlat").val(),
+                seasonId: $("#create-season").val(),
                 status: $("#create-status").val(),
         })
     })

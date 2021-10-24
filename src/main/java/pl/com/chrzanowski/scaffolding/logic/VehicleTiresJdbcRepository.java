@@ -2,6 +2,7 @@ package pl.com.chrzanowski.scaffolding.logic;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
+import pl.com.chrzanowski.scaffolding.domain.VehicleTiresData;
 import pl.com.chrzanowski.scaffolding.domain.VehicleTiresFilter;
 
 import java.util.List;
@@ -20,6 +21,66 @@ public class VehicleTiresJdbcRepository {
         this.commonJdbcRepository = commonJdbcRepository;
     }
 
+    public Long createTire(VehicleTiresData data) {
+        String query = "INSERT INTO tires (" +
+                "brand," +
+                "model," +
+                "width," +
+                "profile," +
+                "diameter," +
+                "speed_index," +
+                "capacity_index," +
+                "reinforced," +
+                "run_on_flat, " +
+                "season_id) VALUES (" +
+                "?, " +
+                "?, " +
+                "?, " +
+                "?, " +
+                "?, " +
+                "?, " +
+                "?, " +
+                "?, " +
+                "?, " +
+                "?)";
+        jdbcTemplate.update(query,
+                data.getBrand(),
+                data.getModel(),
+                data.getWidth(),
+                data.getProfile(),
+                data.getDiameter(),
+                data.getSpeedIndex(),
+                data.getLoadIndex(),
+                data.getReinforced(),
+                data.isRunOnFlat(),
+                data.getSeasonId());
+
+        return commonJdbcRepository.getLastInsertedId();
+    }
+
+    public Long create(VehicleTiresData data) {
+
+        String query = "INSERT INTO vehicle_tires (" +
+                "vehicle_id, " +
+                "tire_id, " +
+                "status, " +
+                "production_year, " +
+                "purchase_date) VALUES ( " +
+                "?, " +
+                "?, " +
+                "?, " +
+                "?, " +
+                "?)";
+        jdbcTemplate.update(query,
+                data.getVehicleId(),
+                createTire(data),
+                data.getStatus(),
+                data.getProductionYear(),
+                data.getPurchaseDate());
+
+        return commonJdbcRepository.getLastInsertedId();
+    }
+
     List<Map<String, Object>> find (VehicleTiresFilter filter) {
         String query = "SELECT\n" +
                 "vehicle_tires.id AS id,\n" +
@@ -28,6 +89,7 @@ public class VehicleTiresJdbcRepository {
                 "vehicle_tires.`status` AS status,\n" +
                 "vehicle_tires.production_year AS productionYear,\n" +
                 "vehicle_tires.purchase_date AS purchaseDate,\n" +
+                "tires.id AS tireId,\n" +
                 "tires.brand AS brand,\n" +
                 "tires.model AS model,\n" +
                 "tires.width AS width,\n" +
@@ -40,7 +102,7 @@ public class VehicleTiresJdbcRepository {
                 "tire_season.id AS seasonId,\n" +
                 "tire_season.name AS seasonName\n" +
                 "FROM vehicle_tires\n" +
-                "JOIN tires ON (vehicle_tires.vehicle_id = tires.id)\n" +
+                "JOIN tires ON (vehicle_tires.tire_id = tires.id)\n" +
                 "JOIN tire_season ON (tires.season_id = tire_season.id)";
 
         if (filter != null) {

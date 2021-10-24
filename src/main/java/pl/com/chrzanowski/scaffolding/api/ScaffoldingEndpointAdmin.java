@@ -246,6 +246,28 @@ public class ScaffoldingEndpointAdmin {
         return new VehicleTiresRequestGetResponse(tiresToResponse(tires));
     }
 
+    @PostMapping(path = "/tires", consumes = "application/json; charset=UTF-8")
+    public void addTires(@RequestBody VehicleTiresPostRequest request) {
+        vehicleTires.create(new VehicleTiresData(
+                request.getVehicleId(),
+                request.getBrand(),
+                request.getModel(),
+                request.getProductionYear(),
+                request.getPurchaseDate(),
+                request.getWidth(),
+                request.getProfile(),
+                request.getDiameter(),
+                request.getSpeedIndex(),
+                request.getCapacityIndex(),
+                request.getReinforced(),
+                request.getRunOnFlat(),
+                request.getSeasonId(),
+                request.getStatus()
+        ));
+    }
+
+
+
     @GetMapping(path = "/fuel-types", produces = "application/json; charset=UTF-8")
     public FuelTypeRequestGetResponse fuelTypes(@RequestParam(name = "page", required = false, defaultValue = "1") Long page,
                                                 @RequestParam(name = "page_size", required = false, defaultValue = "10") Long pageSize) {

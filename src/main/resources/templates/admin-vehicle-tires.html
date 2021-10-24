@@ -99,31 +99,27 @@
                     </div>
                     <div class="form-group">
                         <label for="create-speedIndex" th:text="#{vehicle.tires.speed.index}"></label>
-                        <input id="create-speedIndex" class="form-control" type="search" list="speed-index-list">
-                        <datalist id="speed-index-list">
+                        <select id="create-speedIndex" class="form-control">
                             <option th:each="index : ${speedIndex}"
                                     th:value="${index.code}"
                                     th:text="${index.code}"></option>
-
-                        </datalist>
+                        </select>
                     </div>
                     <div class="form-group">
                         <label for="create-loadIndex" th:text="#{vehicle.tires.load.index}"></label>
-                        <input id="create-loadIndex" class="form-control" type="search" list="load-index-list">
-                        <datalist id="load-index-list">
+                        <select id="create-loadIndex" class="form-control">
                             <option th:each="index : ${loadIndex}"
                                     th:value="${index.code}"
                                     th:text="${index.code}"></option>
-                        </datalist>
+                        </select>
                     </div>
                     <div class="form-group">
                         <label for="create-reinforced" th:text="#{vehicle.tires.reinforced}"></label>
-                        <input id="create-reinforced" class="form-control" type="search" list="reinforced-list">
-                        <datalist id="reinforced-list">
+                        <select id="create-reinforced" class="form-control">
                             <option th:each="type : ${reinforced}"
                                     th:value="${type.code}"
                                     th:text="${type.value}"></option>
-                        </datalist>
+                        </select>
                     </div>
                     <div class="form-group">
                         <label for="create-runOnFlat" th:text="#{vehicle.tires.run.on.flat}"></label>
@@ -139,7 +135,7 @@
                         <label for="create-season" th:text="#{vehicle.tires.season}"></label>
                         <select id="create-season" class="form-control">
                             <option th:each="option : ${tireSeason}"
-                                    th:value="${option.code}"
+                                    th:value="${option.id}"
                                     th:text="${option.value}"
                                     th:selected="#{list.choose}">
                             </option>

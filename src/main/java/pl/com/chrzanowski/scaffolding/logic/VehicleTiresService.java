@@ -33,6 +33,12 @@ public class VehicleTiresService implements IVehicleTires {
         return getTires(tiresJdbcRepository.find(filter)).get(0);
     }
 
+    @Override
+    public void create(VehicleTiresData data) {
+        tiresJdbcRepository.create(data);
+    }
+
+
     private List<VehicleTiresData> getTires(List<Map<String, Object>> data) {
         List<VehicleTiresData> list = new ArrayList<>();
         for (Map<String, Object> row : data) {

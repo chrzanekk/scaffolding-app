@@ -9,4 +9,5 @@ public interface IVehicleTires {
 
     List<VehicleTiresData> find(VehicleTiresFilter filter);
     VehicleTiresData findById(VehicleTiresFilter filter);
+    void create(VehicleTiresData data);
 }

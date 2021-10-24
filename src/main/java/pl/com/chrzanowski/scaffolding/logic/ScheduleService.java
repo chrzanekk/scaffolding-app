@@ -19,11 +19,12 @@ public class ScheduleService {
         this.applicationConfig = applicationConfig;
     }
 
-    @Scheduled(fixedDelay = 3 * 60 * 1000)
+    @Scheduled(fixedDelay = 1 * 60 * 1000)
     public void scheduleFixedDelayTask() {
         cacheService.invalidateDictionaries();
         cacheService.invalidateMenu();
         cacheService.invalidateUserRole();
+        cacheService.invalidateUsers();
         cacheService.invalidateDictionariesById();
         log.debug("Caches invalidated");
     }
