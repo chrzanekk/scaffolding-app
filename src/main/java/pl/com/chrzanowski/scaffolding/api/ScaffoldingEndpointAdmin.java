@@ -265,6 +265,28 @@ public class ScaffoldingEndpointAdmin {
                 request.getStatus()
         ));
     }
+    @PutMapping(path = "/tires/{id}", consumes = "application/json; charset=UTF-8")
+    public void updateTires(@PathVariable Long id,
+                            @RequestBody VehicleTiresPutRequest request) {
+        vehicleTires.update(new VehicleTiresData(
+                id,
+                request.getVehicleId(),
+                request.getTireId(),
+                request.getStatus(),
+                request.getProductionYear(),
+                request.getPurchaseDate(),
+                request.getBrand(),
+                request.getModel(),
+                request.getWidth(),
+                request.getProfile(),
+                request.getDiameter(),
+                request.getSpeedIndex(),
+                request.getCapacityIndex(),
+                request.getReinforced(),
+                request.getRunOnFlat(),
+                request.getSeasonId()
+                ));
+    }
 
 
 

@@ -106,7 +106,7 @@ function sendCreateRequest() {
                 reinforced: $("#create-reinforced").val(),
                 runOnFlat: $("#create-runOnFlat").val(),
                 seasonId: $("#create-season").val(),
-                status: $("#create-status").val(),
+                status: $("#create-status").val()
         })
     })
         .done(function () {

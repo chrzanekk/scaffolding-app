@@ -21,43 +21,6 @@ public class VehicleTiresJdbcRepository {
         this.commonJdbcRepository = commonJdbcRepository;
     }
 
-    public Long createTire(VehicleTiresData data) {
-        String query = "INSERT INTO tires (" +
-                "brand," +
-                "model," +
-                "width," +
-                "profile," +
-                "diameter," +
-                "speed_index," +
-                "capacity_index," +
-                "reinforced," +
-                "run_on_flat, " +
-                "season_id) VALUES (" +
-                "?, " +
-                "?, " +
-                "?, " +
-                "?, " +
-                "?, " +
-                "?, " +
-                "?, " +
-                "?, " +
-                "?, " +
-                "?)";
-        jdbcTemplate.update(query,
-                data.getBrand(),
-                data.getModel(),
-                data.getWidth(),
-                data.getProfile(),
-                data.getDiameter(),
-                data.getSpeedIndex(),
-                data.getLoadIndex(),
-                data.getReinforced(),
-                data.isRunOnFlat(),
-                data.getSeasonId());
-
-        return commonJdbcRepository.getLastInsertedId();
-    }
-
     public Long create(VehicleTiresData data) {
 
         String query = "INSERT INTO vehicle_tires (" +
@@ -79,6 +42,55 @@ public class VehicleTiresJdbcRepository {
                 data.getPurchaseDate());
 
         return commonJdbcRepository.getLastInsertedId();
+    }
+
+    public void update(VehicleTiresData data) {
+        String query = "UPDATE vehicle_tires SET " +
+                "vehicle_id = ?, " +
+                "tire_id = ?, " +
+                "status = ?, " +
+                "production_year = ?, " +
+                "purchase_date = ?," +
+                "modify_date =? WHERE " +
+                "id = ?";
+        jdbcTemplate.update(query,
+                data.getVehicleId(),
+                data.getTireId(),
+                data.getStatus(),
+                data.getProductionYear(),
+                data.getPurchaseDate(),
+                data.getModifyDate(),
+                data.getId());
+    }
+
+    public void updateTire(VehicleTiresData data) {
+        String query = "UPDATE tires SET " +
+                "brand = ?," +
+                "model = ?," +
+                "width = ?," +
+                "profile = ?," +
+                "diameter = ?," +
+                "speed_index = ?," +
+                "capacity_index = ?," +
+                "reinforced = ?," +
+                "run_on_flat = ?, " +
+                "season_id = ?," +
+                "modify_date = ? WHERE " +
+                "id = ?;";
+
+        jdbcTemplate.update(query,
+                data.getBrand(),
+                data.getModel(),
+                data.getWidth(),
+                data.getProfile(),
+                data.getDiameter(),
+                data.getSpeedIndex(),
+                data.getLoadIndex(),
+                data.getReinforced(),
+                data.isRunOnFlat(),
+                data.getSeasonId(),
+                data.getModifyDate(),
+                data.getTireId());
     }
 
     List<Map<String, Object>> find (VehicleTiresFilter filter) {
@@ -127,5 +139,42 @@ public class VehicleTiresJdbcRepository {
             }
         }
         return jdbcTemplate.queryForList(query);
+    }
+
+    private Long createTire(VehicleTiresData data) {
+        String query = "INSERT INTO tires (" +
+                "brand," +
+                "model," +
+                "width," +
+                "profile," +
+                "diameter," +
+                "speed_index," +
+                "capacity_index," +
+                "reinforced," +
+                "run_on_flat, " +
+                "season_id) VALUES (" +
+                "?, " +
+                "?, " +
+                "?, " +
+                "?, " +
+                "?, " +
+                "?, " +
+                "?, " +
+                "?, " +
+                "?, " +
+                "?)";
+        jdbcTemplate.update(query,
+                data.getBrand(),
+                data.getModel(),
+                data.getWidth(),
+                data.getProfile(),
+                data.getDiameter(),
+                data.getSpeedIndex(),
+                data.getLoadIndex(),
+                data.getReinforced(),
+                data.isRunOnFlat(),
+                data.getSeasonId());
+
+        return commonJdbcRepository.getLastInsertedId();
     }
 }

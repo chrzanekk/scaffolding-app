@@ -38,6 +38,17 @@ public class VehicleTiresService implements IVehicleTires {
         tiresJdbcRepository.create(data);
     }
 
+    @Override
+    public void update(VehicleTiresData data) {
+        tiresJdbcRepository.updateTire(data);
+        tiresJdbcRepository.update(data);
+    }
+
+    @Override
+    public void updateTire(VehicleTiresData data) {
+        tiresJdbcRepository.updateTire(data);
+    }
+
 
     private List<VehicleTiresData> getTires(List<Map<String, Object>> data) {
         List<VehicleTiresData> list = new ArrayList<>();
