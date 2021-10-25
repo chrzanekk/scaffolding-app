@@ -30,6 +30,7 @@ function sendUpdateRequest() {
         contentType: "application/json",
         data: JSON.stringify({
             vehicleId : vehicle.id,
+            tireId : tire.id,
             brand: $("brand").val(),
             model: $("model").val(),
             productionYear: $("#production-year").val(),

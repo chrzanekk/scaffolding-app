@@ -308,6 +308,29 @@ public class ApplicationController {
         return "admin-vehicle-tire";
     }
 
+    @GetMapping(path = "/admin/tire-edit/{id}")
+    public String adminVehicleTireEdit(@PathVariable Long id, Model model) {
+        Long vehicleId = vehicleTires.find(new VehicleTiresFilter(id)).get(0).getVehicleId();
+        if (!userService.isLoggedUserAdmin()) {
+            throw new IllegalArgumentException("Access denied");
+        }
+
+        Language lang = LanguagesUtil.getCurrentLanguage();
+
+        model.addAttribute("tire", vehicleTires.findById(new VehicleTiresFilter(id)));
+        model.addAttribute("vehicle", vehicles.findById(new VehicleFilter(vehicleId)));
+        model.addAttribute("yesNoDict", dictionariesService.getDictionary(DictionaryType.YES_NO, lang));
+        model.addAttribute("speedIndex", dictionariesService.getDictionary(DictionaryType.TIRE_SPEED_INDEXES, lang));
+        model.addAttribute("loadIndex", dictionariesService.getDictionary(DictionaryType.TIRE_CAPACITY_INDEXES, lang));
+        model.addAttribute("tireSeason", dictionariesService.getDictionary(DictionaryType.TIRE_SEASONS, lang));
+        model.addAttribute("tireStatus", dictionariesService.getDictionary(DictionaryType.TIRE_STATUS, lang));
+        model.addAttribute("reinforced", dictionariesService.getDictionary(DictionaryType.TIRE_REINFORCED, lang));
+        model.addAttribute("languageDict", dictionariesService.getDictionary(DictionaryType.LANGUAGES, lang));
+        return "admin-vehicle-tire-edit";
+    }
+
+
+
     @GetMapping({"/admin/vehicle-service-actions/{id}"})
     public String adminVehicleServiceActions(@PathVariable Long id, Model model,
                                              @RequestParam(name = "page", required = false, defaultValue = "1") Long page,

@@ -43,6 +43,6 @@ function fillRow(tire) {
 }
 
 function goToEditPage() {
-    window.location.href = "/admin/vehicle-tire-edit/" + tire.id;
+    window.location.href = "/admin/tire-edit/" + tire.id;
 }
 

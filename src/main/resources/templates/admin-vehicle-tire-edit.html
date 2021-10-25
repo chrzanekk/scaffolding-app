@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <div th:replace="fragments/head"></div>
+    <script th:src="@{/js/admin-vehicle-tire-edit.js}"></script>
+    <script th:inline="javascript">
+        var vehicle = [[${vehicle}]];
+        var tire = [[${tire}]];
+        var yesNoDict = [[${yesNoDict}]];
+        var speedIndex = [[${speedIndex}]];
+        var loadIndex = [[${loadIndex}]];
+        var tireSeason = [[${tireSeason}]];
+        var tireStatus = [[${tireStatus}]];
+        var reinforced = [[${reinforced}]];
+
+    </script>
+</head>
+
+<body>
+<div th:replace="fragments/menu :: menu"></div>
+
+<div class="container">
+    <div class="text-center">
+        <h4 th:text="#{vehicle.details}"></h4>
+    </div>
+
+    <form class="bg-light p-5 border">
+        <div class="form-row">
+
+
+            <div class="form-group col-md-4 text-center">
+                <label for="status" th:text="#{vehicle.tires.status}"></label>
+                <select id="status" class="form-control">
+                    <option th:each="option : ${tireStatus}"
+                            th:value="${option.code}"
+                            th:text="${option.value}"
+                            th:selected="(${option.value} == *{tire.status})">
+                    </option>
+                </select>
+            </div>
+            <div class="form-group col-md-4 text-center">
+                <label for="brand" th:text="#{vehicle.tires.brand}"></label>
+                <input type="text" class="form-control" id="brand" th:value="${tire.brand}">
+            </div>
+            <div class="form-group col-md-4 text-center">
+            <label for="model" th:text="#{vehicle.tires.model}"></label>
+            <input type="text" class="form-control" id="model" th:value="${tire.model}">
+            </div>
+            <div class="form-group col-md-4 text-center">
+                <label for="productionYear" th:text="#{vehicle.tires.production.year}"></label>
+                <input type="number" class="form-control" id="productionYear" th:value="${tire.productionYear}">
+            </div>
+            <div class="form-group col-md-4 text-center">
+                <label for="purchaseDate" th:text="#{vehicle.tires.purchased.date}"></label>
+                <input type="date" class="form-control" id="purchaseDate"
+                       th:value="${tire.purchaseDate}">
+            </div>
+            <div class="form-group col-md-4 text-center">
+                <label for="width" th:text="#{vehicle.tires.width}"></label>
+                <input type="number" min="125" max="355" step = 10 class="form-control" id="width" th:value="${tire.width}">
+            </div>
+            <div class="form-group col-md-4 text-center">
+                <label for="profile" th:text="#{vehicle.tires.profile}"></label>
+                <input id="profile" type="number" min="30" max="85" step=5 class="form-control" th:value="${tire.profile}">
+            </div>
+            <div class="form-group col-md-4 text-center">
+                <label for="diameter" th:text="#{vehicle.tires.profile}"></label>
+                <input id="diameter" type="number" min="10" max="24" class="form-control" th:value="${tire.diameter}">
+            </div>
+            <div class="form-group col-md-4 text-center">
+                <label for="speedIndex" th:text="#{vehicle.tires.speed.index}"></label>
+                <select id="speedIndex" class="form-control">
+                    <option th:each="index : ${speedIndex}"
+                            th:value="${index.code}"
+                            th:text="${index.code}"
+                            th:selected="(${index.code} == *{tire.speedIndex})"></option>
+                </select>
+            </div>
+
+            <div class="form-group col-md-4 text-center">
+                <label for="loadIndex" th:text="#{vehicle.tires.load.index}"></label>
+                <select id="loadIndex" class="form-control">
+                    <option th:each="index : ${loadIndex}"
+                            th:value="${index.code}"
+                            th:text="${index.code}"
+                            th:selected="(${index.code} == *{tire.loadIndex})"></option>
+                </select>
+            </div>
+            <div class="form-group col-md-4 text-center">
+                <label for="reinforced" th:text="#{vehicle.tires.reinforced}"></label>
+                <select id="reinforced" class="form-control">
+                    <option th:each="type : ${reinforced}"
+                            th:value="${type.code}"
+                            th:text="${type.code}"
+                            th:selected="(${type.code} == *{tire.reinforced})"></option>
+                </select>
+            </div>
+            <div class="form-group col-md-4 text-center">
+                <label for="runOnFlat" th:text="#{vehicle.tires.run.on.flat}"></label>
+                <select id="runOnFlat" class="form-control">
+                    <option th:each="option : ${yesNoDict}"
+                            th:value="${option.code}"
+                            th:text="${option.value}"
+                            th:selected="(${option.value} == *{tire.runOnFlat})">
+                    </option>
+                </select>
+            </div>
+            <div class="form-group col-md-4 text-center">
+                <label for="season" th:text="#{vehicle.tires.season}"></label>
+                <select id="season" class="form-control">
+                    <option th:each="option : ${tireSeason}"
+                            th:value="${option.code}"
+                            th:text="${option.value}"
+                            th:selected="(${option.value} == *{tire.seasonName})">
+                    </option>
+                </select>
+            </div>
+
+
+        </div>
+
+
+        <div class="text-center">
+            <button type="button" class="btn btn-danger mt-3" onclick="showDeleteModal()"
+                    th:text="#{Delete}"></button>
+            <button type="button" class="btn btn-warning mt-3" onclick="history.back()"
+                    th:text="#{Cancel}"></button>
+            <button type="button" class="btn btn-warning mt-3" onclick="sendUpdateRequest()"
+                    th:text="#{Save.changes}"></button>
+        </div>
+</form>
+
+</div>
+
+<div th:replace="fragments/operation-successful-modal :: modal"></div>
+<div th:replace="fragments/delete-object-modal :: modal"></div>
+</body>
+
+</html>
