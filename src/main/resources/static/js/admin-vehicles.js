@@ -18,7 +18,7 @@ $(document).ready(function () {
 
 function findVehicles() {
     $.ajax({
-        url: vehiclesApiUrl + preparePaginationUrl(),
+        url: vehiclesApiUrl + prepareUrl(),
         type: "get",
         dataType: "json",
         contentType: "application/json"
@@ -146,6 +146,27 @@ function sendDeleteRequest(){
 //        .fail(function(jqxhr, textStatus, errorThrown){
 //            displayErrorInformation(jqxhr.responseText);
 //        });
+}
+//dodać prepareUrl() do GETa
+function prepareUrl(){
+     var url = "";
+     url += preparePaginationUrl();
+
+     var brand = $("#brand-filter").find(":selected").val();
+     var model = $("#model-filter").children(":selected").val();
+     var registrationNumber = $("#registration-number-filter").children(":selected").val();
+
+     if (brand != "") {
+        url += "&brandName=" + brand;
+     }
+     if (model != "") {
+        url += "&modelName=" + model;
+     }
+     if (registrationNumber != "") {
+        url += "&registrationNumber=" + registrationNumber;
+     }
+
+     return url;
 }
 
 

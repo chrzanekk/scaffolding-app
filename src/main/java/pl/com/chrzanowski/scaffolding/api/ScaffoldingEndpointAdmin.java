@@ -123,8 +123,16 @@ public class ScaffoldingEndpointAdmin {
     @GetMapping(path = "/vehicles", produces = "application/json; charset=UTF-8")
     public VehiclesRequestGetResponse vehicles(
             @RequestParam(name = "page", required = false, defaultValue = "1") Long page,
-            @RequestParam(name = "page_size", required = false, defaultValue = "10") Long pageSize) throws SQLException {
-        List<VehicleData> vehicles = this.vehicles.find(new VehicleFilter(page, pageSize));
+            @RequestParam(name = "page_size", required = false, defaultValue = "10") Long pageSize,
+            @RequestParam(name = "brandName", required = false) String brandName,
+            @RequestParam(name = "modelName", required = false) String modelName,
+            @RequestParam(name = "registrationNumber", required = false) String registrationNumber) throws SQLException {
+        List<VehicleData> vehicles = this.vehicles.find(new VehicleFilter(
+                registrationNumber,
+                brandName,
+                modelName ,
+                page,
+                pageSize));
         return new VehiclesRequestGetResponse(vehiclesToResponse(vehicles));
     }
 
