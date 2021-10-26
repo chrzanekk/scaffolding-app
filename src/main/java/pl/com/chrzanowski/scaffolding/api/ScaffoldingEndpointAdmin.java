@@ -21,7 +21,7 @@ public class ScaffoldingEndpointAdmin {
     private IVehicles vehicles;
     private IFuelTypes fuelTypes;
     private IServiceActions serviceActions;
-    private ServiceWorkshopsService workshopsService;
+    private WorkshopsService workshopsService;
     private IServiceActonTypes serviceActonTypes;
     private MarketingService marketingService;
     private ITireSeasons tireSeason;
@@ -35,7 +35,7 @@ public class ScaffoldingEndpointAdmin {
                                     IVehicles vehicles,
                                     IFuelTypes fuelTypes,
                                     IServiceActions serviceActions,
-                                    ServiceWorkshopsService workshopsService,
+                                    WorkshopsService workshopsService,
                                     IServiceActonTypes serviceActonTypes,
                                     MarketingService marketingService,
                                     ITireSeasons tireSeason,
@@ -352,20 +352,20 @@ public class ScaffoldingEndpointAdmin {
     public ServiceWorkshopsRequestGetResponse workshops(
             @RequestParam(name = "page", required = false, defaultValue = "1") Long page,
             @RequestParam(name = "page_size", required = false, defaultValue = "10") Long pageSize) throws SQLException {
-        List<ServiceWorkshopsData> workshops = workshopsService.find(new ServiceWorkshopsFilter(page, pageSize));
+        List<WorkshopsData> workshops = workshopsService.find(new WorkshopsFilter(page, pageSize));
         return new ServiceWorkshopsRequestGetResponse(workshopsToResponse(workshops));
     }
 
     @GetMapping(path = "/workshop/{id}", produces = "application/json; charset=UTF-8")
     public ServiceWorkshopRequestGetResponse workshopById(
             @PathVariable Long id) {
-        ServiceWorkshopsData workshop = workshopsService.find(new ServiceWorkshopsFilter(id)).get(0);
+        WorkshopsData workshop = workshopsService.find(new WorkshopsFilter(id)).get(0);
         return new ServiceWorkshopRequestGetResponse(workshopToResponse(workshop));
     }
 
     @PostMapping(path = "/workshop", consumes = "application/json; charset=UTF-8")
     public void addWorkshop(@RequestBody ServiceWorkshopPostRequest request) {
-        workshopsService.add(new ServiceWorkshopsData(
+        workshopsService.add(new WorkshopsData(
                 request.getName(),
                 request.getTaxNumber(),
                 request.getStreet(),
@@ -378,7 +378,7 @@ public class ScaffoldingEndpointAdmin {
 
     @PutMapping(path = "/workshop/{id}", consumes = "application/json; charset=UTF-8")
     public void updateWorkshop(@PathVariable Long id, @RequestBody ServiceWorkshopPutRequest request) {
-        workshopsService.update(new ServiceWorkshopsData(
+        workshopsService.update(new WorkshopsData(
                 id,
                 request.getName(),
                 request.getTaxNumber(),
@@ -503,9 +503,9 @@ public class ScaffoldingEndpointAdmin {
         return new ServiceActionGetResponse(data);
     }
 
-    private List<ServiceWorkshopsGetResponse> workshopsToResponse(List<ServiceWorkshopsData> workshops) {
+    private List<ServiceWorkshopsGetResponse> workshopsToResponse(List<WorkshopsData> workshops) {
         List<ServiceWorkshopsGetResponse> list = new ArrayList<>();
-        for (ServiceWorkshopsData workshop : workshops) {
+        for (WorkshopsData workshop : workshops) {
             list.add(new ServiceWorkshopsGetResponse(
                     workshop.getId(),
                     workshop.getName(),
@@ -520,7 +520,7 @@ public class ScaffoldingEndpointAdmin {
         return list;
     }
 
-    private ServiceWorkshopsGetResponse workshopToResponse(ServiceWorkshopsData workshop) {
+    private ServiceWorkshopsGetResponse workshopToResponse(WorkshopsData workshop) {
         return new ServiceWorkshopsGetResponse(
                 workshop.getId(),
                 workshop.getName(),

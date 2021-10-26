@@ -2,7 +2,7 @@ package pl.com.chrzanowski.scaffolding.api;
 
 
 import pl.com.chrzanowski.scaffolding.domain.ServiceActionsData;
-import pl.com.chrzanowski.scaffolding.domain.ServiceWorkshopsData;
+import pl.com.chrzanowski.scaffolding.domain.WorkshopsData;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -18,7 +18,7 @@ public class ServiceActionGetResponse {
     private String workshopName;
     private Long serviceActionTypeId;
     private String serviceActionTypeName;
-    private ServiceWorkshopsData workshopsData;
+    private WorkshopsData workshopsData;
     private String serviceActionDescription;
     private LocalDateTime createDate;
     private LocalDateTime modifyDate;

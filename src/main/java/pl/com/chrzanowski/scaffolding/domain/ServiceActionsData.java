@@ -13,7 +13,7 @@ public class ServiceActionsData {
     private String invoiceNumber;
     private Long workshopId;
     private String workshopName;
-    private ServiceWorkshopsData workshopsData;
+    private WorkshopsData workshopsData;
     private Long serviceActionTypeId;
     private String serviceActionTypeName;
     private String serviceActionDescription;
@@ -33,7 +33,7 @@ public class ServiceActionsData {
                               Long serviceActionTypeId,
                               String actionTypeName,
                               String workshopName,
-                              ServiceWorkshopsData workshopsData,
+                              WorkshopsData workshopsData,
                               String serviceActionDescription) {
         this.id = id;
         this.vehicleId = vehicleId;
@@ -124,7 +124,7 @@ public class ServiceActionsData {
         return serviceActionDescription;
     }
 
-    public ServiceWorkshopsData getWorkshopsData() {
+    public WorkshopsData getWorkshopsData() {
         return workshopsData;
     }
 

@@ -36,7 +36,7 @@ public class ApplicationController {
     private IVehicles vehicles;
     private IServiceActions iServiceActions;
     private IServiceActonTypes iServiceActonTypes;
-    private ServiceWorkshopsService workshopsService;
+    private WorkshopsService workshopsService;
     private VehiclesBrandsAndModelsService vehiclesBrandsAndModelsService;
     private IVehicleTires vehicleTires;
     private IVehicleBrands vehicleBrands;
@@ -53,7 +53,7 @@ public class ApplicationController {
                                  IVehicles vehicles,
                                  IServiceActions iServiceActions,
                                  IServiceActonTypes iServiceActonTypes,
-                                 ServiceWorkshopsService workshopsService,
+                                 WorkshopsService workshopsService,
                                  VehiclesBrandsAndModelsService vehiclesBrandsAndModelsService,
                                  IVehicleTires vehicleTires,
                                  IVehicleBrands vehicleBrands,
@@ -344,7 +344,7 @@ public class ApplicationController {
         model.addAttribute("vehicle", vehicles.findById(new VehicleFilter(id)));
         model.addAttribute("serviceActions", iServiceActions.find(new ServiceActionsFilter(id, page, pageSize)));
         model.addAttribute("serviceActionTypes", dictionariesService.getDictionary(DictionaryType.SERVICE_ACTION_TYPES, lang));
-        model.addAttribute("workshops", workshopsService.find(new ServiceWorkshopsFilter()));
+        model.addAttribute("workshops", workshopsService.find(new WorkshopsFilter()));
         model.addAttribute("languageDict", dictionariesService.getDictionary(DictionaryType.LANGUAGES, lang));
 
         return "admin-vehicle-service-actions";
@@ -361,7 +361,7 @@ public class ApplicationController {
         model.addAttribute("vehicle", vehicles.findById(new VehicleFilter(vehicleId)));
         model.addAttribute("serviceAction", iServiceActions.findById(new ServiceActionsFilter(id)));
         model.addAttribute("serviceActionTypes", dictionariesService.getDictionary(DictionaryType.SERVICE_ACTION_TYPES, lang));
-        model.addAttribute("workshops", workshopsService.find(new ServiceWorkshopsFilter()));
+        model.addAttribute("workshops", workshopsService.find(new WorkshopsFilter()));
         model.addAttribute("languageDict", dictionariesService.getDictionary(DictionaryType.LANGUAGES, lang));
 
         return "admin-vehicle-service-action";
@@ -378,7 +378,7 @@ public class ApplicationController {
         model.addAttribute("vehicle", vehicles.findById(new VehicleFilter(vehicleId)));
         model.addAttribute("serviceAction", iServiceActions.findById(new ServiceActionsFilter(id)));
         model.addAttribute("serviceActionTypes", dictionariesService.getDictionary(DictionaryType.SERVICE_ACTION_TYPES, lang));
-        model.addAttribute("workshops", workshopsService.find(new ServiceWorkshopsFilter()));
+        model.addAttribute("workshops", workshopsService.find(new WorkshopsFilter()));
         model.addAttribute("languageDict", dictionariesService.getDictionary(DictionaryType.LANGUAGES, lang));
 
         return "admin-vehicle-service-action-edit";
@@ -393,7 +393,7 @@ public class ApplicationController {
 
         Language lang = LanguagesUtil.getCurrentLanguage();
 
-        model.addAttribute("workshops", workshopsService.find(new ServiceWorkshopsFilter()));
+        model.addAttribute("workshops", workshopsService.find(new WorkshopsFilter()));
         model.addAttribute("languageDict", dictionariesService.getDictionary(DictionaryType.LANGUAGES, lang));
 
         return "admin-workshops";
@@ -408,7 +408,8 @@ public class ApplicationController {
 
         Language lang = LanguagesUtil.getCurrentLanguage();
 
-        model.addAttribute("workshop", workshopsService.find(new ServiceWorkshopsFilter(id)).get(0));
+        model.addAttribute("workshop", workshopsService.find(new WorkshopsFilter(id)).get(0));
+        model.addAttribute("serviceActionTypes", dictionariesService.getDictionary(DictionaryType.SERVICE_ACTION_TYPES,lang));
         model.addAttribute("languageDict", dictionariesService.getDictionary(DictionaryType.LANGUAGES, lang));
 
         return "admin-workshop";

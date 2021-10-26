@@ -2,7 +2,7 @@ package pl.com.chrzanowski.scaffolding.domain;
 
 import java.time.LocalDateTime;
 
-public class ServiceWorkshopsFilter {
+public class WorkshopsFilter {
 
     private Long id;
     private String name;
@@ -15,15 +15,15 @@ public class ServiceWorkshopsFilter {
     private Long page;
     private Long pageSize;
 
-    public ServiceWorkshopsFilter(Long page, Long pageSize) {
+    public WorkshopsFilter(Long page, Long pageSize) {
         this.page = page;
         this.pageSize = pageSize;
     }
 
-    public ServiceWorkshopsFilter() {
+    public WorkshopsFilter() {
     }
 
-    public ServiceWorkshopsFilter(Long id) {
+    public WorkshopsFilter(Long id) {
         this.id = id;
     }
 

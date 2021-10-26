@@ -2,28 +2,27 @@ package pl.com.chrzanowski.scaffolding.logic;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
-import pl.com.chrzanowski.scaffolding.domain.ServiceWorkshopsData;
-import pl.com.chrzanowski.scaffolding.domain.ServiceWorkshopsFilter;
+import pl.com.chrzanowski.scaffolding.domain.WorkshopsData;
+import pl.com.chrzanowski.scaffolding.domain.WorkshopsFilter;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import static pl.com.chrzanowski.scaffolding.logic.JdbcUtil.*;
 
 @Service
-public class ServiceWorkshopsJdbcRepository {
+public class WorkshopsJdbcRepository {
 
     private JdbcTemplate jdbcTemplate;
     private CommonJdbcRepository commonJdbcRepository;
 
-    public ServiceWorkshopsJdbcRepository(JdbcTemplate jdbcTemplate, CommonJdbcRepository commonJdbcRepository) {
+    public WorkshopsJdbcRepository(JdbcTemplate jdbcTemplate, CommonJdbcRepository commonJdbcRepository) {
         this.jdbcTemplate = jdbcTemplate;
         this.commonJdbcRepository = commonJdbcRepository;
     }
 
-    public Long create(ServiceWorkshopsData data) {
-        String query = "INSERT INTO service_workshops (" +
+    public Long create(WorkshopsData data) {
+        String query = "INSERT INTO workshops (" +
                 "name," +
                 "tax_number," +
                 "street," +
@@ -49,9 +48,9 @@ public class ServiceWorkshopsJdbcRepository {
         return commonJdbcRepository.getLastInsertedId();
     }
 
-    public void update(ServiceWorkshopsData data) {
+    public void update(WorkshopsData data) {
 
-        String query = "UPDATE service_workshops SET " +
+        String query = "UPDATE workshops SET " +
                 "name = ?," +
                 "tax_number = ?," +
                 "street = ?," +
@@ -73,9 +72,9 @@ public class ServiceWorkshopsJdbcRepository {
                 data.getId());
     }
 
-    public List<Map<String,Object>> find(ServiceWorkshopsFilter filter) {
+    public List<Map<String,Object>> find(WorkshopsFilter filter) {
 
-        String query = "SELECT * FROM service_workshops";
+        String query = "SELECT * FROM workshops";
 
         if (filter != null) {
             query += " WHERE 1+1";

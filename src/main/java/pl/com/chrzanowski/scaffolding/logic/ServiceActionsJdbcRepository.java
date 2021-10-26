@@ -92,7 +92,7 @@ public class ServiceActionsJdbcRepository {
                 "service_workshops.city AS city\n" +
                 "FROM service_actions \n" +
                 "LEFT JOIN service_action_type ON (service_actions.service_action_type_id = service_action_type.id)" +
-                "LEFT JOIN service_workshops ON (service_actions.workshop_id = service_workshops.id)";
+                "LEFT JOIN workshops ON (service_actions.workshop_id = service_workshops.id)";
 
         if (filter != null) {
             query += " WHERE 1+1";

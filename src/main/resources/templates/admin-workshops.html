@@ -79,7 +79,15 @@
                         <label for="create-taxNumber" th:text="#{workshop.tax.number}"></label>
                         <input id="create-taxNumber" type="text" class="form-control">
                     </div>
-
+                    <div class="form-group">
+                        <h6 th:text="#{workshop.service.action.types}"></h6>
+                        <th:block th:each="actionType: ${serviceActionTypes}">
+                            <input type="checkbox" name="actionTypes"
+                                   th:id="${actionType.code}"
+                                   th:value="${actionType.code}">
+                            <label class="form-check-label"  th:text="${actionType.value}"></label>
+                        </th:block>
+                    </div>
 
 
                 </form>

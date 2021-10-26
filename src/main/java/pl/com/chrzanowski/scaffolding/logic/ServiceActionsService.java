@@ -3,7 +3,7 @@ package pl.com.chrzanowski.scaffolding.logic;
 import org.springframework.stereotype.Service;
 import pl.com.chrzanowski.scaffolding.domain.ServiceActionsData;
 import pl.com.chrzanowski.scaffolding.domain.ServiceActionsFilter;
-import pl.com.chrzanowski.scaffolding.domain.ServiceWorkshopsData;
+import pl.com.chrzanowski.scaffolding.domain.WorkshopsData;
 import pl.com.chrzanowski.scaffolding.domain.UserData;
 
 import java.util.ArrayList;
@@ -69,7 +69,7 @@ public class ServiceActionsService implements IServiceActions {
                     getLong(row, "service_action_type_id"),
                     getString(row, "action_type"),
                     getString(row, "workshop"),
-                    new ServiceWorkshopsData(
+                    new WorkshopsData(
                             getString(row,"workshop"),
                             getString(row,"tax_number"),
                             getString(row,"street"),

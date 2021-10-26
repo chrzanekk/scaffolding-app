@@ -2,7 +2,7 @@ package pl.com.chrzanowski.scaffolding.domain;
 
 import java.time.LocalDateTime;
 
-public class ServiceWorkshopsData {
+public class WorkshopsData {
 
     private Long id;
     private String name;
@@ -17,14 +17,14 @@ public class ServiceWorkshopsData {
     private LocalDateTime removeDate;
 
 
-    public ServiceWorkshopsData(Long id,
-                                String name,
-                                String taxNumber,
-                                String street,
-                                String buildingNo,
-                                String apartmentNo,
-                                String postalCode,
-                                String city) {
+    public WorkshopsData(Long id,
+                         String name,
+                         String taxNumber,
+                         String street,
+                         String buildingNo,
+                         String apartmentNo,
+                         String postalCode,
+                         String city) {
         this.id = id;
         this.name = name;
         this.taxNumber = taxNumber;
@@ -36,7 +36,7 @@ public class ServiceWorkshopsData {
         this.modifyDate = LocalDateTime.now();
     }
 
-    public ServiceWorkshopsData(String name, String taxNumber, String street, String buildingNo, String apartmentNo, String postalCode, String city) {
+    public WorkshopsData(String name, String taxNumber, String street, String buildingNo, String apartmentNo, String postalCode, String city) {
         this.name = name;
         this.taxNumber = taxNumber;
         this.street = street;

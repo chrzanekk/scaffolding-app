@@ -1,6 +1,6 @@
 package pl.com.chrzanowski.scaffolding.api;
 
-import pl.com.chrzanowski.scaffolding.domain.ServiceWorkshopsData;
+import pl.com.chrzanowski.scaffolding.domain.WorkshopsData;
 
 import java.time.LocalDateTime;
 
@@ -36,7 +36,7 @@ public class ServiceWorkshopsGetResponse {
         this.city = city;
     }
 
-    public ServiceWorkshopsGetResponse(ServiceWorkshopsData data) {
+    public ServiceWorkshopsGetResponse(WorkshopsData data) {
         this.id = data.getId();
         this.name = data.getName();
         this.taxNumber = data.getTaxNumber();
