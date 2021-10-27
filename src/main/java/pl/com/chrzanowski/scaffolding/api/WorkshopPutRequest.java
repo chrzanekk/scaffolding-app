@@ -1,8 +1,8 @@
-package pl.com.chrzanowski.scaffolding.domain;
+package pl.com.chrzanowski.scaffolding.api;
 
 import java.time.LocalDateTime;
 
-public class WorkshopsData {
+public class WorkshopPutRequest {
 
     private Long id;
     private String name;
@@ -17,37 +17,8 @@ public class WorkshopsData {
     private LocalDateTime modifyDate;
     private LocalDateTime removeDate;
 
-
-    public WorkshopsData(Long id,
-                         String name,
-                         String taxNumber,
-                         String street,
-                         String buildingNo,
-                         String apartmentNo,
-                         String postalCode,
-                         String city) {
-        this.id = id;
-        this.name = name;
-        this.taxNumber = taxNumber;
-        this.street = street;
-        this.buildingNo = buildingNo;
-        this.apartmentNo = apartmentNo;
-        this.postalCode = postalCode;
-        this.city = city;
-        this.modifyDate = LocalDateTime.now();
+    public WorkshopPutRequest() {
     }
-
-    public WorkshopsData(String name, String taxNumber, String street, String buildingNo, String apartmentNo, String postalCode, String city) {
-        this.name = name;
-        this.taxNumber = taxNumber;
-        this.street = street;
-        this.buildingNo = buildingNo;
-        this.apartmentNo = apartmentNo;
-        this.postalCode = postalCode;
-        this.city = city;
-        this.createDate = LocalDateTime.now();
-    }
-
 
     public Long getId() {
         return id;
@@ -79,6 +50,10 @@ public class WorkshopsData {
 
     public String getCity() {
         return city;
+    }
+
+    public Long[] getActionTypes() {
+        return actionTypes;
     }
 
     public LocalDateTime getCreateDate() {

@@ -349,22 +349,22 @@ public class ScaffoldingEndpointAdmin {
     }
 
     @GetMapping(path = "/workshops", produces = "application/json; charset=UTF-8")
-    public ServiceWorkshopsRequestGetResponse workshops(
+    public WorkshopsRequestGetResponse workshops(
             @RequestParam(name = "page", required = false, defaultValue = "1") Long page,
             @RequestParam(name = "page_size", required = false, defaultValue = "10") Long pageSize) throws SQLException {
         List<WorkshopsData> workshops = workshopsService.find(new WorkshopsFilter(page, pageSize));
-        return new ServiceWorkshopsRequestGetResponse(workshopsToResponse(workshops));
+        return new WorkshopsRequestGetResponse(workshopsToResponse(workshops));
     }
 
     @GetMapping(path = "/workshop/{id}", produces = "application/json; charset=UTF-8")
-    public ServiceWorkshopRequestGetResponse workshopById(
+    public WorkshopRequestGetResponse workshopById(
             @PathVariable Long id) {
         WorkshopsData workshop = workshopsService.find(new WorkshopsFilter(id)).get(0);
-        return new ServiceWorkshopRequestGetResponse(workshopToResponse(workshop));
+        return new WorkshopRequestGetResponse(workshopToResponse(workshop));
     }
 
     @PostMapping(path = "/workshop", consumes = "application/json; charset=UTF-8")
-    public void addWorkshop(@RequestBody ServiceWorkshopPostRequest request) {
+    public void addWorkshop(@RequestBody WorkshopPostRequest request) {
         workshopsService.add(new WorkshopsData(
                 request.getName(),
                 request.getTaxNumber(),
@@ -377,7 +377,7 @@ public class ScaffoldingEndpointAdmin {
 
 
     @PutMapping(path = "/workshop/{id}", consumes = "application/json; charset=UTF-8")
-    public void updateWorkshop(@PathVariable Long id, @RequestBody ServiceWorkshopPutRequest request) {
+    public void updateWorkshop(@PathVariable Long id, @RequestBody WorkshopPutRequest request) {
         workshopsService.update(new WorkshopsData(
                 id,
                 request.getName(),
@@ -503,10 +503,10 @@ public class ScaffoldingEndpointAdmin {
         return new ServiceActionGetResponse(data);
     }
 
-    private List<ServiceWorkshopsGetResponse> workshopsToResponse(List<WorkshopsData> workshops) {
-        List<ServiceWorkshopsGetResponse> list = new ArrayList<>();
+    private List<WorkshopsGetResponse> workshopsToResponse(List<WorkshopsData> workshops) {
+        List<WorkshopsGetResponse> list = new ArrayList<>();
         for (WorkshopsData workshop : workshops) {
-            list.add(new ServiceWorkshopsGetResponse(
+            list.add(new WorkshopsGetResponse(
                     workshop.getId(),
                     workshop.getName(),
                     workshop.getTaxNumber(),
@@ -520,8 +520,8 @@ public class ScaffoldingEndpointAdmin {
         return list;
     }
 
-    private ServiceWorkshopsGetResponse workshopToResponse(WorkshopsData workshop) {
-        return new ServiceWorkshopsGetResponse(
+    private WorkshopsGetResponse workshopToResponse(WorkshopsData workshop) {
+        return new WorkshopsGetResponse(
                 workshop.getId(),
                 workshop.getName(),
                 workshop.getTaxNumber(),

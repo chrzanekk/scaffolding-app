@@ -1,6 +1,5 @@
-
 $(document).ready(function () {
-
+    fillActionTypes();
 
 
 });
@@ -37,7 +36,8 @@ function sendUpdateRequest() {
              apartmentNo: $("#apartmentNo").val(),
              postalCode: $("#postalCode").val(),
              city: $("#city").val(),
-             taxNumber: $("#taxNumber").val()
+             taxNumber: $("#taxNumber").val(),
+             actionTypes: getActionTypes()
         })
     })
         .done(function () {
@@ -46,4 +46,20 @@ function sendUpdateRequest() {
         .fail(function (jqxhr, textStatus, errorThrown) {
             displayErrorInformation(jqxhr.responseText);
         })
+}
+
+function fillActionTypes() {
+    workshop.actionTypes.forEach(function(actionType) {
+    #('#'+actionType).attr('checked', true);
+    })
+}
+
+function getActionTypes() {
+        var actionTypesList = [];
+        for (i = 0; actionTypes.length; i++) {
+            if($('#'+actionTypes[i].code).is(":checked")){
+                actionTypesList.push(actionTypes[i].id);
+            }
+        }
+        return actionTypesList;
 }

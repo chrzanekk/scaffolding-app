@@ -1,8 +1,10 @@
 package pl.com.chrzanowski.scaffolding.api;
 
+import pl.com.chrzanowski.scaffolding.domain.WorkshopsData;
+
 import java.time.LocalDateTime;
 
-public class ServiceWorkshopPostRequest {
+public class WorkshopsGetResponse {
 
     private Long id;
     private String name;
@@ -12,12 +14,29 @@ public class ServiceWorkshopPostRequest {
     private String apartmentNo;
     private String postalCode;
     private String city;
+    private Long[] actionTypes;
     private LocalDateTime createDate;
     private LocalDateTime modifyDate;
     private LocalDateTime removeDate;
 
-    public ServiceWorkshopPostRequest() {
+    public WorkshopsGetResponse(Long id,
+                                String name,
+                                String taxNumber,
+                                String street,
+                                String buildingNo,
+                                String apartmentNo,
+                                String postalCode,
+                                String city) {
+        this.id = id;
+        this.name = name;
+        this.taxNumber = taxNumber;
+        this.street = street;
+        this.buildingNo = buildingNo;
+        this.apartmentNo = apartmentNo;
+        this.postalCode = postalCode;
+        this.city = city;
     }
+
 
     public Long getId() {
         return id;

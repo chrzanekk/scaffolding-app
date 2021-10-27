@@ -2,7 +2,7 @@ package pl.com.chrzanowski.scaffolding.api;
 
 import java.time.LocalDateTime;
 
-public class ServiceWorkshopPutRequest {
+public class WorkshopPostRequest {
 
     private Long id;
     private String name;
@@ -12,11 +12,12 @@ public class ServiceWorkshopPutRequest {
     private String apartmentNo;
     private String postalCode;
     private String city;
+    private Long[] actionTypes;
     private LocalDateTime createDate;
     private LocalDateTime modifyDate;
     private LocalDateTime removeDate;
 
-    public ServiceWorkshopPutRequest() {
+    public WorkshopPostRequest() {
     }
 
     public Long getId() {
@@ -49,6 +50,10 @@ public class ServiceWorkshopPutRequest {
 
     public String getCity() {
         return city;
+    }
+
+    public Long[] getActionTypes() {
+        return actionTypes;
     }
 
     public LocalDateTime getCreateDate() {

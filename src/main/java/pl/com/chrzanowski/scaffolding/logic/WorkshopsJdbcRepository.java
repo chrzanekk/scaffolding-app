@@ -58,7 +58,7 @@ public class WorkshopsJdbcRepository {
                 "apartment_number = ?," +
                 "postal_code = ?," +
                 "city = ?," +
-                "modify_date =? WHERE " +
+                "modify_date = ? WHERE " +
                 "id = ?";
         jdbcTemplate.update(query,
                 data.getName(),
@@ -77,7 +77,7 @@ public class WorkshopsJdbcRepository {
         String query = "SELECT * FROM workshops";
 
         if (filter != null) {
-            query += " WHERE 1+1";
+            query += " WHERE 1=1";
 
             if (filter.getId() != null) {
                 query += " AND id = " + filter.getId();
