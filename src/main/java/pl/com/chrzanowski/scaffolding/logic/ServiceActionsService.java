@@ -70,6 +70,7 @@ public class ServiceActionsService implements IServiceActions {
                     getString(row, "action_type"),
                     getString(row, "workshop"),
                     new WorkshopsData(
+                            getLong(row,"workshopId"),
                             getString(row,"workshop"),
                             getString(row,"tax_number"),
                             getString(row,"street"),

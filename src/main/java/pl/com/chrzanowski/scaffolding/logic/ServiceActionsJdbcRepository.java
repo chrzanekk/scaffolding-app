@@ -82,7 +82,7 @@ public class ServiceActionsJdbcRepository {
                 "service_actions.service_action_type_id,\n" +
                 "service_action_type.id,\n" +
                 "service_action_type.name AS action_type,\n" +
-                "service_workshops.id,\n" +
+                "service_workshops.id AS workshopId,\n" +
                 "service_workshops.name AS workshop,\n" +
                 "service_workshops.tax_number AS tax_number,\n" +
                 "service_workshops.street AS street,\n" +

@@ -30,22 +30,24 @@ public class WorkshopsService {
 
     public List<WorkshopsData> findWithActionTypes(WorkshopsFilter filter) {
         List<WorkshopsData> workshops = find(filter);
-        List<WorkshopsData> workshopsWitActionTypes = new ArrayList<>();
+        List<WorkshopsData> workshopsWithActionTypes = new ArrayList<>();
         if (workshops == null) {
-            workshopsWitActionTypes = null;
+            workshopsWithActionTypes = null;
         } else {
             for (WorkshopsData data : workshops) {
-                workshopsWitActionTypes.add(new WorkshopsData(
+                workshopsWithActionTypes.add(new WorkshopsData(
                         data,
                         workshopServiceTypeService.getActionTypesForWorkshop(data)
                 ));
             }
         }
-        return workshopsWitActionTypes;
+        return workshopsWithActionTypes;
     }
 
     public Long add(WorkshopsData data) {
-        return workshopsJdbcRepository.create(data);
+        Long workshopId = workshopsJdbcRepository.create(data);
+        workshopServiceTypeService.validateAndCreateActionTypesForWorkshop(new WorkshopsData(workshopId,data));
+        return workshopId;
     }
 
     public void update(WorkshopsData data) {

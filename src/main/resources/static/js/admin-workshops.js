@@ -89,8 +89,16 @@ function clearCreateModal() {
     $("#create-postalCode").val('');
     $("#create-city").val('');
     $("#create-taxNumber").val('');
-
+    $("#serviceActionTypes").prop('checked', false);
 }
+
+function getActionTypes(){
+        var actionTypesList = [];
+          $.each($("input[name='actionTypes']:checked"), function(){
+            actionTypesList.push($(this).val());
+            });
+        return actionTypesList;
+    }
 
 function sendCreateRequest() {
     $.ajax({
@@ -104,7 +112,8 @@ function sendCreateRequest() {
                 apartmentNo: $("#create-apartmentNo").val(),
                 postalCode: $("#create-postalCode").val(),
                 city: $("#create-city").val(),
-                taxNumber: $("#create-taxNumber").val()
+                taxNumber: $("#create-taxNumber").val(),
+                actionTypes : getActionTypes()
         })
     })
         .done(function () {

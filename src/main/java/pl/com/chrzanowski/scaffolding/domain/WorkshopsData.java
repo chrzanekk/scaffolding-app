@@ -39,7 +39,8 @@ public class WorkshopsData {
         this.modifyDate = LocalDateTime.now();
     }
 
-    public WorkshopsData(String name, String taxNumber, String street, String buildingNo, String apartmentNo, String postalCode, String city) {
+    public WorkshopsData(String name, String taxNumber, String street, String buildingNo, String apartmentNo,
+                         String postalCode, String city, Long[] actionTypes) {
         this.name = name;
         this.taxNumber = taxNumber;
         this.street = street;
@@ -47,6 +48,7 @@ public class WorkshopsData {
         this.apartmentNo = apartmentNo;
         this.postalCode = postalCode;
         this.city = city;
+        this.actionTypes = actionTypes;
         this.createDate = LocalDateTime.now();
     }
 
@@ -60,6 +62,7 @@ public class WorkshopsData {
         this.postalCode = data.getPostalCode();
         this.city = data.getCity();
         this.actionTypes = actionTypes;
+        this.modifyDate = LocalDateTime.now();
     }
 
     public WorkshopsData(Long id, String name, String taxNumber, String street, String buildingNo, String apartmentNo, String postalCode, String city) {
@@ -71,6 +74,19 @@ public class WorkshopsData {
         this.apartmentNo = apartmentNo;
         this.postalCode = postalCode;
         this.city = city;
+    }
+
+    public WorkshopsData(Long id, WorkshopsData data) {
+        this.id = id;
+        this.name = data.getName();
+        this.taxNumber = data.getTaxNumber();
+        this.street = data.getStreet();
+        this.buildingNo = data.getBuildingNo();
+        this.apartmentNo = data.getApartmentNo();
+        this.postalCode = data.getPostalCode();
+        this.city = data.getCity();
+        this.actionTypes = data.getActionTypes();
+        this.createDate = LocalDateTime.now();
     }
 
     public Long getId() {

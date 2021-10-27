@@ -372,7 +372,8 @@ public class ScaffoldingEndpointAdmin {
                 request.getBuildingNo(),
                 request.getApartmentNo(),
                 request.getPostalCode(),
-                request.getCity()));
+                request.getCity(),
+                request.getActionTypes()));
     }
 
 
