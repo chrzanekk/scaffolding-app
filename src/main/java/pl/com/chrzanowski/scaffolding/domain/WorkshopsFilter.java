@@ -12,6 +12,7 @@ public class WorkshopsFilter {
     private String apartmentNo;
     private String postalCode;
     private String city;
+    private Long[] actionTypes;
     private Long page;
     private Long pageSize;
 

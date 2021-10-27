@@ -408,7 +408,7 @@ public class ApplicationController {
 
         Language lang = LanguagesUtil.getCurrentLanguage();
 
-        model.addAttribute("workshop", workshopsService.find(new WorkshopsFilter(id)).get(0));
+        model.addAttribute("workshop", workshopsService.findWithActionTypes(new WorkshopsFilter(id)).get(0));
         model.addAttribute("serviceActionTypes", dictionariesService.getDictionary(DictionaryType.SERVICE_ACTION_TYPES,lang));
         model.addAttribute("languageDict", dictionariesService.getDictionary(DictionaryType.LANGUAGES, lang));
 

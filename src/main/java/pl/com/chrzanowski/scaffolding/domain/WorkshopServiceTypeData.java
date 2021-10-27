@@ -17,6 +17,21 @@ public class WorkshopServiceTypeData {
         this.serviceActionTypes = serviceActionTypes;
     }
 
+    public WorkshopServiceTypeData(Long id, Long workshopId, Long serviceActionTypeId) {
+        this.id = id;
+        this.workshopId = workshopId;
+        this.serviceActionTypeId = serviceActionTypeId;
+    }
+
+    public WorkshopServiceTypeData(Long workshopId, Long[] serviceActionTypes) {
+        this.workshopId = workshopId;
+        this.serviceActionTypes = serviceActionTypes;
+    }
+
+    public WorkshopServiceTypeData(Long[] serviceActionTypes) {
+        this.serviceActionTypes = serviceActionTypes;
+    }
+
     public Long getId() {
         return id;
     }

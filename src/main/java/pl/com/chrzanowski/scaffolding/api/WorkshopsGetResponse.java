@@ -26,7 +26,8 @@ public class WorkshopsGetResponse {
                                 String buildingNo,
                                 String apartmentNo,
                                 String postalCode,
-                                String city) {
+                                String city,
+                                Long[] actionTypes) {
         this.id = id;
         this.name = name;
         this.taxNumber = taxNumber;
@@ -35,6 +36,7 @@ public class WorkshopsGetResponse {
         this.apartmentNo = apartmentNo;
         this.postalCode = postalCode;
         this.city = city;
+        this.actionTypes = actionTypes;
     }
 
 
@@ -80,5 +82,9 @@ public class WorkshopsGetResponse {
 
     public LocalDateTime getRemoveDate() {
         return removeDate;
+    }
+
+    public Long[] getActionTypes() {
+        return actionTypes;
     }
 }

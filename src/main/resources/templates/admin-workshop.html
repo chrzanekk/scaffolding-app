@@ -7,6 +7,7 @@
     <script th:src="@{/js/admin-workshop.js}"></script>
     <script th:inline="javascript">
         var workshop = [[${workshop}]];
+        var actionTypes = [[${serviceActionTypes}]];
     </script>
 </head>
 
@@ -53,9 +54,10 @@
             <div class="text-center">
                 <h6 th:text="#{workshop.service.action.types}"></h6>
                 <th:block th:each="actionType: ${serviceActionTypes}">
-                    <input type="checkbox" name="actionTypes"
-                           th:id="${actionType.code}"
-                           th:value="${actionType.code}">
+                    <input type="checkbox"
+                           th:id="${actionType.id}"
+                           name="actionTypes"
+                           th:value="${actionType.id}">
                     <label class="form-check-label"  th:text="${actionType.value}"></label>
                 </th:block>
             </div>

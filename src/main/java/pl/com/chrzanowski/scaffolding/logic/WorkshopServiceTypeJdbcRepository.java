@@ -21,8 +21,9 @@ public class WorkshopServiceTypeJdbcRepository {
 
     void create(WorkshopServiceTypeData data) {
         String query = "INSERT INTO workshops_service_types (workshop_id, service_action_type_id) VALUES (?, ?)";
-        for (int i = 0; i < data.getServiceActionTypes().length; i++) {
-            jdbcTemplate.update(query, data.getWorkshopId(), data.getServiceActionTypeId());
+        Long[] actionTypes = data.getServiceActionTypes();
+        for (Long actionType : actionTypes) {
+            jdbcTemplate.update(query, data.getWorkshopId(), actionType);
         }
     }
 

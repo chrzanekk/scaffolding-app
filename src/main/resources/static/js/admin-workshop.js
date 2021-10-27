@@ -24,6 +24,16 @@ function sendDeleteRequest(){
         });
 }
 
+function getActionTypes() {
+        var actionTypesList = [];
+        for (i = 0; i < actionTypes.length; i++) {
+            if($('#'+actionTypes[i].id).is(":checked")){
+                actionTypesList.push(actionTypes[i].id);
+            }
+        }
+        return actionTypesList;
+}
+
 function sendUpdateRequest() {
     $.ajax({
         url: "/admin/api/scaffolding/workshop/" + workshop.id,
@@ -50,16 +60,8 @@ function sendUpdateRequest() {
 
 function fillActionTypes() {
     workshop.actionTypes.forEach(function(actionType) {
-    #('#'+actionType).attr('checked', true);
+    $('#'+actionType).attr('checked', true);
     })
 }
 
-function getActionTypes() {
-        var actionTypesList = [];
-        for (i = 0; actionTypes.length; i++) {
-            if($('#'+actionTypes[i].code).is(":checked")){
-                actionTypesList.push(actionTypes[i].id);
-            }
-        }
-        return actionTypesList;
-}
+

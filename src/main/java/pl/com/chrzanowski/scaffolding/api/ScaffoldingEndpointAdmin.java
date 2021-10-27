@@ -359,7 +359,7 @@ public class ScaffoldingEndpointAdmin {
     @GetMapping(path = "/workshop/{id}", produces = "application/json; charset=UTF-8")
     public WorkshopRequestGetResponse workshopById(
             @PathVariable Long id) {
-        WorkshopsData workshop = workshopsService.find(new WorkshopsFilter(id)).get(0);
+        WorkshopsData workshop = workshopsService.findWithActionTypes(new WorkshopsFilter(id)).get(0);
         return new WorkshopRequestGetResponse(workshopToResponse(workshop));
     }
 
@@ -386,7 +386,8 @@ public class ScaffoldingEndpointAdmin {
                 request.getBuildingNo(),
                 request.getApartmentNo(),
                 request.getPostalCode(),
-                request.getCity()));
+                request.getCity(),
+                request.getActionTypes()));
     }
 
 
@@ -514,7 +515,8 @@ public class ScaffoldingEndpointAdmin {
                     workshop.getBuildingNo(),
                     workshop.getApartmentNo(),
                     workshop.getPostalCode(),
-                    workshop.getCity())
+                    workshop.getCity(),
+                    workshop.getActionTypes())
             );
         }
         return list;
@@ -529,7 +531,8 @@ public class ScaffoldingEndpointAdmin {
                 workshop.getBuildingNo(),
                 workshop.getApartmentNo(),
                 workshop.getPostalCode(),
-                workshop.getCity()
+                workshop.getCity(),
+                workshop.getActionTypes()
         );
     }
 
