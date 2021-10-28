@@ -19,14 +19,14 @@ $(document).ready(function () {
 
 function findServiceActions() {
     $.ajax({
-        url: vehicleServiceActionsApiUrl + vehicle.id + "?" + preparePaginationUrl(),
-        type: "get",
+        url: vehicleServiceActionsApiUrl + vehicle.id + "?" + prepareUrl(),
+        type: "GET",
         dataType: "json",
         contentType: "application/json"
     })
     .done(function (actions) {
         $("#records").empty();
-        fillResults(actions);
+        fillResults(actions.actions);
     })
     .fail(function(jqxhr, textStatus, errorThrown){
         displayErrorInformation(jqxhr.responseText);
@@ -35,7 +35,7 @@ function findServiceActions() {
 
 function fillResults(actions) {
     let value = 1;
-    serviceActions.forEach(function(action){
+    actions.forEach(function(action){
         fillRow(action, value);
         value = value + 1;
     });
@@ -47,7 +47,7 @@ function fillRow(action, value) {
     $('#records').append(
         "<tr>" +
             "<td class='align-middle'>" + value + "</td>" +
-            "<td class='align-middle'>" + action.serviceDate + "</td>" +
+            "<td class='align-middle' type='date'>" + action.serviceDate + "</td>" +
             "<td class='align-middle'>" + action.serviceActionTypeName + " </td>" +
             "<td class='align-middle'>" + action.workshopName + "</td>" +
             "<td class='align-middle'>" + prepareDetailsButton(action.id) + "</td>" +
@@ -108,6 +108,25 @@ function sendCreateRequest() {
             displayErrorInformation(jqxhr.responseText);
         })
 }
+
+function prepareUrl(){
+     var url = "";
+     url += preparePaginationUrl();
+
+     var actionType = $("#action-type-filter").find(":selected").val();
+     var workshop = $("#workshop-filter").children(":selected").val();
+
+
+     if (actionType != "") {
+        url += "&serviceActionTypeName=" + actionType;
+     }
+     if (workshop != "") {
+        url += "&workshopName=" + workshop;
+     }
+
+     return url;
+}
+
 
 //todo to na koniec, jak już będzie działało dodawanie i edycja
 //function sendDeleteRequest(){

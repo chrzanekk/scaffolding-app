@@ -10,12 +10,27 @@ public class ServiceActionsFilter {
     private String actionTypeName;
     private Long serviceActionId;
     private Long workshopId;
+    private String workshopName;
     private Long page;
     private Long pageSize;
 
 
-    public ServiceActionsFilter(Long vehicleId, Long page, Long pageSize) {
+    public ServiceActionsFilter(Long vehicleId,
+                                Long page,
+                                Long pageSize) {
         this.vehicleId = vehicleId;
+        this.page = page;
+        this.pageSize = pageSize;
+    }
+
+    public ServiceActionsFilter(Long vehicleId,
+                                String actionTypeName,
+                                String workshopName,
+                                Long page,
+                                Long pageSize) {
+        this.vehicleId = vehicleId;
+        this.actionTypeName = actionTypeName;
+        this.workshopName = workshopName;
         this.page = page;
         this.pageSize = pageSize;
     }
@@ -49,6 +64,10 @@ public class ServiceActionsFilter {
 
     public Long getWorkshopId() {
         return workshopId;
+    }
+
+    public String getWorkshopName() {
+        return workshopName;
     }
 
     public Long getPage() {

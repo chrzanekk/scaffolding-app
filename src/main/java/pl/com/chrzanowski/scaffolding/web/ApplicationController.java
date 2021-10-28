@@ -266,7 +266,7 @@ public class ApplicationController {
         return "admin-vehicle-edit";
     }
 
-    @GetMapping(path = "/admin/tires/{id}")
+    @GetMapping({"/admin/tires/{id}"})
     public String adminVehicleTires(@PathVariable Long id, Model model) {
 
         if (!userService.isLoggedUserAdmin()) {
@@ -287,7 +287,7 @@ public class ApplicationController {
         return "admin-vehicle-tires";
     }
 
-    @GetMapping(path = "/admin/tire/{id}")
+    @GetMapping({"/admin/tire/{id}"})
     public String adminVehicleTire(@PathVariable Long id, Model model) {
         Long vehicleId = vehicleTires.find(new VehicleTiresFilter(id)).get(0).getVehicleId();
         if (!userService.isLoggedUserAdmin()) {
@@ -308,7 +308,7 @@ public class ApplicationController {
         return "admin-vehicle-tire";
     }
 
-    @GetMapping(path = "/admin/tire-edit/{id}")
+    @GetMapping({"/admin/tire-edit/{id}"})
     public String adminVehicleTireEdit(@PathVariable Long id, Model model) {
         Long vehicleId = vehicleTires.find(new VehicleTiresFilter(id)).get(0).getVehicleId();
         if (!userService.isLoggedUserAdmin()) {

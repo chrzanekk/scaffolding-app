@@ -308,9 +308,15 @@ public class ScaffoldingEndpointAdmin {
     @GetMapping(path = "/vehicle-service-actions/{id}", produces = "application/json; charset=UTF-8")
     public ServiceActionsRequestGetResponse vehicleServiceActions(
             @PathVariable Long id,
+            @RequestParam(name = "serviceActionTypeName", required = false) String actionTypeName,
+            @RequestParam(name = "workshopName", required = false) String workshop,
             @RequestParam(name = "page", required = false, defaultValue = "1") Long page,
             @RequestParam(name = "page_size", required = false, defaultValue = "10") Long pageSize) {
-        List<ServiceActionsData> actions = serviceActions.find(new ServiceActionsFilter(id, page,
+        List<ServiceActionsData> actions = serviceActions.find(new ServiceActionsFilter(
+                id,
+                actionTypeName,
+                workshop,
+                page,
                 pageSize));
         return new ServiceActionsRequestGetResponse(actionsToResponse(actions));
     }

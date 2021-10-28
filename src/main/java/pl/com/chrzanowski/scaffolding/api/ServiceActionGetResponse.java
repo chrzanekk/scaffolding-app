@@ -12,7 +12,7 @@ public class ServiceActionGetResponse {
     private Long id;
     private Long vehicleId;
     private Integer carMileage;
-    private LocalDate serviceDate;
+    private String serviceDate;
     private String invoiceNumber;
     private Long workshopId;
     private String workshopName;
@@ -28,7 +28,7 @@ public class ServiceActionGetResponse {
         this.id = data.getId();
         this.vehicleId = data.getVehicleId();
         this.carMileage = data.getCarMileage();
-        this.serviceDate = data.getServiceDate();
+        this.serviceDate = data.getServiceDate().toString();
         this.invoiceNumber = data.getInvoiceNumber();
         this.workshopId = data.getWorkshopId();
         this.workshopName = data.getWorkshopName();
@@ -50,7 +50,7 @@ public class ServiceActionGetResponse {
         return carMileage;
     }
 
-    public LocalDate getServiceDate() {
+    public String getServiceDate() {
         return serviceDate;
     }
 

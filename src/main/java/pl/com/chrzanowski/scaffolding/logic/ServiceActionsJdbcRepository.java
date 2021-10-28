@@ -82,20 +82,20 @@ public class ServiceActionsJdbcRepository {
                 "service_actions.service_action_type_id,\n" +
                 "service_action_type.id,\n" +
                 "service_action_type.name AS action_type,\n" +
-                "service_workshops.id AS workshopId,\n" +
-                "service_workshops.name AS workshop,\n" +
-                "service_workshops.tax_number AS tax_number,\n" +
-                "service_workshops.street AS street,\n" +
-                "service_workshops.building_number AS building_number,\n" +
-                "service_workshops.apartment_number AS apartment_number,\n" +
-                "service_workshops.postal_code AS postal_code,\n" +
-                "service_workshops.city AS city\n" +
+                "workshops.id AS workshopId,\n" +
+                "workshops.name AS workshop,\n" +
+                "workshops.tax_number AS tax_number,\n" +
+                "workshops.street AS street,\n" +
+                "workshops.building_number AS building_number,\n" +
+                "workshops.apartment_number AS apartment_number,\n" +
+                "workshops.postal_code AS postal_code,\n" +
+                "workshops.city AS city\n" +
                 "FROM service_actions \n" +
                 "LEFT JOIN service_action_type ON (service_actions.service_action_type_id = service_action_type.id)" +
-                "LEFT JOIN workshops ON (service_actions.workshop_id = service_workshops.id)";
+                "LEFT JOIN workshops ON (service_actions.workshop_id = workshops.id)";
 
         if (filter != null) {
-            query += " WHERE 1+1";
+            query += " WHERE 1=1";
             if (filter.getId() != null) {
                 query += " AND service_actions.id = '" + filter.getId() + "'";
             }
@@ -104,6 +104,9 @@ public class ServiceActionsJdbcRepository {
             }
             if (filter.getWorkshopId() != null) {
                 query += " AND service_actions.workshop_id = '" + filter.getWorkshopId() + "'";
+            }
+            if (filter.getWorkshopName() != null) {
+                query += " AND workshops.name = '" + filter.getWorkshopName() + "'";
             }
             if (filter.getServiceDate() != null) {
                 query += " AND service_actions.service_date = '" + filter.getServiceDate() + "'";
