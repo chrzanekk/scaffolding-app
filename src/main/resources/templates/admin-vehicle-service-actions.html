@@ -7,9 +7,18 @@
     <script th:src="@{/js/admin-vehicle-service-actions.js}"></script>
     <script th:inline="javascript">
         var vehicle = [[${vehicle}]];
-<!--        var serviceActions = [[${serviceActions}]];-->
         var serviceActionTypes = [[${serviceActionTypes}]];
         var workshops = [[${workshops}]];
+        $(document).ready(function(){
+            $("#create-workshop").change(function(){
+                var workshopId = $(this).children("option:selected").val();
+                var actionTypes = [];
+                actionTypes =  findWorkshopsServiceActions(workshopId);
+<!--                alert(actionTypes);-->
+            });
+        });
+
+
     </script>
 </head>
 
@@ -104,8 +113,8 @@
                         <input id="create-serviceDate" type="date" class="form-control">
                     </div>
                     <div class="form-group">
-                        <label for="create-workshopId" th:text="#{vehicle.service.workshop}"></label>
-                        <select id="create-workshopId" class="form-control">
+                        <label for="create-workshop" th:text="#{vehicle.service.workshop}"></label>
+                        <select id="create-workshop" class="form-control">
                             <option th:each="workshop : ${workshops}"
                                     th:value="${workshop.id}"
                                     th:text="${workshop.name}"

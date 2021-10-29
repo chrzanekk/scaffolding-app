@@ -2,13 +2,13 @@ package pl.com.chrzanowski.scaffolding.api;
 
 public class WorkshopRequestGetResponse {
 
-    WorkshopsGetResponse workshopsGetResponse;
+    WorkshopsGetResponse workshop;
 
-    public WorkshopRequestGetResponse(WorkshopsGetResponse workshopsGetResponse) {
-        this.workshopsGetResponse = workshopsGetResponse;
+    public WorkshopRequestGetResponse(WorkshopsGetResponse workshop) {
+        this.workshop = workshop;
     }
 
     public WorkshopsGetResponse getServiceWorkshopsGetResponse() {
-        return workshopsGetResponse;
+        return workshop;
     }
 }

@@ -2,10 +2,13 @@ var url = "/admin/api/scaffolding"
 var serviceActionsApiUrl = url + "/vehicle-service-actions?"
 var vehicleServiceActionsApiUrl = url + "/vehicle-service-actions/"
 var vehicleActionApiUrl = url + "/vehicle-service-action"
+var workshopsApiUrl = url + "/workshop/"
+
 
 $(document).ready(function () {
     $('#create-modal').on('hide.bs.modal', function (e) {
         clearCreateModal();
+
     });
 
 
@@ -15,6 +18,7 @@ $(document).ready(function () {
     });
 
 });
+
 
 
 function findServiceActions() {
@@ -40,8 +44,6 @@ function fillResults(actions) {
         value = value + 1;
     });
 }
-
-
 
 function fillRow(action, value) {
     $('#records').append(
@@ -127,7 +129,29 @@ function prepareUrl(){
      return url;
 }
 
-
+function findWorkshopsServiceActions(id) {
+    $.ajax({
+        url: workshopsApiUrl + id,
+        type: "GET",
+        dataType: "json",
+        contentType: "application/json"
+    })
+    .done(function (workshop) {
+        var actionTypesList = [];
+        $.each(workshop, function(index, item){
+            $.each(item.actionTypes, function(index, item){
+                alert(item);
+                actionTypesList.push(item);
+            })
+        })
+        alert(actionTypesList[0]);
+        alert(actionTypesList[1]);
+        return actionTypesList;
+    })
+    .fail(function(jqxhr, textStatus, errorThrown){
+        displayErrorInformation(jqxhr.responseText);
+    });
+}
 //todo to na koniec, jak już będzie działało dodawanie i edycja
 //function sendDeleteRequest(){
 //    $.ajax({

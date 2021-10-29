@@ -334,7 +334,7 @@ public class ApplicationController {
     @GetMapping({"/admin/vehicle-service-actions/{id}"})
     public String adminVehicleServiceActions(@PathVariable Long id, Model model,
                                              @RequestParam(name = "page", required = false, defaultValue = "1") Long page,
-                                             @RequestParam(name = "page_size", required = false, defaultValue = "10") Long pageSize) throws SQLException {
+                                             @RequestParam(name = "page_size", required = false, defaultValue = "10") Long pageSize) {
         if (!userService.isLoggedUserAdmin()) {
             throw new IllegalArgumentException("Access denied");
         }
