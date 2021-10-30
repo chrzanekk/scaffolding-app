@@ -1,6 +1,7 @@
 package pl.com.chrzanowski.scaffolding.domain;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 public class WorkshopsData {
 
@@ -13,6 +14,7 @@ public class WorkshopsData {
     private String postalCode;
     private String city;
     private Long[] actionTypes;
+    private List<ServiceActionTypeData> actionTypesList;
     private LocalDateTime createDate;
     private LocalDateTime modifyDate;
     private LocalDateTime removeDate;
@@ -62,6 +64,20 @@ public class WorkshopsData {
         this.postalCode = data.getPostalCode();
         this.city = data.getCity();
         this.actionTypes = actionTypes;
+        this.modifyDate = LocalDateTime.now();
+    }
+
+    public WorkshopsData(WorkshopsData data, Long[] actionTypes, List<ServiceActionTypeData> actionTypesList) {
+        this.id = data.getId();
+        this.name = data.getName();
+        this.taxNumber = data.getTaxNumber();
+        this.street = data.getStreet();
+        this.buildingNo = data.getBuildingNo();
+        this.apartmentNo = data.getApartmentNo();
+        this.postalCode = data.getPostalCode();
+        this.city = data.getCity();
+        this.actionTypes = actionTypes;
+        this.actionTypesList = actionTypesList;
         this.modifyDate = LocalDateTime.now();
     }
 
@@ -119,6 +135,10 @@ public class WorkshopsData {
 
     public String getCity() {
         return city;
+    }
+
+    public List<ServiceActionTypeData> getActionTypesList() {
+        return actionTypesList;
     }
 
     public Long[] getActionTypes() {

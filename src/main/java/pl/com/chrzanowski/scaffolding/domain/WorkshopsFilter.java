@@ -1,6 +1,7 @@
 package pl.com.chrzanowski.scaffolding.domain;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 public class WorkshopsFilter {
 
@@ -12,6 +13,7 @@ public class WorkshopsFilter {
     private String apartmentNo;
     private String postalCode;
     private String city;
+    private List<ServiceActionTypeData> actionTypesList;
     private Long[] actionTypes;
     private Long page;
     private Long pageSize;
@@ -58,6 +60,14 @@ public class WorkshopsFilter {
 
     public String getCity() {
         return city;
+    }
+
+    public List<ServiceActionTypeData> getActionTypesList() {
+        return actionTypesList;
+    }
+
+    public Long[] getActionTypes() {
+        return actionTypes;
     }
 
     public Long getPage() {

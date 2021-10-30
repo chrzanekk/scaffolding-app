@@ -1,8 +1,10 @@
 package pl.com.chrzanowski.scaffolding.api;
 
+import pl.com.chrzanowski.scaffolding.domain.ServiceActionTypeData;
 import pl.com.chrzanowski.scaffolding.domain.WorkshopsData;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 public class WorkshopsGetResponse {
 
@@ -15,6 +17,7 @@ public class WorkshopsGetResponse {
     private String postalCode;
     private String city;
     private Long[] actionTypes;
+    private List<ServiceActionTypeData> serviceActionTypes;
     private LocalDateTime createDate;
     private LocalDateTime modifyDate;
     private LocalDateTime removeDate;
@@ -27,7 +30,8 @@ public class WorkshopsGetResponse {
                                 String apartmentNo,
                                 String postalCode,
                                 String city,
-                                Long[] actionTypes) {
+                                Long[] actionTypes,
+                                List<ServiceActionTypeData> serviceActionTypes) {
         this.id = id;
         this.name = name;
         this.taxNumber = taxNumber;
@@ -37,6 +41,7 @@ public class WorkshopsGetResponse {
         this.postalCode = postalCode;
         this.city = city;
         this.actionTypes = actionTypes;
+        this.serviceActionTypes = serviceActionTypes;
     }
 
 
@@ -86,5 +91,9 @@ public class WorkshopsGetResponse {
 
     public Long[] getActionTypes() {
         return actionTypes;
+    }
+
+    public List<ServiceActionTypeData> getServiceActionTypes() {
+        return serviceActionTypes;
     }
 }

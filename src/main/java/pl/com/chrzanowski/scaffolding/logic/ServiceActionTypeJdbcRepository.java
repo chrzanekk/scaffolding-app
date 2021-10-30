@@ -38,7 +38,7 @@ public class ServiceActionTypeJdbcRepository {
         String query = "SELECT * FROM service_action_type";
 
         if (filter != null) {
-            query += " WHERE 1+1";
+            query += " WHERE 1=1";
 
             if (filter.getId() != null) {
                 query += " AND id = " + filter.getId();

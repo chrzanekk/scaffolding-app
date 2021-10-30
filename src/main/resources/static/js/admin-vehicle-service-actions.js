@@ -96,8 +96,8 @@ function sendCreateRequest() {
                 carMileage: $("#create-carMileage").val(),
                 serviceDate: $("#create-serviceDate").val(),
                 invoiceNumber: $("#create-invoiceNumber").val(),
-                serviceWorkshop: $("#create-workshopId").val(),
-                serviceActionName: $("#create-serviceActionId").val(),
+                workshopId: $("#create-workshop").val(),
+                serviceActionTypeId: $("#create-serviceAction").val(),
                 serviceActionDescription: $("#create-serviceActionDescription").val()
         })
     })
@@ -129,29 +129,29 @@ function prepareUrl(){
      return url;
 }
 
-function findWorkshopsServiceActions(id) {
-    $.ajax({
-        url: workshopsApiUrl + id,
-        type: "GET",
-        dataType: "json",
-        contentType: "application/json"
-    })
-    .done(function (workshop) {
-        var actionTypesList = [];
-        $.each(workshop, function(index, item){
-            $.each(item.actionTypes, function(index, item){
-                alert(item);
-                actionTypesList.push(item);
-            })
-        })
-        alert(actionTypesList[0]);
-        alert(actionTypesList[1]);
-        return actionTypesList;
-    })
-    .fail(function(jqxhr, textStatus, errorThrown){
-        displayErrorInformation(jqxhr.responseText);
-    });
-}
+//function findWorkshopsServiceActions() {
+//    $.ajax({
+//        url: workshopsApiUrl + workshopId,
+//        type: "GET",
+//        dataType: "json",
+//        contentType: "application/json"
+//    })
+//    .done(function (workshop) {
+//        getWorkshop(workshop);
+//    })
+//        .fail(function(jqxhr, textStatus, errorThrown){
+//        displayErrorInformation(jqxhr.responseText);
+//    });
+//}
+//
+//function getWorkshop(workshop) {
+//    var result;
+//    result = workshop;
+//    return result;
+//}
+
+
+
 //todo to na koniec, jak już będzie działało dodawanie i edycja
 //function sendDeleteRequest(){
 //    $.ajax({

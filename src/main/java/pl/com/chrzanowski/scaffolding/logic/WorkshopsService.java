@@ -1,8 +1,7 @@
 package pl.com.chrzanowski.scaffolding.logic;
 
 import org.springframework.stereotype.Service;
-import pl.com.chrzanowski.scaffolding.domain.WorkshopsData;
-import pl.com.chrzanowski.scaffolding.domain.WorkshopsFilter;
+import pl.com.chrzanowski.scaffolding.domain.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,11 +16,14 @@ public class WorkshopsService {
 
     private WorkshopsJdbcRepository workshopsJdbcRepository;
     private WorkshopServiceTypeService workshopServiceTypeService;
+    private ServiceActionTypesService serviceActionTypesService;
 
     public WorkshopsService(WorkshopsJdbcRepository workshopsJdbcRepository,
-                            WorkshopServiceTypeService workshopServiceTypeService) {
+                            WorkshopServiceTypeService workshopServiceTypeService,
+                            ServiceActionTypesService serviceActionTypesService) {
         this.workshopsJdbcRepository = workshopsJdbcRepository;
         this.workshopServiceTypeService = workshopServiceTypeService;
+        this.serviceActionTypesService = serviceActionTypesService;
     }
 
     public List<WorkshopsData> find(WorkshopsFilter filter) {
@@ -37,12 +39,30 @@ public class WorkshopsService {
             for (WorkshopsData data : workshops) {
                 workshopsWithActionTypes.add(new WorkshopsData(
                         data,
-                        workshopServiceTypeService.getActionTypesForWorkshop(data)
+                        workshopServiceTypeService.getActionTypesForWorkshop(data),
+                        findServiceWorkshopsById(data)
                 ));
             }
         }
         return workshopsWithActionTypes;
     }
+
+    public List<ServiceActionTypeData> findServiceWorkshopsById(WorkshopsData data) {
+        List<ServiceActionTypeData> serviceActionTypeData = serviceActionTypesService.find(new ServiceActionTypesFilter());
+        Long[] workshopServicesTypes = workshopServiceTypeService.getActionTypesForWorkshop(data);
+        List<ServiceActionTypeData> result = new ArrayList<>();
+
+        for (Long workshopServicesType : workshopServicesTypes) {
+            for (ServiceActionTypeData type : serviceActionTypeData) {
+                if (workshopServicesType.equals(type.getId())) {
+                    result.add(new ServiceActionTypeData(type.getId(), type.getName()));
+                }
+            }
+        }
+        return result;
+    }
+
+
 
     public Long add(WorkshopsData data) {
         Long workshopId = workshopsJdbcRepository.create(data);
@@ -77,4 +97,5 @@ public class WorkshopsService {
         }
         return list;
     }
+
 }

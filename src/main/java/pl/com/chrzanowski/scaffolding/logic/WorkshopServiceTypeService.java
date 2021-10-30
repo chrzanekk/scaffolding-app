@@ -34,8 +34,6 @@ public class WorkshopServiceTypeService {
 
     }
 
-
-
     public WorkshopServiceTypeData get(Long id) {
         return find(new WorkshopServiceTypeFilter(id)).get(0);
     }

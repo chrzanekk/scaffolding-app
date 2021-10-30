@@ -1,10 +1,7 @@
 package pl.com.chrzanowski.scaffolding.logic;
 
 import org.springframework.stereotype.Service;
-import pl.com.chrzanowski.scaffolding.domain.ServiceActionsData;
-import pl.com.chrzanowski.scaffolding.domain.ServiceActionsFilter;
-import pl.com.chrzanowski.scaffolding.domain.WorkshopsData;
-import pl.com.chrzanowski.scaffolding.domain.UserData;
+import pl.com.chrzanowski.scaffolding.domain.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,11 +16,16 @@ public class ServiceActionsService implements IServiceActions {
     private ServiceActionsJdbcRepository serviceActionsJdbcRepository;
     private UserService usersService;
     private UserAuthoritiesService userAuthoritiesService;
+    private WorkshopServiceTypeService workshopServiceTypeService;
 
-    public ServiceActionsService(ServiceActionsJdbcRepository serviceActionsJdbcRepository, UserService usersService, UserAuthoritiesService userAuthoritiesService) {
+    public ServiceActionsService(ServiceActionsJdbcRepository serviceActionsJdbcRepository,
+                                 UserService usersService,
+                                 UserAuthoritiesService userAuthoritiesService,
+                                 WorkshopServiceTypeService workshopServiceTypeService) {
         this.serviceActionsJdbcRepository = serviceActionsJdbcRepository;
         this.usersService = usersService;
         this.userAuthoritiesService = userAuthoritiesService;
+        this.workshopServiceTypeService = workshopServiceTypeService;
     }
 
     public List<ServiceActionsData> find(ServiceActionsFilter filter) {
@@ -43,7 +45,12 @@ public class ServiceActionsService implements IServiceActions {
     }
 
     public Long add(ServiceActionsData data) {
-        return serviceActionsJdbcRepository.create(data);
+        if(checkWorkshopServiceType(data)) {
+            return serviceActionsJdbcRepository.create(data);
+        }
+        else {
+            throw new IllegalArgumentException("Ten warsztat nie wykonuje tej usługi ");
+        }
     }
 
     public void update(ServiceActionsData data) {
@@ -84,4 +91,13 @@ public class ServiceActionsService implements IServiceActions {
         return list;
     }
 
+    private Boolean checkWorkshopServiceType(ServiceActionsData data) {
+        List<WorkshopServiceTypeData> availableServices = workshopServiceTypeService.find(new WorkshopServiceTypeFilter(data.getWorkshopId()));
+        for(WorkshopServiceTypeData service : availableServices) {
+            if(data.getServiceActionTypeId().equals(service.getServiceActionTypeId())) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

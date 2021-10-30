@@ -3,6 +3,7 @@ package pl.com.chrzanowski.scaffolding.logic;
 import org.springframework.stereotype.Service;
 import pl.com.chrzanowski.scaffolding.domain.ServiceActionTypeData;
 import pl.com.chrzanowski.scaffolding.domain.ServiceActionTypesFilter;
+import pl.com.chrzanowski.scaffolding.domain.WorkshopsData;
 
 
 import java.util.ArrayList;
@@ -24,6 +25,8 @@ public class ServiceActionTypesService implements IServiceActonTypes {
     public List<ServiceActionTypeData> find(ServiceActionTypesFilter filter) {
         return getActionTypes(serviceActionTypeJdbcRepository.find(filter));
     }
+
+
 
     public Long add(ServiceActionTypeData data) {
         return serviceActionTypeJdbcRepository.create(data);

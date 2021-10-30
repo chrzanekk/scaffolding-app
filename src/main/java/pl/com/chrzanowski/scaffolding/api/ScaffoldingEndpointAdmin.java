@@ -358,7 +358,7 @@ public class ScaffoldingEndpointAdmin {
     public WorkshopsRequestGetResponse workshops(
             @RequestParam(name = "page", required = false, defaultValue = "1") Long page,
             @RequestParam(name = "page_size", required = false, defaultValue = "10") Long pageSize) throws SQLException {
-        List<WorkshopsData> workshops = workshopsService.find(new WorkshopsFilter(page, pageSize));
+        List<WorkshopsData> workshops = workshopsService.findWithActionTypes(new WorkshopsFilter(page, pageSize));
         return new WorkshopsRequestGetResponse(workshopsToResponse(workshops));
     }
 
@@ -523,7 +523,8 @@ public class ScaffoldingEndpointAdmin {
                     workshop.getApartmentNo(),
                     workshop.getPostalCode(),
                     workshop.getCity(),
-                    workshop.getActionTypes())
+                    workshop.getActionTypes(),
+                    workshop.getActionTypesList())
             );
         }
         return list;
@@ -539,7 +540,8 @@ public class ScaffoldingEndpointAdmin {
                 workshop.getApartmentNo(),
                 workshop.getPostalCode(),
                 workshop.getCity(),
-                workshop.getActionTypes()
+                workshop.getActionTypes(),
+                workshop.getActionTypesList()
         );
     }
 
