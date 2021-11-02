@@ -15,12 +15,13 @@ var workshop = serviceAction.workshopsData;
     $('#first').append(
         "<tr>" +
             "<td class='align-middle'>" + serviceAction.invoiceNumber + "</td>" +
+            "<td class='align-middle' colspan='2'>" + serviceAction.invoiceGrossValue + " PLN</td>" +
             "<td class='align-middle'>" + serviceAction.serviceDate + " </td>" +
         "</tr>"
     );
     $('#second').append(
         "<tr>" +
-            "<td class='align-middle' colspan='2'>" + workshop.name + "<br>" +
+            "<td class='align-middle' colspan='6'>" + workshop.name + "<br>" +
              workshop.street + " "  + workshop.buildingNo + showApartmentNo(workshop.apartmentNo) + "<br>" +
              workshop.postalCode + " " + workshop.city + "<br>"
             + workshop.taxNumber + "</td>" +
@@ -28,13 +29,13 @@ var workshop = serviceAction.workshopsData;
     );
     $('#third').append(
         "<tr>" +
-            "<td class='align-middle'>" + serviceAction.carMileage + "</td>" +
-            "<td class='align-middle'>" + serviceAction.serviceActionTypeName + " </td>" +
+            "<td class='align-middle' colspan='2'>" + serviceAction.carMileage + "</td>" +
+            "<td class='align-middle' colspan='2'>" + serviceAction.serviceActionTypeName + " </td>" +
         "</tr>"
     );
     $('#fourth').append(
         "<tr>" +
-            "<td class='align-middle' colspan='2'>" + serviceAction.serviceActionDescription + "</td>" +
+            "<td class='align-middle' colspan='6'>" + serviceAction.serviceActionDescription + "</td>" +
         "</tr>"
     );
 }

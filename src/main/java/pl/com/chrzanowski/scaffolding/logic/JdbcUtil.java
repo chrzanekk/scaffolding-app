@@ -135,6 +135,10 @@ public class JdbcUtil {
         return rs.getBigDecimal(columnLabel);
     }
 
+    public static BigDecimal getBigDecimal(ResultSet rs, String columnLabel, int scale, RoundingMode roundingMode) throws SQLException {
+        return rs.getBigDecimal(columnLabel).setScale(scale,roundingMode);
+    }
+
     public static BigDecimal getBigDecimal(Map<String, Object> row, String columnLabel) {
         String stringValue = String.valueOf(row.get(columnLabel));
         return new BigDecimal(stringValue);

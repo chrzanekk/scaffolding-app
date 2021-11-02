@@ -6,6 +6,8 @@ import pl.com.chrzanowski.scaffolding.logic.*;
 import pl.com.chrzanowski.scaffolding.logic.notifications.NotificationsFromPanelService;
 
 import javax.servlet.http.HttpServletRequest;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -321,6 +323,19 @@ public class ScaffoldingEndpointAdmin {
         return new ServiceActionsRequestGetResponse(actionsToResponse(actions));
     }
 
+
+    @GetMapping(path = "/vehicle-service-action-value-summary/{id}", produces = "application/json; charset=UTF-8")
+    public ServiceActionsSummaryValueGetResponse serviceActionsInvoiceSummary(
+            @PathVariable Long id,
+            @RequestParam(name = "serviceActionTypeName", required = false) String actionTypeName,
+            @RequestParam(name = "workshopName", required = false) String workshop) {
+        ServiceActionsInvoiceSummaryData summary =
+                serviceActions.getActionInvoicesSummary(new ServiceActionsFilter(id,
+                        actionTypeName,
+                        workshop));
+        return summaryToResponse(summary);
+    }
+
     @GetMapping(path = "/vehicle-service-action/{id}", produces = "application/json; charset=UTF-8")
     public ServiceActionRequestGetResponse vehicleServiceActionById(
             @PathVariable Long id) {
@@ -335,6 +350,7 @@ public class ScaffoldingEndpointAdmin {
                 request.getCarMileage(),
                 request.getServiceDate(),
                 request.getInvoiceNumber(),
+                new BigDecimal(request.getInvoiceGrossValue()).setScale(2, RoundingMode.HALF_EVEN),
                 request.getWorkshopId(),
                 request.getServiceActionTypeId(),
                 request.getServiceActionDescription()));
@@ -348,6 +364,7 @@ public class ScaffoldingEndpointAdmin {
                 request.getCarMileage(),
                 request.getServiceDate(),
                 request.getInvoiceNumber(),
+                new BigDecimal(request.getInvoiceGrossValue()).setScale(2,RoundingMode.HALF_EVEN),
                 request.getWorkshopId(),
                 request.getServiceActionTypeId(),
                 request.getServiceActionDescription()
@@ -626,5 +643,12 @@ public class ScaffoldingEndpointAdmin {
 
     private VehicleModelGetResponse modelToResponse(VehicleModelData model) {
         return new VehicleModelGetResponse(model.getId(), model.getBrandId(), model.getName());
+    }
+
+    private ServiceActionsSummaryValueGetResponse summaryToResponse(ServiceActionsInvoiceSummaryData data) {
+        return new ServiceActionsSummaryValueGetResponse(
+                data.getSummaryNetValue(),
+                data.getSummaryTaxValue(),
+                data.getSummaryGrossValue());
     }
 }

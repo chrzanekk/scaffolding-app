@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.thymeleaf.TemplateEngine;
+import pl.com.chrzanowski.scaffolding.api.ServiceActionGetResponse;
+import pl.com.chrzanowski.scaffolding.api.ServiceActionRequestGetResponse;
 import pl.com.chrzanowski.scaffolding.config.ApplicationConfig;
 import pl.com.chrzanowski.scaffolding.domain.*;
 import pl.com.chrzanowski.scaffolding.logic.*;
@@ -41,6 +43,7 @@ public class ApplicationController {
     private IVehicleTires vehicleTires;
     private IVehicleBrands vehicleBrands;
     private IVehicleModels vehicleModels;
+    private ServiceActionRequestGetResponse serviceActionRequestGetResponse;
 
     public ApplicationController(UserService userService,
                                  DictionariesService dictionariesService,
@@ -359,7 +362,8 @@ public class ApplicationController {
 
         Language lang = LanguagesUtil.getCurrentLanguage();
         model.addAttribute("vehicle", vehicles.findById(new VehicleFilter(vehicleId)));
-        model.addAttribute("serviceAction", iServiceActions.findById(new ServiceActionsFilter(id)));
+        model.addAttribute("serviceAction", actionToResponse(iServiceActions.findById(new ServiceActionsFilter(id))));
+//        model.addAttribute("serviceAction", iServiceActions.findById(new ServiceActionsFilter(id)));
         model.addAttribute("serviceActionTypes", dictionariesService.getDictionary(DictionaryType.SERVICE_ACTION_TYPES, lang));
         model.addAttribute("workshops", workshopsService.find(new WorkshopsFilter()));
         model.addAttribute("languageDict", dictionariesService.getDictionary(DictionaryType.LANGUAGES, lang));
@@ -503,5 +507,7 @@ public class ApplicationController {
         return "building";
     }
 
-
+    private ServiceActionGetResponse actionToResponse(ServiceActionsData data) {
+        return new ServiceActionGetResponse(data);
+    }
 }

@@ -36,8 +36,9 @@ function sendUpdateRequest() {
              carMileage: $("#carMileage").val(),
              serviceDate: $("#serviceDate").val(),
              invoiceNumber: $("#invoiceNumber").val(),
+             invoiceGrossValue: $("#invoiceGrossValue").val(),
              workshopId: $("#serviceWorkshop").val(),
-             serviceActionTypeId: $("#serviceActionName").val(),
+             serviceActionTypeId: $("#serviceActionType").val(),
              serviceActionDescription: $("#serviceActionDescription").val()
         })
     })

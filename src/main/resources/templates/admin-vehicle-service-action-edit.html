@@ -30,6 +30,11 @@
                 <input type="text" class="form-control" id="invoiceNumber" th:value="${serviceAction.invoiceNumber}">
             </div>
             <div class="form-group col-md-4 text-center">
+                <label for="invoiceNumber" th:text="#{vehicle.service.invoice.value}"></label>
+                <input type="text" class="form-control" id="invoiceGrossValue"
+                       th:value="${serviceAction.invoiceGrossValue}">
+            </div>
+            <div class="form-group col-md-4 text-center">
                 <label for="serviceDate" th:text="#{vehicle.service.date}"></label>
                 <input type="date" class="form-control" id="serviceDate" th:value="${serviceAction.serviceDate}">
             </div>
@@ -39,7 +44,7 @@
                     <option th:each="workshop : ${workshops}"
                             th:value="${workshop.id}"
                             th:text="${workshop.name}"
-                            th:selected="#{list.choose}"></option>
+                            th:selected="(${workshop.name} == *{serviceAction.workshopName})"></option>
                 </select>
             </div>
             <div class="form-group col-md-4 text-center">
@@ -47,12 +52,12 @@
                 <input type="number" class="form-control" id="carMileage" th:value="${serviceAction.carMileage}">
             </div>
             <div class="form-group col-md-4 text-center">
-                <label for="serviceActionTypeName" th:text="#{vehicle.service.type}"></label>
-                <select id="serviceActionTypeName" class="form-control">
+                <label for="serviceActionType" th:text="#{vehicle.service.type}"></label>
+                <select id="serviceActionType" class="form-control">
                     <option th:each="serviceActionType : ${serviceActionTypes}"
                             th:value="${serviceActionType.id}"
                             th:text="${serviceActionType.value}"
-                            th:selected="#{list.choose}"></option>
+                            th:selected="(${serviceActionType.value} == *{serviceAction.serviceActionTypeName})"></option>
                 </select>
             </div>
             <div class="form-group col-md-4 text-center">

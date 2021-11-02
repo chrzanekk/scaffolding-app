@@ -3,6 +3,7 @@ var serviceActionsApiUrl = url + "/vehicle-service-actions?"
 var vehicleServiceActionsApiUrl = url + "/vehicle-service-actions/"
 var vehicleActionApiUrl = url + "/vehicle-service-action"
 var workshopsApiUrl = url + "/workshop/"
+var summaryApiUrl = url + "/vehicle-service-action-value-summary/"
 
 
 $(document).ready(function () {
@@ -13,8 +14,10 @@ $(document).ready(function () {
 
 
     findServiceActions();
+    findServiceActionsSummary();
     $("#filter input, #filter select, [form='filter']").on("change", function () {
         findServiceActions();
+        findServiceActionsSummary();
     });
 
 });
@@ -45,6 +48,7 @@ function fillResults(actions) {
     });
 }
 
+
 function fillRow(action, value) {
     $('#records').append(
         "<tr>" +
@@ -52,7 +56,43 @@ function fillRow(action, value) {
             "<td class='align-middle' type='date'>" + action.serviceDate + "</td>" +
             "<td class='align-middle'>" + action.serviceActionTypeName + " </td>" +
             "<td class='align-middle'>" + action.workshopName + "</td>" +
+            "<td class='align-middle'>" + action.invoiceNetValue + " PLN</td>" +
+            "<td class='align-middle'>" + action.taxValue + " PLN</td>" +
+            "<td class='align-middle'>" + action.invoiceGrossValue + " PLN</td>" +
             "<td class='align-middle'>" + prepareDetailsButton(action.id) + "</td>" +
+        "</tr>"
+    );
+}
+
+function findServiceActionsSummary() {
+    $.ajax({
+        url: summaryApiUrl + vehicle.id + "?" + prepareUrl(),
+        type: "GET",
+        dataType: "json",
+        contentType: "application/json"
+    })
+    .done(function (summary) {
+        $("#summary").empty();
+        fillResultsSummary(summary);
+    })
+    .fail(function(jqxhr, textStatus, errorThrown){
+        displayErrorInformation(jqxhr.responseText);
+    });
+}
+
+
+function fillResultsSummary(summary) {
+        fillRowSummary(summary);
+}
+
+function fillRowSummary(summary) {
+    $('#summary').append(
+        "<tr>" +
+            "<td class='align-middle'> SUMA </td>" +
+            "<td class='align-middle'>" + summary.summaryNetValue + " PLN</td>" +
+            "<td class='align-middle'>" + summary.summaryTaxValue + " PLN</td>" +
+            "<td class='align-middle'>" + summary.summaryGrossValue + " PLN</td>" +
+            "<td class='align-right'></td>" +
         "</tr>"
     );
 }
@@ -78,6 +118,7 @@ function setObjectToDeleteIdAndShowModal(id) {
 
 function clearCreateModal() {
     $("#create-invoiceNumber").val('');
+    $("#create-invoiceGrossValue").val('');
     $("#create-serviceDate").val('');
     $("#create-workshopId").val('');
     $("#create-carMileage").val('');
@@ -96,6 +137,7 @@ function sendCreateRequest() {
                 carMileage: $("#create-carMileage").val(),
                 serviceDate: $("#create-serviceDate").val(),
                 invoiceNumber: $("#create-invoiceNumber").val(),
+                invoiceGrossValue: $("#create-invoiceGrossValue").val(),
                 workshopId: $("#create-workshop").val(),
                 serviceActionTypeId: $("#create-serviceAction").val(),
                 serviceActionDescription: $("#create-serviceActionDescription").val()

@@ -4,7 +4,9 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 import pl.com.chrzanowski.scaffolding.domain.ServiceActionsData;
 import pl.com.chrzanowski.scaffolding.domain.ServiceActionsFilter;
+import pl.com.chrzanowski.scaffolding.domain.ServiceActionsInvoiceSummaryData;
 
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -54,15 +56,23 @@ public class ServiceActionsJdbcRepository {
         String query = "UPDATE service_actions SET " +
                 "car_mileage = ?, " +
                 "service_date = ?, " +
+                "service_action_type_id = ?, " +
                 "invoice_no = ?, " +
-                "workshop_id = ?," +
-                "modify_date = ?," +
+                "invoice_gross_value = ?, " +
+                "tax_value = ?, " +
+                "invoice_net_value = ?, " +
+                "workshop_id = ?, " +
+                "modify_date = ?, " +
                 "description = ? WHERE " +
                 "id = ?;";
         jdbcTemplate.update(query,
                 data.getCarMileage(),
                 data.getServiceDate(),
+                data.getServiceActionTypeId(),
                 data.getInvoiceNumber(),
+                data.getInvoiceGrossValue(),
+                data.getTaxValue(),
+                data.getInvoiceNetValue(),
                 data.getWorkshopId(),
                 data.getModifyDate(),
                 data.getServiceActionDescription(),
@@ -77,6 +87,9 @@ public class ServiceActionsJdbcRepository {
                 "service_actions.car_mileage,\n" +
                 "service_actions.service_date,\n" +
                 "service_actions.invoice_no,\n" +
+                "service_actions.invoice_gross_value,\n" +
+                "service_actions.invoice_net_value,\n" +
+                "service_actions.tax_value,\n" +
                 "service_actions.workshop_id,\n" +
                 "service_actions.description,\n" +
                 "service_actions.service_action_type_id,\n" +
@@ -121,5 +134,40 @@ public class ServiceActionsJdbcRepository {
         return jdbcTemplate.queryForList(query);
     }
 
+    ServiceActionsInvoiceSummaryData findSummaryInvoiceValues(ServiceActionsFilter filter) {
+        String query = "SELECT " +
+                "SUM(invoice_gross_value) AS summaryGrossValue, " +
+                "SUM(invoice_net_value) AS summaryNetValue, " +
+                "SUM(tax_value) AS summaryTaxValue " +
+                "FROM service_actions " +
+                "LEFT JOIN service_action_type ON (service_actions.service_action_type_id = service_action_type.id)" +
+                "LEFT JOIN workshops ON (service_actions.workshop_id = workshops.id)";
+        if (filter != null) {
+            query += " WHERE 1=1";
+            if (filter.getId() != null) {
+                query += " AND service_actions.id = '" + filter.getId() + "'";
+            }
+            if (filter.getVehicleId() != null) {
+                query += " AND service_actions.vehicle_id = '" + filter.getVehicleId() + "'";
+            }
+            if (filter.getWorkshopId() != null) {
+                query += " AND service_actions.workshop_id = '" + filter.getWorkshopId() + "'";
+            }
+            if (filter.getWorkshopName() != null) {
+                query += " AND workshops.name = '" + filter.getWorkshopName() + "'";
+            }
+            if (filter.getActionTypeName() != null) {
+                query += " AND service_action_type.name = '" + filter.getActionTypeName() + "'";
+            }
+            if (filter.getPage() != null && filter.getPageSize() != null) {
+                query += preparePaginationQuery(filter.getPage(), filter.getPageSize());
+            }
+        }
+        return jdbcTemplate.queryForObject(query, new Object[]{},(rs,rowNum) -> new ServiceActionsInvoiceSummaryData(
+                getBigDecimal(rs,"summaryNetValue",2,RoundingMode.HALF_EVEN),
+                getBigDecimal(rs,"summaryTaxValue",2,RoundingMode.HALF_EVEN),
+                getBigDecimal(rs,"summaryGrossValue",2,RoundingMode.HALF_EVEN)
+        ));
+    }
 
 }

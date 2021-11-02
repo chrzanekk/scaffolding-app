@@ -4,6 +4,7 @@ package pl.com.chrzanowski.scaffolding.api;
 import pl.com.chrzanowski.scaffolding.domain.ServiceActionsData;
 import pl.com.chrzanowski.scaffolding.domain.WorkshopsData;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -14,6 +15,9 @@ public class ServiceActionGetResponse {
     private Integer carMileage;
     private String serviceDate;
     private String invoiceNumber;
+    private String invoiceGrossValue;
+    private String taxValue;
+    private String invoiceNetValue;
     private Long workshopId;
     private String workshopName;
     private Long serviceActionTypeId;
@@ -30,6 +34,9 @@ public class ServiceActionGetResponse {
         this.carMileage = data.getCarMileage();
         this.serviceDate = data.getServiceDate().toString();
         this.invoiceNumber = data.getInvoiceNumber();
+        this.invoiceGrossValue = data.getInvoiceGrossValue().toString();
+        this.invoiceNetValue = data.getInvoiceNetValue().toString();
+        this.taxValue = data.getTaxValue().toString();
         this.workshopId = data.getWorkshopId();
         this.workshopName = data.getWorkshopName();
         this.serviceActionTypeId = data.getServiceActionTypeId();
@@ -56,6 +63,22 @@ public class ServiceActionGetResponse {
 
     public String getInvoiceNumber() {
         return invoiceNumber;
+    }
+
+    public String getInvoiceGrossValue() {
+        return invoiceGrossValue;
+    }
+
+    public String getTaxValue() {
+        return taxValue;
+    }
+
+    public String getInvoiceNetValue() {
+        return invoiceNetValue;
+    }
+
+    public WorkshopsData getWorkshopsData() {
+        return workshopsData;
     }
 
     public Long getWorkshopId() {

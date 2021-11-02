@@ -1,5 +1,6 @@
 package pl.com.chrzanowski.scaffolding.api;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -10,6 +11,9 @@ public class ServiceActionPostRequest {
     private Integer carMileage;
     private LocalDate serviceDate;
     private String invoiceNumber;
+    private String invoiceGrossValue;
+    private String taxValue;
+    private String invoiceNetValue;
     private Long workshopId;
     private Long serviceActionTypeId;
     private String serviceActionName;
@@ -39,6 +43,18 @@ public class ServiceActionPostRequest {
 
     public String getInvoiceNumber() {
         return invoiceNumber;
+    }
+
+    public String getInvoiceGrossValue() {
+        return invoiceGrossValue;
+    }
+
+    public String getTaxValue() {
+        return taxValue;
+    }
+
+    public String getInvoiceNetValue() {
+        return invoiceNetValue;
     }
 
     public Long getWorkshopId() {

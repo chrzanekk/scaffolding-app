@@ -1,6 +1,7 @@
 package pl.com.chrzanowski.scaffolding.domain;
 
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -11,6 +12,9 @@ public class ServiceActionsData {
     private Integer carMileage;
     private LocalDate serviceDate;
     private String invoiceNumber;
+    private BigDecimal invoiceGrossValue;
+    private BigDecimal taxValue;
+    private BigDecimal invoiceNetValue;
     private Long workshopId;
     private String workshopName;
     private WorkshopsData workshopsData;
@@ -21,14 +25,14 @@ public class ServiceActionsData {
     private LocalDateTime modifyDate;
     private LocalDateTime removeDate;
 
-
-
-
     public ServiceActionsData(Long id,
                               Long vehicleId,
                               Integer carMileage,
                               LocalDate serviceDate,
                               String invoiceNumber,
+                              BigDecimal invoiceGrossValue,
+                              BigDecimal invoiceNetValue,
+                              BigDecimal taxValue,
                               Long workshopId,
                               Long serviceActionTypeId,
                               String actionTypeName,
@@ -40,6 +44,9 @@ public class ServiceActionsData {
         this.carMileage = carMileage;
         this.serviceDate = serviceDate;
         this.invoiceNumber = invoiceNumber;
+        this.invoiceGrossValue = invoiceGrossValue;
+        this.invoiceNetValue = invoiceNetValue;
+        this.taxValue = taxValue;
         this.workshopId = workshopId;
         this.workshopName = workshopName;
         this.workshopsData = workshopsData;
@@ -53,6 +60,7 @@ public class ServiceActionsData {
                               Integer carMileage,
                               LocalDate serviceDate,
                               String invoiceNumber,
+                              BigDecimal invoiceGrossValue,
                               Long workshopId,
                               Long serviceActionTypeId,
                               String serviceActionDescription) {
@@ -60,6 +68,7 @@ public class ServiceActionsData {
         this.carMileage = carMileage;
         this.serviceDate = serviceDate;
         this.invoiceNumber = invoiceNumber;
+        this.invoiceGrossValue = invoiceGrossValue;
         this.workshopId = workshopId;
         this.serviceActionTypeId = serviceActionTypeId;
         this.serviceActionDescription = serviceActionDescription;
@@ -71,6 +80,7 @@ public class ServiceActionsData {
                               Integer carMileage,
                               LocalDate serviceDate,
                               String invoiceNumber,
+                              BigDecimal invoiceGrossValue,
                               Long workshopId,
                               Long serviceActionTypeId,
                               String serviceActionDescription) {
@@ -79,9 +89,39 @@ public class ServiceActionsData {
         this.carMileage = carMileage;
         this.serviceDate = serviceDate;
         this.invoiceNumber = invoiceNumber;
+        this.invoiceGrossValue =invoiceGrossValue;
         this.workshopId = workshopId;
         this.serviceActionTypeId = serviceActionTypeId;
         this.serviceActionDescription = serviceActionDescription;
+        this.modifyDate = LocalDateTime.now();
+    }
+
+    public ServiceActionsData(ServiceActionsData data, BigDecimal taxValue, BigDecimal invoiceNetValue) {
+        this.vehicleId = data.getVehicleId();
+        this.carMileage = data.getCarMileage();
+        this.serviceDate = data.getServiceDate();
+        this.invoiceNumber = data.getInvoiceNumber();
+        this.invoiceGrossValue = data.getInvoiceGrossValue();
+        this.workshopId = data.getWorkshopId();
+        this.serviceActionTypeId = data.getServiceActionTypeId();
+        this.serviceActionDescription = data.getServiceActionDescription();
+        this.createDate = LocalDateTime.now();
+        this.taxValue = taxValue;
+        this.invoiceNetValue = invoiceNetValue;
+    }
+
+    public ServiceActionsData(BigDecimal taxValue, BigDecimal invoiceNetValue, ServiceActionsData data) {
+        this.id = data.getId();
+        this.vehicleId = data.getVehicleId();
+        this.carMileage = data.getCarMileage();
+        this.serviceDate = data.getServiceDate();
+        this.invoiceNumber = data.getInvoiceNumber();
+        this.invoiceGrossValue = data.getInvoiceGrossValue();
+        this.workshopId = data.getWorkshopId();
+        this.serviceActionTypeId = data.getServiceActionTypeId();
+        this.serviceActionDescription = data.getServiceActionDescription();
+        this.taxValue = taxValue;
+        this.invoiceNetValue = invoiceNetValue;
     }
 
     public Long getId() {
@@ -102,6 +142,18 @@ public class ServiceActionsData {
 
     public String getInvoiceNumber() {
         return invoiceNumber;
+    }
+
+    public BigDecimal getInvoiceGrossValue() {
+        return invoiceGrossValue;
+    }
+
+    public BigDecimal getTaxValue() {
+        return taxValue;
+    }
+
+    public BigDecimal getInvoiceNetValue() {
+        return invoiceNetValue;
     }
 
     public Long getWorkshopId() {

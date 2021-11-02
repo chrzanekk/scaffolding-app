@@ -39,6 +39,12 @@ public class ServiceActionsFilter {
         this.id = id;
     }
 
+    public ServiceActionsFilter(Long vehicleId, String actionTypeName, String workshopName) {
+        this.vehicleId = vehicleId;
+        this.actionTypeName = actionTypeName;
+        this.workshopName = workshopName;
+    }
+
     public ServiceActionsFilter() {
     }
 

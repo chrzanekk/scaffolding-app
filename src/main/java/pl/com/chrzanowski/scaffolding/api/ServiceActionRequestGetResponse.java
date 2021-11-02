@@ -2,13 +2,13 @@ package pl.com.chrzanowski.scaffolding.api;
 
 public class ServiceActionRequestGetResponse {
 
-    private ServiceActionGetResponse serviceActionGetResponse;
+    private ServiceActionGetResponse serviceAction;
 
-    public ServiceActionRequestGetResponse(ServiceActionGetResponse serviceActionGetResponse) {
-        this.serviceActionGetResponse = serviceActionGetResponse;
+    public ServiceActionRequestGetResponse(ServiceActionGetResponse serviceAction) {
+        this.serviceAction = serviceAction;
     }
 
-    public ServiceActionGetResponse getServiceActionGetResponse() {
-        return serviceActionGetResponse;
+    public ServiceActionGetResponse getServiceAction() {
+        return serviceAction;
     }
 }
