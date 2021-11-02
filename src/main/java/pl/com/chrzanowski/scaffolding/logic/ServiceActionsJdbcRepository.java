@@ -33,8 +33,16 @@ public class ServiceActionsJdbcRepository {
                     "car_mileage," +
                     "service_date," +
                     "invoice_no," +
+                    "invoice_gross_value," +
+                    "tax_value," +
+                    "invoice_net_value," +
                     "workshop_id," +
+                    "description," +
                     "service_action_type_id) VALUES (" +
+                    "?, " +
+                    "?, " +
+                    "?, " +
+                    "?, " +
                     "?, " +
                     "?, " +
                     "?, " +
@@ -46,7 +54,11 @@ public class ServiceActionsJdbcRepository {
                     data.getCarMileage(),
                     data.getServiceDate(),
                     data.getInvoiceNumber(),
+                    data.getInvoiceGrossValue(),
+                    data.getTaxValue(),
+                    data.getInvoiceNetValue(),
                     data.getWorkshopId(),
+                    data.getServiceActionDescription(),
                     data.getServiceActionTypeId());
             return commonJdbcRepository.getLastInsertedId();
     }

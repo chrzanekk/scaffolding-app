@@ -147,6 +147,7 @@ function sendCreateRequest() {
             $("#create-modal").modal('hide');
             $("#operation-successful-modal").modal('show');
             findServiceActions();
+            findServiceActionsSummary();
         })
         .fail(function (jqxhr, textStatus, errorThrown) {
             displayErrorInformation(jqxhr.responseText);

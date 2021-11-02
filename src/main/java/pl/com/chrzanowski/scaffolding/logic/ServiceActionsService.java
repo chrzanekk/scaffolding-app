@@ -52,7 +52,9 @@ public class ServiceActionsService implements IServiceActions {
 
     public Long add(ServiceActionsData data) {
         if(checkWorkshopServiceType(data)) {
-            return serviceActionsJdbcRepository.create(data);
+            BigDecimal netValue = countNetValue(data.getInvoiceGrossValue());
+            BigDecimal taxValue = countTaxValue(data.getInvoiceGrossValue());
+            return serviceActionsJdbcRepository.create(new ServiceActionsData(taxValue,netValue,data));
         }
         else {
             throw new IllegalArgumentException("Ten warsztat nie wykonuje tej usługi.");
