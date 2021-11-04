@@ -7,6 +7,7 @@ public class WorkshopServiceTypeData {
     private Long workshopId;
     private Long serviceActionTypeId;
     private Long[] serviceActionTypes;
+    private String serviceActionName;
 
     public WorkshopServiceTypeData(Long id, WorkshopsData workshopsData, ServiceActionTypeData serviceActionTypeData, Long workshopId, Long serviceActionTypeId, Long[] serviceActionTypes) {
         this.id = id;
@@ -17,10 +18,11 @@ public class WorkshopServiceTypeData {
         this.serviceActionTypes = serviceActionTypes;
     }
 
-    public WorkshopServiceTypeData(Long id, Long workshopId, Long serviceActionTypeId) {
+    public WorkshopServiceTypeData(Long id, Long workshopId, Long serviceActionTypeId, String serviceActionName ) {
         this.id = id;
         this.workshopId = workshopId;
         this.serviceActionTypeId = serviceActionTypeId;
+        this.serviceActionName = serviceActionName;
     }
 
     public WorkshopServiceTypeData(Long workshopId, Long[] serviceActionTypes) {
@@ -38,6 +40,10 @@ public class WorkshopServiceTypeData {
 
     public WorkshopsData getWorkshopsData() {
         return workshopsData;
+    }
+
+    public String getServiceActionName() {
+        return serviceActionName;
     }
 
     public ServiceActionTypeData getServiceActionTypeData() {

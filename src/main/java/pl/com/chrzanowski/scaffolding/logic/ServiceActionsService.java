@@ -52,9 +52,10 @@ public class ServiceActionsService implements IServiceActions {
 
     public Long add(ServiceActionsData data) {
         if(checkWorkshopServiceType(data)) {
-            BigDecimal netValue = countNetValue(data.getInvoiceGrossValue());
-            BigDecimal taxValue = countTaxValue(data.getInvoiceGrossValue());
-            return serviceActionsJdbcRepository.create(new ServiceActionsData(taxValue,netValue,data));
+            return serviceActionsJdbcRepository.create(new ServiceActionsData(
+                    calculateTaxValue(data.getInvoiceGrossValue()),
+                    calculateNetValue(data.getInvoiceGrossValue()),
+                    data));
         }
         else {
             throw new IllegalArgumentException("Ten warsztat nie wykonuje tej usługi.");
@@ -63,9 +64,10 @@ public class ServiceActionsService implements IServiceActions {
 
     public void update(ServiceActionsData data) {
         if(checkWorkshopServiceType(data)) {
-            BigDecimal netValue = countNetValue(data.getInvoiceGrossValue());
-            BigDecimal taxValue = countTaxValue(data.getInvoiceGrossValue());
-            serviceActionsJdbcRepository.update(new ServiceActionsData(taxValue,netValue,data));
+            serviceActionsJdbcRepository.update(new ServiceActionsData(
+                    calculateTaxValue(data.getInvoiceGrossValue()),
+                    calculateNetValue(data.getInvoiceGrossValue()),
+                    data));
         }
         else {
             throw new IllegalArgumentException("Ten warsztat nie wykonuje tej usługi.");
@@ -126,13 +128,13 @@ public class ServiceActionsService implements IServiceActions {
     }
 
 //    todo financial operations here
-    private BigDecimal countNetValue(BigDecimal grossValue) {
+    private BigDecimal calculateNetValue(BigDecimal grossValue) {
         BigDecimal taxRate = new BigDecimal("1.23").setScale(2,RoundingMode.HALF_EVEN);
         return grossValue.setScale(2,RoundingMode.HALF_EVEN).divide(taxRate,2,RoundingMode.HALF_EVEN);
     }
 
-    private BigDecimal countTaxValue(BigDecimal grossValue) {
-        BigDecimal netValue = countNetValue(grossValue);
+    private BigDecimal calculateTaxValue(BigDecimal grossValue) {
+        BigDecimal netValue = calculateNetValue(grossValue);
         return grossValue.subtract(netValue).setScale(2,RoundingMode.HALF_EVEN);
     }
 }

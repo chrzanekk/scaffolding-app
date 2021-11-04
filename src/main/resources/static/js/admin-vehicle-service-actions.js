@@ -4,6 +4,7 @@ var vehicleServiceActionsApiUrl = url + "/vehicle-service-actions/"
 var vehicleActionApiUrl = url + "/vehicle-service-action"
 var workshopsApiUrl = url + "/workshop/"
 var summaryApiUrl = url + "/vehicle-service-action-value-summary/"
+var workshopServiceTypes = url + "/workshop-service-types?"
 
 
 $(document).ready(function () {
@@ -172,26 +173,28 @@ function prepareUrl(){
      return url;
 }
 
-//function findWorkshopsServiceActions() {
-//    $.ajax({
-//        url: workshopsApiUrl + workshopId,
-//        type: "GET",
-//        dataType: "json",
-//        contentType: "application/json"
-//    })
-//    .done(function (workshop) {
-//        getWorkshop(workshop);
-//    })
-//        .fail(function(jqxhr, textStatus, errorThrown){
-//        displayErrorInformation(jqxhr.responseText);
-//    });
-//}
-//
-//function getWorkshop(workshop) {
-//    var result;
-//    result = workshop;
-//    return result;
-//}
+
+
+function reloadServiceActions() {
+    $.ajax({
+        url: workshopServiceTypes + "workshop_id=" + $("#create-workshop").val(),
+        type: "GET",
+        dataType: "json",
+        contentType: "application/json"
+    })
+    .done(function (workshopActions) {
+        $('#create-serviceAction')
+            .empty();
+            workshopActions.forEach(function(action){
+                $('#create-serviceAction').append('<option value="' + action.id + '">"' + action.name + '"</option>');
+            })
+        }
+    })
+        .fail(function(jqxhr, textStatus, errorThrown){
+        displayErrorInformation(jqxhr.responseText);
+    });
+}
+
 
 
 

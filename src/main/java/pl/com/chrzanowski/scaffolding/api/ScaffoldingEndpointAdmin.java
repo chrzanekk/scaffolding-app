@@ -31,6 +31,7 @@ public class ScaffoldingEndpointAdmin {
     private IVehicleBrands vehicleBrands;
     private VehiclesBrandsAndModelsService vehiclesBrandsAndModelsService;
     private IVehicleTires vehicleTires;
+    private WorkshopServiceTypeService workshopServiceTypeService;
 
     public ScaffoldingEndpointAdmin(UserService userService,
                                     NotificationsFromPanelService notificationsFromPanelService,
@@ -44,7 +45,8 @@ public class ScaffoldingEndpointAdmin {
                                     IVehicleModels vehicleModels,
                                     IVehicleBrands vehicleBrands,
                                     VehiclesBrandsAndModelsService vehiclesBrandsAndModelsService,
-                                    IVehicleTires vehicleTires) {
+                                    IVehicleTires vehicleTires,
+                                    WorkshopServiceTypeService workshopServiceTypeService) {
         this.userService = userService;
         this.notificationsFromPanelService = notificationsFromPanelService;
         this.vehicles = vehicles;
@@ -58,6 +60,7 @@ public class ScaffoldingEndpointAdmin {
         this.vehicleModels = vehicleModels;
         this.vehicleBrands = vehicleBrands;
         this.vehicleTires = vehicleTires;
+        this.workshopServiceTypeService = workshopServiceTypeService;
     }
 
     @GetMapping("/users")
@@ -431,6 +434,12 @@ public class ScaffoldingEndpointAdmin {
         return new ServiceActionTypeRequestGetResponse(actionTypeToResponse(serviceActionType));
     }
 
+    @GetMapping(path = "/workshop-service-types", produces = "application/json; charset=UTF-8")
+    public WorkshopServiceActionsRequestGetResponse serviceTypes(@RequestParam(name = "workshop_id") Long workshopId) {
+        List<WorkshopServiceTypeData> workshopServiceTypes = workshopServiceTypeService.find(new WorkshopServiceTypeFilter(workshopId));
+        return new WorkshopServiceActionsRequestGetResponse(workshopServicesToResponse(workshopServiceTypes));
+    }
+
     @PostMapping(path = "/service-action-type", consumes = "application/json; charset=UTF-8")
     public void addServiceActionType(@RequestBody ServiceActionTypesPostRequest request) {
         serviceActonTypes.add(new ServiceActionTypeData(request.getName()));
@@ -651,4 +660,18 @@ public class ScaffoldingEndpointAdmin {
                 data.getSummaryTaxValue(),
                 data.getSummaryGrossValue());
     }
+
+    private List<WorkshopServiceActionsGetResponse> workshopServicesToResponse(List<WorkshopServiceTypeData> workshopServices) {
+        List<WorkshopServiceActionsGetResponse> list = new ArrayList<>();
+        for (WorkshopServiceTypeData data : workshopServices) {
+            list.add(new WorkshopServiceActionsGetResponse(
+                    data.getId(),
+                    data.getWorkshopId(),
+                    data.getServiceActionTypeId(),
+                    data.getServiceActionName()
+            ));
+        }
+        return list;
+    }
+
 }

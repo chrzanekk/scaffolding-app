@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import static pl.com.chrzanowski.scaffolding.logic.JdbcUtil.getLong;
+import static pl.com.chrzanowski.scaffolding.logic.JdbcUtil.*;
 
 @Service
 public class WorkshopServiceTypeService {
@@ -68,7 +68,8 @@ public class WorkshopServiceTypeService {
             list.add(new WorkshopServiceTypeData(
                     getLong(row, "id"),
                     getLong(row, "workshop_id"),
-                    getLong(row, "service_action_type_id")
+                    getLong(row, "service_action_type_id"),
+                    getString(row, "name")
             ));
         }
         return list;

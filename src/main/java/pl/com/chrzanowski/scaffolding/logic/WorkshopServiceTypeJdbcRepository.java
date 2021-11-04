@@ -33,7 +33,8 @@ public class WorkshopServiceTypeJdbcRepository {
     }
 
     List<Map<String, Object>> find(WorkshopServiceTypeFilter filter) {
-        String query = "SELECT * FROM workshops_service_types";
+        String query = "SELECT * FROM workshops_service_types JOIN" +
+                "service_action_type ON (workshops_service_types.service_action_type_id = service_action_type.id)";
 
         if (filter != null) {
             query += " WHERE 1=1";
@@ -49,4 +50,5 @@ public class WorkshopServiceTypeJdbcRepository {
 
         return jdbcTemplate.queryForList(query);
     }
+
 }
