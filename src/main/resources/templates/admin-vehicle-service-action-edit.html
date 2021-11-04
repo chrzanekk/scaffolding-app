@@ -40,7 +40,7 @@
             </div>
             <div class="form-group col-md-4 text-center">
                 <label for="serviceWorkshop" th:text="#{vehicle.service.workshop}"></label>
-                <select id="serviceWorkshop" class="form-control">
+                <select id="serviceWorkshop" class="form-control" onchange="reloadWorkshopServices()">
                     <option th:each="workshop : ${workshops}"
                             th:value="${workshop.id}"
                             th:text="${workshop.name}"

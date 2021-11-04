@@ -9,13 +9,7 @@
         var vehicle = [[${vehicle}]];
         var serviceActionTypes = [[${serviceActionTypes}]];
         var workshops = [[${workshops}]];
-<!--        $(document).ready(function(){-->
-<!--            $("#create-workshop").change(function(){-->
-<!--                var workshopId = $(this).children("option:selected").val();-->
-<!--                alert(workshopId);-->
-<!--                console.log(findWorkshopsServiceActions());-->
-<!--            });-->
-<!--        });-->
+
 
 
     </script>
@@ -137,7 +131,7 @@
                     </div>
                     <div class="form-group">
                         <label for="create-workshop" th:text="#{vehicle.service.workshop}"></label>
-                        <select id="create-workshop" class="form-control" onchange="reloadServiceActions()">
+                        <select id="create-workshop" class="form-control" onchange="reloadWorkshopServices()">
                             <option th:each="workshop : ${workshops}"
                                     th:value="${workshop.id}"
                                     th:text="${workshop.name}"
@@ -156,7 +150,6 @@
                     <div class="form-group">
                         <label for="create-serviceAction" th:text="#{vehicle.service.type}"></label>
                         <select id="create-serviceAction" class="form-control">
-<!--                            dodać walidację usług serwisowych na backend z odpowiednia adnotacją zwrotną-->
                             <option th:each="serviceActionType : ${serviceActionTypes}"
                                     th:value="${serviceActionType.id}"
                                     th:text="${serviceActionType.value}"

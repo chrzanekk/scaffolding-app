@@ -175,7 +175,7 @@ function prepareUrl(){
 
 
 
-function reloadServiceActions() {
+function reloadWorkshopServices() {
     $.ajax({
         url: workshopServiceTypes + "workshop_id=" + $("#create-workshop").val(),
         type: "GET",
@@ -183,18 +183,25 @@ function reloadServiceActions() {
         contentType: "application/json"
     })
     .done(function (workshopActions) {
-        $('#create-serviceAction')
-            .empty();
-            workshopActions.forEach(function(action){
-                $('#create-serviceAction').append('<option value="' + action.id + '">"' + action.name + '"</option>');
-            })
-        }
+        $('#create-serviceAction').empty();
+        fillResultsReloadedWorkshopServices(workshopActions.workshopActions);
+
     })
         .fail(function(jqxhr, textStatus, errorThrown){
         displayErrorInformation(jqxhr.responseText);
     });
 }
 
+function fillResultsReloadedWorkshopServices(workshopActions) {
+    workshopActions.forEach(function(action){
+            fillReloadedWorkshopService(action);
+        });
+}
+
+function fillReloadedWorkshopService(action) {
+    $('#create-serviceAction').append('<option value=' + action.serviceActionId + '>' + action.serviceActionName + '</option>');
+
+}
 
 
 

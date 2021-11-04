@@ -1,4 +1,5 @@
-
+var url = "/admin/api/scaffolding"
+var workshopServiceTypes = url + "/workshop-service-types?"
 $(document).ready(function () {
 
 
@@ -48,4 +49,32 @@ function sendUpdateRequest() {
         .fail(function (jqxhr, textStatus, errorThrown) {
             displayErrorInformation(jqxhr.responseText);
         })
+}
+
+function reloadWorkshopServices() {
+    $.ajax({
+        url: workshopServiceTypes + "workshop_id=" + $("#serviceWorkshop").val(),
+        type: "GET",
+        dataType: "json",
+        contentType: "application/json"
+    })
+    .done(function (workshopActions) {
+        $('#serviceActionType').empty();
+        fillResultsReloadedWorkshopServices(workshopActions.workshopActions);
+
+    })
+        .fail(function(jqxhr, textStatus, errorThrown){
+        displayErrorInformation(jqxhr.responseText);
+    });
+}
+
+function fillResultsReloadedWorkshopServices(workshopActions) {
+    workshopActions.forEach(function(action){
+            fillReloadedWorkshopService(action);
+        });
+}
+
+function fillReloadedWorkshopService(action) {
+    $('#serviceActionType').append('<option value=' + action.serviceActionId + '>' + action.serviceActionName + '</option>');
+
 }
