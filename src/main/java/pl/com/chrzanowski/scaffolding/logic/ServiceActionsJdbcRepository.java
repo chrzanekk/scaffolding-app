@@ -38,7 +38,9 @@ public class ServiceActionsJdbcRepository {
                     "invoice_net_value," +
                     "workshop_id," +
                     "description," +
+                    "create_date, " +
                     "service_action_type_id) VALUES (" +
+                    "?, " +
                     "?, " +
                     "?, " +
                     "?, " +
@@ -59,6 +61,7 @@ public class ServiceActionsJdbcRepository {
                     data.getInvoiceNetValue(),
                     data.getWorkshopId(),
                     data.getServiceActionDescription(),
+                    data.getCreateDate(),
                     data.getServiceActionTypeId());
             return commonJdbcRepository.getLastInsertedId();
     }

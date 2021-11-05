@@ -120,6 +120,7 @@ public class ServiceActionsData {
         this.workshopId = data.getWorkshopId();
         this.serviceActionTypeId = data.getServiceActionTypeId();
         this.serviceActionDescription = data.getServiceActionDescription();
+        this.modifyDate = LocalDateTime.now();
         this.taxValue = taxValue;
         this.invoiceNetValue = invoiceNetValue;
     }

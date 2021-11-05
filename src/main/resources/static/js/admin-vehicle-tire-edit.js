@@ -1,4 +1,6 @@
-
+var url = "/admin/api/scaffolding"
+var vehicleTiresApiUrl = url + "/vehicles/"
+var tiresApiUrl = "/tires/"
 $(document).ready(function () {
 
 });
@@ -25,7 +27,7 @@ function sendDeleteRequest(){
 
 function sendUpdateRequest() {
     $.ajax({
-        url: "/admin/api/scaffolding/tires/" + tire.id,
+        url: vehicleTiresApiUrl + tire.vehicleId + tiresApiUrl + tire.id,
         method: "PUT",
         contentType: "application/json",
         data: JSON.stringify({

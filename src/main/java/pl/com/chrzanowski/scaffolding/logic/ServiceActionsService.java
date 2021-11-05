@@ -53,9 +53,9 @@ public class ServiceActionsService implements IServiceActions {
     public Long add(ServiceActionsData data) {
         if(checkWorkshopServiceType(data)) {
             return serviceActionsJdbcRepository.create(new ServiceActionsData(
+                    data,
                     calculateTaxValue(data.getInvoiceGrossValue()),
-                    calculateNetValue(data.getInvoiceGrossValue()),
-                    data));
+                    calculateNetValue(data.getInvoiceGrossValue())));
         }
         else {
             throw new IllegalArgumentException("Ten warsztat nie wykonuje tej usługi.");

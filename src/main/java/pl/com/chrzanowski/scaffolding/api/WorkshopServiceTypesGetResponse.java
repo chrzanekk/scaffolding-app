@@ -1,13 +1,13 @@
 package pl.com.chrzanowski.scaffolding.api;
 
-public class WorkshopServiceActionsGetResponse {
+public class WorkshopServiceTypesGetResponse {
 
     private Long id;
     private Long workshopId;
     private Long serviceActionId;
     private String serviceActionName;
 
-    public WorkshopServiceActionsGetResponse(Long id, Long workshopId, Long serviceActionId, String serviceActionName) {
+    public WorkshopServiceTypesGetResponse(Long id, Long workshopId, Long serviceActionId, String serviceActionName) {
         this.id = id;
         this.workshopId = workshopId;
         this.serviceActionId = serviceActionId;

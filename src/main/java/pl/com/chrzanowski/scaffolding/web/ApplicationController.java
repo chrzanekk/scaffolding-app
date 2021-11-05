@@ -269,7 +269,7 @@ public class ApplicationController {
         return "admin-vehicle-edit";
     }
 
-    @GetMapping({"/admin/tires/{id}"})
+    @GetMapping({"/admin/vehicles/{id}/tires"})
     public String adminVehicleTires(@PathVariable Long id, Model model) {
 
         if (!userService.isLoggedUserAdmin()) {
@@ -290,16 +290,18 @@ public class ApplicationController {
         return "admin-vehicle-tires";
     }
 
-    @GetMapping({"/admin/tire/{id}"})
-    public String adminVehicleTire(@PathVariable Long id, Model model) {
-        Long vehicleId = vehicleTires.find(new VehicleTiresFilter(id)).get(0).getVehicleId();
+    @GetMapping({"/admin/vehicles/{vehicleId}/tires/{tireId}"})
+    public String adminVehicleTire(@PathVariable Long tireId,
+                                   @PathVariable Long vehicleId,
+                                   Model model) {
+//        Long vehicleId = vehicleTires.find(new VehicleTiresFilter(tireId)).get(0).getVehicleId();
         if (!userService.isLoggedUserAdmin()) {
             throw new IllegalArgumentException("Access denied");
         }
 
         Language lang = LanguagesUtil.getCurrentLanguage();
 
-        model.addAttribute("tire", vehicleTires.findById(new VehicleTiresFilter(id)));
+        model.addAttribute("tire", vehicleTires.findById(new VehicleTiresFilter(tireId)));
         model.addAttribute("vehicle", vehicles.findById(new VehicleFilter(vehicleId)));
         model.addAttribute("yesNoDict", dictionariesService.getDictionary(DictionaryType.YES_NO, lang));
         model.addAttribute("speedIndex", dictionariesService.getDictionary(DictionaryType.TIRE_SPEED_INDEXES, lang));

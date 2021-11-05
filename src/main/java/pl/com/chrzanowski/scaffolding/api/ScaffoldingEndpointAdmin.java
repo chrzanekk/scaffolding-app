@@ -245,13 +245,13 @@ public class ScaffoldingEndpointAdmin {
                             @RequestBody VehicleModelsPutRequest request) {
         vehicleModels.update(new VehicleModelData(
                 modelId,
-                request.getBrandId(),
+                brandId,
                 request.getModelName(),
                 LocalDateTime.now()
         ));
     }
 
-    @GetMapping(path = "/tires/{id}", produces = "application/json; charset=UTF-8")
+    @GetMapping(path = "/vehicles/{id}/tires", produces = "application/json; charset=UTF-8")
     public VehicleTiresRequestGetResponse tiresByVehicleId(@PathVariable Long id,
                                                            @RequestParam(name = "page", required = false, defaultValue = "1") Long page,
                                                            @RequestParam(name = "page_size", required = false, defaultValue = "10") Long pageSize) {
@@ -259,10 +259,12 @@ public class ScaffoldingEndpointAdmin {
         return new VehicleTiresRequestGetResponse(tiresToResponse(tires));
     }
 
-    @PostMapping(path = "/tires", consumes = "application/json; charset=UTF-8")
-    public void addTires(@RequestBody VehicleTiresPostRequest request) {
+    @PostMapping(path = "/vehicles/{id}/tires", consumes = "application/json; charset=UTF-8")
+    public void addTires(
+            @PathVariable Long id,
+            @RequestBody VehicleTiresPostRequest request) {
         vehicleTires.create(new VehicleTiresData(
-                request.getVehicleId(),
+                id,
                 request.getBrand(),
                 request.getModel(),
                 request.getProductionYear(),
@@ -278,12 +280,13 @@ public class ScaffoldingEndpointAdmin {
                 request.getStatus()
         ));
     }
-    @PutMapping(path = "/tires/{id}", consumes = "application/json; charset=UTF-8")
-    public void updateTires(@PathVariable Long id,
+    @PutMapping(path = "/vehicles/{vehicleId}/tires/{tireId}", consumes = "application/json; charset=UTF-8")
+    public void updateTires(@PathVariable Long tireId,
+                            @PathVariable Long vehicleId,
                             @RequestBody VehicleTiresPutRequest request) {
         vehicleTires.update(new VehicleTiresData(
-                id,
-                request.getVehicleId(),
+                tireId,
+                vehicleId,
                 request.getTireId(),
                 request.getStatus(),
                 request.getProductionYear(),
@@ -435,9 +438,9 @@ public class ScaffoldingEndpointAdmin {
     }
 
     @GetMapping(path = "/workshop-service-types", produces = "application/json; charset=UTF-8")
-    public WorkshopServiceActionsRequestGetResponse serviceTypes(@RequestParam(name = "workshop_id") Long workshopId) {
+    public WorkshopServiceTypesRequestGetResponse serviceTypes(@RequestParam(name = "workshop_id") Long workshopId) {
         List<WorkshopServiceTypeData> workshopServiceTypes = workshopServiceTypeService.find(new WorkshopServiceTypeFilter(workshopId));
-        return new WorkshopServiceActionsRequestGetResponse(workshopServicesToResponse(workshopServiceTypes));
+        return new WorkshopServiceTypesRequestGetResponse(workshopServicesToResponse(workshopServiceTypes));
     }
 
     @PostMapping(path = "/service-action-type", consumes = "application/json; charset=UTF-8")
@@ -661,10 +664,10 @@ public class ScaffoldingEndpointAdmin {
                 data.getSummaryGrossValue());
     }
 
-    private List<WorkshopServiceActionsGetResponse> workshopServicesToResponse(List<WorkshopServiceTypeData> workshopServices) {
-        List<WorkshopServiceActionsGetResponse> list = new ArrayList<>();
+    private List<WorkshopServiceTypesGetResponse> workshopServicesToResponse(List<WorkshopServiceTypeData> workshopServices) {
+        List<WorkshopServiceTypesGetResponse> list = new ArrayList<>();
         for (WorkshopServiceTypeData data : workshopServices) {
-            list.add(new WorkshopServiceActionsGetResponse(
+            list.add(new WorkshopServiceTypesGetResponse(
                     data.getId(),
                     data.getWorkshopId(),
                     data.getServiceActionTypeId(),

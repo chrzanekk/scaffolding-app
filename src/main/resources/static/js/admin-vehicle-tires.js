@@ -1,7 +1,7 @@
 var url = "/admin/api/scaffolding"
 var tiresApiUrl = url + "/tires?"
-var vehicleTiresApiUrl = url + "/tires/"
-var tiresApiUrl = url + "/tires"
+var vehicleTiresApiUrl = url + "/vehicles/"
+var tiresApiUrl = "/tires"
 
 $(document).ready(function () {
     $('#create-modal').on('hide.bs.modal', function (e) {
@@ -19,7 +19,7 @@ $(document).ready(function () {
 
 function findTires() {
     $.ajax({
-        url: vehicleTiresApiUrl + vehicle.id + "?" + preparePaginationUrl(),
+        url: vehicleTiresApiUrl + vehicle.id + tiresApiUrl + "?" + preparePaginationUrl(),
         type: "get",
         dataType: "json",
         contentType: "application/json"
@@ -62,7 +62,7 @@ function prepareDetailsButton(id) {
 
 
 function goToDetailsPage(id) {
-    window.location.href = "/admin/tire/" + id;
+    window.location.href = "/admin/vehicles/" + vehicle.id + "/tires/" + id;
 }
 
 
@@ -89,7 +89,7 @@ function clearCreateModal() {
 
 function sendCreateRequest() {
     $.ajax({
-        url: tiresApiUrl,
+        url: vehicleTiresApiUrl + vehicle.id + tiresApiUrl,
         method: "POST",
         contentType: "application/json",
         data: JSON.stringify({

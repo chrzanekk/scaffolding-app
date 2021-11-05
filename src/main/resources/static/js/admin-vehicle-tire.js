@@ -1,4 +1,5 @@
-
+var url = "/admin/api/scaffolding"
+var tireApiUrl = url + "/tires"
 $(document).ready(function () {
 
 fillRow(tire);
@@ -9,6 +10,28 @@ fillRow(tire);
 function showDeleteModal() {
     $('#delete-object-modal').modal('show');
 }
+
+function findTire() {
+    $.ajax({
+        url:  + tire.id,
+        type: "GET",
+        dataType: "json",
+        contentType: "application/json"
+    })
+    .done(function (tire) {
+        $('#first').empty();
+        $('#second').empty();
+        $('#third').empty();
+        $('#fourth').empty();
+        $('#fifth').empty();
+        fillRow(tire.tire);
+    })
+    .fail(function(jqxhr, textStatus, errorThrown){
+        displayErrorInformation(jqxhr.responseText);
+    });
+}
+
+
 
 function fillRow(tire) {
     $('#first').append(
@@ -30,7 +53,8 @@ function fillRow(tire) {
     );
     $('#fourth').append(
         "<tr>" +
-            "<td class='align-middle col-sm-6' colspan='6'>" + tire.width + " / " + tire.profile + " / " + tire.diameter + " " + tire.speedIndex +  tire.capacityIndex +  "</td>" +
+            "<td class='align-middle col-sm-6' colspan='6'>" + tire.width + " / " + tire.profile + " / " + tire.diameter
+             + " " + tire.speedIndex + " " + tire.capacityIndex +  "</td>" +
         "</tr>"
     );
     $('#fifth').append(

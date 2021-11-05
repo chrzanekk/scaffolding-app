@@ -71,7 +71,7 @@ function prepareDeleteButton(id) {
 }
 
 function goToTiresPage(id) {
-    window.location.href = "/admin/tires/" + id;
+    window.location.href = "/admin/vehicles/" + id + "/tires";
 }
 
 function goToDetailsPage(id) {
