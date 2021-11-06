@@ -42,11 +42,11 @@ function sendUpdateRequest() {
         data: JSON.stringify({
              name: $("#name").val(),
              street: $("#street").val(),
-             buildingNo: $("#buildingNo").val(),
-             apartmentNo: $("#apartmentNo").val(),
-             postalCode: $("#postalCode").val(),
+             buildingNo: $("#building-no").val(),
+             apartmentNo: $("#apartment-no").val(),
+             postalCode: $("#postal-code").val(),
              city: $("#city").val(),
-             taxNumber: $("#taxNumber").val(),
+             taxNumber: $("#tax-number").val(),
              actionTypes: getActionTypes()
         })
     })

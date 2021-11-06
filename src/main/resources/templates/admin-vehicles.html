@@ -26,10 +26,10 @@
             <label class="col-12 col-sm-3 col-md-2 col-xl-3 my-auto text-center"
                    th:text="#{vehicle.details.brand}"></label>
             <div class="col-12 col-sm-9 col-md-10 col-xl-9 my-auto">
-                <select id="brand-filter" class="form-control">
+                <select id="brand-filter" class="form-control" onchange="reloadFilteredModels()">
                     <option value="">---</option>
                     <option th:each="brand : ${brands}"
-                            th:value="${brand.value}"
+                            th:value="${brand.id}"
                             th:text="${brand.value}">
                     </option>
                 </select>
@@ -42,7 +42,7 @@
                 <select id="model-filter" class="form-control">
                     <option value="">---</option>
                     <option th:each="model : ${models}"
-                            th:value="${model.value}"
+                            th:value="${model.id}"
                             th:text="${model.value}">
                     </option>
                 </select>
@@ -85,8 +85,8 @@
                 <th class="align-middle col-sm-2" th:text="#{vehicle.details.brand}"></th>
                 <th class="align-middle col-sm-2" th:text="#{vehicle.details.model}"></th>
                 <th class="align-middle col-sm-2" th:text="#{vehicle.details.registrationNumber}"></th>
-                <th class="align-middle col-sm-1" th:text="#{vehicle.tires}"></th>
                 <th class="align-middle col-sm-1" th:text="#{vehicle.details}"></th>
+                <th class="align-middle col-sm-1" th:text="#{vehicle.tires}"></th>
                 <th class="align-middle col-sm-1" th:text="#{vehicle.services}"></th>
 
             </tr>
@@ -112,21 +112,23 @@
                 <form class="text-center">
                     <div class="form-group">
                         <label for="create-brand" th:text="#{vehicle.details.brand}"></label>
-                        <select id="create-brand" class="form-control">
+                        <select id="create-brand" class="form-control" onchange="reloadModels()">
+                            <option value="">---</option>
                             <option th:each="brand : ${brands}"
                                     th:value="${brand.id}"
-                                    th:text="${brand.value}"
-                                    th:selected="${brand.value}">
+                                    th:text="${brand.value}">
+
                             </option>
                         </select>
                     </div>
                     <div class="form-group">
                         <label for="create-model" th:text="#{vehicle.details.model}"></label>
                         <select id="create-model" type="search" class="form-control">
+                            <option value="">---</option>
                             <option th:each="model : ${models}"
                                     th:value="${model.id}"
-                                    th:text="${model.value}"
-                                    th:selected="${model.value}">
+                                    th:text="${model.value}">
+
                             </option>
                         </select>
                     </div>
@@ -156,20 +158,22 @@
                     <div class="form-group">
                         <label for="create-fuel-type" th:text="#{vehicle.details.fuelType}"></label>
                         <select id="create-fuel-type" class="form-control">
+                            <option value="">---</option>
                             <option th:each="fuelType : ${fuelTypes}"
                                     th:value="${fuelType.id}"
-                                    th:text="${fuelType.value}"
-                                    th:selected="(${fuelType.value} == *{fuelType.value})">
+                                    th:text="${fuelType.value}">
+
                             </option>
                         </select>
                     </div>
                     <div class="form-group">
                         <label for="create-vehicle-type" th:text="#{vehicle.details.vehicleType}"></label>
                         <select id="create-vehicle-type" class="form-control">
+                            <option value="">---</option>
                             <option th:each="vehicleType : ${vehicleTypes}"
                                     th:value="${vehicleType.id}"
-                                    th:text="${vehicleType.value}"
-                                    th:selected="(${vehicleType.value} == *{vehicleType.value})">
+                                    th:text="${vehicleType.value}">
+
                             </option>
                         </select>
                     </div>

@@ -1,6 +1,9 @@
 var url = "/admin/api/scaffolding"
 var vehiclesApiUrl = url + "/vehicles?"
 var vehicleApiUrl = url + "/vehicle"
+var brandsApiUrl = url + "/brands"
+var modelsApiUrl = "/models"
+var allModelsApiUrl = url + "/models"
 
 $(document).ready(function () {
     $('#create-modal').on('hide.bs.modal', function (e) {
@@ -47,8 +50,8 @@ function fillRow(vehicle, value) {
             "<td class='align-middle'>" + vehicle.brandName + "</td>" +
             "<td class='align-middle'>" + vehicle.modelName + " </td>" +
             "<td class='align-middle'>" + vehicle.registrationNumber + "</td>" +
-            "<td class='align-middle'>" + prepareTiresButton(vehicle.id) + "</td>" +
             "<td class='align-middle'>" + prepareDetailsButton(vehicle.id) + "</td>" +
+            "<td class='align-middle'>" + prepareTiresButton(vehicle.id) + "</td>" +
             "<td class='align-middle'>" + prepareServicesButton(vehicle.id) + "</td>" +
         "</tr>"
     );
@@ -147,7 +150,7 @@ function sendDeleteRequest(){
 //            displayErrorInformation(jqxhr.responseText);
 //        });
 }
-//dodać prepareUrl() do GETa
+
 function prepareUrl(){
      var url = "";
      url += preparePaginationUrl();
@@ -157,10 +160,10 @@ function prepareUrl(){
      var registrationNumber = $("#registration-number-filter").children(":selected").val();
 
      if (brand != "") {
-        url += "&brandName=" + brand;
+        url += "&brand_id=" + brand;
      }
      if (model != "") {
-        url += "&modelName=" + model;
+        url += "&model_id=" + model;
      }
      if (registrationNumber != "") {
         url += "&registrationNumber=" + registrationNumber;
@@ -169,4 +172,78 @@ function prepareUrl(){
      return url;
 }
 
+function reloadModels() {
+        var url = "";
+        if ($("#create-brand").val() == "") {
+            $("#create-model").val('');
+            url = allModelsApiUrl;
+        }
+        else {
+            url = brandsApiUrl + "/" + $("#create-brand").val() + modelsApiUrl;
+        }
+    $.ajax({
+        url:  url,
+        type: "GET",
+        dataType: "json",
+        contentType: "application/json"
+    })
+    .done(function (models) {
+        $('#create-model').empty();
+        fillResultsReloadedModels(models.models);
+
+    })
+        .fail(function(jqxhr, textStatus, errorThrown){
+        displayErrorInformation(jqxhr.responseText);
+    });
+}
+
+function fillResultsReloadedModels(models) {
+    $('#create-model').append('<option value="">---</option>');
+    models.forEach(function(model){
+            fillReloadedModel(model);
+        });
+}
+
+function fillReloadedModel(model) {
+    $('#create-model').append('<option value=' + model.id + '>' + model.name +
+    '</option>');
+}
+
+function reloadFilteredModels() {
+
+    var url = "";
+        if ($("#brand-filter").val() == "") {
+            $("#model-filter").val('');
+            url = allModelsApiUrl;
+            findVehicles();
+        }
+        else {
+            url = brandsApiUrl + "/" + $("#brand-filter").val() + modelsApiUrl;
+        }
+            $.ajax({
+                url: url,
+                type: "GET",
+                dataType: "json",
+                contentType: "application/json"
+            })
+            .done(function (models) {
+                $('#model-filter').empty();
+                fillResultsReloadedFilterModels(models.models);
+
+            })
+            .fail(function(jqxhr, textStatus, errorThrown){
+                displayErrorInformation(jqxhr.responseText);
+            });
+}
+
+function fillResultsReloadedFilterModels(models) {
+    $('#model-filter').append('<option value="">---</option>');
+    models.forEach(function(model){
+            fillReloadedFilterModel(model);
+    });
+}
+
+function fillReloadedFilterModel(model) {
+    $('#model-filter').append('<option value=' + model.id + '>' + model.name + '</option>');
+}
 

@@ -129,16 +129,16 @@ public class ScaffoldingEndpointAdmin {
     public VehiclesRequestGetResponse vehicles(
             @RequestParam(name = "page", required = false, defaultValue = "1") Long page,
             @RequestParam(name = "page_size", required = false, defaultValue = "10") Long pageSize,
-            @RequestParam(name = "brandName", required = false) String brandName,
-            @RequestParam(name = "modelName", required = false) String modelName,
+            @RequestParam(name = "brand_id", required = false) Long brandId,
+            @RequestParam(name = "model_id", required = false) Long modelId,
             @RequestParam(name = "registrationNumber", required = false) String registrationNumber) throws SQLException {
-        List<VehicleData> vehicles = this.vehicles.find(new VehicleFilter(
+        List<VehicleData> vehiclesList = vehicles.find(new VehicleFilter(
                 registrationNumber,
-                brandName,
-                modelName ,
+                brandId,
+                modelId,
                 page,
                 pageSize));
-        return new VehiclesRequestGetResponse(vehiclesToResponse(vehicles));
+        return new VehiclesRequestGetResponse(vehiclesToResponse(vehiclesList));
     }
 
     @GetMapping(path = "/vehicle/{id}", produces = "application/json; charset=UTF-8")
@@ -224,6 +224,12 @@ public class ScaffoldingEndpointAdmin {
         return new VehicleModelsRequestGetResponse(modelsToResponse(models));
     }
 
+    @GetMapping(path = "/models", produces = "application/json; charset=UTF-8")
+    public VehicleModelsRequestGetResponse allModels() {
+        List<VehicleModelData> models = vehicleModels.find(new VehicleModelFilter());
+        return new VehicleModelsRequestGetResponse(modelsToResponse(models));
+    }
+
     @GetMapping(path = "/brands/{brandId}/models/{modelId}", produces = "application/json; charset=UTF-8")
     public VehicleModelRequestGetResponse modelById(@PathVariable Long brandId,
                                                     @PathVariable Long modelId) {
@@ -257,6 +263,13 @@ public class ScaffoldingEndpointAdmin {
                                                            @RequestParam(name = "page_size", required = false, defaultValue = "10") Long pageSize) {
         List<VehicleTiresData> tires = vehicleTires.find(new VehicleTiresFilter(id, page, pageSize));
         return new VehicleTiresRequestGetResponse(tiresToResponse(tires));
+    }
+
+    @GetMapping(path = "/vehicles/{vehicleId}/tires/{tireId}", produces = "application/json; charset=UTF-8")
+    public VehicleTireRequestGetResponse tireById(@PathVariable Long vehicleId,
+                                                  @PathVariable Long tireId) {
+        VehicleTiresData tire = vehicleTires.findById(new VehicleTiresFilter(tireId, vehicleId));
+        return new VehicleTireRequestGetResponse(tireToResponse(tire));
     }
 
     @PostMapping(path = "/vehicles/{id}/tires", consumes = "application/json; charset=UTF-8")
@@ -647,6 +660,28 @@ public class ScaffoldingEndpointAdmin {
             ));
         }
         return list;
+    }
+
+    private VehicleTiresGetResponse tireToResponse(VehicleTiresData data) {
+        return new VehicleTiresGetResponse(
+                data.getId(),
+                data.getVehicleId(),
+                data.getTireId(),
+                data.getStatus(),
+                data.getProductionYear(),
+                data.getPurchaseDate(),
+                data.getBrand(),
+                data.getModel(),
+                data.getWidth(),
+                data.getProfile(),
+                data.getDiameter(),
+                data.getSpeedIndex(),
+                data.getLoadIndex(),
+                data.getReinforced(),
+                data.isRunOnFlat(),
+                data.getSeasonId(),
+                data.getSeasonName()
+        );
     }
 
     private VehicleBrandGetResponse brandToResponse(VehicleBrandData brand) {

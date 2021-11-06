@@ -84,12 +84,12 @@ function setObjectToDeleteIdAndShowModal(id) {
 function clearCreateModal() {
     $("#create-name").val('');
     $("#create-street").val('');
-    $("#create-buildingNo").val('');
-    $("#create-apartmentNo").val('');
-    $("#create-postalCode").val('');
+    $("#create-building-no").val('');
+    $("#create-apartment-no").val('');
+    $("#create-postal-code").val('');
     $("#create-city").val('');
-    $("#create-taxNumber").val('');
-    $("#serviceActionTypes").prop('checked', false);
+    $("#create-tax-number").val('');
+    $("#service-action-types").prop('checked', false);
 }
 
 function getActionTypes(){
@@ -108,11 +108,11 @@ function sendCreateRequest() {
         data: JSON.stringify({
                 name: $("#create-name").val(),
                 street: $("#create-street").val(),
-                buildingNo: $("#create-buildingNo").val(),
-                apartmentNo: $("#create-apartmentNo").val(),
-                postalCode: $("#create-postalCode").val(),
+                buildingNo: $("#create-building-no").val(),
+                apartmentNo: $("#create-apartment-no").val(),
+                postalCode: $("#create-postal-code").val(),
                 city: $("#create-city").val(),
-                taxNumber: $("#create-taxNumber").val(),
+                taxNumber: $("#create-tax-number").val(),
                 actionTypes : getActionTypes()
         })
     })

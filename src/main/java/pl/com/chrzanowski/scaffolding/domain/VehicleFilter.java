@@ -37,6 +37,14 @@ public class VehicleFilter {
         this.pageSize = pageSize;
     }
 
+    public VehicleFilter(String registrationNumber, Long brandId, Long modelId, Long page, Long pageSize) {
+        this.registrationNumber = registrationNumber;
+        this.brandId = brandId;
+        this.modelId = modelId;
+        this.page = page;
+        this.pageSize = pageSize;
+    }
+
     public VehicleFilter(Long id) {
         this.id = id;
     }

@@ -98,16 +98,16 @@
                         <input id="create-diameter" type="number" min="10" max="24" step=0 class="form-control">
                     </div>
                     <div class="form-group">
-                        <label for="create-speedIndex" th:text="#{vehicle.tires.speed.index}"></label>
-                        <select id="create-speedIndex" class="form-control">
+                        <label for="create-speed-index" th:text="#{vehicle.tires.speed.index}"></label>
+                        <select id="create-speed-index" class="form-control">
                             <option th:each="index : ${speedIndex}"
                                     th:value="${index.code}"
                                     th:text="${index.code}"></option>
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="create-loadIndex" th:text="#{vehicle.tires.load.index}"></label>
-                        <select id="create-loadIndex" class="form-control">
+                        <label for="create-load-index" th:text="#{vehicle.tires.load.index}"></label>
+                        <select id="create-load-index" class="form-control">
                             <option th:each="index : ${loadIndex}"
                                     th:value="${index.code}"
                                     th:text="${index.code}"></option>
@@ -122,8 +122,8 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="create-runOnFlat" th:text="#{vehicle.tires.run.on.flat}"></label>
-                        <select id="create-runOnFlat" class="form-control">
+                        <label for="create-run-on-flat" th:text="#{vehicle.tires.run.on.flat}"></label>
+                        <select id="create-run-on-flat" class="form-control">
                             <option th:each="option : ${yesNoDict}"
                                     th:value="${option.code}"
                                     th:text="${option.value}"

@@ -43,8 +43,8 @@
                 </select>
             </div>
             <div class="form-group col-md-4 text-center">
-                <label for="registrationNumber" th:text="#{vehicle.details.registrationNumber}"></label>
-                <input type="text" class="form-control" id="registrationNumber"
+                <label for="registration-number" th:text="#{vehicle.details.registrationNumber}"></label>
+                <input type="text" class="form-control" id="registration-number"
                        th:value="${vehicle.registrationNumber}">
             </div>
             <div class="form-group col-md-4 text-center">
@@ -52,24 +52,24 @@
                 <input type="text" class="form-control" id="vin" th:value="${vehicle.vin}">
             </div>
             <div class="form-group col-md-4 text-center">
-                <label for="productionYear" th:text="#{vehicle.details.productionYear}"></label>
-                <input type="number" class="form-control" id="productionYear" th:value="${vehicle.productionYear}">
+                <label for="production-year" th:text="#{vehicle.details.productionYear}"></label>
+                <input type="number" class="form-control" id="production-year" th:value="${vehicle.productionYear}">
             </div>
             <div class="form-group col-md-4 text-center">
-                <label for="firstRegistrationDate" th:text="#{vehicle.details.firstRegistrationDate}"></label>
-                <input type="date" class="form-control" id="firstRegistrationDate"
+                <label for="first-registration-date" th:text="#{vehicle.details.firstRegistrationDate}"></label>
+                <input type="date" class="form-control" id="first-registration-date"
                        th:value="${vehicle.firstRegistrationDate}">
             </div>
             <div class="form-group col-md-4 text-center">
-                <label for="freePlacesForTechnicalInspections"
+                <label for="free-places-for-technical-inspections"
                        th:text="#{vehicle.details.freePlacesForTechnicalInspections}"></label>
-                <input type="number" min="1" max="5" class="form-control" id="freePlacesForTechnicalInspections"
+                <input type="number" min="1" max="5" class="form-control" id="free-places-for-technical-inspections"
                        th:value="${vehicle.freePlacesForTechnicalInspections}">
             </div>
 
             <div class="form-group col-md-4 text-center">
-                <label for="fuelType" th:text="#{vehicle.details.fuelType}"></label>
-                <select id="fuelType" class="form-control">
+                <label for="fuel-type" th:text="#{vehicle.details.fuelType}"></label>
+                <select id="fuel-type" class="form-control">
                     <option th:each="fuelType : ${fuelTypes}"
                             th:value="${fuelType.id}"
                             th:text="${fuelType.value}"
@@ -78,8 +78,8 @@
                 </select>
             </div>
             <div class="form-group col-md-4 text-center">
-                <label for="vehicleType" th:text="#{vehicle.details.vehicleType}"></label>
-                <select id="vehicleType" class="form-control">
+                <label for="vehicle-type" th:text="#{vehicle.details.vehicleType}"></label>
+                <select id="vehicle-type" class="form-control">
                     <option th:each="vehicleType : ${vehicleTypes}"
                             th:value="${vehicleType.id}"
                             th:text="${vehicleType.value}"

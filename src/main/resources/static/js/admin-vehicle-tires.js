@@ -79,10 +79,10 @@ function clearCreateModal() {
     $("#create-width").val('');
     $("#create-profile").val('');
     $("#create-diameter").val('');
-    $("#create-speedIndex").val('');
-    $("#create-loadIndex").val('');
+    $("#create-speed-index").val('');
+    $("#create-load-index").val('');
     $("#create-reinforced").val('');
-    $("#create-runOnFlat").val('');
+    $("#create-run-on-flat").val('');
     $("#create-season").val('');
     $("#create-status").val('');
 }
@@ -101,10 +101,10 @@ function sendCreateRequest() {
                 width: $("#create-width").val(),
                 profile: $("#create-profile").val(),
                 diameter: $("#create-diameter").val(),
-                speedIndex: $("#create-speedIndex").val(),
-                capacityIndex: $("#create-loadIndex").val(),
+                speedIndex: $("#create-speed-index").val(),
+                capacityIndex: $("#create-load-index").val(),
                 reinforced: $("#create-reinforced").val(),
-                runOnFlat: $("#create-runOnFlat").val(),
+                runOnFlat: $("#create-run-on-flat").val(),
                 seasonId: $("#create-season").val(),
                 status: $("#create-status").val()
         })

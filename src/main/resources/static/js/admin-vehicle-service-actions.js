@@ -118,13 +118,13 @@ function setObjectToDeleteIdAndShowModal(id) {
 }
 
 function clearCreateModal() {
-    $("#create-invoiceNumber").val('');
-    $("#create-invoiceGrossValue").val('');
-    $("#create-serviceDate").val('');
-    $("#create-workshopId").val('');
-    $("#create-carMileage").val('');
-    $("#create-serviceActionId").val('');
-    $("#create-serviceActionDescription").val('');
+    $("#create-invoice-number").val('');
+    $("#create-invoice-gross-value").val('');
+    $("#create-service-date").val('');
+    $("#create-workshop").val('');
+    $("#create-car-mileage").val('');
+    $("#create-service-action").val('');
+    $("#create-service-action-description").val('');
 
 }
 
@@ -135,13 +135,13 @@ function sendCreateRequest() {
         contentType: "application/json",
         data: JSON.stringify({
                 vehicleId: vehicle.id,
-                carMileage: $("#create-carMileage").val(),
-                serviceDate: $("#create-serviceDate").val(),
-                invoiceNumber: $("#create-invoiceNumber").val(),
-                invoiceGrossValue: $("#create-invoiceGrossValue").val(),
+                carMileage: $("#create-car-mileage").val(),
+                serviceDate: $("#create-service-date").val(),
+                invoiceNumber: $("#create-invoice-number").val(),
+                invoiceGrossValue: $("#create-invoice-gross-value").val(),
                 workshopId: $("#create-workshop").val(),
-                serviceActionTypeId: $("#create-serviceAction").val(),
-                serviceActionDescription: $("#create-serviceActionDescription").val()
+                serviceActionTypeId: $("#create-service-action").val(),
+                serviceActionDescription: $("#create-service-action-description").val()
         })
     })
         .done(function () {
@@ -183,7 +183,7 @@ function reloadWorkshopServices() {
         contentType: "application/json"
     })
     .done(function (workshopActions) {
-        $('#create-serviceAction').empty();
+        $('#create-service-action').empty();
         fillResultsReloadedWorkshopServices(workshopActions.workshopActions);
 
     })
@@ -199,7 +199,8 @@ function fillResultsReloadedWorkshopServices(workshopActions) {
 }
 
 function fillReloadedWorkshopService(action) {
-    $('#create-serviceAction').append('<option value=' + action.serviceActionId + '>' + action.serviceActionName + '</option>');
+    $('#create-service-action').append('<option value=' + action.serviceActionId + '>' + action.serviceActionName +
+    '</option>');
 
 }
 

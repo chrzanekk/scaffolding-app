@@ -69,6 +69,21 @@
         <table class="table bg-light table-bordered table-hover table-sm">
             <thead class="thead-light">
             <tr>
+                <th class="align-middle col-sm-7" ></th>
+                <th class="align-middle col-sm-1" th:text="#{invoice.net.value}"></th>
+                <th class="align-middle col-sm-1" th:text="#{invoice.vat.tax.value}"></th>
+                <th class="align-middle col-sm-1" th:text="#{invoice.gross.value}"></th>
+                <th class="align-middle col-sm-1"></th>
+
+            </tr>
+            </thead>
+            <tbody id="summary">
+
+            </tbody>
+        </table>
+        <table class="table bg-light table-bordered table-hover table-sm">
+            <thead class="thead-light">
+            <tr>
                 <th class="align-middle col-sm-1" th:text="#{vehicle.ordinal.number}"></th>
                 <th class="align-middle col-sm-1" th:text="#{vehicle.service.date}"></th>
                 <th class="align-middle col-sm-2" th:text="#{vehicle.service.type}"></th>
@@ -81,21 +96,6 @@
             </tr>
             </thead>
             <tbody id="records">
-
-            </tbody>
-        </table>
-        <table class="table bg-light table-bordered table-hover table-sm">
-            <thead class="thead-light">
-            <tr>
-                <th class="align-middle col-sm-7" ></th>
-                <th class="align-middle col-sm-1" th:text="#{invoice.net.value}"></th>
-                <th class="align-middle col-sm-1" th:text="#{invoice.vat.tax.value}"></th>
-                <th class="align-middle col-sm-1" th:text="#{invoice.gross.value}"></th>
-                <th class="align-middle col-sm-1"></th>
-
-            </tr>
-            </thead>
-            <tbody id="summary">
 
             </tbody>
         </table>
@@ -118,29 +118,30 @@
                 <h6 class="modal-title" id="exampleModalLabel" th:text="#{vehicle.service.basics}"></h6>
                 <form class="text-center">
                     <div class="form-group">
-                        <label for="create-invoiceNumber" th:text="#{vehicle.service.invoice.no}"></label>
-                        <input id="create-invoiceNumber" type="text"  class="form-control">
+                        <label for="create-invoice-number" th:text="#{vehicle.service.invoice.no}"></label>
+                        <input id="create-invoice-number" type="text"  class="form-control">
                     </div>
                     <div class="form-group">
-                        <label for="create-invoiceGrossValue" th:text="#{vehicle.service.invoice.value}"></label>
-                        <input id="create-invoiceGrossValue" type="number" min="0" step = 0.01 class="form-control">
+                        <label for="create-invoice-gross-value" th:text="#{vehicle.service.invoice.value}"></label>
+                        <input id="create-invoice-gross-value" type="number" min="0" step = 0.01 class="form-control">
                     </div>
                     <div class="form-group">
-                        <label for="create-serviceDate" th:text="#{vehicle.service.date}"></label>
-                        <input id="create-serviceDate" type="date" class="form-control">
+                        <label for="create-service-date" th:text="#{vehicle.service.date}"></label>
+                        <input id="create-service-date" type="date" class="form-control">
                     </div>
                     <div class="form-group">
                         <label for="create-workshop" th:text="#{vehicle.service.workshop}"></label>
                         <select id="create-workshop" class="form-control" onchange="reloadWorkshopServices()">
+                            <option value="">---</option>
                             <option th:each="workshop : ${workshops}"
                                     th:value="${workshop.id}"
-                                    th:text="${workshop.name}"
-                                    th:selected="#{list.choose}"></option>
+                                    th:text="${workshop.name}"></option>
+
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="create-carMileage" th:text="#{vehicle.service.car.mileage}"></label>
-                        <input id="create-carMileage" type="number" class="form-control">
+                        <label for="create-car-mileage" th:text="#{vehicle.service.car.mileage}"></label>
+                        <input id="create-car-mileage" type="number" min="0" class="form-control">
                     </div>
                 </form>
             </div>
@@ -148,17 +149,15 @@
                 <h6 class="modal-title" id="exampleModalLabel" th:text="#{vehicle.service.input.service.type}"></h6>
                 <form class="text-center">
                     <div class="form-group">
-                        <label for="create-serviceAction" th:text="#{vehicle.service.type}"></label>
-                        <select id="create-serviceAction" class="form-control">
-                            <option th:each="serviceActionType : ${serviceActionTypes}"
-                                    th:value="${serviceActionType.id}"
-                                    th:text="${serviceActionType.value}"
-                                    th:selected="#{list.choose}"></option>
+                        <label for="create-service-action" th:text="#{vehicle.service.type}"></label>
+                        <select id="create-service-action" class="form-control">
+                            <option value="">---</option>
+
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="create-serviceActionDescription" th:text="#{vehicle.service.description}"></label>
-                        <textarea id="create-serviceActionDescription" type="text" class="form-control" ></textarea>
+                        <label for="create-service-action-description" th:text="#{vehicle.service.description}"></label>
+                        <textarea id="create-service-action-description" type="text" class="form-control" ></textarea>
                     </div>
                 </form>
             </div>

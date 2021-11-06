@@ -138,8 +138,16 @@ public class VehiclesJdbcRepository {
                 query += " AND vehicle_brand.name = '" + filter.getBrandName() + "'";
             }
 
+            if (filter.getBrandId() != null) {
+                query += " AND vehicle_brand.id = '" + filter.getBrandId() + "'";
+            }
+
             if (filter.getModelName() != null) {
                 query += " AND vehicle_model.name = '" + filter.getModelName() + "'";
+            }
+
+            if (filter.getModelId() != null) {
+                query += " AND vehicle_model.id = '" + filter.getModelId() + "'";
             }
 
             if (filter.getPage() != null && filter.getPageSize() != null) {

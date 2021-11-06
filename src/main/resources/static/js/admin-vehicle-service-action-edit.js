@@ -34,13 +34,13 @@ function sendUpdateRequest() {
         data: JSON.stringify({
              id: serviceAction.id,
              vehicleId: serviceAction.vehicleId,
-             carMileage: $("#carMileage").val(),
-             serviceDate: $("#serviceDate").val(),
-             invoiceNumber: $("#invoiceNumber").val(),
-             invoiceGrossValue: $("#invoiceGrossValue").val(),
-             workshopId: $("#serviceWorkshop").val(),
-             serviceActionTypeId: $("#serviceActionType").val(),
-             serviceActionDescription: $("#serviceActionDescription").val()
+             carMileage: $("#car-mileage").val(),
+             serviceDate: $("#service-date").val(),
+             invoiceNumber: $("#invoice-number").val(),
+             invoiceGrossValue: $("#invoice-gross-value").val(),
+             workshopId: $("#service-workshop").val(),
+             serviceActionTypeId: $("#service-action-type").val(),
+             serviceActionDescription: $("#service-action-description").val()
         })
     })
         .done(function () {
@@ -53,13 +53,13 @@ function sendUpdateRequest() {
 
 function reloadWorkshopServices() {
     $.ajax({
-        url: workshopServiceTypes + "workshop_id=" + $("#serviceWorkshop").val(),
+        url: workshopServiceTypes + "workshop_id=" + $("#service-workshop").val(),
         type: "GET",
         dataType: "json",
         contentType: "application/json"
     })
     .done(function (workshopActions) {
-        $('#serviceActionType').empty();
+        $('#service-action-type').empty();
         fillResultsReloadedWorkshopServices(workshopActions.workshopActions);
 
     })
@@ -75,6 +75,7 @@ function fillResultsReloadedWorkshopServices(workshopActions) {
 }
 
 function fillReloadedWorkshopService(action) {
-    $('#serviceActionType').append('<option value=' + action.serviceActionId + '>' + action.serviceActionName + '</option>');
+    $('#service-action-type').append('<option value=' + action.serviceActionId + '>' + action.serviceActionName +
+    '</option>');
 
 }

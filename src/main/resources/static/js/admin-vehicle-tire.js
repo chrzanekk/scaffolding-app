@@ -1,5 +1,6 @@
 var url = "/admin/api/scaffolding"
-var tireApiUrl = url + "/tires"
+var vehicleApiUrl = url + "/vehicles/"
+var tireApiUrl = url + "/tires/"
 $(document).ready(function () {
 
 fillRow(tire);
@@ -13,7 +14,7 @@ function showDeleteModal() {
 
 function findTire() {
     $.ajax({
-        url:  + tire.id,
+        url:  vehicleApiUrl + vehicle.id + tireApiUrl + tire.id,
         type: "GET",
         dataType: "json",
         contentType: "application/json"
@@ -54,7 +55,7 @@ function fillRow(tire) {
     $('#fourth').append(
         "<tr>" +
             "<td class='align-middle col-sm-6' colspan='6'>" + tire.width + " / " + tire.profile + " / " + tire.diameter
-             + " " + tire.speedIndex + " " + tire.capacityIndex +  "</td>" +
+             + " " + tire.speedIndex + " " + tire.loadIndex +  "</td>" +
         "</tr>"
     );
     $('#fifth').append(

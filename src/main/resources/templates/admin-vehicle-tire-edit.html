@@ -41,20 +41,20 @@
                 </select>
             </div>
             <div class="form-group col-md-4 text-center">
-                <label for="tireBrand" th:text="#{vehicle.tires.brand}"></label>
-                <input type="text" class="form-control" id="tireBrand" th:value="${tire.brand}">
+                <label for="tire-brand" th:text="#{vehicle.tires.brand}"></label>
+                <input type="text" class="form-control" id="tire-brand" th:value="${tire.brand}">
             </div>
             <div class="form-group col-md-4 text-center">
-                <label for="tireModel" th:text="#{vehicle.tires.model}"></label>
-                <input type="text" class="form-control" id="tireModel" th:value="${tire.model}">
+                <label for="tire-model" th:text="#{vehicle.tires.model}"></label>
+                <input type="text" class="form-control" id="tire-model" th:value="${tire.model}">
             </div>
             <div class="form-group col-md-4 text-center">
-                <label for="productionYear" th:text="#{vehicle.tires.production.year}"></label>
-                <input type="number" class="form-control" id="productionYear" th:value="${tire.productionYear}">
+                <label for="production-year" th:text="#{vehicle.tires.production.year}"></label>
+                <input type="number" class="form-control" id="production-year" th:value="${tire.productionYear}">
             </div>
             <div class="form-group col-md-4 text-center">
-                <label for="purchaseDate" th:text="#{vehicle.tires.purchased.date}"></label>
-                <input type="date" class="form-control" id="purchaseDate"
+                <label for="purchase-date" th:text="#{vehicle.tires.purchased.date}"></label>
+                <input type="date" class="form-control" id="purchase-date"
                        th:value="${tire.purchaseDate}">
             </div>
             <div class="form-group col-md-4 text-center">
@@ -70,8 +70,8 @@
                 <input id="diameter" type="number" min="10" max="24" class="form-control" th:value="${tire.diameter}">
             </div>
             <div class="form-group col-md-4 text-center">
-                <label for="speedIndex" th:text="#{vehicle.tires.speed.index}"></label>
-                <select id="speedIndex" class="form-control">
+                <label for="speed-index" th:text="#{vehicle.tires.speed.index}"></label>
+                <select id="speed-index" class="form-control">
                     <option th:each="index : ${speedIndex}"
                             th:value="${index.code}"
                             th:text="${index.code}"
@@ -80,8 +80,8 @@
             </div>
 
             <div class="form-group col-md-4 text-center">
-                <label for="loadIndex" th:text="#{vehicle.tires.load.index}"></label>
-                <select id="loadIndex" class="form-control">
+                <label for="load-index" th:text="#{vehicle.tires.load.index}"></label>
+                <select id="load-index" class="form-control">
                     <option th:each="index : ${loadIndex}"
                             th:value="${index.code}"
                             th:text="${index.code}"
@@ -98,8 +98,8 @@
                 </select>
             </div>
             <div class="form-group col-md-4 text-center">
-                <label for="runOnFlat" th:text="#{vehicle.tires.run.on.flat}"></label>
-                <select id="runOnFlat" class="form-control">
+                <label for="run-on-flat" th:text="#{vehicle.tires.run.on.flat}"></label>
+                <select id="run-on-flat" class="form-control">
                     <option th:each="option : ${yesNoDict}"
                             th:value="${option.code}"
                             th:text="${option.value}"
