@@ -186,10 +186,11 @@ public class ScaffoldingEndpointAdmin {
 
     @GetMapping(path = "/brands", produces = "application/json; charset=UTF-8")
     public VehicleBrandsRequestGetResponse brands(
+            @RequestParam(name = "brand_name", required = false) String brandName,
             @RequestParam(name = "page", required = false, defaultValue = "1") Long page,
             @RequestParam(name = "page_size", required = false, defaultValue = "10") Long pageSize) {
         List<VehicleBrandData> brands =
-                vehicleBrands.find(new VehicleBrandFilter());
+                vehicleBrands.find(new VehicleBrandFilter(brandName));
         return new VehicleBrandsRequestGetResponse(brandsToResponse(brands));
     }
 
@@ -392,9 +393,12 @@ public class ScaffoldingEndpointAdmin {
 
     @GetMapping(path = "/workshops", produces = "application/json; charset=UTF-8")
     public WorkshopsRequestGetResponse workshops(
+            @RequestParam(name = "name", required = false) String name,
+            @RequestParam(name = "city", required = false) String city,
             @RequestParam(name = "page", required = false, defaultValue = "1") Long page,
             @RequestParam(name = "page_size", required = false, defaultValue = "10") Long pageSize) throws SQLException {
-        List<WorkshopsData> workshops = workshopsService.findWithActionTypes(new WorkshopsFilter(page, pageSize));
+        List<WorkshopsData> workshops = workshopsService.findWithActionTypes(new WorkshopsFilter(name, city, page,
+                pageSize));
         return new WorkshopsRequestGetResponse(workshopsToResponse(workshops));
     }
 

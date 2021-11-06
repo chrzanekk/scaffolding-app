@@ -80,16 +80,16 @@ public class WorkshopsJdbcRepository {
             query += " WHERE 1=1";
 
             if (filter.getId() != null) {
-                query += " AND id = " + filter.getId();
+                query += " AND id = '" + filter.getId() + "'";
             }
             if (filter.getName() != null) {
-                query += " AND name = " + filter.getName();
+                query += " AND name = '" + filter.getName() + "'";
             }
             if (filter.getStreet() != null) {
-                query += " AND street = " + filter.getStreet();
+                query += " AND street = '" + filter.getStreet() + "'";
             }
             if (filter.getCity() != null) {
-                query += " AND city = " + filter.getCity();
+                query += " AND city = '" + filter.getCity() + "'";
             }
 
             if (filter.getPage() != null && filter.getPageSize() != null) {

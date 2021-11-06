@@ -149,7 +149,7 @@ public class ServiceActionsJdbcRepository {
         return jdbcTemplate.queryForList(query);
     }
 
-    ServiceActionsInvoiceSummaryData findSummaryInvoiceValues(ServiceActionsFilter filter) {
+    List<Map<String, Object>> findSummaryInvoiceValues(ServiceActionsFilter filter) {
         String query = "SELECT " +
                 "SUM(invoice_gross_value) AS summaryGrossValue, " +
                 "SUM(invoice_net_value) AS summaryNetValue, " +
@@ -178,11 +178,9 @@ public class ServiceActionsJdbcRepository {
                 query += preparePaginationQuery(filter.getPage(), filter.getPageSize());
             }
         }
-        return jdbcTemplate.queryForObject(query, new Object[]{},(rs,rowNum) -> new ServiceActionsInvoiceSummaryData(
-                getBigDecimal(rs,"summaryNetValue",2,RoundingMode.HALF_EVEN),
-                getBigDecimal(rs,"summaryTaxValue",2,RoundingMode.HALF_EVEN),
-                getBigDecimal(rs,"summaryGrossValue",2,RoundingMode.HALF_EVEN)
-        ));
+
+        return jdbcTemplate.queryForList(query);
+
     }
 
 }

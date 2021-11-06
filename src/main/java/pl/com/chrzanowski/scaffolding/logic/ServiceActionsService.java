@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.Map;
 
 import static pl.com.chrzanowski.scaffolding.logic.JdbcUtil.*;
-import static pl.com.chrzanowski.scaffolding.logic.JdbcUtil.getString;
 
 @Service
 public class ServiceActionsService implements IServiceActions {
@@ -39,7 +38,7 @@ public class ServiceActionsService implements IServiceActions {
     }
 
     public ServiceActionsInvoiceSummaryData getActionInvoicesSummary(ServiceActionsFilter filter) {
-        return serviceActionsJdbcRepository.findSummaryInvoiceValues(filter);
+        return getSummaryOfInvoices(serviceActionsJdbcRepository.findSummaryInvoiceValues(filter));
     }
 
     public Boolean hasLoggedUserPermissionToActionsManagement() {
@@ -51,25 +50,23 @@ public class ServiceActionsService implements IServiceActions {
     }
 
     public Long add(ServiceActionsData data) {
-        if(checkWorkshopServiceType(data)) {
+        if (checkWorkshopServiceType(data)) {
             return serviceActionsJdbcRepository.create(new ServiceActionsData(
                     data,
                     calculateTaxValue(data.getInvoiceGrossValue()),
                     calculateNetValue(data.getInvoiceGrossValue())));
-        }
-        else {
+        } else {
             throw new IllegalArgumentException("Ten warsztat nie wykonuje tej usługi.");
         }
     }
 
     public void update(ServiceActionsData data) {
-        if(checkWorkshopServiceType(data)) {
+        if (checkWorkshopServiceType(data)) {
             serviceActionsJdbcRepository.update(new ServiceActionsData(
                     calculateTaxValue(data.getInvoiceGrossValue()),
                     calculateNetValue(data.getInvoiceGrossValue()),
                     data));
-        }
-        else {
+        } else {
             throw new IllegalArgumentException("Ten warsztat nie wykonuje tej usługi.");
         }
     }
@@ -97,44 +94,58 @@ public class ServiceActionsService implements IServiceActions {
                     getString(row, "action_type"),
                     getString(row, "workshop"),
                     new WorkshopsData(
-                            getLong(row,"workshopId"),
-                            getString(row,"workshop"),
-                            getString(row,"tax_number"),
-                            getString(row,"street"),
-                            getString(row,"building_number"),
-                            getString(row,"apartment_number"),
-                            getString(row,"postal_code"),
-                            getString(row,"city")),
+                            getLong(row, "workshopId"),
+                            getString(row, "workshop"),
+                            getString(row, "tax_number"),
+                            getString(row, "street"),
+                            getString(row, "building_number"),
+                            getString(row, "apartment_number"),
+                            getString(row, "postal_code"),
+                            getString(row, "city")),
                     getString(row, "description")
             ));
         }
         return list;
     }
 
-//    private ServiceActionsInvoiceSummaryData getSummaryOfInvoices(Map<String,Object> data) {
-//        for(Map.Entry<String, Object> entry : data.entrySet()) {
-//
-//        }
-//    }
+    private ServiceActionsInvoiceSummaryData getSummaryOfInvoices(List<Map<String, Object>> data) {
+        List<ServiceActionsInvoiceSummaryData> list = new ArrayList<>();
+        for (Map<String, Object> row : data) {
+            if (!row.containsValue(null)) {
+                list.add(new ServiceActionsInvoiceSummaryData(
+                        getBigDecimal(row, "summaryNetValue"),
+                        getBigDecimal(row, "summaryTaxValue"),
+                        getBigDecimal(row, "summaryGrossValue")
+                ));
+            } else {
+                list.add(new ServiceActionsInvoiceSummaryData(
+                        new BigDecimal("0.00"),
+                        new BigDecimal("0.00"),
+                        new BigDecimal("0.00")
+                ));
+            }
+        }
+        return list.get(0);
+    }
 
     private Boolean checkWorkshopServiceType(ServiceActionsData data) {
         List<WorkshopServiceTypeData> availableServices = workshopServiceTypeService.find(new WorkshopServiceTypeFilter(data.getWorkshopId()));
-        for(WorkshopServiceTypeData service : availableServices) {
-            if(data.getServiceActionTypeId().equals(service.getServiceActionTypeId())) {
+        for (WorkshopServiceTypeData service : availableServices) {
+            if (data.getServiceActionTypeId().equals(service.getServiceActionTypeId())) {
                 return true;
             }
         }
         return false;
     }
 
-//    todo financial operations here
+
     private BigDecimal calculateNetValue(BigDecimal grossValue) {
-        BigDecimal taxRate = new BigDecimal("1.23").setScale(2,RoundingMode.HALF_EVEN);
-        return grossValue.setScale(2,RoundingMode.HALF_EVEN).divide(taxRate,2,RoundingMode.HALF_EVEN);
+        BigDecimal taxRate = new BigDecimal("1.23").setScale(2, RoundingMode.HALF_EVEN);
+        return grossValue.setScale(2, RoundingMode.HALF_EVEN).divide(taxRate, 2, RoundingMode.HALF_EVEN);
     }
 
     private BigDecimal calculateTaxValue(BigDecimal grossValue) {
         BigDecimal netValue = calculateNetValue(grossValue);
-        return grossValue.subtract(netValue).setScale(2,RoundingMode.HALF_EVEN);
+        return grossValue.subtract(netValue).setScale(2, RoundingMode.HALF_EVEN);
     }
 }

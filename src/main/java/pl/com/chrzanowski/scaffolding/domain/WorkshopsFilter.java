@@ -26,6 +26,13 @@ public class WorkshopsFilter {
     public WorkshopsFilter() {
     }
 
+    public WorkshopsFilter(String name, String city, Long page, Long pageSize) {
+        this.name = name;
+        this.city = city;
+        this.page = page;
+        this.pageSize = pageSize;
+    }
+
     public WorkshopsFilter(Long id) {
         this.id = id;
     }

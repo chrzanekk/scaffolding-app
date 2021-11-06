@@ -18,7 +18,7 @@ $(document).ready(function () {
 
 function findWorkshops() {
     $.ajax({
-        url: workshopsApiUrl + preparePaginationUrl(),
+        url: workshopsApiUrl + prepareUrl(),
         type: "get",
         dataType: "json",
         contentType: "application/json"
@@ -143,3 +143,20 @@ function sendDeleteRequest(){
 }
 
 
+function prepareUrl(){
+     var url = "";
+     url += preparePaginationUrl();
+
+     var name = $("#name-filter").find(":selected").val();
+     var city = $("#city-filter").children(":selected").val();
+
+
+     if (name != "") {
+        url += "&name=" + name;
+     }
+     if (city != "") {
+        url += "&city=" + city;
+     }
+
+     return url;
+}

@@ -19,7 +19,7 @@ $(document).ready(function () {
 
 function findBrands() {
     $.ajax({
-        url: brandsApiUrl + preparePaginationUrl(),
+        url: brandsApiUrl + prepareUrl(),
         type: "get",
         dataType: "json",
         contentType: "application/json"
@@ -116,4 +116,18 @@ function sendDeleteRequest(){
 //        });
 }
 
+
+function prepareUrl(){
+     var url = "";
+     url += preparePaginationUrl();
+
+     var brand = $("#brand-filter").find(":selected").val();
+
+
+     if (brand != "") {
+        url += "&brand_name=" + brand;
+     }
+
+     return url;
+}
 

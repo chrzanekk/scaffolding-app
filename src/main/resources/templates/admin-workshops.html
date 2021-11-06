@@ -17,6 +17,37 @@
 <button type="button" class="btn btn-success btn-lg btn-block" data-toggle="modal" data-target="#create-modal"
         th:text="#{workshop.add.new}"></button>
 
+<form id="filter" class="bg-light border m-0 p-0 my-3">
+    <div class="form-row m-0 p-0">
+        <div class="form-group row col-12 col-lg-6 border m-0 p-0 py-2">
+            <label class="col-12 col-sm-3 col-md-2 col-xl-3 my-auto text-center"
+                   th:text="#{workshop.name}"></label>
+            <div class="col-12 col-sm-9 col-md-10 col-xl-9 my-auto">
+                <select id="name-filter" class="form-control">
+                    <option value="">---</option>
+                    <option th:each="workshop : ${workshops}"
+                            th:value="${workshop.name}"
+                            th:text="${workshop.name}">
+                    </option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group row col-12 col-lg-6 border m-0 p-0 py-2">
+            <label class="col-12 col-sm-3 col-md-2 col-xl-3 my-auto text-center"
+                   th:text="#{workshop.city}"></label>
+            <div class="col-12 col-sm-9 col-md-10 col-xl-9 my-auto">
+                <select id="city-filter" class="form-control">
+                    <option value="">---</option>
+                    <option th:each="workshop : ${workshops}"
+                            th:value="${workshop.city}"
+                            th:text="${workshop.city}">
+                    </option>
+                </select>
+            </div>
+        </div>
+    </div>
+</form>
+
 <div id="result-container" class="my-4">
     <div class="table-responsive mb-0 pb-0">
         <table class="table bg-light table-bordered table-hover table-sm">

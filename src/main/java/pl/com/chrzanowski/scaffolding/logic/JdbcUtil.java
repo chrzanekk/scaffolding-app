@@ -66,7 +66,7 @@ public class JdbcUtil {
         return "";
     }
 
-    public static Integer getInteger(Map<String, Object> row, String columnLabel)  {
+    public static Integer getInteger(Map<String, Object> row, String columnLabel) {
 
         String stringValue = String.valueOf(row.get(columnLabel));
 
@@ -88,11 +88,11 @@ public class JdbcUtil {
         }
     }
 
-    public static Float getFloat(Map<String,Object> row, String columnLabel) {
+    public static Float getFloat(Map<String, Object> row, String columnLabel) {
 
         String stringValue = String.valueOf(row.get(columnLabel));
 
-        if(stringValue.equals("null")) {
+        if (stringValue.equals("null")) {
             return null;
         } else {
             return Float.valueOf(stringValue);
@@ -103,7 +103,7 @@ public class JdbcUtil {
 
         float number = rs.getFloat(columnLabel);
 
-        if(rs.wasNull()) {
+        if (rs.wasNull()) {
             return null;
         } else {
             return number;
@@ -136,7 +136,7 @@ public class JdbcUtil {
     }
 
     public static BigDecimal getBigDecimal(ResultSet rs, String columnLabel, int scale, RoundingMode roundingMode) throws SQLException {
-        return rs.getBigDecimal(columnLabel).setScale(scale,roundingMode);
+        return rs.getBigDecimal(columnLabel).setScale(scale, roundingMode);
     }
 
     public static BigDecimal getBigDecimal(Map<String, Object> row, String columnLabel) {
