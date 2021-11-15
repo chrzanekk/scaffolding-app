@@ -17,8 +17,9 @@ public class VehicleTiresData {
     private Integer width;
     private Integer profile;
     private Integer diameter;
+    private String type;
     private String speedIndex;
-    private Integer loadIndex;
+    private Integer capacityIndex;
     private String reinforced;
     private Boolean isRunOnFlat;
     private Long seasonId;
@@ -41,8 +42,9 @@ public class VehicleTiresData {
                             Integer width,
                             Integer profile,
                             Integer diameter,
+                            String type,
                             String speedIndex,
-                            Integer loadIndex,
+                            Integer capacityIndex,
                             String reinforced,
                             Long seasonId,
                             String seasonName,
@@ -58,8 +60,9 @@ public class VehicleTiresData {
         this.width = width;
         this.profile = profile;
         this.diameter = diameter;
+        this.type = type;
         this.speedIndex = speedIndex;
-        this.loadIndex = loadIndex;
+        this.capacityIndex = capacityIndex;
         this.reinforced = reinforced;
         this.seasonId = seasonId;
         this.seasonName = seasonName;
@@ -74,8 +77,9 @@ public class VehicleTiresData {
                             Integer width,
                             Integer profile,
                             Integer diameter,
+                            String type,
                             String speedIndex,
-                            Integer loadIndex,
+                            Integer capacityIndex,
                             String reinforced,
                             Boolean isRunOnFlat,
                             Long seasonId,
@@ -90,8 +94,9 @@ public class VehicleTiresData {
         this.width = width;
         this.profile = profile;
         this.diameter = diameter;
+        this.type = type;
         this.speedIndex = speedIndex;
-        this.loadIndex = loadIndex;
+        this.capacityIndex = capacityIndex;
         this.reinforced = reinforced;
         this.isRunOnFlat = isRunOnFlat;
         this.seasonId = seasonId;
@@ -108,8 +113,9 @@ public class VehicleTiresData {
                             Integer width,
                             Integer profile,
                             Integer diameter,
+                            String type,
                             String speedIndex,
-                            Integer loadIndex,
+                            Integer capacityIndex,
                             String reinforced,
                             Boolean isRunOnFlat,
                             Long seasonId) {
@@ -124,8 +130,9 @@ public class VehicleTiresData {
         this.width = width;
         this.profile = profile;
         this.diameter = diameter;
+        this.type = type;
         this.speedIndex = speedIndex;
-        this.loadIndex = loadIndex;
+        this.capacityIndex = capacityIndex;
         this.reinforced = reinforced;
         this.isRunOnFlat = isRunOnFlat;
         this.seasonId = seasonId;
@@ -176,12 +183,16 @@ public class VehicleTiresData {
         return diameter;
     }
 
+    public String getType() {
+        return type;
+    }
+
     public String getSpeedIndex() {
         return speedIndex;
     }
 
-    public Integer getLoadIndex() {
-        return loadIndex;
+    public Integer getCapacityIndex() {
+        return capacityIndex;
     }
 
     public String getReinforced() {

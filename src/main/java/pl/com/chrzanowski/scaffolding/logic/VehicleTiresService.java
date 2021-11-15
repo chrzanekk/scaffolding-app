@@ -65,6 +65,7 @@ public class VehicleTiresService implements IVehicleTires {
                     getInteger(row, "width"),
                     getInteger(row, "profile"),
                     getInteger(row, "diameter"),
+                    getString(row, "type"),
                     getString(row, "speedIndex"),
                     getInteger(row, "capacityIndex"),
                     getString(row, "reinforced"),
@@ -76,7 +77,6 @@ public class VehicleTiresService implements IVehicleTires {
         return list;
     }
 
-    //todo    do sformatowania: reinforced,
     private String convertRunOnFlat(Boolean condition) {
         Language lang = LanguagesUtil.getCurrentLanguage();
         List<DictionaryData> yesNo = dictionariesService.getDictionary(DictionaryType.YES_NO,lang);

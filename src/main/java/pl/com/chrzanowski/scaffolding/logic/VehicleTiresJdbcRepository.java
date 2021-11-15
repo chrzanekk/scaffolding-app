@@ -70,6 +70,7 @@ public class VehicleTiresJdbcRepository {
                 "width = ?," +
                 "profile = ?," +
                 "diameter = ?," +
+                "type = ?," +
                 "speed_index = ?," +
                 "capacity_index = ?," +
                 "reinforced = ?," +
@@ -84,8 +85,9 @@ public class VehicleTiresJdbcRepository {
                 data.getWidth(),
                 data.getProfile(),
                 data.getDiameter(),
+                data.getType(),
                 data.getSpeedIndex(),
-                data.getLoadIndex(),
+                data.getCapacityIndex(),
                 data.getReinforced(),
                 data.isRunOnFlat(),
                 data.getSeasonId(),
@@ -107,6 +109,7 @@ public class VehicleTiresJdbcRepository {
                 "tires.width AS width,\n" +
                 "tires.profile AS profile,\n" +
                 "tires.diameter AS diameter,\n" +
+                "tires.type AS type,\n" +
                 "tires.speed_index AS speedIndex,\n" +
                 "tires.capacity_index AS capacityIndex,\n" +
                 "tires.reinforced AS reinforced,\n" +
@@ -148,11 +151,13 @@ public class VehicleTiresJdbcRepository {
                 "width," +
                 "profile," +
                 "diameter," +
+                "type," +
                 "speed_index," +
                 "capacity_index," +
                 "reinforced," +
                 "run_on_flat, " +
                 "season_id) VALUES (" +
+                "?, " +
                 "?, " +
                 "?, " +
                 "?, " +
@@ -169,8 +174,9 @@ public class VehicleTiresJdbcRepository {
                 data.getWidth(),
                 data.getProfile(),
                 data.getDiameter(),
+                data.getType(),
                 data.getSpeedIndex(),
-                data.getLoadIndex(),
+                data.getCapacityIndex(),
                 data.getReinforced(),
                 data.isRunOnFlat(),
                 data.getSeasonId());

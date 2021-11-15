@@ -186,19 +186,14 @@ public class ScaffoldingEndpointAdmin {
 
     @GetMapping(path = "/brands", produces = "application/json; charset=UTF-8")
     public VehicleBrandsRequestGetResponse brands(
-            @RequestParam(name = "brand_name", required = false) String brandName,
-            @RequestParam(name = "page", required = false, defaultValue = "1") Long page,
-            @RequestParam(name = "page_size", required = false, defaultValue = "10") Long pageSize) {
-        List<VehicleBrandData> brands =
-                vehicleBrands.find(new VehicleBrandFilter(brandName));
+            @RequestParam(name = "brand_name", required = false) String brandName) {
+        List<VehicleBrandData> brands = vehicleBrands.find(new VehicleBrandFilter(brandName));
         return new VehicleBrandsRequestGetResponse(brandsToResponse(brands));
     }
 
     @GetMapping(path = "/brands/{id}", produces = "application/json; charset=UTF-8")
     public VehicleBrandRequestGetResponse brandById(
-            @PathVariable Long id,
-            @RequestParam(name = "page", required = false, defaultValue = "1") Long page,
-            @RequestParam(name = "page_size", required = false, defaultValue = "10") Long pageSize) {
+            @PathVariable Long id) {
         VehicleBrandData brand = vehicleBrands.find(new VehicleBrandFilter(id)).get(0);
         return new VehicleBrandRequestGetResponse(brandToResponse(brand));
     }
@@ -286,6 +281,7 @@ public class ScaffoldingEndpointAdmin {
                 request.getWidth(),
                 request.getProfile(),
                 request.getDiameter(),
+                request.getType(),
                 request.getSpeedIndex(),
                 request.getCapacityIndex(),
                 request.getReinforced(),
@@ -310,6 +306,7 @@ public class ScaffoldingEndpointAdmin {
                 request.getWidth(),
                 request.getProfile(),
                 request.getDiameter(),
+                request.getType(),
                 request.getSpeedIndex(),
                 request.getCapacityIndex(),
                 request.getReinforced(),
@@ -656,7 +653,7 @@ public class ScaffoldingEndpointAdmin {
                     data.getProfile(),
                     data.getDiameter(),
                     data.getSpeedIndex(),
-                    data.getLoadIndex(),
+                    data.getCapacityIndex(),
                     data.getReinforced(),
                     data.isRunOnFlat(),
                     data.getSeasonId(),
@@ -680,7 +677,7 @@ public class ScaffoldingEndpointAdmin {
                 data.getProfile(),
                 data.getDiameter(),
                 data.getSpeedIndex(),
-                data.getLoadIndex(),
+                data.getCapacityIndex(),
                 data.getReinforced(),
                 data.isRunOnFlat(),
                 data.getSeasonId(),

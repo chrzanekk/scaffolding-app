@@ -66,7 +66,16 @@
                 <input id="profile" type="number" min="30" max="85" step=5 class="form-control" th:value="${tire.profile}">
             </div>
             <div class="form-group col-md-4 text-center">
-                <label for="diameter" th:text="#{vehicle.tires.profile}"></label>
+                <label for="type" th:text="#{vehicle.tires.type}"></label>
+                <select id="type" class="form-control">
+                    <option th:each="type : ${tireType}"
+                            th:value="${type.code}"
+                            th:text="${type.value}"
+                            th:selected="(${type.code} == *{tire.type})"></option>
+                </select>
+            </div>
+            <div class="form-group col-md-4 text-center">
+                <label for="diameter" th:text="#{vehicle.tires.diameter}"></label>
                 <input id="diameter" type="number" min="10" max="24" class="form-control" th:value="${tire.diameter}">
             </div>
             <div class="form-group col-md-4 text-center">
@@ -74,18 +83,18 @@
                 <select id="speed-index" class="form-control">
                     <option th:each="index : ${speedIndex}"
                             th:value="${index.code}"
-                            th:text="${index.code}"
+                            th:text="${index.code} +' - '+ ${index.value}+'km/h'"
                             th:selected="(${index.code} == *{tire.speedIndex})"></option>
                 </select>
             </div>
 
             <div class="form-group col-md-4 text-center">
-                <label for="load-index" th:text="#{vehicle.tires.load.index}"></label>
-                <select id="load-index" class="form-control">
-                    <option th:each="index : ${loadIndex}"
+                <label for="capacity-index" th:text="#{vehicle.tires.load.index}"></label>
+                <select id="capacity-index" class="form-control">
+                    <option th:each="index : ${capacityIndex}"
                             th:value="${index.code}"
-                            th:text="${index.code}"
-                            th:selected="(${index.code} == *{tire.loadIndex})"></option>
+                            th:text="${index.code} + ' - ' + ${index.value} + 'kg'"
+                            th:selected="(${index.code} == *{tire.capacityIndex})"></option>
                 </select>
             </div>
             <div class="form-group col-md-4 text-center">
@@ -93,7 +102,7 @@
                 <select id="reinforced" class="form-control">
                     <option th:each="type : ${reinforced}"
                             th:value="${type.code}"
-                            th:text="${type.code}"
+                            th:text="${type.value}"
                             th:selected="(${type.code} == *{tire.reinforced})"></option>
                 </select>
             </div>

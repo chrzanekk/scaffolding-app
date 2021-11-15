@@ -47,6 +47,14 @@ public class DictionaryData {
         this.language = language;
     }
 
+    public DictionaryData(Long id, String code, String value, String language, String extraString) {
+        this.id = id;
+        this.code = code;
+        this.value = value;
+        this.language = language;
+        this.extraString = extraString;
+    }
+
     public Long getId() {
         return id;
     }

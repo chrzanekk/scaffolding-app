@@ -75,9 +75,11 @@ public class DictionariesService {
         } else if (TIRE_SPEED_INDEXES == type) {
             return getTireSpeedIndexes(lang);
         } else if (TIRE_CAPACITY_INDEXES == type) {
-            return getTireLoadIndexes(lang);
+            return getTireCapacityIndexes(lang);
         } else if (TIRE_REINFORCED == type) {
             return getReinforced(lang);
+        } else if (TIRE_TYPE == type) {
+            return getTireType(lang);
         }
         throw new IllegalArgumentException("Dictionary no defined: " + type + " for language: " + lang);
     }
@@ -253,17 +255,17 @@ public class DictionariesService {
         return speedIndexesList;
     }
 
-    private List<DictionaryData> getTireLoadIndexes(Language lang) {
-        List<DictionaryData> loadIndexesList = new ArrayList<>();
-        Map<Integer, Integer> loadIndexesMap = VehicleTireLoadCapacity.LOAD_INDEXES;
-        for (Map.Entry<Integer, Integer> data : loadIndexesMap.entrySet()) {
-            loadIndexesList.add(new DictionaryData(
+    private List<DictionaryData> getTireCapacityIndexes(Language lang) {
+        List<DictionaryData> capacityIndexesList = new ArrayList<>();
+        Map<Integer, Integer> capacityIndexesMap = VehicleTireLoadCapacity.LOAD_INDEXES;
+        for (Map.Entry<Integer, Integer> data : capacityIndexesMap.entrySet()) {
+            capacityIndexesList.add(new DictionaryData(
                     data.getKey().toString(),
                     data.getValue().toString(),
                     lang.getCode()
             ));
         }
-        return loadIndexesList;
+        return capacityIndexesList;
     }
 
     private List<DictionaryData> getReinforced(Language lang) {
@@ -277,5 +279,17 @@ public class DictionariesService {
                             new DictionaryData("C", "C - Commercial Tire", lang.getCode()),
                             new DictionaryData("SL", "SL - Standard Tire", lang.getCode()));
     }
+
+    private List<DictionaryData> getTireType(Language lang) {
+        return Language.PL == lang ?
+                Arrays.asList(new DictionaryData("R", "R - Opona radialna", lang.getCode()),
+                            new DictionaryData("D", "D - Opona diagonalna", lang.getCode())
+
+                           ) :
+                Arrays.asList(new DictionaryData("R", "R - Radial tire", lang.getCode()),
+                            new DictionaryData("D", "D - Diagonal tire", lang.getCode()));
+    }
+
+
 
 }

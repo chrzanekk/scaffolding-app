@@ -17,6 +17,7 @@ public class VehicleTiresPutRequest {
     private Integer width;
     private Integer profile;
     private Integer diameter;
+    private String type;
     private String speedIndex;
     private Integer capacityIndex;
     private String reinforced;
@@ -73,6 +74,10 @@ public class VehicleTiresPutRequest {
 
     public Integer getDiameter() {
         return diameter;
+    }
+
+    public String getType() {
+        return type;
     }
 
     public String getSpeedIndex() {

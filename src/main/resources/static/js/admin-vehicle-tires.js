@@ -79,8 +79,9 @@ function clearCreateModal() {
     $("#create-width").val('');
     $("#create-profile").val('');
     $("#create-diameter").val('');
+    $("#create-type").val('');
     $("#create-speed-index").val('');
-    $("#create-load-index").val('');
+    $("#create-capacity-index").val('');
     $("#create-reinforced").val('');
     $("#create-run-on-flat").val('');
     $("#create-season").val('');
@@ -101,8 +102,9 @@ function sendCreateRequest() {
                 width: $("#create-width").val(),
                 profile: $("#create-profile").val(),
                 diameter: $("#create-diameter").val(),
+                type: $("#create-type").val(),
                 speedIndex: $("#create-speed-index").val(),
-                capacityIndex: $("#create-load-index").val(),
+                capacityIndex: $("#create-capacity-index").val(),
                 reinforced: $("#create-reinforced").val(),
                 runOnFlat: $("#create-run-on-flat").val(),
                 seasonId: $("#create-season").val(),

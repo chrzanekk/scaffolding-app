@@ -282,9 +282,10 @@ public class ApplicationController {
         model.addAttribute("vehicle", vehicles.findById(new VehicleFilter(id)));
         model.addAttribute("yesNoDict", dictionariesService.getDictionary(DictionaryType.YES_NO, lang));
         model.addAttribute("speedIndex", dictionariesService.getDictionary(DictionaryType.TIRE_SPEED_INDEXES, lang));
-        model.addAttribute("loadIndex", dictionariesService.getDictionary(DictionaryType.TIRE_CAPACITY_INDEXES, lang));
+        model.addAttribute("capacityIndex", dictionariesService.getDictionary(DictionaryType.TIRE_CAPACITY_INDEXES, lang));
         model.addAttribute("tireSeason", dictionariesService.getDictionary(DictionaryType.TIRE_SEASONS, lang));
         model.addAttribute("tireStatus", dictionariesService.getDictionary(DictionaryType.TIRE_STATUS, lang));
+        model.addAttribute("tireType", dictionariesService.getDictionary(DictionaryType.TIRE_TYPE, lang));
         model.addAttribute("reinforced", dictionariesService.getDictionary(DictionaryType.TIRE_REINFORCED, lang));
         model.addAttribute("languageDict", dictionariesService.getDictionary(DictionaryType.LANGUAGES, lang));
         return "admin-vehicle-tires";
@@ -294,7 +295,6 @@ public class ApplicationController {
     public String adminVehicleTire(@PathVariable Long tireId,
                                    @PathVariable Long vehicleId,
                                    Model model) {
-//        Long vehicleId = vehicleTires.find(new VehicleTiresFilter(tireId)).get(0).getVehicleId();
         if (!userService.isLoggedUserAdmin()) {
             throw new IllegalArgumentException("Access denied");
         }
@@ -305,9 +305,10 @@ public class ApplicationController {
         model.addAttribute("vehicle", vehicles.findById(new VehicleFilter(vehicleId)));
         model.addAttribute("yesNoDict", dictionariesService.getDictionary(DictionaryType.YES_NO, lang));
         model.addAttribute("speedIndex", dictionariesService.getDictionary(DictionaryType.TIRE_SPEED_INDEXES, lang));
-        model.addAttribute("loadIndex", dictionariesService.getDictionary(DictionaryType.TIRE_CAPACITY_INDEXES, lang));
+        model.addAttribute("capacityIndex", dictionariesService.getDictionary(DictionaryType.TIRE_CAPACITY_INDEXES, lang));
         model.addAttribute("tireSeason", dictionariesService.getDictionary(DictionaryType.TIRE_SEASONS, lang));
         model.addAttribute("tireStatus", dictionariesService.getDictionary(DictionaryType.TIRE_STATUS, lang));
+        model.addAttribute("tireType", dictionariesService.getDictionary(DictionaryType.TIRE_TYPE, lang));
         model.addAttribute("reinforced", dictionariesService.getDictionary(DictionaryType.TIRE_REINFORCED, lang));
         model.addAttribute("languageDict", dictionariesService.getDictionary(DictionaryType.LANGUAGES, lang));
         return "admin-vehicle-tire";
@@ -326,9 +327,10 @@ public class ApplicationController {
         model.addAttribute("vehicle", vehicles.findById(new VehicleFilter(vehicleId)));
         model.addAttribute("yesNoDict", dictionariesService.getDictionary(DictionaryType.YES_NO, lang));
         model.addAttribute("speedIndex", dictionariesService.getDictionary(DictionaryType.TIRE_SPEED_INDEXES, lang));
-        model.addAttribute("loadIndex", dictionariesService.getDictionary(DictionaryType.TIRE_CAPACITY_INDEXES, lang));
+        model.addAttribute("capacityIndex", dictionariesService.getDictionary(DictionaryType.TIRE_CAPACITY_INDEXES, lang));
         model.addAttribute("tireSeason", dictionariesService.getDictionary(DictionaryType.TIRE_SEASONS, lang));
         model.addAttribute("tireStatus", dictionariesService.getDictionary(DictionaryType.TIRE_STATUS, lang));
+        model.addAttribute("tireType", dictionariesService.getDictionary(DictionaryType.TIRE_TYPE, lang));
         model.addAttribute("reinforced", dictionariesService.getDictionary(DictionaryType.TIRE_REINFORCED, lang));
         model.addAttribute("languageDict", dictionariesService.getDictionary(DictionaryType.LANGUAGES, lang));
         return "admin-vehicle-tire-edit";
@@ -365,7 +367,6 @@ public class ApplicationController {
         Language lang = LanguagesUtil.getCurrentLanguage();
         model.addAttribute("vehicle", vehicles.findById(new VehicleFilter(vehicleId)));
         model.addAttribute("serviceAction", actionToResponse(iServiceActions.findById(new ServiceActionsFilter(id))));
-//        model.addAttribute("serviceAction", iServiceActions.findById(new ServiceActionsFilter(id)));
         model.addAttribute("serviceActionTypes", dictionariesService.getDictionary(DictionaryType.SERVICE_ACTION_TYPES, lang));
         model.addAttribute("workshops", workshopsService.find(new WorkshopsFilter()));
         model.addAttribute("languageDict", dictionariesService.getDictionary(DictionaryType.LANGUAGES, lang));
