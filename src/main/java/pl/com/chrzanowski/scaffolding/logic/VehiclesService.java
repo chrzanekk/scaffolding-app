@@ -78,5 +78,9 @@ public class VehiclesService implements IVehicles {
         return list;
     }
 
-
+    private void validateVehicleTires(VehicleFilter filter) {
+        if(!findWithoutTires(filter).isEmpty()){
+            throw new IllegalArgumentException("Samochód nie może jeździć bez kół! Dodaj zestaw opon");
+        }
+    }
 }

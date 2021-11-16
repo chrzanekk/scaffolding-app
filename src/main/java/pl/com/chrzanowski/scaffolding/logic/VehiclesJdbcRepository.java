@@ -173,7 +173,7 @@ public class VehiclesJdbcRepository {
             query += " AND 1=1";
 
             if (filter.getId() != null) {
-                query += " AND id = '" + filter.getId() + "'";
+                query += " AND vehicles.id = '" + filter.getId() + "'";
             }
 
         }
