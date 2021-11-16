@@ -2,12 +2,13 @@ package pl.com.chrzanowski.scaffolding.logic;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
-import pl.com.chrzanowski.scaffolding.domain.*;
+import pl.com.chrzanowski.scaffolding.domain.VehicleData;
+import pl.com.chrzanowski.scaffolding.domain.VehicleFilter;
 
 import java.util.List;
 import java.util.Map;
 
-import static pl.com.chrzanowski.scaffolding.logic.JdbcUtil.*;
+import static pl.com.chrzanowski.scaffolding.logic.JdbcUtil.preparePaginationQuery;
 
 @Service
 public class VehiclesJdbcRepository {
@@ -70,7 +71,7 @@ public class VehiclesJdbcRepository {
     }
 
 
-    public void update(VehicleData data)  {
+    public void update(VehicleData data) {
         String query = "UPDATE vehicles SET " +
                 "registration_number = ?," +
                 "vin = ?," +
@@ -153,6 +154,28 @@ public class VehiclesJdbcRepository {
             if (filter.getPage() != null && filter.getPageSize() != null) {
                 query += preparePaginationQuery(filter.getPage(), filter.getPageSize());
             }
+        }
+        return jdbcTemplate.queryForList(query);
+    }
+
+    List<Map<String, Object>> findWithoutTires(VehicleFilter filter) {
+        String query = "SELECT \n" +
+                "vehicles.id AS id,\n" +
+                "vehicles.registration_number,\n" +
+                "vehicle_brand.name AS brand,\n" +
+                "vehicle_model.name AS model\n" +
+                "FROM vehicles \n" +
+                "JOIN vehicle_brand ON (vehicles.brand_id = vehicle_brand.id)\n" +
+                "JOIN vehicle_model ON (vehicles.model_id = vehicle_model.id)\n" +
+                "WHERE vehicles.id NOT IN (SELECT vehicle_id FROM vehicle_tires)";
+
+        if (filter != null) {
+            query += " AND 1=1";
+
+            if (filter.getId() != null) {
+                query += " AND id = '" + filter.getId() + "'";
+            }
+
         }
         return jdbcTemplate.queryForList(query);
     }

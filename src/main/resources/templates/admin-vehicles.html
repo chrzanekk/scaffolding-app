@@ -14,7 +14,9 @@
 <body>
 <div th:replace="fragments/menu :: menu"></div>
 
-<h5 th:text="#{vehicle.fleet}"></h5>
+<h2 th:text="#{vehicle.fleet}"></h2>
+
+
 
 <button type="button" class="btn btn-success btn-lg btn-block" data-toggle="modal" data-target="#create-modal"
         th:text="#{vehicle.add.new}"></button>
@@ -63,6 +65,27 @@
         </div>
     </div>
 </form>
+
+
+<div id="error-container" class="my-4">
+    <div class="table-responsive mb-0 pb-0">
+        <h5 th:text="#{vehicle.tires.alert.without.tires}"></h5>
+        <table class="table bg-light table-bordered table-hover table-sm">
+            <thead class="thead-light">
+            <tr>
+                <th class="align-middle col-sm-1" th:text="#{vehicle.ordinal.number}"></th>
+                <th class="align-middle col-sm-2" th:text="#{vehicle.details.brand}"></th>
+                <th class="align-middle col-sm-2" th:text="#{vehicle.details.model}"></th>
+                <th class="align-middle col-sm-2" th:text="#{vehicle.details.registrationNumber}"></th>
+
+            </tr>
+            </thead>
+            <tbody id="vehicles-without-tires">
+
+            </tbody>
+        </table>
+    </div>
+</div>
 
 
 <div id="result-container" class="my-4">

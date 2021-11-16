@@ -50,6 +50,10 @@ public class VehiclesService implements IVehicles {
                 data);
     }
 
+    public List<VehicleData> findWithoutTires(VehicleFilter filter) {
+        return getVehicles(vehiclesJdbcRepository.findWithoutTires(filter));
+    }
+
     private List<VehicleData> getVehicles(List<Map<String, Object>> data) {
         List<VehicleData> list = new ArrayList<>();
         for (Map<String, Object> row : data) {
@@ -73,5 +77,6 @@ public class VehiclesService implements IVehicles {
         }
         return list;
     }
+
 
 }

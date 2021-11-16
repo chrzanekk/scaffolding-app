@@ -7,7 +7,9 @@ import java.util.List;
 
 public interface IVehicles {
     List<VehicleData> find(VehicleFilter filter);
+    List<VehicleData> findWithoutTires(VehicleFilter filter);
     VehicleData findById(VehicleFilter filter);
     Long add(VehicleData data);
     void update(VehicleData data);
+
 }

@@ -141,6 +141,12 @@ public class ScaffoldingEndpointAdmin {
         return new VehiclesRequestGetResponse(vehiclesToResponse(vehiclesList));
     }
 
+    @GetMapping(path = "/vehicles-without-tires", produces = "application/json; charset=UTF-8")
+    public VehiclesRequestGetResponse vehiclesWithoutTires() {
+        List<VehicleData> vehicleList = vehicles.findWithoutTires(new VehicleFilter());
+        return new VehiclesRequestGetResponse(vehiclesToResponse(vehicleList));
+    }
+
     @GetMapping(path = "/vehicle/{id}", produces = "application/json; charset=UTF-8")
     public VehicleRequestGetResponse vehicleById(
             @PathVariable Long id) {

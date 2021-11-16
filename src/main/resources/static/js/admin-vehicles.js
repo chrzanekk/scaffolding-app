@@ -1,5 +1,6 @@
 var url = "/admin/api/scaffolding"
 var vehiclesApiUrl = url + "/vehicles?"
+var vehiclesWithoutTiresApiUrl = url + "/vehicles-without-tires"
 var vehicleApiUrl = url + "/vehicle"
 var brandsApiUrl = url + "/brands"
 var modelsApiUrl = "/models"
@@ -12,8 +13,10 @@ $(document).ready(function () {
 
 
     findVehicles();
+    findVehiclesWithoutTires();
     $("#filter input, #filter select, [form='filter']").on("change", function () {
         findVehicles();
+        findVehiclesWithoutTires();
     });
 
 });
@@ -247,3 +250,42 @@ function fillReloadedFilterModel(model) {
     $('#model-filter').append('<option value=' + model.id + '>' + model.name + '</option>');
 }
 
+function findVehiclesWithoutTires() {
+    $.ajax({
+        url: vehiclesWithoutTiresApiUrl,
+        type: "get",
+        dataType: "json",
+        contentType: "application/json"
+    })
+    .done(function (vehicles) {
+          if(vehicles.length == 0){
+            $("#error-container").hide();
+          }
+          else {
+            $("#vehicles-without-tires").empty();
+            fillResultsWithoutTires(vehicles.vehicles);
+          }
+    })
+    .fail(function(jqxhr, textStatus, errorThrown){
+        displayErrorInformation(jqxhr.responseText);
+    });
+}
+
+function fillResultsWithoutTires(vehicles) {
+    let value = 1;
+    vehicles.forEach(function(vehicle){
+        fillRowWithoutTires(vehicle, value);
+        value = value + 1;
+    });
+}
+
+function fillRowWithoutTires(vehicle, value) {
+    $("#vehicles-without-tires").append(
+        "<tr>" +
+            "<td class='align-middle'>" + value + "</td>" +
+            "<td class='align-middle'>" + vehicle.brandName + "</td>" +
+            "<td class='align-middle'>" + vehicle.modelName + " </td>" +
+            "<td class='align-middle'>" + vehicle.registrationNumber + "</td>" +
+        "</tr>"
+    );
+}
