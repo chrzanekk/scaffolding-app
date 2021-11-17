@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import pl.com.chrzanowski.scaffolding.domain.VehicleTiresData;
 import pl.com.chrzanowski.scaffolding.domain.VehicleTiresFilter;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
@@ -121,7 +122,7 @@ public class VehicleTiresJdbcRepository {
                 "JOIN tire_season ON (tires.season_id = tire_season.id)";
 
         if (filter != null) {
-            query += " WHERE 1+1";
+            query += " WHERE 1=1";
             if (filter.getId() != null) {
                 query += " AND vehicle_tires.id = '" + filter.getId() + "'";
             }
@@ -142,6 +143,12 @@ public class VehicleTiresJdbcRepository {
             }
         }
         return jdbcTemplate.queryForList(query);
+    }
+
+    public BigDecimal getMountedTireStatus(VehicleTiresFilter filter) {
+        String query = prepareQueryForTireStatus(filter, "m");
+        Long result = jdbcTemplate.queryForObject(query, (rs, rowNum) -> Long.valueOf(rs.getString("count")));
+        return BigDecimal.valueOf(result);
     }
 
     private Long createTire(VehicleTiresData data) {
@@ -183,4 +190,21 @@ public class VehicleTiresJdbcRepository {
 
         return commonJdbcRepository.getLastInsertedId();
     }
+
+    private String prepareQueryForTireStatus(VehicleTiresFilter filter, String status) {
+        String query = "SELECT COUNT(*) AS count FROM vehicle_tires";
+
+        if (filter != null) {
+            query += " WHERE 1=1";
+            if (filter.getId() != null) {
+                query += " AND vehicle_tires.id = '" + filter.getId() + "'";
+            }
+            if (filter.getVehicleId() != null) {
+                query += " AND vehicle_tires.status = '" + status + "'";
+            }
+        }
+    return query;
+    }
+
+
 }

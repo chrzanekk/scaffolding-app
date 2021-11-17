@@ -101,6 +101,25 @@ public class VehicleTiresData {
         this.isRunOnFlat = isRunOnFlat;
         this.seasonId = seasonId;
     }
+    public VehicleTiresData(VehicleTiresData data,
+                            String status
+    ) {
+        this.vehicleId = data.getVehicleId();
+        this.status = status;
+        this.productionYear = data.getProductionYear();
+        this.purchaseDate = data.getPurchaseDate();
+        this.brand = data.getBrand();
+        this.model = data.getModel();
+        this.width = data.getWidth();
+        this.profile = data.getProfile();
+        this.diameter = data.getDiameter();
+        this.type = data.getType();
+        this.speedIndex = data.getSpeedIndex();
+        this.capacityIndex = data.getCapacityIndex();
+        this.reinforced = data.getReinforced();
+        this.isRunOnFlat = data.isRunOnFlat();
+        this.seasonId = data.getSeasonId();
+    }
 
     public VehicleTiresData(Long id,
                             Long vehicleId,
@@ -138,6 +157,8 @@ public class VehicleTiresData {
         this.seasonId = seasonId;
         this.modifyDate = LocalDateTime.now();
     }
+
+
 
     public Long getId() {
         return id;

@@ -5,6 +5,7 @@ import pl.com.chrzanowski.scaffolding.domain.DictionaryData;
 import pl.com.chrzanowski.scaffolding.domain.VehicleTiresData;
 import pl.com.chrzanowski.scaffolding.domain.VehicleTiresFilter;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -35,7 +36,11 @@ public class VehicleTiresService implements IVehicleTires {
 
     @Override
     public void create(VehicleTiresData data) {
-        tiresJdbcRepository.create(data);
+        if(checkIsTiersMounted(new VehicleTiresFilter(data.getVehicleId()))){
+            tiresJdbcRepository.create(new VehicleTiresData(data, "s"));
+        }else {
+            tiresJdbcRepository.create(data);
+        }
     }
 
     @Override
@@ -98,6 +103,10 @@ public class VehicleTiresService implements IVehicleTires {
             }
         }
         return result;
+    }
+
+    private boolean checkIsTiersMounted(VehicleTiresFilter filter) {
+        return tiresJdbcRepository.getMountedTireStatus(filter).equals(BigDecimal.ONE);
     }
 
 }
