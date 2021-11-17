@@ -48,6 +48,7 @@ function fillRow(tire, value) {
             "<td class='align-middle'>" + tire.brand + "</td>" +
             "<td class='align-middle'>" + tire.model + " </td>" +
             "<td class='align-middle'>" + tire.seasonName + " </td>" +
+            "<td class='align-middle'>" + tire.status + " </td>" +
             "<td class='align-middle'>" + prepareDetailsButton(tire.id) + "</td>" +
         "</tr>"
     );
