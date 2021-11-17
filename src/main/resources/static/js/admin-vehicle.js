@@ -1,7 +1,12 @@
+var url = "/admin/api/scaffolding"
+var vehicleApiUrl = url + "/vehicle/"
+var vehicleTiresApiUrl = url +"/vehicle-tires-check/"
+
 
 $(document).ready(function () {
 
-fillRow(vehicle);
+findVehicle();
+checkTires();
 });
 
 
@@ -9,6 +14,27 @@ fillRow(vehicle);
 function showDeleteModal() {
     $('#delete-object-modal').modal('show');
 }
+
+function findVehicle() {
+    var id = getUrlId();
+    $.ajax({
+        url: vehicleApiUrl + id,
+        type: "get",
+        dataType: "json",
+        contentType: "application/json"
+    })
+    .done(function (vehicle) {
+        $('#first').empty();
+        $('#second').empty();
+        $('#third').empty();
+        $('#fourth').empty();
+        fillRow(vehicle.vehicle);
+    })
+    .fail(function(jqxhr, textStatus, errorThrown){
+        displayErrorInformation(jqxhr.responseText);
+    });
+}
+
 
 function fillRow(vehicle) {
     $('#first').append(
@@ -42,5 +68,32 @@ function fillRow(vehicle) {
 }
 
 function goToEditPage() {
-    window.location.href = "/admin/vehicle-edit/" + vehicle.id;
+    var id = getUrlId();
+    window.location.href = "/admin/vehicle-edit/" + id;
+}
+
+function checkTires() {
+    var id = getUrlId();
+    $.ajax({
+        url: vehicleTiresApiUrl + id,
+        type: "get",
+        dataType: "json",
+        contentType: "application/json"
+    })
+    .done(function (vehicle) {
+        $("#error-alert").hide();
+    })
+    .fail(function(jqxhr, textStatus, errorThrown){
+        showError(prepareErrorMessage(jqxhr.responseText));
+    });
+}
+
+
+function getUrlId(){
+    return window.location.pathname.substring(window.location.pathname.lastIndexOf('/') + 1);
+}
+
+function showError(text) {
+    $("#error-alert-text").text(text);
+    $("#error-alert").removeClass('d-none');
 }

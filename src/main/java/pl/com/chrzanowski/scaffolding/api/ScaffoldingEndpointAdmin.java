@@ -153,6 +153,14 @@ public class ScaffoldingEndpointAdmin {
         VehicleData vehicle = vehicles.findById(new VehicleFilter(id));
         return new VehicleRequestGetResponse(vehicleToResponse(vehicle));
     }
+    @GetMapping(path = "/vehicle-tires-check/{id}", produces = "application/json; charset=UTF-8")
+    public VehicleRequestGetResponse vehicleTiresCheck(
+            @PathVariable Long id) {
+        VehicleData vehicle = vehicles.findByIdAndCheckTires(new VehicleFilter(id));
+        return new VehicleRequestGetResponse(vehicleToResponse(vehicle));
+    }
+
+
 
     @PostMapping(path = "/vehicle", consumes = "application/json; charset=UTF-8")
     public void addVehicle(@RequestBody VehiclePostRequest request) {

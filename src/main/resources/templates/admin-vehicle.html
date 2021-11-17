@@ -6,10 +6,6 @@
     <div th:replace="fragments/head"></div>
     <script th:src="@{/js/admin-vehicle.js}"></script>
     <script th:inline="javascript">
-        var vehicle = [[${vehicle}]];
-
-
-
     </script>
 </head>
 
@@ -20,11 +16,11 @@
     <div class="text-center">
         <h4 th:text="#{vehicle.details}"></h4>
     </div>
-    <div id="error-alert" class="alert alert-danger text-center d-none mt-3" role="alert">
-        <h4 id="error-alert-text" class="alert-heading"></h4>
-    </div>
     <form class="bg-light p-5 border">
         <div id="result-container" class="my4">
+            <div id="error-alert" class="alert alert-danger text-center d-none mt-3" role="alert">
+                <h4 id="error-alert-text" class="alert-heading"></h4>
+            </div>
             <div class="table-responsive mb-0 pb-0">
                 <table class="table bg-light table-bordered table-hover table-sm">
                     <thead class="thead-light">

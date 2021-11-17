@@ -11,5 +11,6 @@ public interface IVehicles {
     VehicleData findById(VehicleFilter filter);
     Long add(VehicleData data);
     void update(VehicleData data);
+    VehicleData findByIdAndCheckTires(VehicleFilter filter);
 
 }

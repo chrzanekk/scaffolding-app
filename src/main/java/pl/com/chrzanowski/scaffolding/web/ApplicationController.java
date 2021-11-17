@@ -240,12 +240,12 @@ public class ApplicationController {
             throw new IllegalArgumentException("Access denied");
         }
 
-        Language lang = LanguagesUtil.getCurrentLanguage();
+//        Language lang = LanguagesUtil.getCurrentLanguage();
 
-        model.addAttribute("vehicle", vehicles.findById(new VehicleFilter(id)));
-        model.addAttribute("languageDict", dictionariesService.getDictionary(DictionaryType.LANGUAGES, lang));
-        model.addAttribute("fuelTypes", dictionariesService.getDictionary(DictionaryType.FUEL_TYPES, lang));
-        model.addAttribute("vehicleTypes", dictionariesService.getDictionary(DictionaryType.VEHICLE_TYPES, lang));
+//        model.addAttribute("vehicle", vehicles.findById(new VehicleFilter(id)));
+//        model.addAttribute("languageDict", dictionariesService.getDictionary(DictionaryType.LANGUAGES, lang));
+//        model.addAttribute("fuelTypes", dictionariesService.getDictionary(DictionaryType.FUEL_TYPES, lang));
+//        model.addAttribute("vehicleTypes", dictionariesService.getDictionary(DictionaryType.VEHICLE_TYPES, lang));
 
 
         return "admin-vehicle";

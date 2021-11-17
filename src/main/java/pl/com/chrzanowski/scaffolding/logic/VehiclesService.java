@@ -50,6 +50,12 @@ public class VehiclesService implements IVehicles {
                 data);
     }
 
+
+    public VehicleData findByIdAndCheckTires(VehicleFilter filter) {
+        validateVehicleTires(filter);
+        return findById(filter);
+    }
+
     public List<VehicleData> findWithoutTires(VehicleFilter filter) {
         return getVehicles(vehiclesJdbcRepository.findWithoutTires(filter));
     }
