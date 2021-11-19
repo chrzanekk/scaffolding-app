@@ -96,7 +96,7 @@ public class VehicleTiresJdbcRepository {
                 data.getTireId());
     }
 
-    List<Map<String, Object>> find (VehicleTiresFilter filter) {
+    List<Map<String, Object>> find(VehicleTiresFilter filter) {
         String query = "SELECT\n" +
                 "vehicle_tires.id AS id,\n" +
                 "vehicle_tires.vehicle_id AS vehicleId,\n" +
@@ -203,7 +203,7 @@ public class VehicleTiresJdbcRepository {
                 query += " AND vehicle_tires.status = '" + status + "'";
             }
         }
-    return query;
+        return query;
     }
 
 

@@ -22,7 +22,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.sql.SQLException;
 
 @Controller
 public class ApplicationController {
@@ -301,7 +300,7 @@ public class ApplicationController {
 
         Language lang = LanguagesUtil.getCurrentLanguage();
 
-        model.addAttribute("tire", vehicleTires.findById(new VehicleTiresFilter(tireId)));
+        model.addAttribute("tire", vehicleTires.getTire(new VehicleTiresFilter(tireId)));
         model.addAttribute("vehicle", vehicles.findById(new VehicleFilter(vehicleId)));
         model.addAttribute("yesNoDict", dictionariesService.getDictionary(DictionaryType.YES_NO, lang));
         model.addAttribute("speedIndex", dictionariesService.getDictionary(DictionaryType.TIRE_SPEED_INDEXES, lang));
@@ -323,7 +322,7 @@ public class ApplicationController {
 
         Language lang = LanguagesUtil.getCurrentLanguage();
 
-        model.addAttribute("tire", vehicleTires.findById(new VehicleTiresFilter(id)));
+        model.addAttribute("tire", vehicleTires.getTire(new VehicleTiresFilter(id)));
         model.addAttribute("vehicle", vehicles.findById(new VehicleFilter(vehicleId)));
         model.addAttribute("yesNoDict", dictionariesService.getDictionary(DictionaryType.YES_NO, lang));
         model.addAttribute("speedIndex", dictionariesService.getDictionary(DictionaryType.TIRE_SPEED_INDEXES, lang));
