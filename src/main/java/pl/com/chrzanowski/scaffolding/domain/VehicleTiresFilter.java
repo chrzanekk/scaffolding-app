@@ -42,6 +42,12 @@ public class VehicleTiresFilter {
         this.pageSize = pageSize;
     }
 
+    public VehicleTiresFilter(Long id, Long vehicleId, String status) {
+        this.id = id;
+        this.vehicleId = vehicleId;
+        this.status = status;
+    }
+
     public VehicleTiresFilter() {
     }
 

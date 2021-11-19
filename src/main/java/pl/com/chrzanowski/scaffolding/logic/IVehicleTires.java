@@ -8,7 +8,7 @@ import java.util.List;
 public interface IVehicleTires {
 
     List<VehicleTiresData> find(VehicleTiresFilter filter);
-    VehicleTiresData findById(VehicleTiresFilter filter);
+    VehicleTiresData getTire(VehicleTiresFilter filter);
     void create(VehicleTiresData data);
     void update(VehicleTiresData data);
     void updateTire(VehicleTiresData data);

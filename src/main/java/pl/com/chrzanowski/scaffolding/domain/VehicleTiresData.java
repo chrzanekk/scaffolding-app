@@ -104,6 +104,8 @@ public class VehicleTiresData {
     public VehicleTiresData(VehicleTiresData data,
                             String status
     ) {
+        this.id = data.getId();
+        this.tireId = data.getTireId();
         this.vehicleId = data.getVehicleId();
         this.status = status;
         this.productionYear = data.getProductionYear();
@@ -119,6 +121,7 @@ public class VehicleTiresData {
         this.reinforced = data.getReinforced();
         this.isRunOnFlat = data.isRunOnFlat();
         this.seasonId = data.getSeasonId();
+        this.modifyDate = LocalDateTime.now();
     }
 
     public VehicleTiresData(Long id,

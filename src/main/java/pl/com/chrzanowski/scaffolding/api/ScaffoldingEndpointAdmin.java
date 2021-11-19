@@ -32,6 +32,7 @@ public class ScaffoldingEndpointAdmin {
     private VehiclesBrandsAndModelsService vehiclesBrandsAndModelsService;
     private IVehicleTires vehicleTires;
     private WorkshopServiceTypeService workshopServiceTypeService;
+    private DictionariesService dictionariesService;
 
     public ScaffoldingEndpointAdmin(UserService userService,
                                     NotificationsFromPanelService notificationsFromPanelService,
@@ -46,7 +47,8 @@ public class ScaffoldingEndpointAdmin {
                                     IVehicleBrands vehicleBrands,
                                     VehiclesBrandsAndModelsService vehiclesBrandsAndModelsService,
                                     IVehicleTires vehicleTires,
-                                    WorkshopServiceTypeService workshopServiceTypeService) {
+                                    WorkshopServiceTypeService workshopServiceTypeService,
+                                    DictionariesService dictionariesService) {
         this.userService = userService;
         this.notificationsFromPanelService = notificationsFromPanelService;
         this.vehicles = vehicles;
@@ -61,6 +63,7 @@ public class ScaffoldingEndpointAdmin {
         this.vehicleBrands = vehicleBrands;
         this.vehicleTires = vehicleTires;
         this.workshopServiceTypeService = workshopServiceTypeService;
+        this.dictionariesService = dictionariesService;
     }
 
     @GetMapping("/users")
@@ -278,7 +281,7 @@ public class ScaffoldingEndpointAdmin {
     @GetMapping(path = "/vehicles/{vehicleId}/tires/{tireId}", produces = "application/json; charset=UTF-8")
     public VehicleTireRequestGetResponse tireById(@PathVariable Long vehicleId,
                                                   @PathVariable Long tireId) {
-        VehicleTiresData tire = vehicleTires.findById(new VehicleTiresFilter(tireId, vehicleId));
+        VehicleTiresData tire = vehicleTires.getTire(new VehicleTiresFilter(tireId, vehicleId));
         return new VehicleTireRequestGetResponse(tireToResponse(tire));
     }
 
@@ -725,6 +728,29 @@ public class ScaffoldingEndpointAdmin {
             ));
         }
         return list;
+    }
+
+    private String convertRunOnFlat(Boolean condition) {
+        Language lang = LanguagesUtil.getCurrentLanguage();
+        List<DictionaryData> yesNo = dictionariesService.getDictionary(DictionaryType.YES_NO, lang);
+        String result = "";
+        if (condition.equals(true)) {
+            result = yesNo.get(0).getValue();
+        } else {
+            result = yesNo.get(1).getValue();
+        }
+        return result;
+    }
+
+    private String convertTireStatus(String status) {
+        String result = "";
+        List<DictionaryData> tireStatus = dictionariesService.getDictionary(DictionaryType.TIRE_STATUS, LanguagesUtil.getCurrentLanguage());
+        for (DictionaryData data : tireStatus) {
+            if (data.getCode().equals(status)) {
+                result = data.getValue();
+            }
+        }
+        return result;
     }
 
 }

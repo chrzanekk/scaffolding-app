@@ -5,7 +5,6 @@ import pl.com.chrzanowski.scaffolding.domain.DictionaryData;
 import pl.com.chrzanowski.scaffolding.domain.VehicleTiresData;
 import pl.com.chrzanowski.scaffolding.domain.VehicleTiresFilter;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -30,17 +29,18 @@ public class VehicleTiresService implements IVehicleTires {
     }
 
     @Override
-    public VehicleTiresData findById(VehicleTiresFilter filter) {
+    public VehicleTiresData getTire(VehicleTiresFilter filter) {
         return getTires(tiresJdbcRepository.find(filter)).get(0);
     }
 
+
     @Override
     public void create(VehicleTiresData data) {
-        if(checkIsTiersMounted(new VehicleTiresFilter(data.getVehicleId()))){
-            tiresJdbcRepository.create(new VehicleTiresData(data, "s"));
-        }else {
-            tiresJdbcRepository.create(data);
+        if (checkIsTiresMounted(new VehicleTiresFilter(null, data.getVehicleId(), "m"))) {
+            VehicleTiresData existingMountedTire = getTire(new VehicleTiresFilter(null, data.getVehicleId(), "m"));
+            tiresJdbcRepository.update(new VehicleTiresData(existingMountedTire, "s"));
         }
+        tiresJdbcRepository.create(data);
     }
 
     @Override
@@ -77,14 +77,14 @@ public class VehicleTiresService implements IVehicleTires {
                     getLong(row, "seasonId"),
                     getString(row, "seasonName"),
                     convertRunOnFlat(getBoolean(row, "runOnFlat"))
-                    ));
+            ));
         }
         return list;
     }
 
     private String convertRunOnFlat(Boolean condition) {
         Language lang = LanguagesUtil.getCurrentLanguage();
-        List<DictionaryData> yesNo = dictionariesService.getDictionary(DictionaryType.YES_NO,lang);
+        List<DictionaryData> yesNo = dictionariesService.getDictionary(DictionaryType.YES_NO, lang);
         String result = "";
         if (condition.equals(true)) {
             result = yesNo.get(0).getValue();
@@ -96,17 +96,18 @@ public class VehicleTiresService implements IVehicleTires {
 
     private String convertTireStatus(String status) {
         String result = "";
-        List<DictionaryData> tireStatus = dictionariesService.getDictionary(DictionaryType.TIRE_STATUS,LanguagesUtil.getCurrentLanguage());
-        for(DictionaryData data : tireStatus) {
-            if(data.getCode().equals(status)) {
+        List<DictionaryData> tireStatus = dictionariesService.getDictionary(DictionaryType.TIRE_STATUS, LanguagesUtil.getCurrentLanguage());
+        for (DictionaryData data : tireStatus) {
+            if (data.getCode().equals(status)) {
                 result = data.getValue();
             }
         }
         return result;
     }
 
-    private boolean checkIsTiersMounted(VehicleTiresFilter filter) {
-        return tiresJdbcRepository.getMountedTireStatus(filter).equals(BigDecimal.ONE);
+    private boolean checkIsTiresMounted(VehicleTiresFilter filter) {
+        VehicleTiresData existingTire = getTire(filter);
+        return existingTire.getStatus().equals(convertTireStatus("m"));
     }
 
 }
