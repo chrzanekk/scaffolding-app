@@ -11,7 +11,7 @@ public class VehicleGetResponse {
     private String registrationNumber;
     private String vin;
     private Integer productionYear;
-    private LocalDate firstRegistrationDate;
+    private String firstRegistrationDate;
     private Integer freePlacesForTechnicalInspections;
     private Long fuelTypeId;
     private Long vehicleTypeId;
@@ -45,7 +45,7 @@ public class VehicleGetResponse {
         this.registrationNumber = registrationNumber;
         this.vin = vin;
         this.productionYear = productionYear;
-        this.firstRegistrationDate = firstRegistrationDate;
+        this.firstRegistrationDate = firstRegistrationDate.toString();
         this.freePlacesForTechnicalInspections = freePlacesForTechnicalInspections;
         this.brandName = brandName;
         this.modelName = modelName;
@@ -56,6 +56,12 @@ public class VehicleGetResponse {
         this.height = height;
     }
 
+    public VehicleGetResponse(Long id, String registrationNumber, String brandName, String modelName) {
+        this.id = id;
+        this.registrationNumber = registrationNumber;
+        this.brandName = brandName;
+        this.modelName = modelName;
+    }
 
     public Long getId() {
         return id;
@@ -73,7 +79,7 @@ public class VehicleGetResponse {
         return productionYear;
     }
 
-    public LocalDate getFirstRegistrationDate() {
+    public String getFirstRegistrationDate() {
         return firstRegistrationDate;
     }
 

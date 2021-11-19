@@ -57,7 +57,7 @@ public class VehiclesService implements IVehicles {
     }
 
     public List<VehicleData> findWithoutTires(VehicleFilter filter) {
-        return getVehicles(vehiclesJdbcRepository.findWithoutTires(filter));
+        return getVehiclesWithoutTires(vehiclesJdbcRepository.findWithoutTires(filter));
     }
 
     private List<VehicleData> getVehicles(List<Map<String, Object>> data) {
@@ -79,6 +79,18 @@ public class VehiclesService implements IVehicles {
                     getFloat(row,"length"),
                     getFloat(row,"width"),
                     getFloat(row,"height")
+            ));
+        }
+        return list;
+    }
+    private List<VehicleData> getVehiclesWithoutTires(List<Map<String, Object>> data) {
+        List<VehicleData> list = new ArrayList<>();
+        for (Map<String, Object> row : data) {
+            list.add(new VehicleData(
+                    getLong(row, "id"),
+                    getString(row, "brand"),
+                    getString(row, "model"),
+                    getString(row, "registration_number")
             ));
         }
         return list;

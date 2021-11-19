@@ -147,7 +147,7 @@ public class ScaffoldingEndpointAdmin {
     @GetMapping(path = "/vehicles-without-tires", produces = "application/json; charset=UTF-8")
     public VehiclesRequestGetResponse vehiclesWithoutTires() {
         List<VehicleData> vehicleList = vehicles.findWithoutTires(new VehicleFilter());
-        return new VehiclesRequestGetResponse(vehiclesToResponse(vehicleList));
+        return new VehiclesRequestGetResponse(vehiclesWithoutTiresToResponse(vehicleList));
     }
 
     @GetMapping(path = "/vehicle/{id}", produces = "application/json; charset=UTF-8")
@@ -528,6 +528,19 @@ public class ScaffoldingEndpointAdmin {
         return list;
     }
 
+    private List<VehicleGetResponse> vehiclesWithoutTiresToResponse(List<VehicleData> vehicles) {
+        List<VehicleGetResponse> list = new ArrayList<>();
+        for (VehicleData vehicle : vehicles) {
+            list.add(new VehicleGetResponse(
+                    vehicle.getId(),
+                    vehicle.getBrandName(),
+                    vehicle.getModelName(),
+                    vehicle.getRegistrationNumber()
+            ));
+        }
+        return list;
+    }
+
     private VehicleGetResponse vehicleToResponse(VehicleData vehicleData) {
         return new VehicleGetResponse(
                 vehicleData.getId(),
@@ -671,10 +684,11 @@ public class ScaffoldingEndpointAdmin {
                     data.getWidth(),
                     data.getProfile(),
                     data.getDiameter(),
+                    data.getType(),
                     data.getSpeedIndex(),
                     data.getCapacityIndex(),
                     data.getReinforced(),
-                    data.isRunOnFlat(),
+                    data.getRunOnFlat(),
                     data.getSeasonId(),
                     data.getSeasonName()
             ));
@@ -695,10 +709,11 @@ public class ScaffoldingEndpointAdmin {
                 data.getWidth(),
                 data.getProfile(),
                 data.getDiameter(),
+                data.getType(),
                 data.getSpeedIndex(),
                 data.getCapacityIndex(),
                 data.getReinforced(),
-                data.isRunOnFlat(),
+                data.getRunOnFlat(),
                 data.getSeasonId(),
                 data.getSeasonName()
         );
@@ -730,29 +745,6 @@ public class ScaffoldingEndpointAdmin {
             ));
         }
         return list;
-    }
-
-    private String convertRunOnFlat(Boolean condition) {
-        Language lang = LanguagesUtil.getCurrentLanguage();
-        List<DictionaryData> yesNo = dictionariesService.getDictionary(DictionaryType.YES_NO, lang);
-        String result = "";
-        if (condition.equals(true)) {
-            result = yesNo.get(0).getValue();
-        } else {
-            result = yesNo.get(1).getValue();
-        }
-        return result;
-    }
-
-    private String convertTireStatus(String status) {
-        String result = "";
-        List<DictionaryData> tireStatus = dictionariesService.getDictionary(DictionaryType.TIRE_STATUS, LanguagesUtil.getCurrentLanguage());
-        for (DictionaryData data : tireStatus) {
-            if (data.getCode().equals(status)) {
-                result = data.getValue();
-            }
-        }
-        return result;
     }
 
 }

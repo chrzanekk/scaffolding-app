@@ -19,7 +19,7 @@ function findVehicle() {
     var id = getUrlId();
     $.ajax({
         url: vehicleApiUrl + id,
-        type: "get",
+        type: "GET",
         dataType: "json",
         contentType: "application/json"
     })

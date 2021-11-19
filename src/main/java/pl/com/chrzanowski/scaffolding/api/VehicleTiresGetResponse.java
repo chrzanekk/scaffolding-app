@@ -10,17 +10,18 @@ public class VehicleTiresGetResponse {
     private Long tireId;
     private String status;
     private Integer productionYear;
-    private LocalDate purchaseDate;
+    private String purchaseDate;
 
     private String brand;
     private String model;
     private Integer width;
     private Integer profile;
     private Integer diameter;
+    private String type;
     private String speedIndex;
     private Integer capacityIndex;
     private String reinforced;
-    private Boolean runOnFlat;
+    private String runOnFlat;
     private Long seasonId;
     private String seasonName;
 
@@ -39,10 +40,11 @@ public class VehicleTiresGetResponse {
                                    Integer width,
                                    Integer profile,
                                    Integer diameter,
+                                   String type,
                                    String speedIndex,
                                    Integer capacityIndex,
                                    String reinforced,
-                                   Boolean runOnFlat,
+                                   String runOnFlat,
                                    Long seasonId,
                                    String seasonName) {
         this.id = id;
@@ -50,12 +52,13 @@ public class VehicleTiresGetResponse {
         this.tireId = tireId;
         this.status = status;
         this.productionYear = productionYear;
-        this.purchaseDate = purchaseDate;
+        this.purchaseDate = purchaseDate.toString();
         this.brand = brand;
         this.model = model;
         this.width = width;
         this.profile = profile;
         this.diameter = diameter;
+        this.type = type;
         this.speedIndex = speedIndex;
         this.capacityIndex = capacityIndex;
         this.reinforced = reinforced;
@@ -84,7 +87,7 @@ public class VehicleTiresGetResponse {
         return productionYear;
     }
 
-    public LocalDate getPurchaseDate() {
+    public String getPurchaseDate() {
         return purchaseDate;
     }
 
@@ -108,6 +111,10 @@ public class VehicleTiresGetResponse {
         return diameter;
     }
 
+    public String getType() {
+        return type;
+    }
+
     public String getSpeedIndex() {
         return speedIndex;
     }
@@ -120,7 +127,7 @@ public class VehicleTiresGetResponse {
         return reinforced;
     }
 
-    public Boolean getRunOnFlat() {
+    public String getRunOnFlat() {
         return runOnFlat;
     }
 

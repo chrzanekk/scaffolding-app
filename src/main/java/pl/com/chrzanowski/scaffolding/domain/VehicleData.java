@@ -150,6 +150,13 @@ public class VehicleData {
         return id;
     }
 
+    public VehicleData(Long id, String registrationNumber, String brandName, String modelName) {
+        this.id = id;
+        this.registrationNumber = registrationNumber;
+        this.brandName = brandName;
+        this.modelName = modelName;
+    }
+
     public VehicleBrandData getBrand() {
         return brand;
     }

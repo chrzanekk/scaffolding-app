@@ -1,9 +1,9 @@
 var url = "/admin/api/scaffolding"
 var vehicleApiUrl = url + "/vehicles/"
-var tireApiUrl = url + "/tires/"
+var tireApiUrl = "/tires/"
 $(document).ready(function () {
 
-fillRow(tire);
+findTire();
 });
 
 
@@ -13,8 +13,9 @@ function showDeleteModal() {
 }
 
 function findTire() {
+    var id = getUrlId();
     $.ajax({
-        url:  vehicleApiUrl + vehicle.id + tireApiUrl + tire.id,
+        url:  vehicleApiUrl + vehicle.id + tireApiUrl + id,
         type: "GET",
         dataType: "json",
         contentType: "application/json"
@@ -68,6 +69,10 @@ function fillRow(tire) {
 }
 
 function goToEditPage() {
-    window.location.href = "/admin/tire-edit/" + tire.id;
+    var id = getUrlId();
+    window.location.href = "/admin/tire-edit/" + id;
 }
 
+function getUrlId(){
+    return window.location.pathname.substring(window.location.pathname.lastIndexOf('/') + 1);
+}
