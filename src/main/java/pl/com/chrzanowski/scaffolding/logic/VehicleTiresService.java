@@ -36,15 +36,13 @@ public class VehicleTiresService implements IVehicleTires {
 
     @Override
     public void create(VehicleTiresData data) {
-        if (checkIsTiresMounted(new VehicleTiresFilter(null, data.getVehicleId(), "m"))) {
-            VehicleTiresData existingMountedTire = getTire(new VehicleTiresFilter(null, data.getVehicleId(), "m"));
-            tiresJdbcRepository.update(new VehicleTiresData(existingMountedTire, "s"));
-        }
+        checkMountStatusAndUpdateToStocked(data);
         tiresJdbcRepository.create(data);
     }
 
     @Override
     public void update(VehicleTiresData data) {
+        checkMountStatusAndUpdateToStocked(data);
         tiresJdbcRepository.updateTire(data);
         tiresJdbcRepository.update(data);
     }
@@ -80,6 +78,13 @@ public class VehicleTiresService implements IVehicleTires {
             ));
         }
         return list;
+    }
+
+    private void checkMountStatusAndUpdateToStocked(VehicleTiresData data) {
+        if (checkIsTiresMounted(new VehicleTiresFilter(null, data.getVehicleId(), "m"))) {
+            VehicleTiresData existingMountedTire = getTire(new VehicleTiresFilter(null, data.getVehicleId(), "m"));
+            tiresJdbcRepository.update(new VehicleTiresData(existingMountedTire, "s"));
+        }
     }
 
     private String convertRunOnFlat(Boolean condition) {

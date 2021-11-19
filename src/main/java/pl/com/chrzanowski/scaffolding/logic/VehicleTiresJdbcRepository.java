@@ -197,7 +197,7 @@ public class VehicleTiresJdbcRepository {
         if (filter != null) {
             query += " WHERE 1=1";
             if (filter.getId() != null) {
-                query += " AND vehicle_tires.id = '" + filter.getId() + "'";
+                query += " AND vehicle_tires.vehicle_id = '" + filter.getVehicleId() + "'";
             }
             if (filter.getVehicleId() != null) {
                 query += " AND vehicle_tires.status = '" + status + "'";

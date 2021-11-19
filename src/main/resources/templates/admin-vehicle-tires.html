@@ -13,6 +13,7 @@
         var loadIndex = [[${loadIndex}]];
         var tireSeason = [[${tireSeason}]];
         var tireStatus = [[${tireStatus}]];
+        var tireOldStatus = [[${tireOldStatus}]];
         var reinforced = [[${reinforced}]];
 
 
@@ -172,6 +173,9 @@
     </div>
 </div>
 
+
+<div th:replace="fragments/operation-successful-modal :: modal"></div>
+<div th:replace="fragments/operation-change-tire-status :: modal"></div>
 <div th:replace="fragments/pagination :: pagination"></div>
 
 </body>

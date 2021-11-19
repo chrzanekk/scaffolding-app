@@ -1,4 +1,5 @@
 var url = "/admin/api/scaffolding"
+
 var tiresApiUrl = url + "/tires?"
 var vehicleTiresApiUrl = url + "/vehicles/"
 var tiresApiUrl = "/tires"
@@ -109,7 +110,8 @@ function sendCreateRequest() {
                 reinforced: $("#create-reinforced").val(),
                 runOnFlat: $("#create-run-on-flat").val(),
                 seasonId: $("#create-season").val(),
-                status: $("#create-status").val()
+                status: $("#create-status").val(),
+
         })
     })
         .done(function () {
@@ -138,4 +140,23 @@ function sendDeleteRequest(){
 //        });
 }
 
+function findMountedTire() {
+    $.ajax({
+        url:  vehicleTiresApiUrl + vehicle.id + tiresApiUrl + "?status=m",
+        type: "GET",
+        dataType: "json",
+        contentType: "application/json"
+    })
+    .done(function (tires) {
+        if(tires.tires.length) {
+            showChangeNotification();
+        }
+    })
+    .fail(function(jqxhr, textStatus, errorThrown){
+        displayErrorInformation(jqxhr.responseText);
+    });
+}
 
+function showChangeNotification() {
+    $("#operation-change-tire-status").modal('show');
+}

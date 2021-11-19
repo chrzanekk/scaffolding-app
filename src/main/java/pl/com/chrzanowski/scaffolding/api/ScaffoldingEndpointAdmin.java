@@ -156,13 +156,13 @@ public class ScaffoldingEndpointAdmin {
         VehicleData vehicle = vehicles.findById(new VehicleFilter(id));
         return new VehicleRequestGetResponse(vehicleToResponse(vehicle));
     }
+
     @GetMapping(path = "/vehicle-tires-check/{id}", produces = "application/json; charset=UTF-8")
     public VehicleRequestGetResponse vehicleTiresCheck(
             @PathVariable Long id) {
         VehicleData vehicle = vehicles.findByIdAndCheckTires(new VehicleFilter(id));
         return new VehicleRequestGetResponse(vehicleToResponse(vehicle));
     }
-
 
 
     @PostMapping(path = "/vehicle", consumes = "application/json; charset=UTF-8")
@@ -272,9 +272,10 @@ public class ScaffoldingEndpointAdmin {
 
     @GetMapping(path = "/vehicles/{id}/tires", produces = "application/json; charset=UTF-8")
     public VehicleTiresRequestGetResponse tiresByVehicleId(@PathVariable Long id,
+                                                           @RequestParam(name = "status", required = false) String status,
                                                            @RequestParam(name = "page", required = false, defaultValue = "1") Long page,
                                                            @RequestParam(name = "page_size", required = false, defaultValue = "10") Long pageSize) {
-        List<VehicleTiresData> tires = vehicleTires.find(new VehicleTiresFilter(id, page, pageSize));
+        List<VehicleTiresData> tires = vehicleTires.find(new VehicleTiresFilter(id, status, page, pageSize));
         return new VehicleTiresRequestGetResponse(tiresToResponse(tires));
     }
 
@@ -304,9 +305,11 @@ public class ScaffoldingEndpointAdmin {
                 request.getReinforced(),
                 request.getRunOnFlat(),
                 request.getSeasonId(),
-                request.getStatus()
+                request.getStatus(),
+                request.getOldStatus()
         ));
     }
+
     @PutMapping(path = "/vehicles/{vehicleId}/tires/{tireId}", consumes = "application/json; charset=UTF-8")
     public void updateTires(@PathVariable Long tireId,
                             @PathVariable Long vehicleId,
@@ -329,9 +332,8 @@ public class ScaffoldingEndpointAdmin {
                 request.getReinforced(),
                 request.getRunOnFlat(),
                 request.getSeasonId()
-                ));
+        ));
     }
-
 
 
     @GetMapping(path = "/fuel-types", produces = "application/json; charset=UTF-8")
@@ -398,7 +400,7 @@ public class ScaffoldingEndpointAdmin {
                 request.getCarMileage(),
                 request.getServiceDate(),
                 request.getInvoiceNumber(),
-                new BigDecimal(request.getInvoiceGrossValue()).setScale(2,RoundingMode.HALF_EVEN),
+                new BigDecimal(request.getInvoiceGrossValue()).setScale(2, RoundingMode.HALF_EVEN),
                 request.getWorkshopId(),
                 request.getServiceActionTypeId(),
                 request.getServiceActionDescription()

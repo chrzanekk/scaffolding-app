@@ -1,0 +1,35 @@
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <script th:src="@{/js/admin-vehicle-tires.js}"></script>
+    <script th:inline="javascript">
+        var tireOldStatus = [[${tireOldStatus}]];
+    </script>
+</head>
+
+<body>
+
+<div th:fragment="modal" class="modal" id="operation-change-tire-status">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content bg-green p-2">
+            <div class="modal-body w-100">
+                <button type="button" class="close">&times;</button>
+                <p></p>
+                <div class="form-group">
+                    <label for="update-tire-status" th:text="#{vehicle.tires.status.change}"></label>
+                    <select id="update-tire-status" class="form-control">
+                        <option th:each="option : ${tireOldStatus}"
+                                th:value="${option.code}"
+                                th:text="${option.value}">
+                        </option>
+                    </select>
+                </div>
+                <button type="button" class="btn btn-success" onclick="sendCreateRequest()"
+                        th:text="#{vehicle.tires.update}"></button>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

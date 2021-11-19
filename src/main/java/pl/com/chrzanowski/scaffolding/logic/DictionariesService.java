@@ -72,6 +72,8 @@ public class DictionariesService {
             return getModels(lang);
         } else if (TIRE_STATUS == type) {
             return getTireStatus(lang);
+        } else if (TIRE_OLD_STATUS == type) {
+            return getOldTireStatus(lang);
         } else if (TIRE_SPEED_INDEXES == type) {
             return getTireSpeedIndexes(lang);
         } else if (TIRE_CAPACITY_INDEXES == type) {
@@ -236,6 +238,20 @@ public class DictionariesService {
             list.add(new DictionaryData(VehicleTiresStatus.DISPOSED.getCode(), "Zutylizowane", lang.getCode()));
         } else if (Language.US == lang || Language.EN == lang) {
             list.add(new DictionaryData(VehicleTiresStatus.MOUNTED.getCode(), "Mounted", lang.getCode()));
+            list.add(new DictionaryData(VehicleTiresStatus.STOKED.getCode(), "Stoked", lang.getCode()));
+            list.add(new DictionaryData(VehicleTiresStatus.DISPOSED.getCode(), "Disposed", lang.getCode()));
+        }
+        return list;
+    }
+
+    private List<DictionaryData> getOldTireStatus(Language lang) {
+
+        List<DictionaryData> list = new ArrayList<>();
+
+        if (Language.PL == lang) {
+            list.add(new DictionaryData(VehicleTiresStatus.STOKED.getCode(), "W magazynie", lang.getCode()));
+            list.add(new DictionaryData(VehicleTiresStatus.DISPOSED.getCode(), "Zutylizowane", lang.getCode()));
+        } else if (Language.US == lang || Language.EN == lang) {
             list.add(new DictionaryData(VehicleTiresStatus.STOKED.getCode(), "Stoked", lang.getCode()));
             list.add(new DictionaryData(VehicleTiresStatus.DISPOSED.getCode(), "Disposed", lang.getCode()));
         }

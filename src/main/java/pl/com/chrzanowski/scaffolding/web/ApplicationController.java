@@ -307,6 +307,7 @@ public class ApplicationController {
         model.addAttribute("capacityIndex", dictionariesService.getDictionary(DictionaryType.TIRE_CAPACITY_INDEXES, lang));
         model.addAttribute("tireSeason", dictionariesService.getDictionary(DictionaryType.TIRE_SEASONS, lang));
         model.addAttribute("tireStatus", dictionariesService.getDictionary(DictionaryType.TIRE_STATUS, lang));
+        model.addAttribute("tireOldStatus", dictionariesService.getDictionary(DictionaryType.TIRE_OLD_STATUS, lang));
         model.addAttribute("tireType", dictionariesService.getDictionary(DictionaryType.TIRE_TYPE, lang));
         model.addAttribute("reinforced", dictionariesService.getDictionary(DictionaryType.TIRE_REINFORCED, lang));
         model.addAttribute("languageDict", dictionariesService.getDictionary(DictionaryType.LANGUAGES, lang));

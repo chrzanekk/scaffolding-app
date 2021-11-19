@@ -9,6 +9,7 @@ public class VehicleTiresPostRequest {
     private Long vehicleId;
     private Long tireId;
     private String status;
+    private String oldStatus;
     private Integer productionYear;
     private LocalDate purchaseDate;
 
@@ -46,6 +47,10 @@ public class VehicleTiresPostRequest {
 
     public String getStatus() {
         return status;
+    }
+
+    public String getOldStatus() {
+        return oldStatus;
     }
 
     public Integer getProductionYear() {
