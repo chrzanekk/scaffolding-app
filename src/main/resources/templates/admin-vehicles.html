@@ -113,7 +113,7 @@
 
 
 <div class="modal fade" id="create-modal" tabindex="-1" role="dialog">
-    <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel" th:text="#{vehicle.add.new}"></h5>
@@ -123,85 +123,225 @@
             </div>
             <div class="modal-body">
                 <form class="text-center">
-                    <div class="form-group">
-                        <label for="create-brand" th:text="#{vehicle.details.brand}"></label>
-                        <select id="create-brand" class="form-control" onchange="reloadModels()">
-                            <option value="">---</option>
-                            <option th:each="brand : ${brands}"
-                                    th:value="${brand.id}"
-                                    th:text="${brand.value}">
 
-                            </option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="create-model" th:text="#{vehicle.details.model}"></label>
-                        <select id="create-model" type="search" class="form-control">
-                            <option value="">---</option>
-                            <option th:each="model : ${models}"
-                                    th:value="${model.id}"
-                                    th:text="${model.value}">
 
-                            </option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="create-registration-number" th:text="#{vehicle.details.registrationNumber}"></label>
-                        <input id="create-registration-number" type="text" class="form-control">
-                    </div>
-                    <div class="form-group">
-                        <label for="create-vin" th:text="#{vehicle.details.vin}"></label>
-                        <input id="create-vin" type="text" class="form-control">
-                    </div>
-                    <div class="form-group">
-                        <label for="create-production-year" th:text="#{vehicle.details.productionYear}"></label>
-                        <input id="create-production-year" type="number" min="1995" max="2021" class="form-control">
-                    </div>
-                    <div class="form-group">
-                        <label for="create-first-registration-date"
-                               th:text="#{vehicle.details.firstRegistrationDate}"></label>
-                        <input id="create-first-registration-date" type="date" class="form-control">
-                    </div>
-                    <div class="form-group">
-                        <label for="create-free-places-for-technical-inspections"
-                               th:text="#{vehicle.details.freePlacesForTechnicalInspections}"></label>
-                        <input id="create-free-places-for-technical-inspections" type="number" min="1" max="5"
-                               class="form-control">
-                    </div>
-                    <div class="form-group">
-                        <label for="create-fuel-type" th:text="#{vehicle.details.fuelType}"></label>
-                        <select id="create-fuel-type" class="form-control">
-                            <option value="">---</option>
-                            <option th:each="fuelType : ${fuelTypes}"
-                                    th:value="${fuelType.id}"
-                                    th:text="${fuelType.value}">
+                    <div class="table-responsive mb-0 pb-0">
+                        <table class="table bg-light table-bordered table-hover table-sm">
+                            <thead class="thead-light">
+                            <tr>
+                                <th class="align-middle col-sm-3" colspan="3" th:text="#{vehicle.details.brand}"></th>
+                                <th class="align-middle col-sm-3" colspan="3" th:text="#{vehicle.details.model}"></th>
+                            </tr>
+                            </thead>
+                            <tbody id="first">
+                            <tr>
+                                <th class="align-middle col-sm-3" colspan="3">
+                                    <select id="create-brand" class="form-control" onchange="reloadModels()">
+                                        <option value="">---</option>
+                                        <option th:each="brand : ${brands}"
+                                                th:value="${brand.id}"
+                                                th:text="${brand.value}">
 
-                            </option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="create-vehicle-type" th:text="#{vehicle.details.vehicleType}"></label>
-                        <select id="create-vehicle-type" class="form-control">
-                            <option value="">---</option>
-                            <option th:each="vehicleType : ${vehicleTypes}"
-                                    th:value="${vehicleType.id}"
-                                    th:text="${vehicleType.value}">
+                                        </option>
+                                    </select>
+                                </th>
+                                <th class="align-middle col-sm-3" colspan="3">
+                                    <select id="create-model" type="search" class="form-control">
+                                        <option value="">---</option>
+                                        <option th:each="model : ${models}"
+                                                th:value="${model.id}"
+                                                th:text="${model.value}">
 
-                            </option>
-                        </select>
+                                        </option>
+                                    </select>
+                                </th>
+                            </tr>
+                            </tbody>
+
+
+                            <thead class="thead-light">
+                            <tr>
+                                <th class="align-middle col-sm-3" colspan="3"
+                                    th:text="#{vehicle.details.registrationNumber}"></th>
+                                <th class="align-middle col-sm-3" colspan="3" th:text="#{vehicle.details.vin}"></th>
+                            </tr>
+                            </thead>
+                            <tbody id="second">
+                            <tr>
+                                <th class="align-middle col-sm-3" colspan="3">
+                                    <input id="create-registration-number" type="text" class="form-control">
+                                </th>
+                                <th class="align-middle col-sm-3" colspan="3">
+                                    <input id="create-vin" type="text" class="form-control">
+                                </th>
+
+                            </tr>
+                            </tbody>
+
+
+                            <thead class="thead-light">
+                            <tr>
+                                <th class="align-middle col-sm-3" colspan="3"
+                                    th:text="#{vehicle.details.productionYear}"></th>
+                                <th class="align-middle col-sm-3" colspan="3"
+                                    th:text="#{vehicle.details.firstRegistrationDate}"></th>
+                            </tr>
+                            </thead>
+                            <tbody id="third">
+                            <tr>
+                                <th class="align-middle col-sm-3" colspan="3">
+                                    <input id="create-production-year" type="number" min="1995" max="2021" class="form-control">
+                                </th>
+                                <th class="align-middle col-sm-3" colspan="3">
+                                    <input id="create-first-registration-date" type="date" class="form-control">
+                                </th>
+
+                            </tr>
+                            </tbody>
+
+
+                            <thead class="thead-light">
+                            <tr>
+                                <th class="align-middle col-sm-2" colspan="2" th:text="#{vehicle.details.freePlacesForTechnicalInspections}"></th>
+                                <th class="align-middle col-sm-2" colspan="2" th:text="#{vehicle.details.fuelType}"></th>
+                                <th class="align-middle col-sm-2" colspan="2" th:text="#{vehicle.details.vehicleType}"></th>
+                            </tr>
+                            </thead>
+                            <tbody id="fourth">
+                            <tr>
+                                <th class="align-middle col-sm-2" colspan="2">
+                                    <input id="create-free-places-for-technical-inspections" type="number" min="1" max="5" class="form-control">
+                                </th>
+                                <th class="align-middle col-sm-2" colspan="2">
+                                    <select id="create-fuel-type" class="form-control">
+                                        <option value="">---</option>
+                                        <option th:each="fuelType : ${fuelTypes}"
+                                                th:value="${fuelType.id}"
+                                                th:text="${fuelType.value}">
+
+                                        </option>
+                                    </select>
+                                </th>
+                                <th class="align-middle col-sm-2" colspan="2">
+                                    <select id="create-vehicle-type" class="form-control">
+                                        <option value="">---</option>
+                                        <option th:each="vehicleType : ${vehicleTypes}"
+                                                th:value="${vehicleType.id}"
+                                                th:text="${vehicleType.value}">
+
+                                        </option>
+                                    </select>
+                                </th>
+
+                            </tr>
+                            </tbody>
+
+
+                            <thead class="thead-light">
+                            <tr>
+                                <th class="align-middle col-sm-2" colspan="2" th:text="#{vehicle.details.length}"></th>
+                                <th class="align-middle col-sm-2" colspan="2" th:text="#{vehicle.details.width}"></th>
+                                <th class="align-middle col-sm-2" colspan="2" th:text="#{vehicle.details.height}"></th>
+                            </tr>
+                            </thead>
+                            <tbody id="fifth">
+                            <tr>
+                                <th class="align-middle col-sm-2" colspan="2">
+                                    <input id="create-length" type="number" min="0" max="8" step = 0.1 class="form-control">
+                                </th>
+                                <th class="align-middle col-sm-2" colspan="2">
+                                    <input id="create-width" type="number" min="0" max="8" step = 0.1 class="form-control">
+                                </th>
+                                <th class="align-middle col-sm-2" colspan="2">
+                                    <input id="create-height" type="number" min="0" max="8" step = 0.1 class="form-control">
+                                </th>
+
+                            </tr>
+                            </tbody>
+
+                        </table>
                     </div>
-                    <div class="form-group">
-                        <label for="create-length" th:text="#{vehicle.details.length}"></label>
-                        <input id="create-length" type="number" min="0" max="8" step = 0.1 class="form-control">
-                    </div>
-                    <div class="form-group">
-                        <label for="create-width" th:text="#{vehicle.details.width}"></label>
-                        <input id="create-width" type="number" min="0" max="8" step = 0.1 class="form-control">
-                    </div>
-                    <div class="form-group">
-                        <label for="create-height" th:text="#{vehicle.details.height}"></label>
-                        <input id="create-height" type="number" min="0" max="8" step = 0.1 class="form-control">
-                    </div>
+
+
+<!--                    <div class="form-group">-->
+<!--                        <label for="create-brand" th:text="#{vehicle.details.brand}"></label>-->
+<!--                        <select id="create-brand" class="form-control" onchange="reloadModels()">-->
+<!--                            <option value="">-&#45;&#45;</option>-->
+<!--                            <option th:each="brand : ${brands}"-->
+<!--                                    th:value="${brand.id}"-->
+<!--                                    th:text="${brand.value}">-->
+
+<!--                            </option>-->
+<!--                        </select>-->
+<!--                    </div>-->
+<!--                    <div class="form-group">-->
+<!--                        <label for="create-model" th:text="#{vehicle.details.model}"></label>-->
+<!--                        <select id="create-model" type="search" class="form-control">-->
+<!--                            <option value="">-&#45;&#45;</option>-->
+<!--                            <option th:each="model : ${models}"-->
+<!--                                    th:value="${model.id}"-->
+<!--                                    th:text="${model.value}">-->
+
+<!--                            </option>-->
+<!--                        </select>-->
+<!--                    </div>-->
+<!--                    <div class="form-group">-->
+<!--                        <label for="create-registration-number" th:text="#{vehicle.details.registrationNumber}"></label>-->
+<!--                        <input id="create-registration-number" type="text" class="form-control">-->
+<!--                    </div>-->
+<!--                    <div class="form-group">-->
+<!--                        <label for="create-vin" th:text="#{vehicle.details.vin}"></label>-->
+<!--                        <input id="create-vin" type="text" class="form-control">-->
+<!--                    </div>-->
+<!--                    <div class="form-group">-->
+<!--                        <label for="create-production-year" th:text="#{vehicle.details.productionYear}"></label>-->
+<!--                        <input id="create-production-year" type="number" min="1995" max="2021" class="form-control">-->
+<!--                    </div>-->
+<!--                    <div class="form-group">-->
+<!--                        <label for="create-first-registration-date"-->
+<!--                               th:text="#{vehicle.details.firstRegistrationDate}"></label>-->
+<!--                        <input id="create-first-registration-date" type="date" class="form-control">-->
+<!--                    </div>-->
+<!--                    <div class="form-group">-->
+<!--                        <label for="create-free-places-for-technical-inspections"-->
+<!--                               th:text="#{vehicle.details.freePlacesForTechnicalInspections}"></label>-->
+<!--                        <input id="create-free-places-for-technical-inspections" type="number" min="1" max="5"-->
+<!--                               class="form-control">-->
+<!--                    </div>-->
+<!--                    <div class="form-group">-->
+<!--                        <label for="create-fuel-type" th:text="#{vehicle.details.fuelType}"></label>-->
+<!--                        <select id="create-fuel-type" class="form-control">-->
+<!--                            <option value="">-&#45;&#45;</option>-->
+<!--                            <option th:each="fuelType : ${fuelTypes}"-->
+<!--                                    th:value="${fuelType.id}"-->
+<!--                                    th:text="${fuelType.value}">-->
+
+<!--                            </option>-->
+<!--                        </select>-->
+<!--                    </div>-->
+<!--                    <div class="form-group">-->
+<!--                        <label for="create-vehicle-type" th:text="#{vehicle.details.vehicleType}"></label>-->
+<!--                        <select id="create-vehicle-type" class="form-control">-->
+<!--                            <option value="">-&#45;&#45;</option>-->
+<!--                            <option th:each="vehicleType : ${vehicleTypes}"-->
+<!--                                    th:value="${vehicleType.id}"-->
+<!--                                    th:text="${vehicleType.value}">-->
+
+<!--                            </option>-->
+<!--                        </select>-->
+<!--                    </div>-->
+<!--                    <div class="form-group">-->
+<!--                        <label for="create-length" th:text="#{vehicle.details.length}"></label>-->
+<!--                        <input id="create-length" type="number" min="0" max="8" step = 0.1 class="form-control">-->
+<!--                    </div>-->
+<!--                    <div class="form-group">-->
+<!--                        <label for="create-width" th:text="#{vehicle.details.width}"></label>-->
+<!--                        <input id="create-width" type="number" min="0" max="8" step = 0.1 class="form-control">-->
+<!--                    </div>-->
+<!--                    <div class="form-group">-->
+<!--                        <label for="create-height" th:text="#{vehicle.details.height}"></label>-->
+<!--                        <input id="create-height" type="number" min="0" max="8" step = 0.1 class="form-control">-->
+<!--                    </div>-->
                 </form>
             </div>
             <div class="modal-footer">

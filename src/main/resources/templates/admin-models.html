@@ -53,9 +53,22 @@
             </div>
             <div class="modal-body">
                 <form class="text-center">
-                    <div class="form-group">
-                        <label for="create-model" th:text="#{vehicle.details.model}"></label>
-                        <input id="create-model" class="form-control" type="text">
+
+                    <div class="table-responsive mb-0 pb-0">
+                        <table class="table bg-light table-bordered table-hover table-sm">
+                            <thead class="thead-light">
+                            <tr>
+                                <th class="align-middle col-sm-2" colspan="2" th:text="#{vehicle.details.model}"></th>
+                            </tr>
+                            </thead>
+                            <tbody id="first">
+                            <tr>
+                                <th class="align-middle col-sm-2" colspan="2">
+                                    <input id="create-model" class="form-control" type="text">
+                                </th>
+                            </tr>
+                            </tbody>
+                        </table>
                     </div>
 
                 </form>

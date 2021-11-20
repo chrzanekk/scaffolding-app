@@ -47,9 +47,21 @@
             </div>
             <div class="modal-body">
                 <form class="text-center">
-                    <div class="form-group">
-                        <label for="create-name" th:text="#{vehicle.service.action.type.name}"></label>
-                        <input type="text" id="create-name" class="form-control">
+                    <div class="table-responsive mb-0 pb-0">
+                        <table class="table bg-light table-bordered table-hover table-sm">
+                            <thead class="thead-light">
+                            <tr>
+                                <th class="align-middle col-sm-2" colspan="2" th:text="#{vehicle.service.action.type.name}"></th>
+                            </tr>
+                            </thead>
+                            <tbody id="first">
+                            <tr>
+                                <th class="align-middle col-sm-2" colspan="2">
+                                    <input type="text" id="create-name" class="form-control">
+                                </th>
+                            </tr>
+                            </tbody>
+                        </table>
                     </div>
 
 
