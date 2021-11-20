@@ -106,61 +106,171 @@
 
 
 <div class="modal fade" id="create-modal" tabindex="-1" role="dialog">
-    <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
+
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel" th:text="#{vehicle.service.add}"></h5>
+                <h5 class="modal-title" id="create-vehicle-service-header" th:text="#{vehicle.service.add}"></h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">
-                <h6 class="modal-title" id="exampleModalLabel" th:text="#{vehicle.service.basics}"></h6>
-                <form class="text-center">
-                    <div class="form-group">
-                        <label for="create-invoice-number" th:text="#{vehicle.service.invoice.no}"></label>
-                        <input id="create-invoice-number" type="text"  class="form-control">
-                    </div>
-                    <div class="form-group">
-                        <label for="create-invoice-gross-value" th:text="#{vehicle.service.invoice.value}"></label>
-                        <input id="create-invoice-gross-value" type="number" min="0" step = 0.01 class="form-control">
-                    </div>
-                    <div class="form-group">
-                        <label for="create-service-date" th:text="#{vehicle.service.date}"></label>
-                        <input id="create-service-date" type="date" class="form-control">
-                    </div>
-                    <div class="form-group">
-                        <label for="create-workshop" th:text="#{vehicle.service.workshop}"></label>
-                        <select id="create-workshop" class="form-control" onchange="reloadWorkshopServices()">
-                            <option value="">---</option>
-                            <option th:each="workshop : ${workshops}"
-                                    th:value="${workshop.id}"
-                                    th:text="${workshop.name}"></option>
 
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="create-car-mileage" th:text="#{vehicle.service.car.mileage}"></label>
-                        <input id="create-car-mileage" type="number" min="0" class="form-control">
-                    </div>
-                </form>
-            </div>
             <div class="modal-body">
-                <h6 class="modal-title" id="exampleModalLabel" th:text="#{vehicle.service.input.service.type}"></h6>
+                <h6 class="modal-title" id="create-service-basics" th:text="#{vehicle.service.basics}"></h6>
                 <form class="text-center">
-                    <div class="form-group">
-                        <label for="create-service-action" th:text="#{vehicle.service.type}"></label>
-                        <select id="create-service-action" class="form-control">
-                            <option value="">---</option>
 
-                        </select>
+                    <div class="table-responsive mb-0 pb-0">
+                        <table class="table bg-light table-bordered table-hover table-sm">
+                            <thead class="thead-light">
+                            <tr>
+                                <th class="align-middle col-sm-2" colspan="2" th:text="#{vehicle.service.invoice.no}"></th>
+                                <th class="align-middle col-sm-2" colspan="2" th:text="#{vehicle.service.date}"></th>
+                            </tr>
+                            </thead>
+                            <tbody id="first">
+                            <tr>
+                                <th class="align-middle col-sm-2" colspan="2">
+                                    <input id="create-invoice-number" type="text" class="form-control">
+                                </th>
+                                <th class="align-middle col-sm-2" colspan="2">
+                                    <input id="create-service-date" type="date" class="form-control">
+                                </th>
+                            </tr>
+                            </tbody>
+
+
+                            <thead class="thead-light">
+                            <tr>
+                                <th class="align-middle col-sm-2" colspan="2"
+                                    th:text="#{vehicle.service.invoice.net.value}"></th>
+                                <th class="align-middle col-sm-2" colspan="2"
+                                    th:text="#{vehicle.service.invoice.tax.rate}"></th>
+                            </tr>
+                            </thead>
+                            <tbody id="second">
+                            <tr>
+                                <th class="align-middle col-sm-2" colspan="2">
+                                    <input id="create-invoice-gross-value" type="number" min="0" step = 0.01 class="form-control">
+                                </th>
+                                <th class="align-middle col-sm-2" colspan="2">
+                                    <input id="create-invoice-tax-rate" type="number" min="0" step = 0.01 class="form-control">
+                                </th>
+
+                            </tr>
+                            </tbody>
+
+
+                            <thead class="thead-light">
+                            <tr>
+                                <th class="align-middle col-sm-3" colspan="6" th:text="#{vehicle.service.workshop}"></th>
+                            </tr>
+                            </thead>
+                            <tbody id="third">
+                            <tr>
+                                <th class="align-middle col-sm-3" colspan="6">
+                                    <select id="create-workshop" class="form-control" onchange="reloadWorkshopServices()">
+                                    <option value="">---</option>
+                                    <option th:each="workshop : ${workshops}"
+                                            th:value="${workshop.id}"
+                                            th:text="${workshop.name}"></option>
+                                </select>
+                                </th>
+                            </tr>
+                            </tbody>
+
+
+                            <thead class="thead-light">
+                            <tr>
+                                <th class="align-middle col-sm-2" colspan="2" th:text="#{vehicle.service.car.mileage}"></th>
+                                <th class="align-middle col-sm-2" colspan="2" th:text="#{vehicle.service.type}"></th>
+                            </tr>
+                            </thead>
+                            <tbody id="fourth">
+                            <tr>
+                                <th class="align-middle col-sm-2" colspan="2">
+                                    <input id="create-car-mileage" type="number" min="0" class="form-control">
+                                </th>
+                                <th class="align-middle col-sm-2" colspan="2">
+                                    <select id="create-service-action" class="form-control">
+                                        <option value="">---</option>
+                                        <option th:each="actionType : ${serviceActionTypes}"
+                                                th:value="${actionType.id}"
+                                                th:text="${actionType.value}"></option>
+                                    </select>
+                                </th>
+
+                            </tr>
+                            </tbody>
+
+
+                            <thead class="thead-light">
+                            <tr>
+                                <th class="align-middle col-sm-3" colspan="6" th:text="#{vehicle.service.description}"></th>
+                            </tr>
+                            </thead>
+                            <tbody id="fifth">
+                            <tr>
+                                <th class="align-middle col-sm-3" colspan="6">
+                                    <textarea id="create-service-action-description" type="text" class="form-control"></textarea>
+                                </th>
+                            </tr>
+                            </tbody>
+
+
+                        </table>
                     </div>
-                    <div class="form-group">
-                        <label for="create-service-action-description" th:text="#{vehicle.service.description}"></label>
-                        <textarea id="create-service-action-description" type="text" class="form-control" ></textarea>
-                    </div>
-                </form>
-            </div>
+
+
+
+<!--                    <div class="form-group">-->
+<!--                        <label for="create-invoice-number" th:text="#{vehicle.service.invoice.no}"></label>-->
+<!--                        <input id="create-invoice-number" type="text"  class="form-control">-->
+<!--                    </div>-->
+<!--                    <div class="form-group">-->
+<!--                        <label for="create-invoice-gross-value" th:text="#{vehicle.service.invoice.value}"></label>-->
+<!--                        <input id="create-invoice-gross-value" type="number" min="0" step = 0.01 class="form-control">-->
+<!--                    </div>-->
+<!--                    <div class="form-group">-->
+<!--                        <label for="create-service-date" th:text="#{vehicle.service.date}"></label>-->
+<!--                        <input id="create-service-date" type="date" class="form-control">-->
+<!--                    </div>-->
+<!--                    <div class="form-group">-->
+<!--                        <label for="create-workshop" th:text="#{vehicle.service.workshop}"></label>-->
+<!--                        <select id="create-workshop" class="form-control" onchange="reloadWorkshopServices()">-->
+<!--                            <option value="">-&#45;&#45;</option>-->
+<!--                            <option th:each="workshop : ${workshops}"-->
+<!--                                    th:value="${workshop.id}"-->
+<!--                                    th:text="${workshop.name}"></option>-->
+<!--                        </select>-->
+<!--                    </div>-->
+<!--                    <div class="form-group">-->
+<!--                        <label for="create-car-mileage" th:text="#{vehicle.service.car.mileage}"></label>-->
+<!--                        <input id="create-car-mileage" type="number" min="0" class="form-control">-->
+<!--                    </div>-->
+<!--                </form>-->
+<!--            </div>-->
+
+<!--            <div class="modal-body">-->
+<!--                <h6 class="modal-title" id="create-service-type-and-description"-->
+<!--                    th:text="#{vehicle.service.input.service.type}"></h6>-->
+<!--                <form class="text-center">-->
+<!--                    <div class="form-group">-->
+<!--                        <label for="create-service-action" th:text="#{vehicle.service.type}"></label>-->
+<!--                        <select id="create-service-action" class="form-control">-->
+<!--                            <option value="">-&#45;&#45;</option>-->
+<!--                            <option th:each="actionType : ${serviceActionTypes}"-->
+<!--                                    th:value="${actionType.id}"-->
+<!--                                    th:text="${actionType.value}"></option>-->
+<!--                        </select>-->
+<!--                    </div>-->
+<!--                    <div class="form-group">-->
+<!--                        <label for="create-service-action-description" th:text="#{vehicle.service.description}"></label>-->
+<!--                        <textarea id="create-service-action-description" type="text" class="form-control" ></textarea>-->
+<!--                    </div>-->
+<!--                </form>-->
+<!--            </div>-->
+
             <div class="modal-footer">
                 <button type="button" class="btn btn-success" onclick="sendCreateRequest()"
                         th:text="#{vehicle.service.add}"></button>
