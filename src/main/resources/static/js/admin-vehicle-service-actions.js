@@ -119,7 +119,8 @@ function setObjectToDeleteIdAndShowModal(id) {
 
 function clearCreateModal() {
     $("#create-invoice-number").val('');
-    $("#create-invoice-gross-value").val('');
+    $("#create-invoice-net-value").val('');
+    $("#create-invoice-tax-rate").val('');
     $("#create-service-date").val('');
     $("#create-workshop").val('');
     $("#create-car-mileage").val('');
@@ -138,7 +139,8 @@ function sendCreateRequest() {
                 carMileage: $("#create-car-mileage").val(),
                 serviceDate: $("#create-service-date").val(),
                 invoiceNumber: $("#create-invoice-number").val(),
-                invoiceGrossValue: $("#create-invoice-gross-value").val(),
+                invoiceNetValue: $("#create-invoice-net-value").val(),
+                taxRate: $("#create-invoice-tax-rate").val(),
                 workshopId: $("#create-workshop").val(),
                 serviceActionTypeId: $("#create-service-action").val(),
                 serviceActionDescription: $("#create-service-action-description").val()

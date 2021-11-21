@@ -16,5 +16,6 @@ public enum DictionaryType {
     TIRE_SPEED_INDEXES,
     TIRE_CAPACITY_INDEXES,
     TIRE_REINFORCED,
-    TIRE_TYPE
+    TIRE_TYPE,
+    TAX_RATE
 }

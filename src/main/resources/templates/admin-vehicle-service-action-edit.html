@@ -9,6 +9,7 @@
         var vehicle = [[${vehicle}]];
         var serviceAction = [[${serviceAction}]]
         var serviceActionTypes = [[${serviceActionTypes}]];
+        var taxRates = [[${taxRates}]];
         var workshops = [[${workshops}]];
     </script>
 </head>
@@ -30,9 +31,18 @@
                 <input type="text" class="form-control" id="invoice-number" th:value="${serviceAction.invoiceNumber}">
             </div>
             <div class="form-group col-md-4 text-center">
-                <label for="invoice-gross-value" th:text="#{vehicle.service.invoice.net.value}"></label>
-                <input type="text" class="form-control" id="invoice-gross-value"
-                       th:value="${serviceAction.invoiceGrossValue}">
+                <label for="invoice-net-value" th:text="#{vehicle.service.invoice.net.value}"></label>
+                <input type="text" class="form-control" id="invoice-net-value"
+                       th:value="${serviceAction.invoiceNetValue}">
+            </div>
+            <div class="form-group col-md-4 text-center">
+                <label for="invoice-tax-rate" th:text="#{vehicle.service.invoice.tax.rate}"></label>
+                <select id="invoice-tax-rate" class="form-control">
+                    <option th:each="taxRate : ${taxRates}"
+                            th:value="${taxRate.code}"
+                            th:text="${taxRate.value}"
+                            th:selected="(${taxRate.code} == *{serviceAction.taxRate})"></option>
+                </select>
             </div>
             <div class="form-group col-md-4 text-center">
                 <label for="service-date" th:text="#{vehicle.service.date}"></label>

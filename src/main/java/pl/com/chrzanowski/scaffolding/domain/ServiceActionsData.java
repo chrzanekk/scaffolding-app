@@ -14,6 +14,7 @@ public class ServiceActionsData {
     private String invoiceNumber;
     private BigDecimal invoiceGrossValue;
     private BigDecimal taxValue;
+    private BigDecimal taxRate;
     private BigDecimal invoiceNetValue;
     private Long workshopId;
     private String workshopName;
@@ -60,7 +61,8 @@ public class ServiceActionsData {
                               Integer carMileage,
                               LocalDate serviceDate,
                               String invoiceNumber,
-                              BigDecimal invoiceGrossValue,
+                              BigDecimal invoiceNetValue,
+                              BigDecimal taxRate,
                               Long workshopId,
                               Long serviceActionTypeId,
                               String serviceActionDescription) {
@@ -68,7 +70,8 @@ public class ServiceActionsData {
         this.carMileage = carMileage;
         this.serviceDate = serviceDate;
         this.invoiceNumber = invoiceNumber;
-        this.invoiceGrossValue = invoiceGrossValue;
+        this.invoiceNetValue = invoiceNetValue;
+        this.taxRate = taxRate;
         this.workshopId = workshopId;
         this.serviceActionTypeId = serviceActionTypeId;
         this.serviceActionDescription = serviceActionDescription;
@@ -80,7 +83,8 @@ public class ServiceActionsData {
                               Integer carMileage,
                               LocalDate serviceDate,
                               String invoiceNumber,
-                              BigDecimal invoiceGrossValue,
+                              BigDecimal invoiceNetValue,
+                              BigDecimal taxRate,
                               Long workshopId,
                               Long serviceActionTypeId,
                               String serviceActionDescription) {
@@ -89,41 +93,49 @@ public class ServiceActionsData {
         this.carMileage = carMileage;
         this.serviceDate = serviceDate;
         this.invoiceNumber = invoiceNumber;
-        this.invoiceGrossValue =invoiceGrossValue;
+        this.invoiceNetValue = invoiceNetValue;
+        this.taxRate = taxRate;
         this.workshopId = workshopId;
         this.serviceActionTypeId = serviceActionTypeId;
         this.serviceActionDescription = serviceActionDescription;
         this.modifyDate = LocalDateTime.now();
     }
-
-    public ServiceActionsData(ServiceActionsData data, BigDecimal taxValue, BigDecimal invoiceNetValue) {
+//add method
+    public ServiceActionsData(ServiceActionsData data, BigDecimal taxValue, BigDecimal invoiceGrossValue) {
         this.vehicleId = data.getVehicleId();
         this.carMileage = data.getCarMileage();
         this.serviceDate = data.getServiceDate();
         this.invoiceNumber = data.getInvoiceNumber();
-        this.invoiceGrossValue = data.getInvoiceGrossValue();
+        this.invoiceGrossValue = invoiceGrossValue;
+        this.invoiceNetValue = data.getInvoiceNetValue();
+        this.taxRate = data.getTaxRate();
         this.workshopId = data.getWorkshopId();
         this.serviceActionTypeId = data.getServiceActionTypeId();
         this.serviceActionDescription = data.getServiceActionDescription();
         this.createDate = LocalDateTime.now();
         this.taxValue = taxValue;
-        this.invoiceNetValue = invoiceNetValue;
     }
 
-    public ServiceActionsData(BigDecimal taxValue, BigDecimal invoiceNetValue, ServiceActionsData data) {
+//    update method
+    public ServiceActionsData(BigDecimal taxValue, BigDecimal invoiceGrossValue, ServiceActionsData data) {
         this.id = data.getId();
         this.vehicleId = data.getVehicleId();
         this.carMileage = data.getCarMileage();
         this.serviceDate = data.getServiceDate();
         this.invoiceNumber = data.getInvoiceNumber();
-        this.invoiceGrossValue = data.getInvoiceGrossValue();
+        this.invoiceGrossValue = invoiceGrossValue;
         this.workshopId = data.getWorkshopId();
         this.serviceActionTypeId = data.getServiceActionTypeId();
         this.serviceActionDescription = data.getServiceActionDescription();
         this.modifyDate = LocalDateTime.now();
         this.taxValue = taxValue;
-        this.invoiceNetValue = invoiceNetValue;
+        this.invoiceNetValue = data.getInvoiceNetValue();
+        this.taxRate = data.getTaxRate();
     }
+
+
+
+
 
     public Long getId() {
         return id;
@@ -151,6 +163,10 @@ public class ServiceActionsData {
 
     public BigDecimal getTaxValue() {
         return taxValue;
+    }
+
+    public BigDecimal getTaxRate() {
+        return taxRate;
     }
 
     public BigDecimal getInvoiceNetValue() {

@@ -9,6 +9,7 @@
         var vehicle = [[${vehicle}]];
         var serviceActionTypes = [[${serviceActionTypes}]];
         var workshops = [[${workshops}]];
+        var taxRate = [[${taxRates}]];
 
 
 
@@ -151,10 +152,16 @@
                             <tbody id="second">
                             <tr>
                                 <th class="align-middle col-sm-2" colspan="2">
-                                    <input id="create-invoice-gross-value" type="number" min="0" step = 0.01 class="form-control">
+                                    <input id="create-invoice-net-value" type="number" min="0" step = 0.01
+                                           class="form-control">
                                 </th>
                                 <th class="align-middle col-sm-2" colspan="2">
-                                    <input id="create-invoice-tax-rate" type="number" min="0" step = 0.01 class="form-control">
+                                    <select id="create-invoice-tax-rate" class="form-control">
+                                        <option value="">---</option>
+                                        <option th:each="taxRate : ${taxRates}"
+                                                th:value="${taxRate.code}"
+                                                th:text="${taxRate.value}"></option>
+                                    </select>
                                 </th>
 
                             </tr>

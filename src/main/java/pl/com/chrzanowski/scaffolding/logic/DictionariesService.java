@@ -82,6 +82,8 @@ public class DictionariesService {
             return getReinforced(lang);
         } else if (TIRE_TYPE == type) {
             return getTireType(lang);
+        } else if (TAX_RATE == type) {
+            return getTaxRate(lang);
         }
         throw new IllegalArgumentException("Dictionary no defined: " + type + " for language: " + lang);
     }
@@ -306,6 +308,15 @@ public class DictionariesService {
                             new DictionaryData("D", "D - Diagonal tire", lang.getCode()));
     }
 
-
+    private List<DictionaryData> getTaxRate(Language lang) {
+        return Language.PL == lang ?
+                Arrays.asList(new DictionaryData("1.00", "VAT 0%", lang.getCode()),
+                            new DictionaryData("1.08", "VAT 8%", lang.getCode()),
+                            new DictionaryData("1.23", "VAT 23%", lang.getCode())
+                           ) :
+                Arrays.asList(new DictionaryData("1.00", "Value Added Tax - 0%", lang.getCode()),
+                        new DictionaryData("1.08", "Value Added Tax 8%", lang.getCode()),
+                        new DictionaryData("1.23", "Value Added Tax 23%", lang.getCode()));
+    }
 
 }

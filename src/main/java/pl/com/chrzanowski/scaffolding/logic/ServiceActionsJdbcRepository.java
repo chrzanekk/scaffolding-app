@@ -36,10 +36,12 @@ public class ServiceActionsJdbcRepository {
                     "invoice_gross_value," +
                     "tax_value," +
                     "invoice_net_value," +
+                    "tax_rate," +
                     "workshop_id," +
                     "description," +
                     "create_date, " +
                     "service_action_type_id) VALUES (" +
+                    "?, " +
                     "?, " +
                     "?, " +
                     "?, " +
@@ -59,6 +61,7 @@ public class ServiceActionsJdbcRepository {
                     data.getInvoiceGrossValue(),
                     data.getTaxValue(),
                     data.getInvoiceNetValue(),
+                    data.getTaxRate(),
                     data.getWorkshopId(),
                     data.getServiceActionDescription(),
                     data.getCreateDate(),
@@ -76,6 +79,7 @@ public class ServiceActionsJdbcRepository {
                 "invoice_gross_value = ?, " +
                 "tax_value = ?, " +
                 "invoice_net_value = ?, " +
+                "tax_rate = ?, " +
                 "workshop_id = ?, " +
                 "modify_date = ?, " +
                 "description = ? WHERE " +
@@ -88,6 +92,7 @@ public class ServiceActionsJdbcRepository {
                 data.getInvoiceGrossValue(),
                 data.getTaxValue(),
                 data.getInvoiceNetValue(),
+                data.getTaxRate(),
                 data.getWorkshopId(),
                 data.getModifyDate(),
                 data.getServiceActionDescription(),
@@ -105,6 +110,7 @@ public class ServiceActionsJdbcRepository {
                 "service_actions.invoice_gross_value,\n" +
                 "service_actions.invoice_net_value,\n" +
                 "service_actions.tax_value,\n" +
+                "service_actions.tax_rate,\n" +
                 "service_actions.workshop_id,\n" +
                 "service_actions.description,\n" +
                 "service_actions.service_action_type_id,\n" +

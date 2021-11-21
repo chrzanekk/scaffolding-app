@@ -386,7 +386,8 @@ public class ScaffoldingEndpointAdmin {
                 request.getCarMileage(),
                 request.getServiceDate(),
                 request.getInvoiceNumber(),
-                new BigDecimal(request.getInvoiceGrossValue()).setScale(2, RoundingMode.HALF_EVEN),
+                new BigDecimal(request.getInvoiceNetValue()),
+                new BigDecimal(request.getTaxRate()),
                 request.getWorkshopId(),
                 request.getServiceActionTypeId(),
                 request.getServiceActionDescription()));
@@ -400,7 +401,8 @@ public class ScaffoldingEndpointAdmin {
                 request.getCarMileage(),
                 request.getServiceDate(),
                 request.getInvoiceNumber(),
-                new BigDecimal(request.getInvoiceGrossValue()).setScale(2, RoundingMode.HALF_EVEN),
+                new BigDecimal(request.getInvoiceNetValue()).setScale(2, RoundingMode.HALF_EVEN),
+                new BigDecimal(request.getTaxRate()).setScale(2,RoundingMode.HALF_EVEN),
                 request.getWorkshopId(),
                 request.getServiceActionTypeId(),
                 request.getServiceActionDescription()

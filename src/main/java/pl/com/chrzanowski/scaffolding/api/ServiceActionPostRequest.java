@@ -13,6 +13,7 @@ public class ServiceActionPostRequest {
     private String invoiceNumber;
     private String invoiceGrossValue;
     private String taxValue;
+    private String taxRate;
     private String invoiceNetValue;
     private Long workshopId;
     private Long serviceActionTypeId;
@@ -51,6 +52,10 @@ public class ServiceActionPostRequest {
 
     public String getTaxValue() {
         return taxValue;
+    }
+
+    public String getTaxRate() {
+        return taxRate;
     }
 
     public String getInvoiceNetValue() {

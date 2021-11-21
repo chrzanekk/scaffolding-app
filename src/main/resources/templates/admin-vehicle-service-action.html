@@ -29,20 +29,21 @@
                 <table class="table bg-light table-bordered table-hover table-sm">
                     <thead class="thead-light">
                     <tr>
-                        <th class="align-middle col-sm-1" th:text="#{vehicle.service.invoice.no}"></th>
-                        <th class="align-middle col-sm-1" colspan="2"
-                            th:text="#{vehicle.service.invoice.net.value}"></th>
-                        <th class="align-middle col-sm-1" th:text="#{vehicle.service.date}"></th>
+                        <th class="align-middle col-sm-3" colspan="3" th:text="#{vehicle.service.invoice.no}"></th>
+                        <th class="align-middle col-sm-3" colspan="3" th:text="#{vehicle.service.date}"></th>
                     </tr>
                     </thead>
                     <tbody id="first">
-
                     </tbody>
-
 
                     <thead class="thead-light">
                     <tr>
-                        <th class="align-middle col-sm-3" colspan="6" th:text="#{vehicle.service.workshop}"></th>
+                        <th class="align-middle col-sm-2" colspan="2"
+                            th:text="#{vehicle.service.invoice.net.value}"></th>
+                        <th class="align-middle col-sm-2" colspan="2"
+                            th:text="#{vehicle.service.invoice.tax.value}"></th>
+                        <th class="align-middle col-sm-2" colspan="2"
+                            th:text="#{vehicle.service.invoice.gross.value}"></th>
                     </tr>
                     </thead>
                     <tbody id="second">
@@ -51,8 +52,7 @@
 
                     <thead class="thead-light">
                     <tr>
-                        <th class="align-middle col-sm-1" colspan="2" th:text="#{vehicle.service.car.mileage}"></th>
-                        <th class="align-middle col-sm-1" colspan="2" th:text="#{vehicle.service.type}"></th>
+                        <th class="align-middle col-sm-6" colspan="6" th:text="#{vehicle.service.workshop}"></th>
                     </tr>
                     </thead>
                     <tbody id="third">
@@ -61,10 +61,20 @@
 
                     <thead class="thead-light">
                     <tr>
-                        <th class="align-middle col-sm-3" colspan="6" th:text="#{vehicle.service.description}" ></th>
+                        <th class="align-middle col-sm-3" colspan="3" th:text="#{vehicle.service.car.mileage}"></th>
+                        <th class="align-middle col-sm-3" colspan="3" th:text="#{vehicle.service.type}"></th>
                     </tr>
                     </thead>
                     <tbody id="fourth">
+                    </tbody>
+
+
+                    <thead class="thead-light">
+                    <tr>
+                        <th class="align-middle col-sm-6" colspan="6" th:text="#{vehicle.service.description}" ></th>
+                    </tr>
+                    </thead>
+                    <tbody id="fifth">
                     </tbody>
 
 

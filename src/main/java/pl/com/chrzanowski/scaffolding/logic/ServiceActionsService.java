@@ -18,15 +18,18 @@ public class ServiceActionsService implements IServiceActions {
     private UserService usersService;
     private UserAuthoritiesService userAuthoritiesService;
     private WorkshopServiceTypeService workshopServiceTypeService;
+    private DictionariesService dictionariesService;
 
     public ServiceActionsService(ServiceActionsJdbcRepository serviceActionsJdbcRepository,
                                  UserService usersService,
                                  UserAuthoritiesService userAuthoritiesService,
-                                 WorkshopServiceTypeService workshopServiceTypeService) {
+                                 WorkshopServiceTypeService workshopServiceTypeService,
+                                 DictionariesService dictionariesService) {
         this.serviceActionsJdbcRepository = serviceActionsJdbcRepository;
         this.usersService = usersService;
         this.userAuthoritiesService = userAuthoritiesService;
         this.workshopServiceTypeService = workshopServiceTypeService;
+        this.dictionariesService = dictionariesService;
     }
 
     public List<ServiceActionsData> find(ServiceActionsFilter filter) {
@@ -53,8 +56,8 @@ public class ServiceActionsService implements IServiceActions {
         if (checkWorkshopServiceType(data)) {
             return serviceActionsJdbcRepository.create(new ServiceActionsData(
                     data,
-                    calculateTaxValue(data.getInvoiceGrossValue()),
-                    calculateNetValue(data.getInvoiceGrossValue())));
+                    calculateTaxValue(data.getInvoiceNetValue(),data.getTaxRate()),
+                    calculateGrossValue(data.getInvoiceNetValue(),data.getTaxRate())));
         } else {
             throw new IllegalArgumentException("Ten warsztat nie wykonuje tej usługi.");
         }
@@ -63,8 +66,8 @@ public class ServiceActionsService implements IServiceActions {
     public void update(ServiceActionsData data) {
         if (checkWorkshopServiceType(data)) {
             serviceActionsJdbcRepository.update(new ServiceActionsData(
-                    calculateTaxValue(data.getInvoiceGrossValue()),
-                    calculateNetValue(data.getInvoiceGrossValue()),
+                    calculateTaxValue(data.getInvoiceNetValue(),data.getTaxRate()),
+                    calculateGrossValue(data.getInvoiceNetValue(),data.getTaxRate()),
                     data));
         } else {
             throw new IllegalArgumentException("Ten warsztat nie wykonuje tej usługi.");
@@ -139,13 +142,24 @@ public class ServiceActionsService implements IServiceActions {
     }
 
 
-    private BigDecimal calculateNetValue(BigDecimal grossValue) {
-        BigDecimal taxRate = new BigDecimal("1.23").setScale(2, RoundingMode.HALF_EVEN);
-        return grossValue.setScale(2, RoundingMode.HALF_EVEN).divide(taxRate, 2, RoundingMode.HALF_EVEN);
+    private BigDecimal calculateTaxValue(BigDecimal netValue, BigDecimal taxRate) {
+        BigDecimal grossValue = calculateGrossValue(netValue, taxRate);
+        return grossValue.subtract(netValue).setScale(2, RoundingMode.HALF_EVEN);
     }
 
-    private BigDecimal calculateTaxValue(BigDecimal grossValue) {
-        BigDecimal netValue = calculateNetValue(grossValue);
-        return grossValue.subtract(netValue).setScale(2, RoundingMode.HALF_EVEN);
+    private BigDecimal calculateGrossValue(BigDecimal netValue, BigDecimal taxRate) {
+        return netValue.setScale(2,RoundingMode.HALF_EVEN).multiply(taxRate.setScale(2,RoundingMode.HALF_EVEN));
+    }
+
+    private String getTaxRateValue(String taxRateCode) {
+        List<DictionaryData> taxRates = dictionariesService.getDictionary(DictionaryType.TAX_RATE,LanguagesUtil.getCurrentLanguage());
+        String taxValue = "";
+        for(DictionaryData taxRate : taxRates) {
+            if(taxRate.getCode().equals(taxRateCode)) {
+                taxValue = taxRate.getValue();
+
+            }
+        }
+        return taxValue;
     }
 }
