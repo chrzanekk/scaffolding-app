@@ -153,7 +153,7 @@ function sendCreateRequest() {
             findServiceActionsSummary();
         })
         .fail(function (jqxhr, textStatus, errorThrown) {
-            displayErrorInformation(jqxhr.responseText);
+            showError(prepareErrorMessage(jqxhr.responseText));
         })
 }
 
@@ -203,7 +203,11 @@ function fillResultsReloadedWorkshopServices(workshopActions) {
 function fillReloadedWorkshopService(action) {
     $('#create-service-action').append('<option value=' + action.serviceActionId + '>' + action.serviceActionName +
     '</option>');
+}
 
+function showError(text) {
+    $("#error-alert-text").text(text);
+    $("#error-alert").removeClass('d-none');
 }
 
 

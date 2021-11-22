@@ -386,8 +386,8 @@ public class ScaffoldingEndpointAdmin {
                 request.getCarMileage(),
                 request.getServiceDate(),
                 request.getInvoiceNumber(),
-                new BigDecimal(request.getInvoiceNetValue()),
-                new BigDecimal(request.getTaxRate()),
+                serviceActions.validateAndCreateValue(request.getInvoiceNetValue()),
+                serviceActions.validateAndCreateValue(request.getTaxRate()),
                 request.getWorkshopId(),
                 request.getServiceActionTypeId(),
                 request.getServiceActionDescription()));

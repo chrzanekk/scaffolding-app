@@ -4,6 +4,7 @@ import pl.com.chrzanowski.scaffolding.domain.ServiceActionsData;
 import pl.com.chrzanowski.scaffolding.domain.ServiceActionsFilter;
 import pl.com.chrzanowski.scaffolding.domain.ServiceActionsInvoiceSummaryData;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 public interface IServiceActions {
@@ -13,5 +14,6 @@ public interface IServiceActions {
     Long add(ServiceActionsData data);
     void update(ServiceActionsData data);
     void delete(ServiceActionsData data);
+    BigDecimal validateAndCreateValue(String value);
 
 }

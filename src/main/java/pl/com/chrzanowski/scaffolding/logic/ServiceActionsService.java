@@ -53,21 +53,23 @@ public class ServiceActionsService implements IServiceActions {
     }
 
     public Long add(ServiceActionsData data) {
+        validateServiceActionData(data);
         if (checkWorkshopServiceType(data)) {
             return serviceActionsJdbcRepository.create(new ServiceActionsData(
                     data,
-                    calculateTaxValue(data.getInvoiceNetValue(),data.getTaxRate()),
-                    calculateGrossValue(data.getInvoiceNetValue(),data.getTaxRate())));
+                    calculateTaxValue(data.getInvoiceNetValue(), data.getTaxRate()),
+                    calculateGrossValue(data.getInvoiceNetValue(), data.getTaxRate())));
         } else {
             throw new IllegalArgumentException("Ten warsztat nie wykonuje tej usługi.");
         }
     }
 
     public void update(ServiceActionsData data) {
+        validateServiceActionData(data);
         if (checkWorkshopServiceType(data)) {
             serviceActionsJdbcRepository.update(new ServiceActionsData(
-                    calculateTaxValue(data.getInvoiceNetValue(),data.getTaxRate()),
-                    calculateGrossValue(data.getInvoiceNetValue(),data.getTaxRate()),
+                    calculateTaxValue(data.getInvoiceNetValue(), data.getTaxRate()),
+                    calculateGrossValue(data.getInvoiceNetValue(), data.getTaxRate()),
                     data));
         } else {
             throw new IllegalArgumentException("Ten warsztat nie wykonuje tej usługi.");
@@ -77,6 +79,22 @@ public class ServiceActionsService implements IServiceActions {
     public void delete(ServiceActionsData data) {
     }
 
+    public BigDecimal validateAndCreateValue(String value) {
+        if (!value.isEmpty()) {
+            if (isValuePositive(value)) {
+                return new BigDecimal(value);
+            } else {
+                throw new IllegalArgumentException("Wartość nie może być ujemna.");
+            }
+        } else {
+            throw new IllegalArgumentException("Wartość netto faktury lub stawka podatku VAT nie może być pusta.");
+        }
+    }
+
+
+    public boolean isValuePositive(String value) {
+        return !value.startsWith("-");
+    }
 
     private List<ServiceActionsData> getActions(List<Map<String, Object>> data) {
 
@@ -143,23 +161,31 @@ public class ServiceActionsService implements IServiceActions {
 
 
     private BigDecimal calculateTaxValue(BigDecimal netValue, BigDecimal taxRate) {
-        BigDecimal grossValue = calculateGrossValue(netValue, taxRate);
-        return grossValue.subtract(netValue).setScale(2, RoundingMode.HALF_EVEN);
+        return calculateGrossValue(netValue, taxRate).subtract(netValue).setScale(2, RoundingMode.HALF_EVEN);
+
     }
 
     private BigDecimal calculateGrossValue(BigDecimal netValue, BigDecimal taxRate) {
-        return netValue.setScale(2,RoundingMode.HALF_EVEN).multiply(taxRate.setScale(2,RoundingMode.HALF_EVEN));
+        return netValue.setScale(2, RoundingMode.HALF_EVEN).multiply(taxRate.setScale(2, RoundingMode.HALF_EVEN));
     }
 
-    private String getTaxRateValue(String taxRateCode) {
-        List<DictionaryData> taxRates = dictionariesService.getDictionary(DictionaryType.TAX_RATE,LanguagesUtil.getCurrentLanguage());
-        String taxValue = "";
-        for(DictionaryData taxRate : taxRates) {
-            if(taxRate.getCode().equals(taxRateCode)) {
-                taxValue = taxRate.getValue();
+    private void validateServiceActionData(ServiceActionsData data) {
+        validateServiceActionDescription(data.getServiceActionDescription());
+        validateServiceActionCarMileage(data.getCarMileage());
+    }
 
-            }
+    private void validateServiceActionDescription(String description) {
+        if (description == null || description.equals("")) {
+            throw new IllegalArgumentException("Pole \" Opis szczegółowy wykonanych prac.\" nie może być puste.");
         }
-        return taxValue;
+    }
+
+    private void validateServiceActionCarMileage(Integer carMileage) {
+        if (carMileage == null) {
+            throw new IllegalArgumentException("Pole \" Przebieg \" nie może być puste.");
+        }
+        if (carMileage <= 0) {
+            throw new IllegalArgumentException("\" Przebieg \" nie może być ujemny lub równy zero.");
+        }
     }
 }
