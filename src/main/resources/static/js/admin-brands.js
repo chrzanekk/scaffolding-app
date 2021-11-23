@@ -95,7 +95,7 @@ function sendCreateRequest() {
             findBrands();
         })
         .fail(function (jqxhr, textStatus, errorThrown) {
-            displayErrorInformation(jqxhr.responseText);
+            showError(prepareErrorMessage(jqxhr.responseText));
             $("#brands.already.exist").modal('show');
         })
 }
@@ -129,5 +129,10 @@ function prepareUrl(){
      }
 
      return url;
+}
+
+function showError(text) {
+    $("#error-alert-text").text(text);
+    $("#error-alert").removeClass('d-none');
 }
 

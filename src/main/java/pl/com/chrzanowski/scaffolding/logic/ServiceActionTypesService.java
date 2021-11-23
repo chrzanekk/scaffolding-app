@@ -17,9 +17,12 @@ import static pl.com.chrzanowski.scaffolding.logic.JdbcUtil.getString;
 public class ServiceActionTypesService implements IServiceActonTypes {
 
     private ServiceActionTypeJdbcRepository serviceActionTypeJdbcRepository;
+    private DataValidateService dataValidateService;
 
-    public ServiceActionTypesService(ServiceActionTypeJdbcRepository serviceActionTypeJdbcRepository) {
+    public ServiceActionTypesService(ServiceActionTypeJdbcRepository serviceActionTypeJdbcRepository,
+                                     DataValidateService dataValidateService) {
         this.serviceActionTypeJdbcRepository = serviceActionTypeJdbcRepository;
+        this.dataValidateService = dataValidateService;
     }
 
     public List<ServiceActionTypeData> find(ServiceActionTypesFilter filter) {
@@ -29,10 +32,12 @@ public class ServiceActionTypesService implements IServiceActonTypes {
 
 
     public Long add(ServiceActionTypeData data) {
+        validateData(data);
         return serviceActionTypeJdbcRepository.create(data);
     }
 
     public void update(ServiceActionTypeData data) {
+        validateData(data);
         serviceActionTypeJdbcRepository.update(data);
     }
 
@@ -47,5 +52,9 @@ public class ServiceActionTypesService implements IServiceActonTypes {
             ));
         }
         return list;
+    }
+
+    private void validateData(ServiceActionTypeData data) {
+        dataValidateService.validateTextField(data.getName(), "Nazwa usługi serwisowej");
     }
 }

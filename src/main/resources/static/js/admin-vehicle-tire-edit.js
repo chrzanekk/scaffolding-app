@@ -53,6 +53,11 @@ function sendUpdateRequest() {
             $("#operation-successful-modal").modal('show');
         })
         .fail(function (jqxhr, textStatus, errorThrown) {
-            displayErrorInformation(jqxhr.responseText);
+            showError(prepareErrorMessage(jqxhr.responseText));
         })
+}
+
+function showError(text) {
+    $("#error-alert-text").text(text);
+    $("#error-alert").removeClass('d-none');
 }

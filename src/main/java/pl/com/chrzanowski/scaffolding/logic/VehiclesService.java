@@ -16,9 +16,12 @@ import static pl.com.chrzanowski.scaffolding.logic.JdbcUtil.getFloat;
 public class VehiclesService implements IVehicles {
 
     private VehiclesJdbcRepository vehiclesJdbcRepository;
+    private DataValidateService dataValidateService;
 
-    public VehiclesService(VehiclesJdbcRepository vehiclesJdbcRepository) {
+    public VehiclesService(VehiclesJdbcRepository vehiclesJdbcRepository,
+                           DataValidateService dataValidateService) {
         this.vehiclesJdbcRepository = vehiclesJdbcRepository;
+        this.dataValidateService = dataValidateService;
     }
 
     public List<VehicleData> find(VehicleFilter filter)  {
@@ -30,7 +33,7 @@ public class VehiclesService implements IVehicles {
     }
 
     public Long add(VehicleData data) {
-        validateVehicleData(data);
+        validateData(data);
         return vehiclesJdbcRepository.create(new VehicleData(
                 data.getBrandId(),
                 data.getModelId(),
@@ -48,7 +51,7 @@ public class VehiclesService implements IVehicles {
     }
 
     public void update(VehicleData data) {
-        validateVehicleData(data);
+        validateData(data);
         vehiclesJdbcRepository.update(
                 data);
     }
@@ -105,67 +108,74 @@ public class VehiclesService implements IVehicles {
         }
     }
 
-    private void validateVehicleData(VehicleData data) {
-        validateValue(data.getBrandId(), "Marka");
-        validateValue(data.getModelId(), "Model");
-        validateTextField(data.getRegistrationNumber(), "Numer rejestracyjny");
-        validateTextField(data.getVin(), "VIN");
-        validateDate(data.getFirstRegistrationDate(), "Data pierwszej rejestracji.");
+    private void validateData(VehicleData data) {
+        dataValidateService.validateValue(data.getBrandId(), "Marka");
+        dataValidateService.validateValue(data.getModelId(), "Model");
+        dataValidateService.validateTextField(data.getRegistrationNumber(), "Numer rejestracyjny");
+        dataValidateService.validateTextField(data.getVin(), "VIN");
+        dataValidateService.validateDate(data.getFirstRegistrationDate(), "Data pierwszej rejestracji.");
         validateFreePlacesForTechnicalInspections(data.getFreePlacesForTechnicalInspections(), "Ilość wolnych miejsc na przegląd techniczny");
-        validateValue(data.getFuelTypeId(), "Typ paliwa");
-        validateValue(data.getVehicleTypeId(), "Typ pojazdu");
-        validateValue(data.getLength(), "Długość (m)");
-        validateValue(data.getWidth(), "Szerokość (m)");
-        validateValue(data.getHeight(), "Wysokość (m)");
+        dataValidateService.validateValue(data.getFuelTypeId(), "Typ paliwa");
+        dataValidateService.validateValue(data.getVehicleTypeId(), "Typ pojazdu");
+        dataValidateService.validateValue(data.getLength(), "Długość (m)");
+        dataValidateService.validateValue(data.getWidth(), "Szerokość (m)");
     }
 
     private void validateFreePlacesForTechnicalInspections(Integer value, String fieldName) {
-        validateValue(value,fieldName);
+        dataValidateService.validateValue(value,fieldName);
         if(value > 6 || value < 1) {
             throw new IllegalArgumentException("Niepoprawna ilość wolnych miejsc na przeglądy techniczne.");
         }
     }
 
-    private void validateValue(Long value, String fieldName) {
-        if(value == null) {
-            throw new IllegalArgumentException("Pole \"" + fieldName + " \" nie może być puste.");
-        }
-        if (value < 0) {
-            throw new IllegalArgumentException("Pole \" " + fieldName + " \" nie może mieć wartości ujemnej.");
-        }
-    }
-
-    private void validateValue(Float value, String fieldName) {
-        if (value == null) {
-            throw new IllegalArgumentException("Pole \" " + fieldName + " \" nie może być puste.");
-        }
-        if (value < 0) {
-            throw new IllegalArgumentException("Pole \" " + fieldName + " \" nie może mieć wartości ujemnej.");
-        }
-
-    }
-
-    private void validateValue(Integer value, String fieldName) {
-        if (value == null) {
-            throw new IllegalArgumentException("Pole \" " + fieldName + " \" nie może być puste.");
-        }
-        if (value < 0) {
-            throw new IllegalArgumentException("Pole \" " + fieldName + " \" nie może mieć wartości ujemnej.");
-        }
-    }
-
-    private void validateTextField(String textField, String fieldName) {
-        if (textField == null || textField.equals("")) {
-            throw new IllegalArgumentException("Pole \" " + fieldName + "\"  nie może być puste.");
-        }
-    }
-
-    private void validateDate(LocalDate date, String fieldName) {
-        if (date == null) {
-            throw new IllegalArgumentException("Pole \" " + fieldName + " \" nie może być puste.");
-        }
-        if(date.isAfter(LocalDate.now())) {
-            throw new IllegalArgumentException("Data nie może być późniejsza niż aktualna.");
-        }
-    }
+// do obgadania z Pawłem
+//    private void validateFreePlacesForTechnicalInspections(Integer value, String fieldName) {
+//        validateValue(value,fieldName);
+//        if(value > 6 || value < 1) {
+//            throw new IllegalArgumentException("Niepoprawna ilość wolnych miejsc na przeglądy techniczne.");
+//        }
+//    }
+//
+//    private void validateValue(Long value, String fieldName) {
+//        if(value == null) {
+//            throw new IllegalArgumentException("Pole \"" + fieldName + " \" nie może być puste.");
+//        }
+//        if (value < 0) {
+//            throw new IllegalArgumentException("Pole \" " + fieldName + " \" nie może mieć wartości ujemnej.");
+//        }
+//    }
+//
+//    private void validateValue(Float value, String fieldName) {
+//        if (value == null) {
+//            throw new IllegalArgumentException("Pole \" " + fieldName + " \" nie może być puste.");
+//        }
+//        if (value < 0) {
+//            throw new IllegalArgumentException("Pole \" " + fieldName + " \" nie może mieć wartości ujemnej.");
+//        }
+//
+//    }
+//
+//    private void validateValue(Integer value, String fieldName) {
+//        if (value == null) {
+//            throw new IllegalArgumentException("Pole \" " + fieldName + " \" nie może być puste.");
+//        }
+//        if (value < 0) {
+//            throw new IllegalArgumentException("Pole \" " + fieldName + " \" nie może mieć wartości ujemnej.");
+//        }
+//    }
+//
+//    private void validateTextField(String textField, String fieldName) {
+//        if (textField == null || textField.equals("")) {
+//            throw new IllegalArgumentException("Pole \" " + fieldName + "\"  nie może być puste.");
+//        }
+//    }
+//
+//    private void validateDate(LocalDate date, String fieldName) {
+//        if (date == null) {
+//            throw new IllegalArgumentException("Pole \" " + fieldName + " \" nie może być puste.");
+//        }
+//        if(date.isAfter(LocalDate.now())) {
+//            throw new IllegalArgumentException("Data nie może być późniejsza niż aktualna.");
+//        }
+//    }
 }

@@ -120,7 +120,7 @@ function sendCreateRequest() {
             findTires();
         })
         .fail(function (jqxhr, textStatus, errorThrown) {
-            displayErrorInformation(jqxhr.responseText);
+            showError(prepareErrorMessage(jqxhr.responseText));
         })
 }
 
@@ -159,4 +159,9 @@ function findMountedTire() {
 
 function showChangeNotification() {
     $("#operation-change-tire-status").modal('show');
+}
+
+function showError(text) {
+    $("#error-alert-text").text(text);
+    $("#error-alert").removeClass('d-none');
 }

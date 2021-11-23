@@ -1,7 +1,10 @@
 package pl.com.chrzanowski.scaffolding.logic;
 
 import org.springframework.stereotype.Service;
-import pl.com.chrzanowski.scaffolding.domain.*;
+import pl.com.chrzanowski.scaffolding.domain.ServiceActionTypeData;
+import pl.com.chrzanowski.scaffolding.domain.ServiceActionTypesFilter;
+import pl.com.chrzanowski.scaffolding.domain.WorkshopsData;
+import pl.com.chrzanowski.scaffolding.domain.WorkshopsFilter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,13 +20,16 @@ public class WorkshopsService {
     private WorkshopsJdbcRepository workshopsJdbcRepository;
     private WorkshopServiceTypeService workshopServiceTypeService;
     private ServiceActionTypesService serviceActionTypesService;
+    private DataValidateService dataValidateService;
 
     public WorkshopsService(WorkshopsJdbcRepository workshopsJdbcRepository,
                             WorkshopServiceTypeService workshopServiceTypeService,
-                            ServiceActionTypesService serviceActionTypesService) {
+                            ServiceActionTypesService serviceActionTypesService,
+                            DataValidateService dataValidateService) {
         this.workshopsJdbcRepository = workshopsJdbcRepository;
         this.workshopServiceTypeService = workshopServiceTypeService;
         this.serviceActionTypesService = serviceActionTypesService;
+        this.dataValidateService = dataValidateService;
     }
 
     public List<WorkshopsData> find(WorkshopsFilter filter) {
@@ -63,14 +69,15 @@ public class WorkshopsService {
     }
 
 
-
     public Long add(WorkshopsData data) {
+        validateData(data);
         Long workshopId = workshopsJdbcRepository.create(data);
-        workshopServiceTypeService.validateAndCreateActionTypesForWorkshop(new WorkshopsData(workshopId,data));
+        workshopServiceTypeService.validateAndCreateActionTypesForWorkshop(new WorkshopsData(workshopId, data));
         return workshopId;
     }
 
     public void update(WorkshopsData data) {
+        validateData(data);
         if (data.getActionTypes() != null) {
             workshopServiceTypeService.deleteActionTypes(data);
             workshopServiceTypeService.validateAndCreateActionTypesForWorkshop(data);
@@ -96,6 +103,22 @@ public class WorkshopsService {
             ));
         }
         return list;
+    }
+
+    private void validateData(WorkshopsData data) {
+        dataValidateService.validateTextField(data.getName(), "Nazwa");
+        dataValidateService.validateTextField(data.getTaxNumber(), "NIP");
+        dataValidateService.validateTextField(data.getStreet(), "Ulica");
+        dataValidateService.validateTextField(data.getBuildingNo(), "Numer budynku");
+        dataValidateService.validateTextField(data.getPostalCode(), "Kod pocztowy");
+        dataValidateService.validateTextField(data.getCity(), "Miasto");
+        validateServiceTypes(data.getActionTypes());
+    }
+
+    private void validateServiceTypes(Long[] actionTypes) {
+        if(actionTypes.length==0) {
+            throw new IllegalArgumentException("Wybierz przynajmniej jeden rodzaj usługi.");
+        }
     }
 
 }

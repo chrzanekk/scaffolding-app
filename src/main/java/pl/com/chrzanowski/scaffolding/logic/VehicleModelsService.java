@@ -15,16 +15,21 @@ import static pl.com.chrzanowski.scaffolding.logic.JdbcUtil.getString;
 public class VehicleModelsService implements IVehicleModels {
 
     private VehicleModelJdbcRepository vehicleModelJdbcRepository;
+    private DataValidateService dataValidateService;
 
-    public VehicleModelsService(VehicleModelJdbcRepository vehicleModelJdbcRepository) {
+    public VehicleModelsService(VehicleModelJdbcRepository vehicleModelJdbcRepository,
+                                DataValidateService dataValidateService) {
         this.vehicleModelJdbcRepository = vehicleModelJdbcRepository;
+        this.dataValidateService = dataValidateService;
     }
 
     public Long add(VehicleModelData data) {
+        validateData(data);
         return vehicleModelJdbcRepository.create(data);
     }
 
     public void update(VehicleModelData data) {
+        validateData(data);
         vehicleModelJdbcRepository.update(data);
     }
 
@@ -44,5 +49,9 @@ public class VehicleModelsService implements IVehicleModels {
             ));
         }
         return models;
+    }
+
+    private void validateData(VehicleModelData data) {
+        dataValidateService.validateTextField(data.getName(), "Model");
     }
 }

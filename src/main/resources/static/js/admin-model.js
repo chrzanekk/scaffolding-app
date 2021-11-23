@@ -14,6 +14,10 @@ function showDeleteModal() {
     $('#delete-object-modal').modal('show');
 }
 
+function showError(text) {
+    $("#error-alert-text").text(text);
+    $("#error-alert").removeClass('d-none');
+}
 //function sendDeleteRequest(){
 //    $.ajax({
 //        url: "/admin/api/scaffolding/vehicle/" + vehicle.id,
@@ -42,6 +46,6 @@ function sendUpdateRequest() {
             $("#operation-successful-modal").modal('show');
         })
         .fail(function (jqxhr, textStatus, errorThrown) {
-            displayErrorInformation(jqxhr.responseText);
+            showError(prepareErrorMessage(jqxhr.responseText));
         })
 }

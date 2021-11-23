@@ -87,8 +87,13 @@ function sendCreateRequest() {
             findServiceActionTypes();
         })
         .fail(function (jqxhr, textStatus, errorThrown) {
-            displayErrorInformation(jqxhr.responseText);
+            showError(prepareErrorMessage(jqxhr.responseText));
         })
+}
+
+function showError(text) {
+    $("#error-alert-text").text(text);
+    $("#error-alert").removeClass('d-none');
 }
 
 //todo to na koniec, jak już będzie działało dodawanie i edycja

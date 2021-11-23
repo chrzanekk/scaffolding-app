@@ -16,11 +16,14 @@ public class VehicleTiresService implements IVehicleTires {
 
     private VehicleTiresJdbcRepository tiresJdbcRepository;
     private DictionariesService dictionariesService;
+    private DataValidateService dataValidateService;
 
     public VehicleTiresService(VehicleTiresJdbcRepository tiresJdbcRepository,
-                               DictionariesService dictionariesService) {
+                               DictionariesService dictionariesService,
+                               DataValidateService dataValidateService) {
         this.tiresJdbcRepository = tiresJdbcRepository;
         this.dictionariesService = dictionariesService;
+        this.dataValidateService = dataValidateService;
     }
 
     @Override
@@ -36,12 +39,14 @@ public class VehicleTiresService implements IVehicleTires {
 
     @Override
     public void create(VehicleTiresData data) {
+        validateData(data);
         checkMountStatusAndUpdateToStocked(data);
         tiresJdbcRepository.create(data);
     }
 
     @Override
     public void update(VehicleTiresData data) {
+        validateData(data);
         checkMountStatusAndUpdateToStocked(data);
         tiresJdbcRepository.updateTire(data);
         tiresJdbcRepository.update(data);
@@ -113,6 +118,23 @@ public class VehicleTiresService implements IVehicleTires {
     private boolean checkIsTiresMounted(VehicleTiresFilter filter) {
         VehicleTiresData existingTire = getTire(filter);
         return existingTire.getStatus().equals(convertTireStatus("m"));
+    }
+
+    private void validateData(VehicleTiresData data) {
+        dataValidateService.validateTextField(data.getBrand(), "Marka");
+        dataValidateService.validateTextField(data.getModel(), "Model");
+        dataValidateService.validateValue(data.getProductionYear(), "Rok produkcji");
+        dataValidateService.validateDate(data.getPurchaseDate(), "Data zakupu");
+        dataValidateService.validateTextField(data.getStatus(), "Status opon");
+        dataValidateService.validateValue(data.getSeasonId(), "Sezon");
+        dataValidateService.validateValue(data.getWidth(), "Szerokość");
+        dataValidateService.validateValue(data.getProfile(), "Profil");
+        dataValidateService.validateTextField(data.getType(), "Typ");
+        dataValidateService.validateValue(data.getDiameter(), "Średnica");
+        dataValidateService.validateTextField(data.getSpeedIndex(), "Index prędkości");
+        dataValidateService.validateValue(data.getCapacityIndex(), "Index nośności");
+        dataValidateService.validateTextField(data.getReinforced(), "Czy jest wzmacniana(Reinforced)?");
+        dataValidateService.validateTextField(data.getRunOnFlat(), "Run on flat?");
     }
 
 }

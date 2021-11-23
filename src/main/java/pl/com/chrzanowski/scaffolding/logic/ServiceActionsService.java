@@ -20,17 +20,20 @@ public class ServiceActionsService implements IServiceActions {
     private UserAuthoritiesService userAuthoritiesService;
     private WorkshopServiceTypeService workshopServiceTypeService;
     private DictionariesService dictionariesService;
+    private DataValidateService dataValidateService;
 
     public ServiceActionsService(ServiceActionsJdbcRepository serviceActionsJdbcRepository,
                                  UserService usersService,
                                  UserAuthoritiesService userAuthoritiesService,
                                  WorkshopServiceTypeService workshopServiceTypeService,
-                                 DictionariesService dictionariesService) {
+                                 DictionariesService dictionariesService,
+                                 DataValidateService dataValidateService) {
         this.serviceActionsJdbcRepository = serviceActionsJdbcRepository;
         this.usersService = usersService;
         this.userAuthoritiesService = userAuthoritiesService;
         this.workshopServiceTypeService = workshopServiceTypeService;
         this.dictionariesService = dictionariesService;
+        this.dataValidateService = dataValidateService;
     }
 
     public List<ServiceActionsData> find(ServiceActionsFilter filter) {
@@ -54,7 +57,7 @@ public class ServiceActionsService implements IServiceActions {
     }
 
     public Long add(ServiceActionsData data) {
-        validateServiceActionData(data);
+        validateData(data);
         if (checkWorkshopServiceType(data)) {
             return serviceActionsJdbcRepository.create(new ServiceActionsData(
                     data,
@@ -66,7 +69,7 @@ public class ServiceActionsService implements IServiceActions {
     }
 
     public void update(ServiceActionsData data) {
-        validateServiceActionData(data);
+        validateData(data);
         if (checkWorkshopServiceType(data)) {
             serviceActionsJdbcRepository.update(new ServiceActionsData(
                     calculateTaxValue(data.getInvoiceNetValue(), data.getTaxRate()),
@@ -170,19 +173,13 @@ public class ServiceActionsService implements IServiceActions {
         return netValue.setScale(2, RoundingMode.HALF_EVEN).multiply(taxRate.setScale(2, RoundingMode.HALF_EVEN));
     }
 
-    private void validateServiceActionData(ServiceActionsData data) {
-        validateTextField(data.getInvoiceNumber(), "Numer faktury");
-        validateDate(data.getServiceDate(), "Data wykonania");
-        validateId(data.getWorkshopId(), "Miejsce wykonania usługi");
-        validateId(data.getServiceActionTypeId(), "Skrócony typ usługi");
+    private void validateData(ServiceActionsData data) {
+        dataValidateService.validateTextField(data.getInvoiceNumber(), "Numer faktury");
+        dataValidateService.validateDate(data.getServiceDate(), "Data wykonania");
+        dataValidateService.validateValue(data.getWorkshopId(), "Miejsce wykonania usługi");
+        dataValidateService.validateValue(data.getServiceActionTypeId(), "Skrócony typ usługi");
         validateCarMileage(data.getCarMileage(), "Przebieg");
-        validateTextField(data.getServiceActionDescription(), "Opis szczełowy wykonanych prac");
-    }
-
-    private void validateTextField(String textField, String fieldName) {
-        if (textField == null || textField.equals("")) {
-            throw new IllegalArgumentException("Pole \" " + fieldName + "\"  nie może być puste.");
-        }
+        dataValidateService.validateTextField(data.getServiceActionDescription(), "Opis szczełowy wykonanych prac");
     }
 
     private void validateCarMileage(Integer carMileage, String fieldName) {
@@ -194,19 +191,6 @@ public class ServiceActionsService implements IServiceActions {
         }
     }
 
-    private void validateDate(LocalDate date, String fieldName) {
-        if (date == null) {
-            throw new IllegalArgumentException("Pole \" " + fieldName + " \" nie może być puste.");
-        }
-        if(date.isAfter(LocalDate.now())) {
-            throw new IllegalArgumentException("Data nie może być późniejsza niż aktualna.");
-        }
-    }
 
-    private void validateId(Long id, String fieldName) {
-        if(id == null) {
-            throw new IllegalArgumentException("Pole \"" + fieldName + " \" nie może być puste.");
-        }
-    }
 
 }

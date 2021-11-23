@@ -122,7 +122,7 @@ function sendCreateRequest() {
             findWorkshops();
         })
         .fail(function (jqxhr, textStatus, errorThrown) {
-            displayErrorInformation(jqxhr.responseText);
+            showError(prepareErrorMessage(jqxhr.responseText));
         })
 }
 
@@ -159,4 +159,9 @@ function prepareUrl(){
      }
 
      return url;
+}
+
+function showError(text) {
+    $("#error-alert-text").text(text);
+    $("#error-alert").removeClass('d-none');
 }

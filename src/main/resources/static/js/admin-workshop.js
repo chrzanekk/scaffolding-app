@@ -54,7 +54,7 @@ function sendUpdateRequest() {
             $("#operation-successful-modal").modal('show');
         })
         .fail(function (jqxhr, textStatus, errorThrown) {
-            displayErrorInformation(jqxhr.responseText);
+            showError(prepareErrorMessage(jqxhr.responseText));
         })
 }
 
@@ -62,6 +62,11 @@ function fillActionTypes() {
     workshop.actionTypes.forEach(function(actionType) {
     $('#'+actionType).attr('checked', true);
     })
+}
+
+function showError(text) {
+    $("#error-alert-text").text(text);
+    $("#error-alert").removeClass('d-none');
 }
 
 
