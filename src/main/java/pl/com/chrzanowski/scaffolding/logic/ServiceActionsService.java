@@ -5,6 +5,7 @@ import pl.com.chrzanowski.scaffolding.domain.*;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -170,22 +171,42 @@ public class ServiceActionsService implements IServiceActions {
     }
 
     private void validateServiceActionData(ServiceActionsData data) {
-        validateServiceActionDescription(data.getServiceActionDescription());
-        validateServiceActionCarMileage(data.getCarMileage());
+        validateServiceActionTextField(data.getInvoiceNumber(), "Numer faktury");
+        validateDate(data.getServiceDate(), "Data wykonania");
+        validateId(data.getWorkshopId(), "Miejsce wykonania usługi");
+        validateId(data.getServiceActionTypeId(), "Skrócony typ usługi");
+        validateCarMileage(data.getCarMileage(), "Przebieg");
+        validateServiceActionTextField(data.getServiceActionDescription(), "Opis szczełowy wykonanych prac");
     }
 
-    private void validateServiceActionDescription(String description) {
-        if (description == null || description.equals("")) {
-            throw new IllegalArgumentException("Pole \" Opis szczegółowy wykonanych prac.\" nie może być puste.");
+    private void validateServiceActionTextField(String textField, String fieldName) {
+        if (textField == null || textField.equals("")) {
+            throw new IllegalArgumentException("Pole \" " + fieldName + "\"  nie może być puste.");
         }
     }
 
-    private void validateServiceActionCarMileage(Integer carMileage) {
+    private void validateCarMileage(Integer carMileage, String fieldName) {
         if (carMileage == null) {
-            throw new IllegalArgumentException("Pole \" Przebieg \" nie może być puste.");
+            throw new IllegalArgumentException("Pole \" " + fieldName + " \" nie może być puste.");
         }
         if (carMileage <= 0) {
             throw new IllegalArgumentException("\" Przebieg \" nie może być ujemny lub równy zero.");
         }
     }
+
+    private void validateDate(LocalDate date, String fieldName) {
+        if (date == null) {
+            throw new IllegalArgumentException("Pole \" " + fieldName + " \" nie może być puste.");
+        }
+        if(date.isAfter(LocalDate.now())) {
+            throw new IllegalArgumentException("Data nie może być późniejsza niż aktualna.");
+        }
+    }
+
+    private void validateId(Long id, String fieldName) {
+        if(id == null) {
+            throw new IllegalArgumentException("Pole \"" + fieldName + " \" nie może być puste.");
+        }
+    }
+
 }
