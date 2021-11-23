@@ -171,15 +171,15 @@ public class ServiceActionsService implements IServiceActions {
     }
 
     private void validateServiceActionData(ServiceActionsData data) {
-        validateServiceActionTextField(data.getInvoiceNumber(), "Numer faktury");
+        validateTextField(data.getInvoiceNumber(), "Numer faktury");
         validateDate(data.getServiceDate(), "Data wykonania");
         validateId(data.getWorkshopId(), "Miejsce wykonania usługi");
         validateId(data.getServiceActionTypeId(), "Skrócony typ usługi");
         validateCarMileage(data.getCarMileage(), "Przebieg");
-        validateServiceActionTextField(data.getServiceActionDescription(), "Opis szczełowy wykonanych prac");
+        validateTextField(data.getServiceActionDescription(), "Opis szczełowy wykonanych prac");
     }
 
-    private void validateServiceActionTextField(String textField, String fieldName) {
+    private void validateTextField(String textField, String fieldName) {
         if (textField == null || textField.equals("")) {
             throw new IllegalArgumentException("Pole \" " + fieldName + "\"  nie może być puste.");
         }

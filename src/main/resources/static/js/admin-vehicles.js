@@ -134,7 +134,7 @@ function sendCreateRequest() {
             findVehicles();
         })
         .fail(function (jqxhr, textStatus, errorThrown) {
-            displayErrorInformation(jqxhr.responseText);
+            showError(prepareErrorMessage(jqxhr.responseText));
         })
 }
 
@@ -288,4 +288,9 @@ function fillRowWithoutTires(vehicle, value) {
             "<td class='align-middle'>" + vehicle.registrationNumber + "</td>" +
         "</tr>"
     );
+}
+
+function showError(text) {
+    $("#error-alert-text").text(text);
+    $("#error-alert").removeClass('d-none');
 }

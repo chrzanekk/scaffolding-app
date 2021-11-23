@@ -48,7 +48,7 @@ function sendUpdateRequest() {
             $("#operation-successful-modal").modal('show');
         })
         .fail(function (jqxhr, textStatus, errorThrown) {
-            displayErrorInformation(jqxhr.responseText);
+            showError(prepareErrorMessage(jqxhr.responseText));
         })
 }
 
@@ -79,4 +79,9 @@ function fillReloadedWorkshopService(action) {
     $('#service-action-type').append('<option value=' + action.serviceActionId + '>' + action.serviceActionName +
     '</option>');
 
+}
+
+function showError(text) {
+    $("#error-alert-text").text(text);
+    $("#error-alert").removeClass('d-none');
 }
