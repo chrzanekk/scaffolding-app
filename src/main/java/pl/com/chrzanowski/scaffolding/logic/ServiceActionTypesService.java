@@ -3,7 +3,6 @@ package pl.com.chrzanowski.scaffolding.logic;
 import org.springframework.stereotype.Service;
 import pl.com.chrzanowski.scaffolding.domain.ServiceActionTypeData;
 import pl.com.chrzanowski.scaffolding.domain.ServiceActionTypesFilter;
-import pl.com.chrzanowski.scaffolding.domain.WorkshopsData;
 
 
 import java.util.ArrayList;
@@ -17,12 +16,9 @@ import static pl.com.chrzanowski.scaffolding.logic.JdbcUtil.getString;
 public class ServiceActionTypesService implements IServiceActonTypes {
 
     private ServiceActionTypeJdbcRepository serviceActionTypeJdbcRepository;
-    private DataValidateService dataValidateService;
 
-    public ServiceActionTypesService(ServiceActionTypeJdbcRepository serviceActionTypeJdbcRepository,
-                                     DataValidateService dataValidateService) {
+    public ServiceActionTypesService(ServiceActionTypeJdbcRepository serviceActionTypeJdbcRepository) {
         this.serviceActionTypeJdbcRepository = serviceActionTypeJdbcRepository;
-        this.dataValidateService = dataValidateService;
     }
 
     public List<ServiceActionTypeData> find(ServiceActionTypesFilter filter) {
@@ -55,6 +51,6 @@ public class ServiceActionTypesService implements IServiceActonTypes {
     }
 
     private void validateData(ServiceActionTypeData data) {
-        dataValidateService.validateTextField(data.getName(), "Nazwa usługi serwisowej");
+        DataValidationUtil.validateTextField(data.getName(), "Nazwa usługi serwisowej");
     }
 }

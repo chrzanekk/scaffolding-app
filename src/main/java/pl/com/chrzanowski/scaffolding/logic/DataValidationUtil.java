@@ -1,19 +1,13 @@
 package pl.com.chrzanowski.scaffolding.logic;
 
-import org.springframework.stereotype.Service;
 
-import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDate;
 
-@Service
-@Transactional
-public class DataValidateService {
 
-    public DataValidateService() {
-    }
+public class DataValidationUtil {
 
 
-    public void validateValue(Long value, String fieldName) {
+    public static void validateValue(Long value, String fieldName) {
         if(value == null) {
             throw new IllegalArgumentException(prepareMessageForEmpty(fieldName));
         }
@@ -22,7 +16,7 @@ public class DataValidateService {
         }
     }
 
-    public void validateValue(Float value, String fieldName) {
+    public static void validateValue(Float value, String fieldName) {
         if (value == null) {
             throw new IllegalArgumentException(prepareMessageForEmpty(fieldName));
         }
@@ -32,7 +26,7 @@ public class DataValidateService {
 
     }
 
-    public void validateValue(Integer value, String fieldName) {
+    public static void validateValue(Integer value, String fieldName) {
         if (value == null) {
             throw new IllegalArgumentException(prepareMessageForEmpty(fieldName));
         }
@@ -41,13 +35,13 @@ public class DataValidateService {
         }
     }
 
-    public void validateTextField(String textField, String fieldName) {
+    public static void validateTextField(String textField, String fieldName) {
         if (textField == null || textField.equals("")) {
             throw new IllegalArgumentException(prepareMessageForEmpty(fieldName));
         }
     }
 
-    public void validateDate(LocalDate date, String fieldName) {
+    public static void validateDate(LocalDate date, String fieldName) {
         if (date == null) {
             throw new IllegalArgumentException(prepareMessageForEmpty(fieldName));
         }
@@ -56,15 +50,30 @@ public class DataValidateService {
         }
     }
 
-    private String prepareMessageForEmpty(String fieldName) {
+    public static void validateCarMileage(Integer carMileage, String fieldName) {
+        if (carMileage == null) {
+            throw new IllegalArgumentException(prepareMessageForEmpty(fieldName));
+        }
+        if (carMileage <= 0) {
+            throw new IllegalArgumentException(prepareMessageForNegativeValue(fieldName));
+        }
+    }
+
+    public static void validateServiceTypes(Long[] actionTypes) {
+        if(actionTypes.length==0) {
+            throw new IllegalArgumentException("Wybierz przynajmniej jeden rodzaj usługi.");
+        }
+    }
+
+    private static String prepareMessageForEmpty(String fieldName) {
         return "Pole \" " + fieldName + " \" nie może być puste.";
     }
 
-    private String prepareMessageForNegativeValue(String fieldName) {
+    private static String prepareMessageForNegativeValue(String fieldName) {
         return "Pole \" " + fieldName + " \" nie może mieć wartości ujemnej.";
     }
 
-    private String prepareMessageForFutureDate() {
+    private static String prepareMessageForFutureDate() {
         return "Data nie może być późniejsza niż aktualna.";
     }
 

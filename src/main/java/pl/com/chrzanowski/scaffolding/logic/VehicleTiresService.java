@@ -16,14 +16,11 @@ public class VehicleTiresService implements IVehicleTires {
 
     private VehicleTiresJdbcRepository tiresJdbcRepository;
     private DictionariesService dictionariesService;
-    private DataValidateService dataValidateService;
 
     public VehicleTiresService(VehicleTiresJdbcRepository tiresJdbcRepository,
-                               DictionariesService dictionariesService,
-                               DataValidateService dataValidateService) {
+                               DictionariesService dictionariesService) {
         this.tiresJdbcRepository = tiresJdbcRepository;
         this.dictionariesService = dictionariesService;
-        this.dataValidateService = dataValidateService;
     }
 
     @Override
@@ -121,20 +118,20 @@ public class VehicleTiresService implements IVehicleTires {
     }
 
     private void validateData(VehicleTiresData data) {
-        dataValidateService.validateTextField(data.getBrand(), "Marka");
-        dataValidateService.validateTextField(data.getModel(), "Model");
-        dataValidateService.validateValue(data.getProductionYear(), "Rok produkcji");
-        dataValidateService.validateDate(data.getPurchaseDate(), "Data zakupu");
-        dataValidateService.validateTextField(data.getStatus(), "Status opon");
-        dataValidateService.validateValue(data.getSeasonId(), "Sezon");
-        dataValidateService.validateValue(data.getWidth(), "Szerokość");
-        dataValidateService.validateValue(data.getProfile(), "Profil");
-        dataValidateService.validateTextField(data.getType(), "Typ");
-        dataValidateService.validateValue(data.getDiameter(), "Średnica");
-        dataValidateService.validateTextField(data.getSpeedIndex(), "Index prędkości");
-        dataValidateService.validateValue(data.getCapacityIndex(), "Index nośności");
-        dataValidateService.validateTextField(data.getReinforced(), "Czy jest wzmacniana(Reinforced)?");
-        dataValidateService.validateTextField(data.getRunOnFlat(), "Run on flat?");
+        DataValidationUtil.validateTextField(data.getBrand(), "Marka");
+        DataValidationUtil.validateTextField(data.getModel(), "Model");
+        DataValidationUtil.validateValue(data.getProductionYear(), "Rok produkcji");
+        DataValidationUtil.validateDate(data.getPurchaseDate(), "Data zakupu");
+        DataValidationUtil.validateTextField(data.getStatus(), "Status opon");
+        DataValidationUtil.validateValue(data.getSeasonId(), "Sezon");
+        DataValidationUtil.validateValue(data.getWidth(), "Szerokość");
+        DataValidationUtil.validateValue(data.getProfile(), "Profil");
+        DataValidationUtil.validateTextField(data.getType(), "Typ");
+        DataValidationUtil.validateValue(data.getDiameter(), "Średnica");
+        DataValidationUtil.validateTextField(data.getSpeedIndex(), "Index prędkości");
+        DataValidationUtil.validateValue(data.getCapacityIndex(), "Index nośności");
+        DataValidationUtil.validateTextField(data.getReinforced(), "Czy jest wzmacniana(Reinforced)?");
+        DataValidationUtil.validateTextField(data.getRunOnFlat(), "Run on flat?");
     }
 
 }

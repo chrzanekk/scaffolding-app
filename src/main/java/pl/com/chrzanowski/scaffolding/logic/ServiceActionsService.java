@@ -5,7 +5,6 @@ import pl.com.chrzanowski.scaffolding.domain.*;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -20,20 +19,17 @@ public class ServiceActionsService implements IServiceActions {
     private UserAuthoritiesService userAuthoritiesService;
     private WorkshopServiceTypeService workshopServiceTypeService;
     private DictionariesService dictionariesService;
-    private DataValidateService dataValidateService;
 
     public ServiceActionsService(ServiceActionsJdbcRepository serviceActionsJdbcRepository,
                                  UserService usersService,
                                  UserAuthoritiesService userAuthoritiesService,
                                  WorkshopServiceTypeService workshopServiceTypeService,
-                                 DictionariesService dictionariesService,
-                                 DataValidateService dataValidateService) {
+                                 DictionariesService dictionariesService) {
         this.serviceActionsJdbcRepository = serviceActionsJdbcRepository;
         this.usersService = usersService;
         this.userAuthoritiesService = userAuthoritiesService;
         this.workshopServiceTypeService = workshopServiceTypeService;
         this.dictionariesService = dictionariesService;
-        this.dataValidateService = dataValidateService;
     }
 
     public List<ServiceActionsData> find(ServiceActionsFilter filter) {
@@ -174,22 +170,15 @@ public class ServiceActionsService implements IServiceActions {
     }
 
     private void validateData(ServiceActionsData data) {
-        dataValidateService.validateTextField(data.getInvoiceNumber(), "Numer faktury");
-        dataValidateService.validateDate(data.getServiceDate(), "Data wykonania");
-        dataValidateService.validateValue(data.getWorkshopId(), "Miejsce wykonania usługi");
-        dataValidateService.validateValue(data.getServiceActionTypeId(), "Skrócony typ usługi");
-        validateCarMileage(data.getCarMileage(), "Przebieg");
-        dataValidateService.validateTextField(data.getServiceActionDescription(), "Opis szczełowy wykonanych prac");
+        DataValidationUtil.validateTextField(data.getInvoiceNumber(), "Numer faktury");
+        DataValidationUtil.validateDate(data.getServiceDate(), "Data wykonania");
+        DataValidationUtil.validateValue(data.getWorkshopId(), "Miejsce wykonania usługi");
+        DataValidationUtil.validateValue(data.getServiceActionTypeId(), "Skrócony typ usługi");
+        DataValidationUtil.validateCarMileage(data.getCarMileage(), "Przebieg");
+        DataValidationUtil.validateTextField(data.getServiceActionDescription(), "Opis szczełowy wykonanych prac");
     }
 
-    private void validateCarMileage(Integer carMileage, String fieldName) {
-        if (carMileage == null) {
-            throw new IllegalArgumentException("Pole \" " + fieldName + " \" nie może być puste.");
-        }
-        if (carMileage <= 0) {
-            throw new IllegalArgumentException("\" Przebieg \" nie może być ujemny lub równy zero.");
-        }
-    }
+
 
 
 

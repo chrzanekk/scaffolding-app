@@ -4,7 +4,6 @@ import org.springframework.stereotype.Service;
 import pl.com.chrzanowski.scaffolding.domain.VehicleData;
 import pl.com.chrzanowski.scaffolding.domain.VehicleFilter;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -16,12 +15,12 @@ import static pl.com.chrzanowski.scaffolding.logic.JdbcUtil.getFloat;
 public class VehiclesService implements IVehicles {
 
     private VehiclesJdbcRepository vehiclesJdbcRepository;
-    private DataValidateService dataValidateService;
+    private DataValidationUtil dataValidationUtil;
 
     public VehiclesService(VehiclesJdbcRepository vehiclesJdbcRepository,
-                           DataValidateService dataValidateService) {
+                           DataValidationUtil dataValidationUtil) {
         this.vehiclesJdbcRepository = vehiclesJdbcRepository;
-        this.dataValidateService = dataValidateService;
+        this.dataValidationUtil = dataValidationUtil;
     }
 
     public List<VehicleData> find(VehicleFilter filter)  {
@@ -109,20 +108,20 @@ public class VehiclesService implements IVehicles {
     }
 
     private void validateData(VehicleData data) {
-        dataValidateService.validateValue(data.getBrandId(), "Marka");
-        dataValidateService.validateValue(data.getModelId(), "Model");
-        dataValidateService.validateTextField(data.getRegistrationNumber(), "Numer rejestracyjny");
-        dataValidateService.validateTextField(data.getVin(), "VIN");
-        dataValidateService.validateDate(data.getFirstRegistrationDate(), "Data pierwszej rejestracji.");
+        dataValidationUtil.validateValue(data.getBrandId(), "Marka");
+        dataValidationUtil.validateValue(data.getModelId(), "Model");
+        dataValidationUtil.validateTextField(data.getRegistrationNumber(), "Numer rejestracyjny");
+        dataValidationUtil.validateTextField(data.getVin(), "VIN");
+        dataValidationUtil.validateDate(data.getFirstRegistrationDate(), "Data pierwszej rejestracji.");
         validateFreePlacesForTechnicalInspections(data.getFreePlacesForTechnicalInspections(), "Ilość wolnych miejsc na przegląd techniczny");
-        dataValidateService.validateValue(data.getFuelTypeId(), "Typ paliwa");
-        dataValidateService.validateValue(data.getVehicleTypeId(), "Typ pojazdu");
-        dataValidateService.validateValue(data.getLength(), "Długość (m)");
-        dataValidateService.validateValue(data.getWidth(), "Szerokość (m)");
+        dataValidationUtil.validateValue(data.getFuelTypeId(), "Typ paliwa");
+        dataValidationUtil.validateValue(data.getVehicleTypeId(), "Typ pojazdu");
+        dataValidationUtil.validateValue(data.getLength(), "Długość (m)");
+        dataValidationUtil.validateValue(data.getWidth(), "Szerokość (m)");
     }
 
     private void validateFreePlacesForTechnicalInspections(Integer value, String fieldName) {
-        dataValidateService.validateValue(value,fieldName);
+        dataValidationUtil.validateValue(value,fieldName);
         if(value > 6 || value < 1) {
             throw new IllegalArgumentException("Niepoprawna ilość wolnych miejsc na przeglądy techniczne.");
         }

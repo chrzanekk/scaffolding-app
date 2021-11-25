@@ -15,12 +15,10 @@ import static pl.com.chrzanowski.scaffolding.logic.JdbcUtil.*;
 public class VehicleBrandsService implements IVehicleBrands {
 
     private VehicleBrandJdbcRepository vehicleBrandJdbcRepository;
-    private DataValidateService dataValidateService;
 
-    public VehicleBrandsService(VehicleBrandJdbcRepository vehicleBrandJdbcRepository,
-                                DataValidateService dataValidateService) {
+    public VehicleBrandsService(VehicleBrandJdbcRepository vehicleBrandJdbcRepository) {
         this.vehicleBrandJdbcRepository = vehicleBrandJdbcRepository;
-        this.dataValidateService = dataValidateService;
+
     }
 
     public Long add(VehicleBrandData data) {
@@ -59,6 +57,6 @@ public class VehicleBrandsService implements IVehicleBrands {
     }
 
     private void validateData(VehicleBrandData data) {
-        dataValidateService.validateTextField(data.getName(), "Marka");
+        DataValidationUtil.validateTextField(data.getName(), "Marka");
     }
 }

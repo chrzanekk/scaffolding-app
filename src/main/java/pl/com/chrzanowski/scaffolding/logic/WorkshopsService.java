@@ -20,16 +20,14 @@ public class WorkshopsService {
     private WorkshopsJdbcRepository workshopsJdbcRepository;
     private WorkshopServiceTypeService workshopServiceTypeService;
     private ServiceActionTypesService serviceActionTypesService;
-    private DataValidateService dataValidateService;
 
     public WorkshopsService(WorkshopsJdbcRepository workshopsJdbcRepository,
                             WorkshopServiceTypeService workshopServiceTypeService,
-                            ServiceActionTypesService serviceActionTypesService,
-                            DataValidateService dataValidateService) {
+                            ServiceActionTypesService serviceActionTypesService) {
         this.workshopsJdbcRepository = workshopsJdbcRepository;
         this.workshopServiceTypeService = workshopServiceTypeService;
         this.serviceActionTypesService = serviceActionTypesService;
-        this.dataValidateService = dataValidateService;
+
     }
 
     public List<WorkshopsData> find(WorkshopsFilter filter) {
@@ -106,19 +104,15 @@ public class WorkshopsService {
     }
 
     private void validateData(WorkshopsData data) {
-        dataValidateService.validateTextField(data.getName(), "Nazwa");
-        dataValidateService.validateTextField(data.getTaxNumber(), "NIP");
-        dataValidateService.validateTextField(data.getStreet(), "Ulica");
-        dataValidateService.validateTextField(data.getBuildingNo(), "Numer budynku");
-        dataValidateService.validateTextField(data.getPostalCode(), "Kod pocztowy");
-        dataValidateService.validateTextField(data.getCity(), "Miasto");
-        validateServiceTypes(data.getActionTypes());
+        DataValidationUtil.validateTextField(data.getName(), "Nazwa");
+        DataValidationUtil.validateTextField(data.getTaxNumber(), "NIP");
+        DataValidationUtil.validateTextField(data.getStreet(), "Ulica");
+        DataValidationUtil.validateTextField(data.getBuildingNo(), "Numer budynku");
+        DataValidationUtil.validateTextField(data.getPostalCode(), "Kod pocztowy");
+        DataValidationUtil.validateTextField(data.getCity(), "Miasto");
+        DataValidationUtil.validateServiceTypes(data.getActionTypes());
     }
 
-    private void validateServiceTypes(Long[] actionTypes) {
-        if(actionTypes.length==0) {
-            throw new IllegalArgumentException("Wybierz przynajmniej jeden rodzaj usługi.");
-        }
-    }
+
 
 }
