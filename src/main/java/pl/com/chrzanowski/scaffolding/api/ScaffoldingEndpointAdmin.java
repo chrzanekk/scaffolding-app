@@ -381,6 +381,8 @@ public class ScaffoldingEndpointAdmin {
 
     @PostMapping(path = "/vehicle-service-action", consumes = "application/json; charset=UTF-8")
     public void addVehicleServiceAction(@RequestBody ServiceActionPostRequest request) {
+//        validate here
+
         serviceActions.add(new ServiceActionsData(
                 request.getVehicleId(),
                 request.getCarMileage(),

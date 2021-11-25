@@ -15,8 +15,6 @@
         var tireStatus = [[${tireStatus}]];
         var tireOldStatus = [[${tireOldStatus}]];
         var reinforced = [[${reinforced}]];
-
-
     </script>
 </head>
 
@@ -207,10 +205,10 @@
                                     </select>
                                 </th>
                                 <th class="align-middle col-sm-2" colspan="2">
-                                    <select id="create-type" class="form-control">
-                                        <option th:each="type : ${tireType}"
-                                                th:value="${type.code}"
-                                                th:text="${type.value}"></option>
+                                    <select id="create-reinforced" class="form-control">
+                                        <option th:each="option : ${reinforced}"
+                                                th:value="${option.code}"
+                                                th:text="${option.value}"></option>
                                     </select>
                                 </th>
                                 <th class="align-middle col-sm-2" colspan="2">

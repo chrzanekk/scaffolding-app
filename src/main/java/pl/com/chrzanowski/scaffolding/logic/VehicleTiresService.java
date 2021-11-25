@@ -46,7 +46,7 @@ public class VehicleTiresService implements IVehicleTires {
 
     @Override
     public void update(VehicleTiresData data) {
-        validateData(data);
+
         checkMountStatusAndUpdateToStocked(data);
         tiresJdbcRepository.updateTire(data);
         tiresJdbcRepository.update(data);
