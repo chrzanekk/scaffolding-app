@@ -15,12 +15,10 @@ import static pl.com.chrzanowski.scaffolding.logic.JdbcUtil.getFloat;
 public class VehiclesService implements IVehicles {
 
     private VehiclesJdbcRepository vehiclesJdbcRepository;
-    private DataValidationUtil dataValidationUtil;
 
-    public VehiclesService(VehiclesJdbcRepository vehiclesJdbcRepository,
-                           DataValidationUtil dataValidationUtil) {
+
+    public VehiclesService(VehiclesJdbcRepository vehiclesJdbcRepository) {
         this.vehiclesJdbcRepository = vehiclesJdbcRepository;
-        this.dataValidationUtil = dataValidationUtil;
     }
 
     public List<VehicleData> find(VehicleFilter filter)  {
@@ -108,24 +106,19 @@ public class VehiclesService implements IVehicles {
     }
 
     private void validateData(VehicleData data) {
-        dataValidationUtil.validateValue(data.getBrandId(), "Marka");
-        dataValidationUtil.validateValue(data.getModelId(), "Model");
-        dataValidationUtil.validateTextField(data.getRegistrationNumber(), "Numer rejestracyjny");
-        dataValidationUtil.validateTextField(data.getVin(), "VIN");
-        dataValidationUtil.validateDate(data.getFirstRegistrationDate(), "Data pierwszej rejestracji.");
-        validateFreePlacesForTechnicalInspections(data.getFreePlacesForTechnicalInspections(), "Ilość wolnych miejsc na przegląd techniczny");
-        dataValidationUtil.validateValue(data.getFuelTypeId(), "Typ paliwa");
-        dataValidationUtil.validateValue(data.getVehicleTypeId(), "Typ pojazdu");
-        dataValidationUtil.validateValue(data.getLength(), "Długość (m)");
-        dataValidationUtil.validateValue(data.getWidth(), "Szerokość (m)");
+        DataValidationUtil.validateValue(data.getBrandId(), "Marka");
+        DataValidationUtil.validateValue(data.getModelId(), "Model");
+        DataValidationUtil.validateTextField(data.getRegistrationNumber(), "Numer rejestracyjny");
+        DataValidationUtil.validateTextField(data.getVin(), "VIN");
+        DataValidationUtil.validateDate(data.getFirstRegistrationDate(), "Data pierwszej rejestracji.");
+        DataValidationUtil.validateFreePlacesForTechnicalInspections(data.getFreePlacesForTechnicalInspections(), "Ilość wolnych miejsc na przegląd techniczny");
+        DataValidationUtil.validateValue(data.getFuelTypeId(), "Typ paliwa");
+        DataValidationUtil.validateValue(data.getVehicleTypeId(), "Typ pojazdu");
+        DataValidationUtil.validateValue(data.getLength(), "Długość (m)");
+        DataValidationUtil.validateValue(data.getWidth(), "Szerokość (m)");
     }
 
-    private void validateFreePlacesForTechnicalInspections(Integer value, String fieldName) {
-        dataValidationUtil.validateValue(value,fieldName);
-        if(value > 6 || value < 1) {
-            throw new IllegalArgumentException("Niepoprawna ilość wolnych miejsc na przeglądy techniczne.");
-        }
-    }
+
 
 // do obgadania z Pawłem
 //    private void validateFreePlacesForTechnicalInspections(Integer value, String fieldName) {

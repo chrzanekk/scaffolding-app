@@ -105,8 +105,7 @@ public class VehicleTiresData {
         this.seasonId = seasonId;
     }
     public VehicleTiresData(VehicleTiresData data,
-                            String status
-    ) {
+                            String status) {
         this.id = data.getId();
         this.tireId = data.getTireId();
         this.vehicleId = data.getVehicleId();

@@ -310,13 +310,13 @@ public class DictionariesService {
 
     private List<DictionaryData> getTaxRate(Language lang) {
         return Language.PL == lang ?
-                Arrays.asList(new DictionaryData("1.00", "VAT 0%", lang.getCode()),
-                            new DictionaryData("1.08", "VAT 8%", lang.getCode()),
-                            new DictionaryData("1.23", "VAT 23%", lang.getCode())
+                Arrays.asList(new DictionaryData("0.00", "VAT 0%", lang.getCode()),
+                            new DictionaryData("0.08", "VAT 8%", lang.getCode()),
+                            new DictionaryData("0.23", "VAT 23%", lang.getCode())
                            ) :
-                Arrays.asList(new DictionaryData("1.00", "Value Added Tax - 0%", lang.getCode()),
-                        new DictionaryData("1.08", "Value Added Tax 8%", lang.getCode()),
-                        new DictionaryData("1.23", "Value Added Tax 23%", lang.getCode()));
+                Arrays.asList(new DictionaryData("0.00", "Value Added Tax - 0%", lang.getCode()),
+                        new DictionaryData("0.08", "Value Added Tax 8%", lang.getCode()),
+                        new DictionaryData("0.23", "Value Added Tax 23%", lang.getCode()));
     }
 
 }

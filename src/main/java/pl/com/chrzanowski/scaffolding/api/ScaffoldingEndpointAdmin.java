@@ -29,7 +29,6 @@ public class ScaffoldingEndpointAdmin {
     private ITireSeasons tireSeason;
     private IVehicleModels vehicleModels;
     private IVehicleBrands vehicleBrands;
-    private VehiclesBrandsAndModelsService vehiclesBrandsAndModelsService;
     private IVehicleTires vehicleTires;
     private WorkshopServiceTypeService workshopServiceTypeService;
     private DictionariesService dictionariesService;
@@ -45,7 +44,6 @@ public class ScaffoldingEndpointAdmin {
                                     ITireSeasons tireSeason,
                                     IVehicleModels vehicleModels,
                                     IVehicleBrands vehicleBrands,
-                                    VehiclesBrandsAndModelsService vehiclesBrandsAndModelsService,
                                     IVehicleTires vehicleTires,
                                     WorkshopServiceTypeService workshopServiceTypeService,
                                     DictionariesService dictionariesService) {
@@ -58,7 +56,6 @@ public class ScaffoldingEndpointAdmin {
         this.serviceActonTypes = serviceActonTypes;
         this.marketingService = marketingService;
         this.tireSeason = tireSeason;
-        this.vehiclesBrandsAndModelsService = vehiclesBrandsAndModelsService;
         this.vehicleModels = vehicleModels;
         this.vehicleBrands = vehicleBrands;
         this.vehicleTires = vehicleTires;
@@ -381,15 +378,15 @@ public class ScaffoldingEndpointAdmin {
 
     @PostMapping(path = "/vehicle-service-action", consumes = "application/json; charset=UTF-8")
     public void addVehicleServiceAction(@RequestBody ServiceActionPostRequest request) {
-//        validate here
-
+        BigDecimal netValue = DataValidationUtil.validateAndCreateValue(request.getInvoiceNetValue());
+        BigDecimal taxRate = DataValidationUtil.validateAndCreateValue(request.getTaxRate());
         serviceActions.add(new ServiceActionsData(
                 request.getVehicleId(),
                 request.getCarMileage(),
                 request.getServiceDate(),
                 request.getInvoiceNumber(),
-                serviceActions.validateAndCreateValue(request.getInvoiceNetValue()),
-                serviceActions.validateAndCreateValue(request.getTaxRate()),
+                netValue,
+                taxRate,
                 request.getWorkshopId(),
                 request.getServiceActionTypeId(),
                 request.getServiceActionDescription()));
@@ -397,14 +394,16 @@ public class ScaffoldingEndpointAdmin {
 
     @PutMapping(path = "/vehicle-service-action/{id}")
     public void updateServiceAction(@PathVariable Long id, @RequestBody ServiceActionPutRequest request) {
+        BigDecimal netValue = DataValidationUtil.validateAndCreateValue(request.getInvoiceNetValue());
+        BigDecimal taxRate = DataValidationUtil.validateAndCreateValue(request.getTaxRate());
         serviceActions.update(new ServiceActionsData(
                 request.getId(),
                 request.getVehicleId(),
                 request.getCarMileage(),
                 request.getServiceDate(),
                 request.getInvoiceNumber(),
-                new BigDecimal(request.getInvoiceNetValue()).setScale(2, RoundingMode.HALF_EVEN),
-                new BigDecimal(request.getTaxRate()).setScale(2,RoundingMode.HALF_EVEN),
+                netValue,
+                taxRate,
                 request.getWorkshopId(),
                 request.getServiceActionTypeId(),
                 request.getServiceActionDescription()

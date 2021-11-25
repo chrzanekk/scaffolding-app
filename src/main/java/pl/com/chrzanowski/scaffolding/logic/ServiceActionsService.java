@@ -4,7 +4,6 @@ import org.springframework.stereotype.Service;
 import pl.com.chrzanowski.scaffolding.domain.*;
 
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -57,8 +56,8 @@ public class ServiceActionsService implements IServiceActions {
         if (checkWorkshopServiceType(data)) {
             return serviceActionsJdbcRepository.create(new ServiceActionsData(
                     data,
-                    calculateTaxValue(data.getInvoiceNetValue(), data.getTaxRate()),
-                    calculateGrossValue(data.getInvoiceNetValue(), data.getTaxRate())));
+                    TaxCalculationUtil.calculateTaxValue(data.getInvoiceNetValue(), data.getTaxRate()),
+                    TaxCalculationUtil.calculateGrossValue(data.getInvoiceNetValue(), data.getTaxRate())));
         } else {
             throw new IllegalArgumentException("Ten warsztat nie wykonuje tej usługi.");
         }
@@ -68,8 +67,8 @@ public class ServiceActionsService implements IServiceActions {
         validateData(data);
         if (checkWorkshopServiceType(data)) {
             serviceActionsJdbcRepository.update(new ServiceActionsData(
-                    calculateTaxValue(data.getInvoiceNetValue(), data.getTaxRate()),
-                    calculateGrossValue(data.getInvoiceNetValue(), data.getTaxRate()),
+                    TaxCalculationUtil.calculateTaxValue(data.getInvoiceNetValue(), data.getTaxRate()),
+                    TaxCalculationUtil.calculateGrossValue(data.getInvoiceNetValue(), data.getTaxRate()),
                     data));
         } else {
             throw new IllegalArgumentException("Ten warsztat nie wykonuje tej usługi.");
@@ -79,22 +78,6 @@ public class ServiceActionsService implements IServiceActions {
     public void delete(ServiceActionsData data) {
     }
 
-    public BigDecimal validateAndCreateValue(String value) {
-        if (!value.isEmpty()) {
-            if (isValuePositive(value)) {
-                return new BigDecimal(value);
-            } else {
-                throw new IllegalArgumentException("Wartość nie może być ujemna.");
-            }
-        } else {
-            throw new IllegalArgumentException("Wartość netto faktury lub stawka podatku VAT nie może być pusta.");
-        }
-    }
-
-
-    public boolean isValuePositive(String value) {
-        return !value.startsWith("-");
-    }
 
     private List<ServiceActionsData> getActions(List<Map<String, Object>> data) {
 
@@ -160,14 +143,7 @@ public class ServiceActionsService implements IServiceActions {
     }
 
 
-    private BigDecimal calculateTaxValue(BigDecimal netValue, BigDecimal taxRate) {
-        return calculateGrossValue(netValue, taxRate).subtract(netValue).setScale(2, RoundingMode.HALF_EVEN);
 
-    }
-
-    private BigDecimal calculateGrossValue(BigDecimal netValue, BigDecimal taxRate) {
-        return netValue.setScale(2, RoundingMode.HALF_EVEN).multiply(taxRate.setScale(2, RoundingMode.HALF_EVEN));
-    }
 
     private void validateData(ServiceActionsData data) {
         DataValidationUtil.validateTextField(data.getInvoiceNumber(), "Numer faktury");

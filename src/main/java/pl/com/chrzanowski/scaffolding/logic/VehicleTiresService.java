@@ -43,7 +43,7 @@ public class VehicleTiresService implements IVehicleTires {
 
     @Override
     public void update(VehicleTiresData data) {
-
+        validateData(data);
         checkMountStatusAndUpdateToStocked(data);
         tiresJdbcRepository.updateTire(data);
         tiresJdbcRepository.update(data);
@@ -120,7 +120,7 @@ public class VehicleTiresService implements IVehicleTires {
     private void validateData(VehicleTiresData data) {
         DataValidationUtil.validateTextField(data.getBrand(), "Marka");
         DataValidationUtil.validateTextField(data.getModel(), "Model");
-        DataValidationUtil.validateValue(data.getProductionYear(), "Rok produkcji");
+        DataValidationUtil.validateTireProductionYear(data.getProductionYear(), "Rok produkcji");
         DataValidationUtil.validateDate(data.getPurchaseDate(), "Data zakupu");
         DataValidationUtil.validateTextField(data.getStatus(), "Status opon");
         DataValidationUtil.validateValue(data.getSeasonId(), "Sezon");
@@ -131,7 +131,7 @@ public class VehicleTiresService implements IVehicleTires {
         DataValidationUtil.validateTextField(data.getSpeedIndex(), "Index prędkości");
         DataValidationUtil.validateValue(data.getCapacityIndex(), "Index nośności");
         DataValidationUtil.validateTextField(data.getReinforced(), "Czy jest wzmacniana(Reinforced)?");
-        DataValidationUtil.validateTextField(data.getRunOnFlat(), "Run on flat?");
+        DataValidationUtil.validateBoolean(data.isRunOnFlat(), "Run on flat?");
     }
 
 }

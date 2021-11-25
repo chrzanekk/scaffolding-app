@@ -14,6 +14,4 @@ public interface IServiceActions {
     Long add(ServiceActionsData data);
     void update(ServiceActionsData data);
     void delete(ServiceActionsData data);
-    BigDecimal validateAndCreateValue(String value);
-
 }

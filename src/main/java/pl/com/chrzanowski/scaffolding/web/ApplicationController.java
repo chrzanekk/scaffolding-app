@@ -38,7 +38,6 @@ public class ApplicationController {
     private IServiceActions iServiceActions;
     private IServiceActonTypes iServiceActonTypes;
     private WorkshopsService workshopsService;
-    private VehiclesBrandsAndModelsService vehiclesBrandsAndModelsService;
     private IVehicleTires vehicleTires;
     private IVehicleBrands vehicleBrands;
     private IVehicleModels vehicleModels;
@@ -56,7 +55,6 @@ public class ApplicationController {
                                  IServiceActions iServiceActions,
                                  IServiceActonTypes iServiceActonTypes,
                                  WorkshopsService workshopsService,
-                                 VehiclesBrandsAndModelsService vehiclesBrandsAndModelsService,
                                  IVehicleTires vehicleTires,
                                  IVehicleBrands vehicleBrands,
                                  IVehicleModels vehicleModels) {
@@ -72,7 +70,6 @@ public class ApplicationController {
         this.iServiceActonTypes = iServiceActonTypes;
         this.workshopsService = workshopsService;
         this.iServiceActions = iServiceActions;
-        this.vehiclesBrandsAndModelsService = vehiclesBrandsAndModelsService;
         this.vehicleTires = vehicleTires;
         this.vehicleBrands = vehicleBrands;
         this.vehicleModels = vehicleModels;
