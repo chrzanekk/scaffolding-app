@@ -117,7 +117,7 @@ public class VehicleTiresService implements IVehicleTires {
         if (existingTires.isEmpty()) {
             return false;
         }
-        return existingTire.getStatus().equals(convertTireStatus("m"));
+        return true;
     }
 
     private void validateData(VehicleTiresData data) {
