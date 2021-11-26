@@ -102,7 +102,7 @@
                             <tbody id="second">
                             <tr>
                                 <th class="align-middle col-sm-4" colspan="4">
-                                    <input id="create-production-year" type="number" min="2020" max="2021" class="form-control">
+                                    <input id="create-production-year" type="number" class="form-control">
                                 </th>
                                 <th class="align-middle col-sm-4" colspan="4">
                                     <input id="create-purchased-date" type="date" class="form-control">
@@ -119,6 +119,7 @@
                             <tr>
                                 <th class="align-middle col-sm-8" colspan="8">
                                     <select id="create-status" class="form-control">
+                                        <option value="">---</option>
                                         <option th:each="option : ${tireStatus}"
                                                 th:value="${option.code}"
                                                 th:text="${option.value}">
@@ -137,6 +138,7 @@
                             <tr>
                                 <th class="align-middle col-sm-8" colspan="8">
                                     <select id="create-season" class="form-control">
+                                        <option value="">---</option>
                                         <option th:each="option : ${tireSeason}"
                                                 th:value="${option.id}"
                                                 th:text="${option.value}"
@@ -169,6 +171,7 @@
                                 </th>
                                 <th class="align-middle col-sm-2" colspan="2">
                                     <select id="create-type" class="form-control">
+                                        <option value="">---</option>
                                         <option th:each="type : ${tireType}"
                                                 th:value="${type.code}"
                                                 th:text="${type.value}"></option>
@@ -192,6 +195,7 @@
                             <tr>
                                 <th class="align-middle col-sm-2" colspan="2">
                                     <select id="create-speed-index" class="form-control">
+                                        <option value="">---</option>
                                         <option th:each="index : ${speedIndex}"
                                                 th:value="${index.code}"
                                                 th:text="${index.code} +' - '+ ${index.value}+'km/h'"></option>
@@ -199,6 +203,7 @@
                                 </th>
                                 <th class="align-middle col-sm-2" colspan="2">
                                     <select id="create-capacity-index" class="form-control">
+                                        <option value="">---</option>
                                         <option th:each="index : ${capacityIndex}"
                                                 th:value="${index.code}"
                                                 th:text="${index.code} + ' - ' + ${index.value} + 'kg'"></option>
@@ -206,6 +211,7 @@
                                 </th>
                                 <th class="align-middle col-sm-2" colspan="2">
                                     <select id="create-reinforced" class="form-control">
+                                        <option value="">---</option>
                                         <option th:each="option : ${reinforced}"
                                                 th:value="${option.code}"
                                                 th:text="${option.value}"></option>
@@ -213,6 +219,7 @@
                                 </th>
                                 <th class="align-middle col-sm-2" colspan="2">
                                     <select id="create-run-on-flat" class="form-control">
+                                        <option value="">---</option>
                                         <option th:each="option : ${yesNoDict}"
                                                 th:value="${option.code}"
                                                 th:text="${option.value}"

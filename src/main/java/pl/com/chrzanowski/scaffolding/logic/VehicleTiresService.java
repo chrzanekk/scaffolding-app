@@ -111,9 +111,12 @@ public class VehicleTiresService implements IVehicleTires {
         }
         return result;
     }
-
+//naprawić metode
     private boolean checkIsTiresMounted(VehicleTiresFilter filter) {
-        VehicleTiresData existingTire = getTire(filter);
+        List<VehicleTiresData> existingTires = find(filter);
+        if (existingTires.isEmpty()) {
+            return false;
+        }
         return existingTire.getStatus().equals(convertTireStatus("m"));
     }
 
@@ -124,10 +127,10 @@ public class VehicleTiresService implements IVehicleTires {
         DataValidationUtil.validateDate(data.getPurchaseDate(), "Data zakupu");
         DataValidationUtil.validateTextField(data.getStatus(), "Status opon");
         DataValidationUtil.validateValue(data.getSeasonId(), "Sezon");
-        DataValidationUtil.validateValue(data.getWidth(), "Szerokość");
-        DataValidationUtil.validateValue(data.getProfile(), "Profil");
+        DataValidationUtil.validateTireWidth(data.getWidth(), "Szerokość");
+        DataValidationUtil.validateTireProfile(data.getProfile(), "Profil");
         DataValidationUtil.validateTextField(data.getType(), "Typ");
-        DataValidationUtil.validateValue(data.getDiameter(), "Średnica");
+        DataValidationUtil.validateTireDiameter(data.getDiameter(), "Średnica");
         DataValidationUtil.validateTextField(data.getSpeedIndex(), "Index prędkości");
         DataValidationUtil.validateValue(data.getCapacityIndex(), "Index nośności");
         DataValidationUtil.validateTextField(data.getReinforced(), "Czy jest wzmacniana(Reinforced)?");

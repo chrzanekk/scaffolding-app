@@ -93,10 +93,34 @@ public class DataValidationUtil {
     }
 
     public static void validateTireProductionYear(Integer productionYear, String fieldName) {
-        validateValue(productionYear,fieldName);
-        if(LocalDate.now().getYear() - productionYear > 4) {
+        validateValue(productionYear, fieldName);
+        if (LocalDate.now().getYear() - productionYear > 4) {
             throw new IllegalArgumentException("Zakupione opony mają powyżej 4 lat. Zaleca się zakup nowszych.");
         }
+    }
+
+    public static void validateTireWidth(Integer width, String fieldName) {
+        validateValue(width, fieldName);
+        validateIntegerValueInCompartment(width, fieldName, 125, 355);
+    }
+
+    public static void validateTireProfile(Integer profile, String fieldName) {
+        validateValue(profile, fieldName);
+        validateIntegerValueInCompartment(profile, fieldName, 30, 85);
+    }
+
+    public static void validateTireDiameter(Integer diameter, String fieldName) {
+        validateValue(diameter, fieldName);
+        validateIntegerValueInCompartment(diameter, fieldName, 10, 24);
+    }
+
+    private static void validateIntegerValueInCompartment(Integer value, String fieldName, Integer minValue,
+                                                          Integer maxValue) {
+        validateValue(value, fieldName);
+        if (value < minValue || value > maxValue) {
+            throw new IllegalArgumentException(prepareErrorMessageOutOfCompartment(fieldName, minValue, maxValue));
+        }
+
     }
 
 
@@ -114,6 +138,11 @@ public class DataValidationUtil {
 
     private static String prepareMessageForFutureDate() {
         return "Data nie może być późniejsza niż aktualna.";
+    }
+
+    private static String prepareErrorMessageOutOfCompartment(String fieldName, Integer minValue, Integer maxValue) {
+        return "Niepoprawna wartość pola " + fieldName + ". Podaj wartość z zakresu: " + minValue + "-" + maxValue +
+                ".";
     }
 
 }
