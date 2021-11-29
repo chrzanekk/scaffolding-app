@@ -163,6 +163,8 @@ function prepareUrl(){
 
      var actionType = $("#action-type-filter").find(":selected").val();
      var workshop = $("#workshop-filter").children(":selected").val();
+     var dateFrom = $("#date-from-filter").val();
+     var dateTo = $("#date-to-filter").val();
 
 
      if (actionType != "") {
@@ -170,6 +172,12 @@ function prepareUrl(){
      }
      if (workshop != "") {
         url += "&workshopName=" + workshop;
+     }
+     if (dateFrom != "") {
+        url += "&dateFrom=" + dateFrom;
+     }
+     if (dateTo != "") {
+        url += "&dateTo=" + dateTo;
      }
 
      return url;

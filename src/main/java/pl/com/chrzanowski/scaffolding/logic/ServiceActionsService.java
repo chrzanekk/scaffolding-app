@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 import pl.com.chrzanowski.scaffolding.domain.*;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -142,9 +143,6 @@ public class ServiceActionsService implements IServiceActions {
         return false;
     }
 
-
-
-
     private void validateData(ServiceActionsData data) {
         DataValidationUtil.validateTextField(data.getInvoiceNumber(), "Numer faktury");
         DataValidationUtil.validateDate(data.getServiceDate(), "Data wykonania");
@@ -153,6 +151,17 @@ public class ServiceActionsService implements IServiceActions {
         DataValidationUtil.validateCarMileage(data.getCarMileage(), "Przebieg");
         DataValidationUtil.validateTextField(data.getServiceActionDescription(), "Opis szczełowy wykonanych prac");
     }
+
+    public static void validateOilServiceStatus(String serviceTypeName, LocalDate serviceDate) {
+
+        if (serviceDate.minusDays(7).getDayOfWeek().getValue() <= 7) {
+            throw new IllegalArgumentException("Usługa " + serviceTypeName + " była wykonywana w przeciągu 7 dni.");
+        }
+
+    }
+
+
+
 
 
 

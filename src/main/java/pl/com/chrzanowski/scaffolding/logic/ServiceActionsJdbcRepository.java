@@ -4,14 +4,12 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 import pl.com.chrzanowski.scaffolding.domain.ServiceActionsData;
 import pl.com.chrzanowski.scaffolding.domain.ServiceActionsFilter;
-import pl.com.chrzanowski.scaffolding.domain.ServiceActionsInvoiceSummaryData;
 
-import java.math.RoundingMode;
-import java.util.ArrayList;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
-import static pl.com.chrzanowski.scaffolding.logic.JdbcUtil.*;
+import static pl.com.chrzanowski.scaffolding.logic.JdbcUtil.preparePaginationQuery;
 
 @Service
 public class ServiceActionsJdbcRepository {
@@ -28,45 +26,45 @@ public class ServiceActionsJdbcRepository {
 
     public Long create(ServiceActionsData data) {
 
-            String query = "INSERT INTO service_actions (" +
-                    "vehicle_id," +
-                    "car_mileage," +
-                    "service_date," +
-                    "invoice_no," +
-                    "invoice_gross_value," +
-                    "tax_value," +
-                    "invoice_net_value," +
-                    "tax_rate," +
-                    "workshop_id," +
-                    "description," +
-                    "create_date, " +
-                    "service_action_type_id) VALUES (" +
-                    "?, " +
-                    "?, " +
-                    "?, " +
-                    "?, " +
-                    "?, " +
-                    "?, " +
-                    "?, " +
-                    "?, " +
-                    "?, " +
-                    "?, " +
-                    "?, " +
-                    "? )";
-            jdbcTemplate.update(query,
-                    data.getVehicleId(),
-                    data.getCarMileage(),
-                    data.getServiceDate(),
-                    data.getInvoiceNumber(),
-                    data.getInvoiceGrossValue(),
-                    data.getTaxValue(),
-                    data.getInvoiceNetValue(),
-                    data.getTaxRate(),
-                    data.getWorkshopId(),
-                    data.getServiceActionDescription(),
-                    data.getCreateDate(),
-                    data.getServiceActionTypeId());
-            return commonJdbcRepository.getLastInsertedId();
+        String query = "INSERT INTO service_actions (" +
+                "vehicle_id," +
+                "car_mileage," +
+                "service_date," +
+                "invoice_no," +
+                "invoice_gross_value," +
+                "tax_value," +
+                "invoice_net_value," +
+                "tax_rate," +
+                "workshop_id," +
+                "description," +
+                "create_date, " +
+                "service_action_type_id) VALUES (" +
+                "?, " +
+                "?, " +
+                "?, " +
+                "?, " +
+                "?, " +
+                "?, " +
+                "?, " +
+                "?, " +
+                "?, " +
+                "?, " +
+                "?, " +
+                "? )";
+        jdbcTemplate.update(query,
+                data.getVehicleId(),
+                data.getCarMileage(),
+                data.getServiceDate(),
+                data.getInvoiceNumber(),
+                data.getInvoiceGrossValue(),
+                data.getTaxValue(),
+                data.getInvoiceNetValue(),
+                data.getTaxRate(),
+                data.getWorkshopId(),
+                data.getServiceActionDescription(),
+                data.getCreateDate(),
+                data.getServiceActionTypeId());
+        return commonJdbcRepository.getLastInsertedId();
     }
 
     public void update(ServiceActionsData data) {
@@ -128,30 +126,8 @@ public class ServiceActionsJdbcRepository {
                 "LEFT JOIN service_action_type ON (service_actions.service_action_type_id = service_action_type.id)" +
                 "LEFT JOIN workshops ON (service_actions.workshop_id = workshops.id)";
 
-        if (filter != null) {
-            query += " WHERE 1=1";
-            if (filter.getId() != null) {
-                query += " AND service_actions.id = '" + filter.getId() + "'";
-            }
-            if (filter.getVehicleId() != null) {
-                query += " AND service_actions.vehicle_id = '" + filter.getVehicleId() + "'";
-            }
-            if (filter.getWorkshopId() != null) {
-                query += " AND service_actions.workshop_id = '" + filter.getWorkshopId() + "'";
-            }
-            if (filter.getWorkshopName() != null) {
-                query += " AND workshops.name = '" + filter.getWorkshopName() + "'";
-            }
-            if (filter.getServiceDate() != null) {
-                query += " AND service_actions.service_date = '" + filter.getServiceDate() + "'";
-            }
-            if (filter.getActionTypeName() != null) {
-                query += " AND service_action_type.name = '" + filter.getActionTypeName() + "'";
-            }
-            if (filter.getPage() != null && filter.getPageSize() != null) {
-                query += preparePaginationQuery(filter.getPage(), filter.getPageSize());
-            }
-        }
+        query = prepareFilterQuery(filter, query);
+
         return jdbcTemplate.queryForList(query);
     }
 
@@ -163,6 +139,14 @@ public class ServiceActionsJdbcRepository {
                 "FROM service_actions " +
                 "LEFT JOIN service_action_type ON (service_actions.service_action_type_id = service_action_type.id)" +
                 "LEFT JOIN workshops ON (service_actions.workshop_id = workshops.id)";
+
+        query = prepareFilterQuery(filter, query);
+
+        return jdbcTemplate.queryForList(query);
+
+    }
+
+    private String prepareFilterQuery(ServiceActionsFilter filter, String query) {
         if (filter != null) {
             query += " WHERE 1=1";
             if (filter.getId() != null) {
@@ -180,13 +164,28 @@ public class ServiceActionsJdbcRepository {
             if (filter.getActionTypeName() != null) {
                 query += " AND service_action_type.name = '" + filter.getActionTypeName() + "'";
             }
+            if (filter.getDateFrom() != null || filter.getDateTo() != null) {
+                query += prepareQueryForDateFiltering(filter.getDateFrom(), filter.getDateTo());
+            }
             if (filter.getPage() != null && filter.getPageSize() != null) {
                 query += preparePaginationQuery(filter.getPage(), filter.getPageSize());
             }
         }
+        return query;
+    }
 
-        return jdbcTemplate.queryForList(query);
-
+    private String prepareQueryForDateFiltering(LocalDate dateFrom, LocalDate dateTo) {
+        String query = "";
+        if (dateFrom != null && dateTo == null) {
+            query += " AND service_actions.service_date BETWEEN '" + dateFrom + "' AND '" + LocalDate.now() + "'";
+        }
+        if (dateTo != null && dateFrom == null) {
+            query += " AND service_actions.service_date BETWEEN '' AND '" + dateTo + "'";
+        }
+        if (dateTo != null && dateFrom != null) {
+            query += " AND service_actions.service_date BETWEEN '" + dateFrom + "' AND '" + dateTo + "'";
+        }
+        return query;
     }
 
 }

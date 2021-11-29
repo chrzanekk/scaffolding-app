@@ -1,5 +1,6 @@
 package pl.com.chrzanowski.scaffolding.api;
 
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 import pl.com.chrzanowski.scaffolding.domain.*;
 import pl.com.chrzanowski.scaffolding.logic.*;
@@ -9,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -345,12 +347,16 @@ public class ScaffoldingEndpointAdmin {
             @PathVariable Long id,
             @RequestParam(name = "serviceActionTypeName", required = false) String actionTypeName,
             @RequestParam(name = "workshopName", required = false) String workshop,
+            @RequestParam(name = "dateFrom", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateFrom,
+            @RequestParam(name = "dateTo", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateTo,
             @RequestParam(name = "page", required = false, defaultValue = "1") Long page,
             @RequestParam(name = "page_size", required = false, defaultValue = "10") Long pageSize) {
         List<ServiceActionsData> actions = serviceActions.find(new ServiceActionsFilter(
                 id,
                 actionTypeName,
                 workshop,
+                dateFrom,
+                dateTo,
                 page,
                 pageSize));
         return new ServiceActionsRequestGetResponse(actionsToResponse(actions));
@@ -361,11 +367,15 @@ public class ScaffoldingEndpointAdmin {
     public ServiceActionsSummaryValueGetResponse serviceActionsInvoiceSummary(
             @PathVariable Long id,
             @RequestParam(name = "serviceActionTypeName", required = false) String actionTypeName,
-            @RequestParam(name = "workshopName", required = false) String workshop) {
+            @RequestParam(name = "workshopName", required = false) String workshop,
+            @RequestParam(name = "dateFrom", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateFrom,
+            @RequestParam(name = "dateTo", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateTo) {
         ServiceActionsInvoiceSummaryData summary =
                 serviceActions.getActionInvoicesSummary(new ServiceActionsFilter(id,
                         actionTypeName,
-                        workshop));
+                        workshop,
+                        dateFrom,
+                        dateTo));
         return summaryToResponse(summary);
     }
 

@@ -13,6 +13,8 @@ public class ServiceActionsFilter {
     private String workshopName;
     private Long page;
     private Long pageSize;
+    private LocalDate dateFrom;
+    private LocalDate dateTo;
 
 
     public ServiceActionsFilter(Long vehicleId,
@@ -26,11 +28,15 @@ public class ServiceActionsFilter {
     public ServiceActionsFilter(Long vehicleId,
                                 String actionTypeName,
                                 String workshopName,
+                                LocalDate dateFrom,
+                                LocalDate dateTo,
                                 Long page,
                                 Long pageSize) {
         this.vehicleId = vehicleId;
         this.actionTypeName = actionTypeName;
         this.workshopName = workshopName;
+        this.dateFrom = dateFrom;
+        this.dateTo = dateTo;
         this.page = page;
         this.pageSize = pageSize;
     }
@@ -39,10 +45,13 @@ public class ServiceActionsFilter {
         this.id = id;
     }
 
-    public ServiceActionsFilter(Long vehicleId, String actionTypeName, String workshopName) {
+    public ServiceActionsFilter(Long vehicleId, String actionTypeName, String workshopName, LocalDate dateFrom,
+                                LocalDate dateTo) {
         this.vehicleId = vehicleId;
         this.actionTypeName = actionTypeName;
         this.workshopName = workshopName;
+        this.dateFrom = dateFrom;
+        this.dateTo = dateTo;
     }
 
     public ServiceActionsFilter() {
@@ -82,5 +91,13 @@ public class ServiceActionsFilter {
 
     public Long getPageSize() {
         return pageSize;
+    }
+
+    public LocalDate getDateFrom() {
+        return dateFrom;
+    }
+
+    public LocalDate getDateTo() {
+        return dateTo;
     }
 }

@@ -114,6 +114,9 @@ public class DataValidationUtil {
         validateIntegerValueInCompartment(diameter, fieldName, 10, 24);
     }
 
+
+
+
     private static void validateIntegerValueInCompartment(Integer value, String fieldName, Integer minValue,
                                                           Integer maxValue) {
         validateValue(value, fieldName);
@@ -122,7 +125,6 @@ public class DataValidationUtil {
         }
 
     }
-
 
     private static boolean isValuePositive(String value) {
         return !value.startsWith("-");

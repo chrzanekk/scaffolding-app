@@ -111,7 +111,7 @@ public class VehicleTiresService implements IVehicleTires {
         }
         return result;
     }
-//naprawić metode
+
     private boolean checkIsTiresMounted(VehicleTiresFilter filter) {
         List<VehicleTiresData> existingTires = find(filter);
         if (existingTires.isEmpty()) {
