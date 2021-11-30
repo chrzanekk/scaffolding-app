@@ -54,6 +54,11 @@ public class ServiceActionsFilter {
         this.dateTo = dateTo;
     }
 
+    public ServiceActionsFilter(Long vehicleId, Long serviceActionId) {
+        this.vehicleId = vehicleId;
+        this.serviceActionId = serviceActionId;
+    }
+
     public ServiceActionsFilter() {
     }
 

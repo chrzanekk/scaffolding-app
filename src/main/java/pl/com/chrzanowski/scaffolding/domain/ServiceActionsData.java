@@ -133,9 +133,13 @@ public class ServiceActionsData {
         this.taxRate = data.getTaxRate();
     }
 
-
-
-
+    public ServiceActionsData(Long id, Long vehicleId, LocalDate serviceDate, Long serviceActionTypeId, String serviceActionTypeName) {
+        this.id = id;
+        this.vehicleId = vehicleId;
+        this.serviceDate = serviceDate;
+        this.serviceActionTypeId = serviceActionTypeId;
+        this.serviceActionTypeName = serviceActionTypeName;
+    }
 
     public Long getId() {
         return id;

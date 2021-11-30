@@ -44,6 +44,10 @@ public class ServiceActionsService implements IServiceActions {
         return getSummaryOfInvoices(serviceActionsJdbcRepository.findSummaryInvoiceValues(filter));
     }
 
+    public ServiceActionsData getLastActionByType(ServiceActionsFilter filter) {
+        return getLastActionByType(serviceActionsJdbcRepository.findLastDateOfServiceType(filter));
+    }
+
     public Boolean hasLoggedUserPermissionToActionsManagement() {
 
         UserData loggedUser = usersService.getLoggedUser();
@@ -54,6 +58,8 @@ public class ServiceActionsService implements IServiceActions {
 
     public Long add(ServiceActionsData data) {
         validateData(data);
+        validateOilServiceStatus(data, getLastActionByType(serviceActionsJdbcRepository.findLastDateOfServiceType(
+                                new ServiceActionsFilter(data.getVehicleId(),data.getServiceActionTypeId()))));
         if (checkWorkshopServiceType(data)) {
             return serviceActionsJdbcRepository.create(new ServiceActionsData(
                     data,
@@ -133,6 +139,16 @@ public class ServiceActionsService implements IServiceActions {
         return list.get(0);
     }
 
+    private ServiceActionsData getLastActionByType(Map<String,Object> data) {
+        return new ServiceActionsData(
+                getLong(data, "id"),
+                getLong(data, "vehicle_id"),
+                getDate(data, "service_date"),
+                getLong(data, "service_action_type_id"),
+                getString(data, "action_type")
+        );
+    }
+
     private Boolean checkWorkshopServiceType(ServiceActionsData data) {
         List<WorkshopServiceTypeData> availableServices = workshopServiceTypeService.find(new WorkshopServiceTypeFilter(data.getWorkshopId()));
         for (WorkshopServiceTypeData service : availableServices) {
@@ -152,19 +168,14 @@ public class ServiceActionsService implements IServiceActions {
         DataValidationUtil.validateTextField(data.getServiceActionDescription(), "Opis szczełowy wykonanych prac");
     }
 
-    public static void validateOilServiceStatus(String serviceTypeName, LocalDate serviceDate) {
-
-        if (serviceDate.minusDays(7).getDayOfWeek().getValue() <= 7) {
-            throw new IllegalArgumentException("Usługa " + serviceTypeName + " była wykonywana w przeciągu 7 dni.");
+    public static void validateOilServiceStatus(ServiceActionsData data, ServiceActionsData lastAction) {
+        if(lastAction != null) {
+            if (data.getServiceDate().compareTo(lastAction.getServiceDate()) <= 7) {
+                throw new IllegalArgumentException("Usługa \"" + lastAction.getServiceActionTypeName() + "\" była " +
+                        "wykonywana w przeciągu 7 dni.(" + lastAction.getServiceDate() + ")");
+            }
         }
-
     }
-
-
-
-
-
-
 
 
 }

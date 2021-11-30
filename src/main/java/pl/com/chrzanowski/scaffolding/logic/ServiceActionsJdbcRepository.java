@@ -146,6 +146,22 @@ public class ServiceActionsJdbcRepository {
 
     }
 
+    Map<String, Object> findLastDateOfServiceType(ServiceActionsFilter filter) {
+        String query = "SELECT " +
+                "service_actions.id," +
+                "service_actions.vehicle_id," +
+                "service_actions.service_date, " +
+                "service_actions.service_action_type_id, " +
+                "service_action_type.id, " +
+                "service_action_type.name AS action_type " +
+                "FROM service_actions " +
+                "LEFT JOIN service_action_type ON (service_actions.service_action_type_id = service_action_type.id) " +
+                "WHERE service_actions.vehicle_id = " + filter.getVehicleId() + " " +
+                "AND service_action_type.id = " + filter.getServiceActionId() + " " +
+                "ORDER BY service_actions.id DESC LIMIT 1";
+        return jdbcTemplate.queryForMap(query);
+    }
+
     private String prepareFilterQuery(ServiceActionsFilter filter, String query) {
         if (filter != null) {
             query += " WHERE 1=1";
@@ -186,6 +202,10 @@ public class ServiceActionsJdbcRepository {
             query += " AND service_actions.service_date BETWEEN '" + dateFrom + "' AND '" + dateTo + "'";
         }
         return query;
+    }
+
+    private String prepareQueryForLastOilService(Long actionTypeId) {
+        return " AND service_action_type.id = " + actionTypeId + " ORDER BY service_actions.id DESC LIMIT 1";
     }
 
 }
