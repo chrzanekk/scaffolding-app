@@ -133,6 +133,53 @@ public class ServiceActionsData {
         this.taxRate = data.getTaxRate();
     }
 
+//  remove method in service
+    public ServiceActionsData(BigDecimal taxValue, BigDecimal invoiceGrossValue, ServiceActionsData data,
+                              LocalDateTime removeDate) {
+        this.id = data.getId();
+        this.vehicleId = data.getVehicleId();
+        this.carMileage = data.getCarMileage();
+        this.serviceDate = data.getServiceDate();
+        this.invoiceNumber = data.getInvoiceNumber();
+        this.invoiceGrossValue = invoiceGrossValue;
+        this.workshopId = data.getWorkshopId();
+        this.serviceActionTypeId = data.getServiceActionTypeId();
+        this.serviceActionDescription = data.getServiceActionDescription();
+        this.modifyDate = LocalDateTime.now();
+        this.taxValue = taxValue;
+        this.invoiceNetValue = data.getInvoiceNetValue();
+        this.taxRate = data.getTaxRate();
+        this.removeDate = removeDate;
+    }
+
+    // delete method in api
+    public ServiceActionsData(Long id,
+                              Long vehicleId,
+                              Integer carMileage,
+                              LocalDate serviceDate,
+                              String invoiceNumber,
+                              BigDecimal invoiceNetValue,
+                              BigDecimal taxRate,
+                              Long workshopId,
+                              Long serviceActionTypeId,
+                              String serviceActionDescription,
+                              LocalDateTime removeDate) {
+        this.id = id;
+        this.vehicleId = vehicleId;
+        this.carMileage = carMileage;
+        this.serviceDate = serviceDate;
+        this.invoiceNumber = invoiceNumber;
+        this.invoiceNetValue = invoiceNetValue;
+        this.taxRate = taxRate;
+        this.workshopId = workshopId;
+        this.serviceActionTypeId = serviceActionTypeId;
+        this.serviceActionDescription = serviceActionDescription;
+        this.removeDate = removeDate;
+    }
+
+
+
+
     public ServiceActionsData(Long id, Long vehicleId, LocalDate serviceDate, Long serviceActionTypeId, String serviceActionTypeName) {
         this.id = id;
         this.vehicleId = vehicleId;

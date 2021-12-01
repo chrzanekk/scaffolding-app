@@ -97,6 +97,36 @@ public class ServiceActionsJdbcRepository {
                 data.getId());
     }
 
+    public void remove(ServiceActionsData data) {
+
+        String query = "UPDATE service_actions SET " +
+                "car_mileage = ?, " +
+                "service_date = ?, " +
+                "service_action_type_id = ?, " +
+                "invoice_no = ?, " +
+                "invoice_gross_value = ?, " +
+                "tax_value = ?, " +
+                "invoice_net_value = ?, " +
+                "tax_rate = ?, " +
+                "workshop_id = ?, " +
+                "remove_date = ?, " +
+                "description = ? WHERE " +
+                "id = ?;";
+        jdbcTemplate.update(query,
+                data.getCarMileage(),
+                data.getServiceDate(),
+                data.getServiceActionTypeId(),
+                data.getInvoiceNumber(),
+                data.getInvoiceGrossValue(),
+                data.getTaxValue(),
+                data.getInvoiceNetValue(),
+                data.getTaxRate(),
+                data.getWorkshopId(),
+                data.getRemoveDate(),
+                data.getServiceActionDescription(),
+                data.getId());
+    }
+
     List<Map<String, Object>> find(ServiceActionsFilter filter) {
 
         String query = "SELECT \n" +
@@ -112,6 +142,7 @@ public class ServiceActionsJdbcRepository {
                 "service_actions.workshop_id,\n" +
                 "service_actions.description,\n" +
                 "service_actions.service_action_type_id,\n" +
+                "service_actions.remove_date,\n" +
                 "service_action_type.id,\n" +
                 "service_action_type.name AS action_type,\n" +
                 "workshops.id AS workshopId,\n" +
@@ -180,6 +211,9 @@ public class ServiceActionsJdbcRepository {
             if (filter.getActionTypeName() != null) {
                 query += " AND service_action_type.name = '" + filter.getActionTypeName() + "'";
             }
+
+//            query += "AND service_actions.remove_date IS NULL ";
+
             if (filter.getDateFrom() != null || filter.getDateTo() != null) {
                 query += prepareQueryForDateFiltering(filter.getDateFrom(), filter.getDateTo());
             }
@@ -187,6 +221,7 @@ public class ServiceActionsJdbcRepository {
                 query += preparePaginationQuery(filter.getPage(), filter.getPageSize());
             }
         }
+
         return query;
     }
 

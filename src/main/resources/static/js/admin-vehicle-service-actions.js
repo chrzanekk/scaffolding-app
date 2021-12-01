@@ -102,19 +102,8 @@ function prepareDetailsButton(id) {
     return '<button type="button" class="btn btn-primary" onclick="goToDetailsPage(' + id + ')">Detale</button>';
 }
 
-
-function prepareDeleteButton(id) {
-    return '<button type="button" class="btn btn-danger" onclick="setObjectToDeleteIdAndShowModal(' + id + ')">Usuń/Zezłomuj</button>';
-}
-
 function goToDetailsPage(id) {
     window.location.href = "/admin/vehicle-service-action/" + id;
-}
-
-
-function setObjectToDeleteIdAndShowModal(id) {
-    objToDeleteId = id;
-    $('#delete-object-modal').modal('show');
 }
 
 function clearCreateModal() {
@@ -220,20 +209,7 @@ function showError(text) {
 
 
 
-//todo to na koniec, jak już będzie działało dodawanie i edycja
-//function sendDeleteRequest(){
-//    $.ajax({
-//        url: "/admin/api/crs/author/" + objToDeleteId,
-//        type: "DELETE"
-//    })
-//        .done(function(response) {
-//            $('#delete-object-modal').modal('hide');
-//            $('#operation-successful-modal').modal('show');
-//            findAuthors();
-//        })
-//        .fail(function(jqxhr, textStatus, errorThrown){
-//            displayErrorInformation(jqxhr.responseText);
-//        });
-//}
+
+
 
 

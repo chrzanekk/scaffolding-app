@@ -4,7 +4,6 @@ import org.springframework.stereotype.Service;
 import pl.com.chrzanowski.scaffolding.domain.*;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -59,7 +58,7 @@ public class ServiceActionsService implements IServiceActions {
     public Long add(ServiceActionsData data) {
         validateData(data);
         validateOilServiceStatus(data, getLastActionByType(serviceActionsJdbcRepository.findLastDateOfServiceType(
-                                new ServiceActionsFilter(data.getVehicleId(),data.getServiceActionTypeId()))));
+                new ServiceActionsFilter(data.getVehicleId(), data.getServiceActionTypeId()))));
         if (checkWorkshopServiceType(data)) {
             return serviceActionsJdbcRepository.create(new ServiceActionsData(
                     data,
@@ -83,6 +82,16 @@ public class ServiceActionsService implements IServiceActions {
     }
 
     public void delete(ServiceActionsData data) {
+        validateData(data);
+        if (checkWorkshopServiceType(data)) {
+            serviceActionsJdbcRepository.remove(new ServiceActionsData(
+                    TaxCalculationUtil.calculateTaxValue(data.getInvoiceNetValue(), data.getTaxRate()),
+                    TaxCalculationUtil.calculateGrossValue(data.getInvoiceNetValue(), data.getTaxRate()),
+                    data, data.getRemoveDate()));
+        } else {
+            throw new IllegalArgumentException("Nie można usunąć, warsztat nie wykonuje wybranej usługi.");
+        }
+
     }
 
 
@@ -139,7 +148,7 @@ public class ServiceActionsService implements IServiceActions {
         return list.get(0);
     }
 
-    private ServiceActionsData getLastActionByType(Map<String,Object> data) {
+    private ServiceActionsData getLastActionByType(Map<String, Object> data) {
         return new ServiceActionsData(
                 getLong(data, "id"),
                 getLong(data, "vehicle_id"),
@@ -169,7 +178,7 @@ public class ServiceActionsService implements IServiceActions {
     }
 
     public static void validateOilServiceStatus(ServiceActionsData data, ServiceActionsData lastAction) {
-        if(lastAction != null) {
+        if (lastAction != null) {
             if (data.getServiceDate().compareTo(lastAction.getServiceDate()) <= 7) {
                 throw new IllegalArgumentException("Usługa \"" + lastAction.getServiceActionTypeName() + "\" była " +
                         "wykonywana w przeciągu 7 dni.(" + lastAction.getServiceDate() + ")");

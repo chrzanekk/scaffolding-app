@@ -1,5 +1,8 @@
 package pl.com.chrzanowski.scaffolding.api;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -22,6 +25,8 @@ public class ServiceActionPutRequest {
     private String serviceActionDescription;
     private LocalDateTime createDate;
     private LocalDateTime modifyDate;
+
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private LocalDateTime removeDate;
 
     public ServiceActionPutRequest() {

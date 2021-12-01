@@ -420,6 +420,26 @@ public class ScaffoldingEndpointAdmin {
         ));
     }
 
+    @PutMapping(path = "/vehicle-service-action-to-remove/{id}")
+    public void deleteServiceAction(@PathVariable Long id, @RequestBody ServiceActionPutRequest request) {
+        BigDecimal netValue = DataValidationUtil.validateAndCreateValue(request.getInvoiceNetValue());
+        BigDecimal taxRate = DataValidationUtil.validateAndCreateValue(request.getTaxRate());
+        LocalDateTime removeDate = request.getRemoveDate();
+        serviceActions.delete(new ServiceActionsData(
+                request.getId(),
+                request.getVehicleId(),
+                request.getCarMileage(),
+                request.getServiceDate(),
+                request.getInvoiceNumber(),
+                netValue,
+                taxRate,
+                request.getWorkshopId(),
+                request.getServiceActionTypeId(),
+                request.getServiceActionDescription(),
+                removeDate
+        ));
+    }
+
     @GetMapping(path = "/workshops", produces = "application/json; charset=UTF-8")
     public WorkshopsRequestGetResponse workshops(
             @RequestParam(name = "name", required = false) String name,
