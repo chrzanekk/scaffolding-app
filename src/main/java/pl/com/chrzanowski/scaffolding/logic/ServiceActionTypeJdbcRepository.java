@@ -33,6 +33,11 @@ public class ServiceActionTypeJdbcRepository {
         jdbcTemplate.update(query, data.getName(),data.getModifyDate(), data.getId());
     }
 
+    public void remove(ServiceActionTypeData data) {
+            String query = "UPDATE service_action_type SET name = ?, remove_date = ? WHERE id = ?;";
+            jdbcTemplate.update(query, data.getName(), data.getRemoveDate(), data.getId());
+    }
+
     public List<Map<String, Object>> find(ServiceActionTypesFilter filter) {
 
         String query = "SELECT * FROM service_action_type";

@@ -91,7 +91,6 @@ public class ServiceActionsService implements IServiceActions {
         } else {
             throw new IllegalArgumentException("Nie można usunąć, warsztat nie wykonuje wybranej usługi.");
         }
-
     }
 
 

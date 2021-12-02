@@ -8,7 +8,7 @@ public class ServiceActionsFilter {
     private Long vehicleId;
     private LocalDate serviceDate;
     private String actionTypeName;
-    private Long serviceActionId;
+    private Long serviceActionTypeId;
     private Long workshopId;
     private String workshopName;
     private Long page;
@@ -54,9 +54,9 @@ public class ServiceActionsFilter {
         this.dateTo = dateTo;
     }
 
-    public ServiceActionsFilter(Long vehicleId, Long serviceActionId) {
+    public ServiceActionsFilter(Long vehicleId, Long serviceActionTypeId) {
         this.vehicleId = vehicleId;
-        this.serviceActionId = serviceActionId;
+        this.serviceActionTypeId = serviceActionTypeId;
     }
 
     public ServiceActionsFilter() {
@@ -78,8 +78,8 @@ public class ServiceActionsFilter {
         return actionTypeName;
     }
 
-    public Long getServiceActionId() {
-        return serviceActionId;
+    public Long getServiceActionTypeId() {
+        return serviceActionTypeId;
     }
 
     public Long getWorkshopId() {

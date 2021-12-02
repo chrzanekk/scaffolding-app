@@ -188,7 +188,7 @@ public class ServiceActionsJdbcRepository {
                 "FROM service_actions " +
                 "LEFT JOIN service_action_type ON (service_actions.service_action_type_id = service_action_type.id) " +
                 "WHERE service_actions.vehicle_id = " + filter.getVehicleId() + " " +
-                "AND service_action_type.id = " + filter.getServiceActionId() + " " +
+                "AND service_action_type.id = " + filter.getServiceActionTypeId() + " " +
                 "ORDER BY service_actions.id DESC LIMIT 1";
         return jdbcTemplate.queryForMap(query);
     }
@@ -210,6 +210,9 @@ public class ServiceActionsJdbcRepository {
             }
             if (filter.getActionTypeName() != null) {
                 query += " AND service_action_type.name = '" + filter.getActionTypeName() + "'";
+            }
+            if (filter.getServiceActionTypeId() != null) {
+                query += " AND service_action_type.id = '" + filter.getServiceActionTypeId() + "'";
             }
 
             query += "AND service_actions.remove_date IS NULL ";

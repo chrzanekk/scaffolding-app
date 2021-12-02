@@ -135,6 +135,22 @@ public class ServiceActionsData {
         this.taxRate = data.getTaxRate();
     }
 
+    public ServiceActionsData(ServiceActionsData data, Long serviceActionTypeId) {
+        this.id = data.getId();
+        this.vehicleId = data.getVehicleId();
+        this.carMileage = data.getCarMileage();
+        this.serviceDate = data.getServiceDate();
+        this.invoiceNumber = data.getInvoiceNumber();
+        this.invoiceGrossValue = data.getInvoiceGrossValue();
+        this.workshopId = data.getWorkshopId();
+        this.serviceActionTypeId = serviceActionTypeId;
+        this.serviceActionDescription = data.getServiceActionDescription();
+        this.modifyDate = LocalDateTime.now();
+        this.taxValue = data.getTaxValue();
+        this.invoiceNetValue = data.getInvoiceNetValue();
+        this.taxRate = data.getTaxRate();
+    }
+
 //  remove method in service
     public ServiceActionsData(BigDecimal taxValue, BigDecimal invoiceGrossValue, ServiceActionsData data,
                               LocalDateTime removeDate) {
