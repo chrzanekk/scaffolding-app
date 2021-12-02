@@ -212,7 +212,7 @@ public class ServiceActionsJdbcRepository {
                 query += " AND service_action_type.name = '" + filter.getActionTypeName() + "'";
             }
 
-//            query += "AND service_actions.remove_date IS NULL ";
+            query += "AND service_actions.remove_date IS NULL ";
 
             if (filter.getDateFrom() != null || filter.getDateTo() != null) {
                 query += prepareQueryForDateFiltering(filter.getDateFrom(), filter.getDateTo());
@@ -239,8 +239,5 @@ public class ServiceActionsJdbcRepository {
         return query;
     }
 
-    private String prepareQueryForLastOilService(Long actionTypeId) {
-        return " AND service_action_type.id = " + actionTypeId + " ORDER BY service_actions.id DESC LIMIT 1";
-    }
 
 }
