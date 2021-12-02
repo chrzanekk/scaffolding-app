@@ -13,9 +13,9 @@ function showDeleteModal() {
 }
 
 function findTire() {
-    var id = getUrlId();
+
     $.ajax({
-        url:  vehicleApiUrl + vehicle.id + tireApiUrl + id,
+        url:  vehicleApiUrl + vehicle.id + tireApiUrl + tire.id,
         type: "GET",
         dataType: "json",
         contentType: "application/json"
@@ -70,7 +70,7 @@ function fillRow(tire) {
 
 function goToEditPage() {
     var id = getUrlId();
-    window.location.href = "/admin/tire-edit/" + id;
+    window.location.href = "/admin/vehicles/"+ vehicle.id + "/tire-edit/" + tire.id;
 }
 
 function getUrlId(){

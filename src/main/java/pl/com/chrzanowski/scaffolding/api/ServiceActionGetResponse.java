@@ -17,6 +17,7 @@ public class ServiceActionGetResponse {
     private String invoiceNumber;
     private String invoiceGrossValue;
     private String taxValue;
+    private String taxRate;
     private String invoiceNetValue;
     private Long workshopId;
     private String workshopName;
@@ -37,6 +38,7 @@ public class ServiceActionGetResponse {
         this.invoiceGrossValue = data.getInvoiceGrossValue().toString();
         this.invoiceNetValue = data.getInvoiceNetValue().toString();
         this.taxValue = data.getTaxValue().toString();
+        this.taxRate = data.getTaxRate().toString();
         this.workshopId = data.getWorkshopId();
         this.workshopName = data.getWorkshopName();
         this.serviceActionTypeId = data.getServiceActionTypeId();
@@ -71,6 +73,10 @@ public class ServiceActionGetResponse {
 
     public String getTaxValue() {
         return taxValue;
+    }
+
+    public String getTaxRate() {
+        return taxRate;
     }
 
     public String getInvoiceNetValue() {

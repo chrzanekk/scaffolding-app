@@ -34,6 +34,7 @@ public class ServiceActionsData {
                               BigDecimal invoiceGrossValue,
                               BigDecimal invoiceNetValue,
                               BigDecimal taxValue,
+                              BigDecimal taxRate,
                               Long workshopId,
                               Long serviceActionTypeId,
                               String actionTypeName,
@@ -48,6 +49,7 @@ public class ServiceActionsData {
         this.invoiceGrossValue = invoiceGrossValue;
         this.invoiceNetValue = invoiceNetValue;
         this.taxValue = taxValue;
+        this.taxRate = taxRate;
         this.workshopId = workshopId;
         this.workshopName = workshopName;
         this.workshopsData = workshopsData;

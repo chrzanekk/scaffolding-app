@@ -109,6 +109,7 @@ public class ServiceActionsService implements IServiceActions {
                     getBigDecimal(row, "invoice_gross_value"),
                     getBigDecimal(row, "invoice_net_value"),
                     getBigDecimal(row, "tax_value"),
+                    getBigDecimal(row,"tax_rate"),
                     getLong(row, "workshop_id"),
                     getLong(row, "service_action_type_id"),
                     getString(row, "action_type"),
