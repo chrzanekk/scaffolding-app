@@ -86,6 +86,18 @@ public class WorkshopsService {
         workshopsJdbcRepository.update(data);
     }
 
+    public void remove(WorkshopsData data) {
+        validateData(data);
+        if (data.getActionTypes() != null) {
+            workshopServiceTypeService.deleteActionTypes(data);
+            workshopServiceTypeService.validateAndCreateActionTypesForWorkshop(data);
+        } else {
+            data = new WorkshopsData(data, workshopServiceTypeService.getActionTypesForWorkshop(data));
+
+        }
+        workshopsJdbcRepository.remove(data);
+    }
+
     private List<WorkshopsData> getWorkshops(List<Map<String, Object>> data) {
         List<WorkshopsData> list = new ArrayList<>();
         for (Map<String, Object> row : data) {

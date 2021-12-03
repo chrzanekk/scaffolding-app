@@ -41,7 +41,7 @@ public class ServiceActionTypesService implements IServiceActonTypes {
         serviceActionTypeJdbcRepository.update(data);
     }
 
-    public void delete(ServiceActionTypeData data) {
+    public void remove(ServiceActionTypeData data) {
         validateData(data);
         if(data.getId() != 8L) {
             serviceActionTypeJdbcRepository.remove(data);

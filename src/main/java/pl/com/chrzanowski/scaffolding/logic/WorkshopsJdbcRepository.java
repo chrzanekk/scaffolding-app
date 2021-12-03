@@ -71,6 +71,31 @@ public class WorkshopsJdbcRepository {
                 data.getModifyDate(),
                 data.getId());
     }
+    public void remove(WorkshopsData data) {
+
+        String query = "UPDATE workshops SET " +
+                "name = ?," +
+                "tax_number = ?," +
+                "street = ?," +
+                "building_number = ?," +
+                "apartment_number = ?," +
+                "postal_code = ?," +
+                "city = ?," +
+                "remove_date = ? WHERE " +
+                "id = ?";
+        jdbcTemplate.update(query,
+                data.getName(),
+                data.getTaxNumber(),
+                data.getStreet(),
+                data.getBuildingNo(),
+                data.getApartmentNo(),
+                data.getPostalCode(),
+                data.getCity(),
+                data.getRemoveDate(),
+                data.getId());
+    }
+
+
 
     public List<Map<String,Object>> find(WorkshopsFilter filter) {
 
@@ -91,6 +116,8 @@ public class WorkshopsJdbcRepository {
             if (filter.getCity() != null) {
                 query += " AND city = '" + filter.getCity() + "'";
             }
+
+            query += " AND remove_date IS NULL ";
 
             if (filter.getPage() != null && filter.getPageSize() != null) {
                 query += preparePaginationQuery(filter.getPage(), filter.getPageSize());

@@ -8,7 +8,6 @@ import pl.com.chrzanowski.scaffolding.logic.notifications.NotificationsFromPanel
 
 import javax.servlet.http.HttpServletRequest;
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -485,6 +484,21 @@ public class ScaffoldingEndpointAdmin {
                 request.getActionTypes()));
     }
 
+    @PutMapping(path = "/workshop-to-remove/{id}", consumes = "application/json; charset=UTF-8")
+    public void removeWorkshop(@PathVariable Long id, @RequestBody WorkshopPutRequest request) {
+        workshopsService.remove(new WorkshopsData(
+                id,
+                request.getName(),
+                request.getTaxNumber(),
+                request.getStreet(),
+                request.getBuildingNo(),
+                request.getApartmentNo(),
+                request.getPostalCode(),
+                request.getCity(),
+                request.getActionTypes(),
+                request.getRemoveDate()));
+    }
+
 
     @GetMapping(path = "/service-action-types", produces = "application/json; charset=UTF-8")
     public ServiceActionTypesRequestGetResponse serviceActionTypes(
@@ -522,7 +536,7 @@ public class ScaffoldingEndpointAdmin {
     @PutMapping(path = "/service-action-type-to-remove/{id}", consumes = "application/json; charset=UTF-8")
     public void removeServiceActionType(@PathVariable Long id,
                                         @RequestBody ServiceActionTypesPutRequest request) {
-        serviceActonTypes.delete(new ServiceActionTypeData(id, request.getName(),request.getRemoveDate()));
+        serviceActonTypes.remove(new ServiceActionTypeData(id, request.getName(),request.getRemoveDate()));
     }
 
     @GetMapping(path = "/tire-seasons", produces = "application/json; charset=UTF-8")

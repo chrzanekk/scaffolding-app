@@ -24,7 +24,7 @@ function sendDeleteRequest(){
         .done(function(response) {
             $("#operation-successful-modal").modal('show');
             $('#delete-object-modal').modal('hide');
-            backToServiceActionsList();
+            window.location.href = "/admin/service-action-types/";
         })
         .fail(function(jqxhr, textStatus, errorThrown){
             $('#delete-object-modal').modal('hide');
@@ -54,9 +54,6 @@ function showError(text) {
     $("#error-alert").removeClass('d-none');
 }
 
-function backToServiceActionsList() {
-    window.location.href = "/admin/service-action-types/";
-}
 
 function prepareActualDate() {
 
@@ -68,7 +65,5 @@ var dateString =
     ("0" + m.getUTCHours()).slice(-2) + ":" +
     ("0" + m.getUTCMinutes()).slice(-2) + ":" +
     ("0" + m.getUTCSeconds()).slice(-2);
-
-
     return dateString;
 }

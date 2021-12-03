@@ -41,6 +41,28 @@ public class WorkshopsData {
         this.modifyDate = LocalDateTime.now();
     }
 
+    public WorkshopsData(Long id,
+                         String name,
+                         String taxNumber,
+                         String street,
+                         String buildingNo,
+                         String apartmentNo,
+                         String postalCode,
+                         String city,
+                         Long[] actionTypes,
+                         LocalDateTime removeDate) {
+        this.id = id;
+        this.name = name;
+        this.taxNumber = taxNumber;
+        this.street = street;
+        this.buildingNo = buildingNo;
+        this.apartmentNo = apartmentNo;
+        this.postalCode = postalCode;
+        this.city = city;
+        this.actionTypes = actionTypes;
+        this.removeDate = removeDate;
+    }
+
     public WorkshopsData(String name, String taxNumber, String street, String buildingNo, String apartmentNo,
                          String postalCode, String city, Long[] actionTypes) {
         this.name = name;

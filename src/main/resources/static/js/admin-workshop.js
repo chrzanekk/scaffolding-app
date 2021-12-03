@@ -12,15 +12,29 @@ function showDeleteModal() {
 
 function sendDeleteRequest(){
     $.ajax({
-        url: "/admin/api/scaffolding/vehicle/" + vehicle.id,
-        type: "DELETE"
+        url: "/admin/api/scaffolding/workshop-to-remove/" + workshop.id,
+        method: "PUT",
+        contentType: "application/json",
+        data: JSON.stringify({
+                     name: $("#name").val(),
+                     street: $("#street").val(),
+                     buildingNo: $("#building-no").val(),
+                     apartmentNo: $("#apartment-no").val(),
+                     postalCode: $("#postal-code").val(),
+                     city: $("#city").val(),
+                     taxNumber: $("#tax-number").val(),
+                     actionTypes: getActionTypes(),
+                     removeDate: prepareActualDate()
+                })
     })
         .done(function(response) {
             $('#delete-object-modal').modal('hide');
-            window.location.href = '/admin/vehicles';
+            $("#operation-successful-modal").modal('show');
+            window.location.href = "/admin/workshops/";
         })
         .fail(function(jqxhr, textStatus, errorThrown){
-            displayErrorInformation(jqxhr.responseText);
+            $('#delete-object-modal').modal('hide');
+            showError(prepareErrorMessage(jqxhr.responseText));
         });
 }
 
@@ -69,4 +83,16 @@ function showError(text) {
     $("#error-alert").removeClass('d-none');
 }
 
+function prepareActualDate() {
+
+var m = new Date();
+var dateString =
+    m.getUTCFullYear() + "-" +
+    ("0" + (m.getUTCMonth()+1)).slice(-2) + "-" +
+    ("0" + m.getUTCDate()).slice(-2) + "T" +
+    ("0" + m.getUTCHours()).slice(-2) + ":" +
+    ("0" + m.getUTCMinutes()).slice(-2) + ":" +
+    ("0" + m.getUTCSeconds()).slice(-2);
+    return dateString;
+}
 
