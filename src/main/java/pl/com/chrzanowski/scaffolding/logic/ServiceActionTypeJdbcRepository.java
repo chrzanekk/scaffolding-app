@@ -51,6 +51,9 @@ public class ServiceActionTypeJdbcRepository {
             if (filter.getName() != null) {
                 query += " AND name = " + filter.getName();
             }
+
+            query += " AND remove_date IS NULL ";
+
             if (filter.getPage() != null && filter.getPageSize() != null) {
                 query += preparePaginationQuery(filter.getPage(), filter.getPageSize());
             }

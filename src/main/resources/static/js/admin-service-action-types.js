@@ -96,20 +96,6 @@ function showError(text) {
     $("#error-alert").removeClass('d-none');
 }
 
-//todo to na koniec, jak już będzie działało dodawanie i edycja
-function sendDeleteRequest(){
-//    $.ajax({
-//        url: "/admin/api/crs/author/" + objToDeleteId,
-//        type: "DELETE"
-//    })
-//        .done(function(response) {
-//            $('#delete-object-modal').modal('hide');
-//            $('#operation-successful-modal').modal('show');
-//            findAuthors();
-//        })
-//        .fail(function(jqxhr, textStatus, errorThrown){
-//            displayErrorInformation(jqxhr.responseText);
-//        });
-}
+
 
 

@@ -424,7 +424,6 @@ public class ScaffoldingEndpointAdmin {
     public void deleteServiceAction(@PathVariable Long id, @RequestBody ServiceActionPutRequest request) {
         BigDecimal netValue = DataValidationUtil.validateAndCreateValue(request.getInvoiceNetValue());
         BigDecimal taxRate = DataValidationUtil.validateAndCreateValue(request.getTaxRate());
-        LocalDateTime removeDate = request.getRemoveDate();
         serviceActions.delete(new ServiceActionsData(
                 request.getId(),
                 request.getVehicleId(),
@@ -436,7 +435,7 @@ public class ScaffoldingEndpointAdmin {
                 request.getWorkshopId(),
                 request.getServiceActionTypeId(),
                 request.getServiceActionDescription(),
-                removeDate
+                request.getRemoveDate()
         ));
     }
 
@@ -518,6 +517,12 @@ public class ScaffoldingEndpointAdmin {
     public void updateServiceActionType(@PathVariable Long id,
                                         @RequestBody ServiceActionTypesPutRequest request) {
         serviceActonTypes.update(new ServiceActionTypeData(id, request.getName()));
+    }
+
+    @PutMapping(path = "/service-action-type-to-remove/{id}", consumes = "application/json; charset=UTF-8")
+    public void removeServiceActionType(@PathVariable Long id,
+                                        @RequestBody ServiceActionTypesPutRequest request) {
+        serviceActonTypes.delete(new ServiceActionTypeData(id, request.getName(),request.getRemoveDate()));
     }
 
     @GetMapping(path = "/tire-seasons", produces = "application/json; charset=UTF-8")

@@ -15,6 +15,12 @@ public class ServiceActionTypeData {
         this.modifyDate = LocalDateTime.now();
     }
 
+    public ServiceActionTypeData(Long id, String name, LocalDateTime removeDate) {
+        this.id = id;
+        this.name = name;
+        this.removeDate = removeDate;
+    }
+
     public ServiceActionTypeData(String name) {
         this.name = name;
     }

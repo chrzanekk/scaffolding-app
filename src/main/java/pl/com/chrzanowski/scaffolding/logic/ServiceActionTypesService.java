@@ -18,13 +18,11 @@ import static pl.com.chrzanowski.scaffolding.logic.JdbcUtil.getString;
 public class ServiceActionTypesService implements IServiceActonTypes {
 
     private ServiceActionTypeJdbcRepository serviceActionTypeJdbcRepository;
-    private ServiceActionsService serviceActionsService;
 
-    public ServiceActionTypesService(ServiceActionTypeJdbcRepository serviceActionTypeJdbcRepository,
-                                     ServiceActionsService serviceActionsService) {
+
+    public ServiceActionTypesService(ServiceActionTypeJdbcRepository serviceActionTypeJdbcRepository) {
 
         this.serviceActionTypeJdbcRepository = serviceActionTypeJdbcRepository;
-        this.serviceActionsService = serviceActionsService;
     }
 
     public List<ServiceActionTypeData> find(ServiceActionTypesFilter filter) {
@@ -45,8 +43,7 @@ public class ServiceActionTypesService implements IServiceActonTypes {
 
     public void delete(ServiceActionTypeData data) {
         validateData(data);
-        if(!data.getId().equals(8L)) {
-            updateExistingActionTypesToDefault(data);
+        if(data.getId() != 8L) {
             serviceActionTypeJdbcRepository.remove(data);
         }
         else {
@@ -70,10 +67,5 @@ public class ServiceActionTypesService implements IServiceActonTypes {
     private void validateData(ServiceActionTypeData data) {
         DataValidationUtil.validateTextField(data.getName(), "Nazwa usługi serwisowej");
     }
-    private void updateExistingActionTypesToDefault(ServiceActionTypeData data) {
-        List<ServiceActionsData> findExisting = serviceActionsService.find(new ServiceActionsFilter(null,data.getId()));
-        for(ServiceActionsData element : findExisting) {
-            serviceActionsService.update(new ServiceActionsData(element, 8L));
-        }
-    }
+
 }

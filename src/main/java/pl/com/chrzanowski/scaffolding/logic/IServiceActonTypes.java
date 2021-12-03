@@ -10,5 +10,6 @@ public interface IServiceActonTypes {
 
     Long add(ServiceActionTypeData data);
     void update(ServiceActionTypeData data);
+    void delete(ServiceActionTypeData data);
     List<ServiceActionTypeData> find(ServiceActionTypesFilter filter);
 }
