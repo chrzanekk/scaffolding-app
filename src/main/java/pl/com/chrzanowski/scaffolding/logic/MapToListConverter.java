@@ -19,6 +19,8 @@ public class MapToListConverter {
             for (Map<String, Object> row : data) {
                 users.add(new UserData(
                         getLong(row, "id"),
+                        getString(row, "first_name"),
+                        getString(row, "second_name"),
                         getString(row, "login"),
                         getString(row, "password_hash"),
                         getString(row, "language"),

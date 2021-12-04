@@ -2,7 +2,7 @@
 
     <a class="navbar-brand d-flex align-items-center" href="/">
         <img th:src="${@applicationConfig.getLogoFrontPath()}" width="50" height="50" class="d-inline-block align-top"
-             alt="Computing College Logo">
+             alt="Scaffolding App Logo">
         <span class="ml-2" th:text="${@applicationConfig.getAppNameFront()}"></span>
     </a>
 
@@ -13,7 +13,7 @@
     <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav ml-auto my-2 my-lg-0">
 
-            <li th:if="${@userService.isLoggedUser() or @userService.isLoggedUserAdmin()}" class="nav-item dropdown">
+            <li th:if="${@userService.isLoggedUser() OR @userService.isLoggedUserAdmin()}" class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown">
                     <span><i class="fas fa-user-alt"></i></span>
                     <span th:text="#{navbar.my.account}"></span>
@@ -25,7 +25,7 @@
                     </a>
                 </div>
             </li>
-            <li th:if="${@userService.isLoggedUserAdmin()}"
+            <li th:if="${@userService.isLoggedUserAdmin() OR @userService.isLoggedUser()}"
                 class="nav-item"><a class="nav-link" href="/admin" th:text="#{navbar.admin}"></a></li>
 
             <li id="notifications-dropdown" class="nav-item dropdown">

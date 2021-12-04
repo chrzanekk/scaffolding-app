@@ -144,6 +144,29 @@ public class ApplicationController {
         return "data-changed-successfully";
     }
 
+    @GetMapping({"/admin/users"})
+    public String adminUsers(Model model) {
+        Language currentLang = LanguagesUtil.getCurrentLanguage();
+        model.addAttribute("languagesDict", dictionariesService.getDictionary(DictionaryType.LANGUAGES, currentLang));
+        model.addAttribute("yesNoDict", dictionariesService.getDictionary(DictionaryType.YES_NO, currentLang));
+        model.addAttribute("authoritiesDict", dictionariesService.getDictionary(DictionaryType.USER_AUTHORITIES,
+                currentLang));
+
+        return "admin-users";
+    }
+
+    @GetMapping({"/admin/user/{id}"})
+    public String adminUser(@PathVariable Long id, Model model) {
+        Language currentLang = LanguagesUtil.getCurrentLanguage();
+        model.addAttribute("user", userService.findWithAuthorities(new UsersFilter(id)).get(0));
+        model.addAttribute("languagesDict", dictionariesService.getDictionary(DictionaryType.LANGUAGES, currentLang));
+        model.addAttribute("yesNoDict", dictionariesService.getDictionary(DictionaryType.YES_NO, currentLang));
+        model.addAttribute("authoritiesDict", dictionariesService.getDictionary(DictionaryType.USER_AUTHORITIES,
+                currentLang));
+
+        return "admin-user";
+    }
+
 
     @GetMapping({"/admin/vehicles"})
     public String adminVehicles(Model model) {

@@ -6,7 +6,7 @@ import pl.com.chrzanowski.scaffolding.domain.WorkshopsData;
 import java.time.LocalDateTime;
 import java.util.List;
 
-public class WorkshopsGetResponse {
+public class WorkshopGetResponse {
 
     private Long id;
     private String name;
@@ -22,16 +22,16 @@ public class WorkshopsGetResponse {
     private LocalDateTime modifyDate;
     private LocalDateTime removeDate;
 
-    public WorkshopsGetResponse(Long id,
-                                String name,
-                                String taxNumber,
-                                String street,
-                                String buildingNo,
-                                String apartmentNo,
-                                String postalCode,
-                                String city,
-                                Long[] actionTypes,
-                                List<ServiceActionTypeData> serviceActionTypes) {
+    public WorkshopGetResponse(Long id,
+                               String name,
+                               String taxNumber,
+                               String street,
+                               String buildingNo,
+                               String apartmentNo,
+                               String postalCode,
+                               String city,
+                               Long[] actionTypes,
+                               List<ServiceActionTypeData> serviceActionTypes) {
         this.id = id;
         this.name = name;
         this.taxNumber = taxNumber;

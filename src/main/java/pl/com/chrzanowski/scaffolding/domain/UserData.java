@@ -40,9 +40,13 @@ public class UserData {
         this.deleteDateTime = deleteDateTime;
         this.authorities = authorities;
     }
-
-    public UserData(Long id, String login, String passwordHash, String language, Boolean regulationAccepted, Boolean newsletterAccepted, Boolean isEnabled, LocalDateTime registrationDatetime, String registrationIp, String registrationUserAgent, Boolean emailConfirmed) {
+//to find
+    public UserData(Long id, String firstName, String secondName, String login, String passwordHash, String language,
+                    Boolean regulationAccepted,
+                    Boolean newsletterAccepted, Boolean isEnabled, LocalDateTime registrationDatetime, String registrationIp, String registrationUserAgent, Boolean emailConfirmed) {
         this.id = id;
+        this.firstName = firstName;
+        this.secondName = secondName;
         this.login = login;
         this.passwordHash = passwordHash;
         this.language = language;
@@ -89,6 +93,8 @@ public class UserData {
 
     public UserData(UserData userData, String[] authorities) {
         this.id = userData.getId();
+        this.firstName = userData.getFirstName();
+        this.secondName = userData.getSecondName();
         this.login = userData.getLogin();
         this.passwordHash = userData.getPasswordHash();
         this.language = userData.getLanguage();
@@ -196,13 +202,18 @@ public class UserData {
         this.newsletterAccepted = newsletterAccepted;
         this.isEnabled = isEnabled;
         this.emailConfirmed = emailConfirmed;
-        this.registrationIp = WebUtil.getUserAgent(httpServletRequest);
+        this.registrationIp = WebUtil.getClientIp(httpServletRequest);
         this.registrationUserAgent = WebUtil.getUserAgent(httpServletRequest);
         this.authorities = authorities;
     }
-
-    public UserData(Long id, String login, String passwordHash, String language, Boolean regulationAccepted, Boolean newsletterAccepted, Boolean isEnabled, Boolean emailConfirmed, LocalDateTime registrationDatetime, String[] authorities) {
+//to update
+    public UserData(Long id, String firstName, String secondName, String login, String passwordHash, String language,
+                    Boolean regulationAccepted,
+                    Boolean newsletterAccepted, Boolean isEnabled, Boolean emailConfirmed,
+                    LocalDateTime registrationDatetime, String[] authorities, String registrationIp, String registrationUserAgent) {
         this.id = id;
+        this.firstName = firstName;
+        this.secondName = secondName;
         this.login = login;
         this.passwordHash = passwordHash;
         this.language = language;
@@ -212,6 +223,8 @@ public class UserData {
         this.emailConfirmed = emailConfirmed;
         this.registrationDatetime = registrationDatetime;
         this.authorities = authorities;
+        this.registrationIp = registrationIp;
+        this.registrationUserAgent = registrationUserAgent;
     }
 
     public Long getId() {

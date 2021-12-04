@@ -51,7 +51,7 @@ function sendPasswordChangeRequest(password) {
 }
 
 function fillRoles() {
-       customer.authorities.forEach(function(authority){
+       user.authorities.forEach(function(authority){
            $('#'+authority).attr('checked', true);
        })
 }
@@ -72,7 +72,8 @@ function sendUpdateRequest() {
         method: "PUT",
         contentType: "application/json",
         data: JSON.stringify({
-            invoiceFirstAndLastName: $("#first-and-last-name").val(),
+            firstName: $("#first-name").val(),
+            secondName: $("#last-name").val(),
             login: $("#login").val(),
             language: $("#language").find(":selected").val(),
             isEnabled: $("#enabled").find(":selected").val(),

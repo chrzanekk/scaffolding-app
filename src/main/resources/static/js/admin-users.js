@@ -7,21 +7,21 @@ $(document).ready(function () {
     });
 
  $("#filter input, #filter select, [form='filter']").on("change", function () {
-        findCustomers();
+        findUsers();
     });
 
-    findCustomers();
+    findUsers();
 });
 
-function findCustomers() {
+function findUsers() {
     $.ajax({
-        url: "/admin/api/crs/customers?" + prepareUrl(),
+        url: "/admin/api/scaffolding/users?" + prepareUrl(),
         type: "get",
         dataType: "json",
         contentType: "application/json"
     })
-    .done(function (response) {
-        fillResults(response);
+    .done(function (users) {
+        fillResults(users.users);
     })
     .fail(function(jqxhr, textStatus, errorThrown){
         displayErrorInformation(jqxhr.responseText);
@@ -35,33 +35,29 @@ function prepareUrl() {
         if (login != "") {
             url += "&login=" + login;
         }
-    var invoiceFirstAndLastName = $("#invoice-first-last-name").val();
-        if (invoiceFirstAndLastName != "") {
-            url += "&invoice_first_and_last_name=" + invoiceFirstAndLastName;
-        }
 
     url += preparePaginationUrl();
 
     return url;
 }
 
-function fillResults(response) {
+function fillResults(users) {
     $("#records").empty();
-    var customers = response;
-    customers.forEach(function(customer){
-        fillRow(customer);
+    users.forEach(function(user){
+        fillRow(user);
     });
 }
 
-function fillRow(customer) {
+function fillRow(user) {
     $('#records').append(
         "<tr>" +
-            "<td class='align-middle'>" + customer.invoiceFirstAndLastName + "</td>" +
-            "<td class='align-middle'>" + customer.login + "</td>" +
-            "<td class='align-middle'>" + customer.language + "</td>" +
-            "<td class='align-middle'>" + prepareDateTime(customer.registrationDatetime) + "</td>" +
-            "<td class='align-middle'>" + prepareDetailsButton(customer.id) + "</td>" +
-            "<td class='align-middle'>" + prepareDeleteButton(customer.id) + "</td>" +
+            "<td class='align-middle'>" + user.firstName + "</td>" +
+            "<td class='align-middle'>" + user.secondName + "</td>" +
+            "<td class='align-middle'>" + user.login + "</td>" +
+            "<td class='align-middle'>" + user.language + "</td>" +
+            "<td class='align-middle'>" + prepareDateTime(user.registrationDatetime) + "</td>" +
+            "<td class='align-middle'>" + prepareDetailsButton(user.id) + "</td>" +
+            "<td class='align-middle'>" + prepareDeleteButton(user.id) + "</td>" +
         "</tr>"
     );
 }
@@ -71,7 +67,7 @@ function prepareDetailsButton(id) {
 }
 
 function goToDetailsPage(id) {
-    window.location.href = "/admin/customer/" + id;
+    window.location.href = "/admin/user/" + id;
 }
 
 function prepareDeleteButton(id) {
@@ -89,7 +85,7 @@ function setObjectToDeleteIdAndShowModal(id) {
 function sendDeleteRequest(){
     console.log(objToDeleteId);
      $.ajax({
-        url: "/admin/api/crs/customer/" + objToDeleteId,
+        url: "/admin/api/scaffolding/user/" + objToDeleteId,
         type: "DELETE"
      })
      .done(function(response) {
@@ -139,7 +135,7 @@ function sendDeleteRequest(){
 
      function sendCreateRequest(login, password) {
          $.ajax({
-             url: "/admin/api/crs/customer",
+             url: "/admin/api/scaffolding/user",
              method: "post",
              contentType: "application/json",
              data:

@@ -2,7 +2,8 @@ package pl.com.chrzanowski.scaffolding.auth;
 
 public enum Permissions {
 
-    ADMIN("admin");
+    ADMIN("admin"),
+    USER("user");
 
     private String code;
 

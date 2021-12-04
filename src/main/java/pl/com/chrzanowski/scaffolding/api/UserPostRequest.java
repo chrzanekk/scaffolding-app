@@ -7,8 +7,8 @@ public class UserPostRequest {
     private String language;
     private Boolean regulationAccepted;
     private Boolean newsletterAccepted;
-    private String authorFirstName;
-    private String authorLastName;
+    private String firstName;
+    private String secondName;
     private Boolean isEnabled;
     private String invoiceFirstAndLastName;
     private Boolean isEmailConfirmed;
@@ -38,12 +38,12 @@ public class UserPostRequest {
         return newsletterAccepted;
     }
 
-    public String getAuthorFirstName() {
-        return authorFirstName;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public String getAuthorLastName() {
-        return authorLastName;
+    public String getSecondName() {
+        return secondName;
     }
 
     public Boolean getIsEnabled() {

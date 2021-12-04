@@ -5,6 +5,8 @@ import pl.com.chrzanowski.scaffolding.domain.UserData;
 public class UserGetResponse {
     private Long id;
     private String login;
+    private String firstName;
+    private String secondName;
     private String language;
     private Boolean newsletterAccepted;
     private Boolean regulationAccepted;
@@ -19,11 +21,13 @@ public class UserGetResponse {
     public UserGetResponse(UserData data) {
         this.id = data.getId();
         this.login = data.getLogin();
+        this.firstName = data.getFirstName();
+        this.secondName = data.getSecondName();
         this.language = data.getLanguage();
         this.newsletterAccepted = data.getNewsletterAccepted();
         this.regulationAccepted = data.getRegulationAccepted();
         this.passwordHash = data.getPasswordHash();
-        this.registrationDatetime = data.getRegistrationDatetime().toString().replace("T", " ");
+        this.registrationDatetime = data.getRegistrationDatetime().toString();
         this.isEnabled = data.getEnabled();
         this.registrationIp = data.getRegistrationIp();
         this.userAgent = data.getRegistrationUserAgent();
@@ -38,6 +42,18 @@ public class UserGetResponse {
 
     public String getLogin() {
         return login;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getSecondName() {
+        return secondName;
+    }
+
+    public Boolean getEnabled() {
+        return isEnabled;
     }
 
     public String getLanguage() {

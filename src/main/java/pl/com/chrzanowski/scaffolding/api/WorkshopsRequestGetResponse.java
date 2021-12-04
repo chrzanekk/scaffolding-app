@@ -4,13 +4,13 @@ import java.util.List;
 
 public class WorkshopsRequestGetResponse {
 
-    private List<WorkshopsGetResponse> workshops;
+    private List<WorkshopGetResponse> workshops;
 
-    public WorkshopsRequestGetResponse(List<WorkshopsGetResponse> workshops) {
+    public WorkshopsRequestGetResponse(List<WorkshopGetResponse> workshops) {
         this.workshops = workshops;
     }
 
-    public List<WorkshopsGetResponse> getWorkshops() {
+    public List<WorkshopGetResponse> getWorkshops() {
         return workshops;
     }
 }

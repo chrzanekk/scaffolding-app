@@ -220,6 +220,9 @@ public class ServiceActionsJdbcRepository {
             if (filter.getDateFrom() != null || filter.getDateTo() != null) {
                 query += prepareQueryForDateFiltering(filter.getDateFrom(), filter.getDateTo());
             }
+
+            query += "ORDER BY service_actions.service_date DESC ";
+
             if (filter.getPage() != null && filter.getPageSize() != null) {
                 query += preparePaginationQuery(filter.getPage(), filter.getPageSize());
             }

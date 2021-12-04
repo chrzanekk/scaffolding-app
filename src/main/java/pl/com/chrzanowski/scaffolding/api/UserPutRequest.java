@@ -1,14 +1,18 @@
 package pl.com.chrzanowski.scaffolding.api;
 
+import java.time.LocalDateTime;
+
 public class UserPutRequest {
 
     private String login;
+    private String firstName;
+    private String secondName;
     private String passwordHash;
     private String language;
     private Boolean regulationAccepted;
     private Boolean newsletterAccepted;
     private Boolean isEnabled;
-    private String registrationDatetime;
+    private LocalDateTime registrationDatetime;
     private Boolean isEmailConfirmed;
     private String[] authorities;
 
@@ -17,6 +21,22 @@ public class UserPutRequest {
 
     public String getLogin() {
         return login;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getSecondName() {
+        return secondName;
+    }
+
+    public Boolean getEnabled() {
+        return isEnabled;
+    }
+
+    public Boolean getEmailConfirmed() {
+        return isEmailConfirmed;
     }
 
     public String getPasswordHash() {
@@ -39,7 +59,7 @@ public class UserPutRequest {
         return isEnabled;
     }
 
-    public String getRegistrationDatetime() {
+    public LocalDateTime getRegistrationDatetime() {
         return registrationDatetime;
     }
 

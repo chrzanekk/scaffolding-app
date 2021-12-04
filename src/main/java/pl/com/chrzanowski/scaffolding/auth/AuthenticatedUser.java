@@ -43,13 +43,31 @@ public class AuthenticatedUser {
         UserData loggedUser = userService.getLoggedUser();
         Language currentLang = LanguagesUtil.getCurrentLanguage();
 
-        if (userAuthoritiesService.hasUserAuthority(loggedUser, UserAuthority.ADMIN)) {
+        if (userAuthoritiesService.hasUserAuthority(loggedUser, UserAuthority.ADMIN) || userAuthoritiesService.hasUserAuthority(loggedUser, UserAuthority.USER)) {
             return new ArrayList<>(Arrays.asList(
-                    new Menu("Flota", "#", new Permissions[]{Permissions.ADMIN},
+                    new Menu("Flota", "#",
+                            new Permissions[]{Permissions.ADMIN},
                             new ArrayList<>(Arrays.asList(
                                     new Menu(chooseMenuName("List", "Lista samochodów",
                                             currentLang),
                                             "/admin/vehicles", new Permissions[]{Permissions.ADMIN}, Collections.emptyList())
+
+                            ))
+                    ),
+                    new Menu("Rusztowania", "#",
+                            new Permissions[]{Permissions.ADMIN},
+                            new ArrayList<>(Arrays.asList(
+                                    new Menu(chooseMenuName("Scaffolding Log", "Dziennik rusztowań",
+                                            currentLang),
+                                            "/building", new Permissions[]{Permissions.ADMIN}, Collections.emptyList())
+                            ))
+                    ),
+                    new Menu("Zakupy", "#",
+                            new Permissions[]{Permissions.ADMIN},
+                            new ArrayList<>(Arrays.asList(
+                                    new Menu(chooseMenuName("Purchase Statement", "Zestawienei zakupów",
+                                            currentLang),
+                                            "/building", new Permissions[]{Permissions.ADMIN}, Collections.emptyList())
 
                             ))
                     ),
@@ -67,12 +85,22 @@ public class AuthenticatedUser {
                                             Collections.emptyList())
                             ))
                     ),
-                    new Menu("Marketing", "#", new Permissions[]{Permissions.ADMIN}, new ArrayList<>(Arrays.asList(
-                            new Menu("Newsletter", "/admin/marketing/newsletter", new Permissions[]{Permissions.ADMIN}, Collections.emptyList())
-                    ))),
-                    new Menu(chooseMenuName("Notifications", "Powiadomienia", currentLang), "#", new Permissions[]{Permissions.ADMIN}, new ArrayList<>(Arrays.asList(
-                            new Menu(chooseMenuName("Send notifications", "Wyślij powiadomienia", currentLang), "/admin/notifications/send", new Permissions[]{Permissions.ADMIN}, Collections.emptyList())
-                    )))
+                    new Menu(chooseMenuName("Admin menu", "Menu administratora", currentLang), "#",
+                            new Permissions[]{Permissions.ADMIN},
+                            new ArrayList<>(Arrays.asList(
+                                    new Menu(chooseMenuName("Users", "Użytkownicy", currentLang),
+                                            "/admin/users", new Permissions[]{Permissions.ADMIN},
+                                            Collections.emptyList()),
+                                    new Menu(chooseMenuName("Archived/Deleted Data", "Dane zarchiwizowane/usunięte",
+                                            currentLang),
+                                            "/building", new Permissions[]{Permissions.ADMIN},
+                                            Collections.emptyList()),
+                                    new Menu("Newsletter", "/admin/marketing/newsletter",
+                                            new Permissions[]{Permissions.ADMIN}, Collections.emptyList()),
+                                    new Menu(chooseMenuName("Send notifications", "Wyślij powiadomienia", currentLang), "/admin/notifications/send",
+                                            new Permissions[]{Permissions.ADMIN}, Collections.emptyList())
+                            ))
+                    )
             ));
         } else {
             throw new IllegalArgumentException("You don't have permissions to Menu!");

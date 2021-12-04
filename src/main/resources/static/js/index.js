@@ -87,25 +87,6 @@ function changeLanguage(lang) {
     window.location.href = window.location.pathname + "?lang=" + lang;
 }
 
-//$(document).ready(function () {
-//    $.ajax({
-//        url: "/api/adviser/languages",
-//        method: "get",
-//        contentType: "application/json",
-//        dataType: "json"
-//    })
-//        .done(function (languages) {
-//            languages.forEach(function (language) {
-//                $("#language-change-menu").append(
-//                    '<a class="dropdown-item" href="#" onclick="changeLanguage(\'' + language.code + '\')">' + language.value + '</a>'
-//                )
-//            })
-//        })
-//        .fail(function(jqxhr, textStatus, errorThrown){
-//            displayErrorInformation(jqxhr.responseText);
-//        });
-//})
-
 function prepareText(text) {
     if(text === "null") {
         return "";
@@ -228,11 +209,7 @@ function trace(what, value, who) {
         })
 }
 
-// what:
-// button.<button-name>
-// page.show
-// file.downloaded
-// link.clicked
+
 function trace(what, value) {
     $.ajax({
         url: "/api/scaffolding/trace",

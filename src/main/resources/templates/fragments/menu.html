@@ -16,7 +16,8 @@
                 <span class="desktop-only" th:text="#{main.menu.logged.in.user}"></span>
                 <span class="desktop-only"><b><span th:text="${@authenticatedUser.getUserName()}"></span></b></span>
                 <a class="btn btn-dark" href="/perform/logout" th:text="#{main.menu.logout.button}"></a>
-                <div th:if="${@userService.isLoggedUserAdmin()}" class="dropdown ml-1 p-0"
+                <div th:if="${@userService.isLoggedUserAdmin() OR @userService.isLoggedUser()}"
+                     class="dropdown ml-1 p-0"
                      style="display: inline;">
                     <p></p>
                 </div>

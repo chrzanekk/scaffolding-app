@@ -65,14 +65,14 @@ public class ScaffoldingEndpointAdmin {
     }
 
     @GetMapping("/users")
-    public List<UserGetResponse> getUsers(
+    public UsersRequestGetResponse getUsers(
             @RequestParam(name = "page", required = false, defaultValue = "1") Long page,
             @RequestParam(name = "page_size", required = false, defaultValue = "10") Long pageSize,
             @RequestParam(name = "login", required = false) String loginLike
     ) {
         List<UserData> users = userService.find(new UsersFilter(loginLike, page, pageSize
         ));
-        return usersToResponses(users);
+        return new UsersRequestGetResponse(usersToResponses(users));
     }
 
     @PostMapping("/user")
@@ -93,8 +93,9 @@ public class ScaffoldingEndpointAdmin {
     @PutMapping("/user/{id}")
     public void updateUser(@PathVariable Long id, @RequestBody UserPutRequest request) {
         UserData data = userService.get(id);
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         userService.update(new UserData(id,
+                request.getFirstName(),
+                request.getSecondName(),
                 request.getLogin(),
                 data.getPasswordHash(),
                 request.getLanguage(),
@@ -102,8 +103,10 @@ public class ScaffoldingEndpointAdmin {
                 request.getNewsletterAccepted(),
                 request.getIsEnabled(),
                 request.getIsEmailConfirmed(),
-                LocalDateTime.parse(request.getRegistrationDatetime(), formatter),
-                request.getAuthorities()));
+                request.getRegistrationDatetime(),
+                request.getAuthorities(),
+                data.getRegistrationIp(),
+                data.getRegistrationUserAgent()));
     }
 
     @DeleteMapping("/user/{id}")
@@ -638,10 +641,10 @@ public class ScaffoldingEndpointAdmin {
         return new ServiceActionGetResponse(data);
     }
 
-    private List<WorkshopsGetResponse> workshopsToResponse(List<WorkshopsData> workshops) {
-        List<WorkshopsGetResponse> list = new ArrayList<>();
+    private List<WorkshopGetResponse> workshopsToResponse(List<WorkshopsData> workshops) {
+        List<WorkshopGetResponse> list = new ArrayList<>();
         for (WorkshopsData workshop : workshops) {
-            list.add(new WorkshopsGetResponse(
+            list.add(new WorkshopGetResponse(
                     workshop.getId(),
                     workshop.getName(),
                     workshop.getTaxNumber(),
@@ -657,8 +660,8 @@ public class ScaffoldingEndpointAdmin {
         return list;
     }
 
-    private WorkshopsGetResponse workshopToResponse(WorkshopsData workshop) {
-        return new WorkshopsGetResponse(
+    private WorkshopGetResponse workshopToResponse(WorkshopsData workshop) {
+        return new WorkshopGetResponse(
                 workshop.getId(),
                 workshop.getName(),
                 workshop.getTaxNumber(),
