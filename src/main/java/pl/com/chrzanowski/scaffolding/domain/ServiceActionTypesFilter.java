@@ -14,6 +14,10 @@ public class ServiceActionTypesFilter {
         this.id = id;
     }
 
+    public ServiceActionTypesFilter(String name) {
+        this.name = name;
+    }
+
     public ServiceActionTypesFilter(Long page, Long pageSize) {
         this.page = page;
         this.pageSize = pageSize;

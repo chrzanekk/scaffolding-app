@@ -46,10 +46,10 @@ public class ServiceActionTypeJdbcRepository {
             query += " WHERE 1=1";
 
             if (filter.getId() != null) {
-                query += " AND id = " + filter.getId();
+                query += " AND id = '" + filter.getId() + "'";
             }
             if (filter.getName() != null) {
-                query += " AND name = " + filter.getName();
+                query += " AND name = '" + filter.getName() + "'";
             }
 
             query += " AND remove_date IS NULL ";
