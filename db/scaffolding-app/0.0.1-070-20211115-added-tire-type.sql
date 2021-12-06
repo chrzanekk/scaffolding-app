@@ -1,6 +1,3 @@
 ALTER TABLE tires 
 ADD type VARCHAR(2) NOT NULL;
 
-UPDATE tires 
-SET TYPE = 'r' 
-WHERE id>=1;

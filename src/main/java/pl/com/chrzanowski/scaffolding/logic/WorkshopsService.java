@@ -19,14 +19,14 @@ public class WorkshopsService {
 
     private WorkshopsJdbcRepository workshopsJdbcRepository;
     private WorkshopServiceTypeService workshopServiceTypeService;
-    private ServiceActionTypesService serviceActionTypesService;
+    private ServiceActionTypeService serviceActionTypeService;
 
     public WorkshopsService(WorkshopsJdbcRepository workshopsJdbcRepository,
                             WorkshopServiceTypeService workshopServiceTypeService,
-                            ServiceActionTypesService serviceActionTypesService) {
+                            ServiceActionTypeService serviceActionTypeService) {
         this.workshopsJdbcRepository = workshopsJdbcRepository;
         this.workshopServiceTypeService = workshopServiceTypeService;
-        this.serviceActionTypesService = serviceActionTypesService;
+        this.serviceActionTypeService = serviceActionTypeService;
 
     }
 
@@ -52,7 +52,7 @@ public class WorkshopsService {
     }
 
     public List<ServiceActionTypeData> findServiceWorkshopsById(WorkshopsData data) {
-        List<ServiceActionTypeData> serviceActionTypeData = serviceActionTypesService.find(new ServiceActionTypesFilter());
+        List<ServiceActionTypeData> serviceActionTypeData = serviceActionTypeService.find(new ServiceActionTypesFilter());
         Long[] workshopServicesTypes = workshopServiceTypeService.getActionTypesForWorkshop(data);
         List<ServiceActionTypeData> result = new ArrayList<>();
 
