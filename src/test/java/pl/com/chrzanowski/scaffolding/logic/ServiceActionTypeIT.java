@@ -17,21 +17,20 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(SpringRunner.class)
-@ActiveProfiles("h2")
+
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, classes = Application.class)
-@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 public class ServiceActionTypeIT {
 
     @Autowired
     private ServiceActionTypeService serviceActionTypeService;
 
-    @Autowired
-    private ServiceActionTypeFixture serviceActionTypeFixture;
+//    @Autowired
+//    private ServiceActionTypeFixture serviceActionTypeFixture;
 
-    @Ignore
+
     @Test
     public void checkIsAnyDataExists() {
-        serviceActionTypeFixture.createActionTypes();
+//        serviceActionTypeFixture.createActionTypes();
 
         ServiceActionTypesFilter filter = new ServiceActionTypesFilter();
 
@@ -42,12 +41,50 @@ public class ServiceActionTypeIT {
 
     @Test
     public void checkIfTheGivenNameExistsWithPositiveResult() {
-        serviceActionTypeFixture.createActionTypes();
+//        serviceActionTypeFixture.createActionTypes();
 
-        ServiceActionTypesFilter filter = new ServiceActionTypesFilter("wulkanizacja");
+        ServiceActionTypesFilter filter = new ServiceActionTypesFilter("inne");
 
         List<ServiceActionTypeData> result = serviceActionTypeService.find(filter);
 
         assertThat(result).hasSize(1);
+    }
+
+    @Test
+    public void checkIfTheGivenNameExistsWithNegativeResult() {
+
+        ServiceActionTypesFilter filter = new ServiceActionTypesFilter("naprawa silnika");
+
+        List<ServiceActionTypeData> result = serviceActionTypeService.find(filter);
+
+        assertThat(result).hasSize(0);
+
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void checkIfDataValidationWorksWhenGivenNameIsEmptyString() {
+
+        ServiceActionTypeData newData = new ServiceActionTypeData("");
+
+        serviceActionTypeService.add(newData);
+
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void checkIfDataValidationWorksWhenGivenNameIsNull() {
+
+        ServiceActionTypeData newData = new ServiceActionTypeData(null);
+
+        serviceActionTypeService.add(newData);
+
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void checkIfDataValidationWorksWhenGivenNameProtectedAgainstRemove() {
+
+        ServiceActionTypeData newData = new ServiceActionTypeData(8L,"inne");
+
+        serviceActionTypeService.remove(newData);
+
     }
 }
