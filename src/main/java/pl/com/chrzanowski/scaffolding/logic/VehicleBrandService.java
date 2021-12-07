@@ -12,11 +12,11 @@ import static pl.com.chrzanowski.scaffolding.logic.JdbcUtil.*;
 
 
 @Service
-public class VehicleBrandsService implements IVehicleBrands {
+public class VehicleBrandService implements IVehicleBrands {
 
     private VehicleBrandJdbcRepository vehicleBrandJdbcRepository;
 
-    public VehicleBrandsService(VehicleBrandJdbcRepository vehicleBrandJdbcRepository) {
+    public VehicleBrandService(VehicleBrandJdbcRepository vehicleBrandJdbcRepository) {
         this.vehicleBrandJdbcRepository = vehicleBrandJdbcRepository;
 
     }

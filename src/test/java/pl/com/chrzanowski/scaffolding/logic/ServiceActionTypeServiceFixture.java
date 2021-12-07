@@ -12,7 +12,7 @@ import javax.persistence.EntityManager;
 
 
 @Service
-public class ServiceActionTypeFixture {
+public class ServiceActionTypeServiceFixture {
 
     @Autowired
     private ServiceActionTypeService serviceActionTypeService;

@@ -36,19 +36,8 @@ public class VehicleTiresFilter {
         this.id = id;
     }
 
-    public VehicleTiresFilter(Long vehicleId, Long page, Long pageSize) {
-        this.vehicleId = vehicleId;
-        this.page = page;
-        this.pageSize = pageSize;
-    }
-
     public VehicleTiresFilter(Long id, Long vehicleId, String status) {
         this.id = id;
-        this.vehicleId = vehicleId;
-        this.status = status;
-    }
-
-    public VehicleTiresFilter(Long vehicleId, String status) {
         this.vehicleId = vehicleId;
         this.status = status;
     }
@@ -60,7 +49,10 @@ public class VehicleTiresFilter {
         this.pageSize = pageSize;
     }
 
-
+    public VehicleTiresFilter(String brand, String model) {
+        this.brand = brand;
+        this.model = model;
+    }
 
     public VehicleTiresFilter() {
     }

@@ -45,12 +45,7 @@ public class VehicleTiresService implements IVehicleTires {
     public void update(VehicleTiresData data) {
         validateData(data);
         checkMountStatusAndUpdateToStocked(data);
-        tiresJdbcRepository.updateTire(data);
-        tiresJdbcRepository.update(data);
-    }
-
-    @Override
-    public void updateTire(VehicleTiresData data) {
+        tiresJdbcRepository.updateTireProperties(data);
         tiresJdbcRepository.updateTire(data);
     }
 
@@ -85,7 +80,7 @@ public class VehicleTiresService implements IVehicleTires {
     private void checkMountStatusAndUpdateToStocked(VehicleTiresData data) {
         if (checkIsTiresMounted(new VehicleTiresFilter(null, data.getVehicleId(), "m"))) {
             VehicleTiresData existingMountedTire = getTire(new VehicleTiresFilter(null, data.getVehicleId(), "m"));
-            tiresJdbcRepository.update(new VehicleTiresData(existingMountedTire, "s"));
+            tiresJdbcRepository.updateTire(new VehicleTiresData(existingMountedTire, "s"));
         }
     }
 

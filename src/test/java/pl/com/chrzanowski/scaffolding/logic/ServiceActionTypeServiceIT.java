@@ -17,9 +17,8 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(SpringRunner.class)
-
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, classes = Application.class)
-public class ServiceActionTypeIT {
+public class ServiceActionTypeServiceIT {
 
     @Autowired
     private ServiceActionTypeService serviceActionTypeService;

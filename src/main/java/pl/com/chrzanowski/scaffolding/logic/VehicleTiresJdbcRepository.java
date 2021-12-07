@@ -45,7 +45,7 @@ public class VehicleTiresJdbcRepository {
         return commonJdbcRepository.getLastInsertedId();
     }
 
-    public void update(VehicleTiresData data) {
+    public void updateTire(VehicleTiresData data) {
         String query = "UPDATE vehicle_tires SET " +
                 "vehicle_id = ?, " +
                 "tire_id = ?, " +
@@ -64,7 +64,7 @@ public class VehicleTiresJdbcRepository {
                 data.getId());
     }
 
-    public void updateTire(VehicleTiresData data) {
+    public void updateTireProperties(VehicleTiresData data) {
         String query = "UPDATE tires SET " +
                 "brand = ?," +
                 "model = ?," +
@@ -132,6 +132,14 @@ public class VehicleTiresJdbcRepository {
 
             if (filter.getStatus() != null) {
                 query += " AND vehicle_tires.status = '" + filter.getStatus() + "'";
+            }
+
+            if (filter.getBrand() != null) {
+                query += " AND tires.brand = '" + filter.getBrand() + "'";
+            }
+
+            if (filter.getModel() != null) {
+                query += " AND tires.model = '" + filter.getModel() + "'";
             }
 
             if (filter.getSeasonName() != null) {

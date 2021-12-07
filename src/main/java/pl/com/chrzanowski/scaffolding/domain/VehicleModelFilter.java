@@ -21,6 +21,12 @@ public class VehicleModelFilter {
         this.brandId = brandId;
     }
 
+    public VehicleModelFilter(Long id, Long brandId, String name) {
+        this.id = id;
+        this.brandId = brandId;
+        this.name = name;
+    }
+
     public VehicleModelFilter() {
     }
 

@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 import pl.com.chrzanowski.scaffolding.domain.VehicleModelData;
 import pl.com.chrzanowski.scaffolding.domain.VehicleModelFilter;
 
+import javax.xml.crypto.Data;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -12,11 +13,11 @@ import static pl.com.chrzanowski.scaffolding.logic.JdbcUtil.getLong;
 import static pl.com.chrzanowski.scaffolding.logic.JdbcUtil.getString;
 
 @Service
-public class VehicleModelsService implements IVehicleModels {
+public class VehicleModelService implements IVehicleModels {
 
     private VehicleModelJdbcRepository vehicleModelJdbcRepository;
 
-    public VehicleModelsService(VehicleModelJdbcRepository vehicleModelJdbcRepository) {
+    public VehicleModelService(VehicleModelJdbcRepository vehicleModelJdbcRepository) {
         this.vehicleModelJdbcRepository = vehicleModelJdbcRepository;
     }
 
@@ -49,6 +50,7 @@ public class VehicleModelsService implements IVehicleModels {
     }
 
     private void validateData(VehicleModelData data) {
+        DataValidationUtil.validateValue(data.getId(),"Marka");
         DataValidationUtil.validateTextField(data.getName(), "Model");
     }
 }
