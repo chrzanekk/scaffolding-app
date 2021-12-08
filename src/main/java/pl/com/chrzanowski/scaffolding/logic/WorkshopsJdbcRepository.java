@@ -127,5 +127,9 @@ public class WorkshopsJdbcRepository {
         return jdbcTemplate.queryForList(query);
     }
 
+    public List<Map<String, Object>> findRemoved() {
+        String query = "SELECT * FROM workshops WHERE 1=1 AND remove_date IS NOT NULL";
+        return jdbcTemplate.queryForList(query);
+    }
 
 }

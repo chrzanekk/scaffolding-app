@@ -193,6 +193,39 @@ public class ServiceActionsJdbcRepository {
         return jdbcTemplate.queryForMap(query);
     }
 
+    List<Map<String,Object>> findRemoved() {
+        String query = "SELECT \n" +
+                "service_actions.id,\n" +
+                "service_actions.vehicle_id,\n" +
+                "service_actions.car_mileage,\n" +
+                "service_actions.service_date,\n" +
+                "service_actions.invoice_no,\n" +
+                "service_actions.invoice_gross_value,\n" +
+                "service_actions.invoice_net_value,\n" +
+                "service_actions.tax_value,\n" +
+                "service_actions.tax_rate,\n" +
+                "service_actions.workshop_id,\n" +
+                "service_actions.description,\n" +
+                "service_actions.service_action_type_id,\n" +
+                "service_actions.remove_date,\n" +
+                "service_action_type.id,\n" +
+                "service_action_type.name AS action_type,\n" +
+                "workshops.id AS workshopId,\n" +
+                "workshops.name AS workshop,\n" +
+                "workshops.tax_number AS tax_number,\n" +
+                "workshops.street AS street,\n" +
+                "workshops.building_number AS building_number,\n" +
+                "workshops.apartment_number AS apartment_number,\n" +
+                "workshops.postal_code AS postal_code,\n" +
+                "workshops.city AS city\n" +
+                "FROM service_actions \n" +
+                "LEFT JOIN service_action_type ON (service_actions.service_action_type_id = service_action_type.id)" +
+                "LEFT JOIN workshops ON (service_actions.workshop_id = workshops.id) " +
+                "WHERE 1=1 " +
+                "AND service_actions.remove_date IS NOT NULL";
+        return jdbcTemplate.queryForList(query);
+    }
+
     private String prepareFilterQuery(ServiceActionsFilter filter, String query) {
         if (filter != null) {
             query += " WHERE 1=1";

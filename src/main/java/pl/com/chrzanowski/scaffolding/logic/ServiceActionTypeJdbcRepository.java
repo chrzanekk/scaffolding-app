@@ -61,4 +61,9 @@ public class ServiceActionTypeJdbcRepository {
         return jdbcTemplate.queryForList(query);
     }
 
+    public List<Map<String, Object>> findRemoved() {
+        String query = "SELECT * FROM service_action_type WHERE 1=1 AND remove_date IS NOT NULL";
+        return jdbcTemplate.queryForList(query);
+    }
+
 }
