@@ -17,6 +17,8 @@ public class WorkshopsFilter {
     private Long[] actionTypes;
     private Long page;
     private Long pageSize;
+    private LocalDateTime removeDate;
+
 
     public WorkshopsFilter(Long page, Long pageSize) {
         this.page = page;
@@ -83,5 +85,9 @@ public class WorkshopsFilter {
 
     public Long getPageSize() {
         return pageSize;
+    }
+
+    public LocalDateTime getRemoveDate() {
+        return removeDate;
     }
 }
