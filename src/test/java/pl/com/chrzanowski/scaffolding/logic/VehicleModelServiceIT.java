@@ -87,6 +87,22 @@ public class VehicleModelServiceIT {
         vehicleModelService.add(data);
     }
 
+    @Test(expected = IllegalArgumentException.class)
+    public void checkIfDataValidationWorksWhenGivenEmptyStringAsNameAndBrandId() {
+
+        VehicleModelData data = new VehicleModelData("",1L);
+
+        vehicleModelService.add(data);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void checkIfDataValidationWorksWhenGivenNullAsNameAndBrandId() {
+
+        VehicleModelData data = new VehicleModelData(null,1L);
+
+        vehicleModelService.add(data);
+    }
+
 
 
 }

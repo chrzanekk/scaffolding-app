@@ -19,7 +19,7 @@ public class WorkshopsData {
     private LocalDateTime modifyDate;
     private LocalDateTime removeDate;
 
-
+//to put in endpoint
     public WorkshopsData(Long id,
                          String name,
                          String taxNumber,
@@ -40,7 +40,7 @@ public class WorkshopsData {
         this.actionTypes = actionTypes;
         this.modifyDate = LocalDateTime.now();
     }
-
+// to put in endpoint to remove
     public WorkshopsData(Long id,
                          String name,
                          String taxNumber,
@@ -62,7 +62,7 @@ public class WorkshopsData {
         this.actionTypes = actionTypes;
         this.removeDate = removeDate;
     }
-
+// to post in endpoint
     public WorkshopsData(String name, String taxNumber, String street, String buildingNo, String apartmentNo,
                          String postalCode, String city, Long[] actionTypes) {
         this.name = name;
@@ -76,6 +76,7 @@ public class WorkshopsData {
         this.createDate = LocalDateTime.now();
     }
 
+// to update and remove
     public WorkshopsData(WorkshopsData data, Long[] actionTypes) {
         this.id = data.getId();
         this.name = data.getName();
@@ -88,7 +89,19 @@ public class WorkshopsData {
         this.actionTypes = actionTypes;
         this.modifyDate = LocalDateTime.now();
     }
-
+// to format fields
+    public WorkshopsData(WorkshopsData data, String taxNumber, String postalCode) {
+        this.id = data.getId();
+        this.name = data.getName();
+        this.taxNumber = taxNumber;
+        this.street = data.getStreet();
+        this.buildingNo = data.getBuildingNo();
+        this.apartmentNo = data.getApartmentNo();
+        this.postalCode = data.getPostalCode();
+        this.city = postalCode;
+        this.actionTypes = data.getActionTypes();
+    }
+// to find with action types
     public WorkshopsData(WorkshopsData data, Long[] actionTypes, List<ServiceActionTypeData> actionTypesList) {
         this.id = data.getId();
         this.name = data.getName();
@@ -102,7 +115,7 @@ public class WorkshopsData {
         this.actionTypesList = actionTypesList;
         this.modifyDate = LocalDateTime.now();
     }
-
+// to get workshop data
     public WorkshopsData(Long id, String name, String taxNumber, String street, String buildingNo, String apartmentNo, String postalCode, String city) {
         this.id = id;
         this.name = name;
@@ -114,6 +127,7 @@ public class WorkshopsData {
         this.city = city;
     }
 
+//    to create action services in workshop
     public WorkshopsData(Long id, WorkshopsData data) {
         this.id = id;
         this.name = data.getName();
@@ -126,6 +140,35 @@ public class WorkshopsData {
         this.actionTypes = data.getActionTypes();
         this.createDate = LocalDateTime.now();
     }
+
+//    to update with formatted fields
+    public WorkshopsData(WorkshopsData data, Long id) {
+        this.id = id;
+        this.name = data.getName();
+        this.taxNumber = data.getTaxNumber();
+        this.street = data.getStreet();
+        this.buildingNo = data.getBuildingNo();
+        this.apartmentNo = data.getApartmentNo();
+        this.postalCode = data.getPostalCode();
+        this.city = data.getCity();
+        this.actionTypes = data.getActionTypes();
+        this.modifyDate = LocalDateTime.now();
+    }
+//    to remove with formatted fields
+    public WorkshopsData(WorkshopsData data, Long id, LocalDateTime removeDate) {
+        this.id = id;
+        this.name = data.getName();
+        this.taxNumber = data.getTaxNumber();
+        this.street = data.getStreet();
+        this.buildingNo = data.getBuildingNo();
+        this.apartmentNo = data.getApartmentNo();
+        this.postalCode = data.getPostalCode();
+        this.city = data.getCity();
+        this.actionTypes = data.getActionTypes();
+        this.modifyDate = removeDate;
+    }
+
+
 
     public Long getId() {
         return id;

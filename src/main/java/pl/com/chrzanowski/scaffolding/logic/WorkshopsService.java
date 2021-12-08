@@ -6,6 +6,7 @@ import pl.com.chrzanowski.scaffolding.domain.ServiceActionTypesFilter;
 import pl.com.chrzanowski.scaffolding.domain.WorkshopsData;
 import pl.com.chrzanowski.scaffolding.domain.WorkshopsFilter;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -68,34 +69,37 @@ public class WorkshopsService {
 
 
     public Long add(WorkshopsData data) {
-        validateData(data);
-        Long workshopId = workshopsJdbcRepository.create(data);
-        workshopServiceTypeService.validateAndCreateActionTypesForWorkshop(new WorkshopsData(workshopId, data));
+        WorkshopsData workshopsData = formatFields(data);
+        validateData(workshopsData);
+        Long workshopId = workshopsJdbcRepository.create(workshopsData);
+        workshopServiceTypeService.validateAndCreateActionTypesForWorkshop(new WorkshopsData(workshopId, workshopsData));
         return workshopId;
     }
 
     public void update(WorkshopsData data) {
-        validateData(data);
+        WorkshopsData workshopsData = new WorkshopsData(formatFields(data), data.getId());
+        validateData(workshopsData);
         if (data.getActionTypes() != null) {
-            workshopServiceTypeService.deleteActionTypes(data);
-            workshopServiceTypeService.validateAndCreateActionTypesForWorkshop(data);
+            workshopServiceTypeService.deleteActionTypes(workshopsData);
+            workshopServiceTypeService.validateAndCreateActionTypesForWorkshop(workshopsData);
         } else {
-            data = new WorkshopsData(data, workshopServiceTypeService.getActionTypesForWorkshop(data));
+            workshopsData = new WorkshopsData(workshopsData, workshopServiceTypeService.getActionTypesForWorkshop(workshopsData));
 
         }
-        workshopsJdbcRepository.update(data);
+        workshopsJdbcRepository.update(workshopsData);
     }
 
     public void remove(WorkshopsData data) {
-        validateData(data);
-        if (data.getActionTypes() != null) {
-            workshopServiceTypeService.deleteActionTypes(data);
-            workshopServiceTypeService.validateAndCreateActionTypesForWorkshop(data);
+        WorkshopsData workshopsData = new WorkshopsData(formatFields(data), data.getId(), LocalDateTime.now());
+        validateData(workshopsData);
+        if (workshopsData.getActionTypes() != null) {
+            workshopServiceTypeService.deleteActionTypes(workshopsData);
+            workshopServiceTypeService.validateAndCreateActionTypesForWorkshop(workshopsData);
         } else {
-            data = new WorkshopsData(data, workshopServiceTypeService.getActionTypesForWorkshop(data));
+            workshopsData = new WorkshopsData(workshopsData, workshopServiceTypeService.getActionTypesForWorkshop(workshopsData));
 
         }
-        workshopsJdbcRepository.remove(data);
+        workshopsJdbcRepository.remove(workshopsData);
     }
 
     private List<WorkshopsData> getWorkshops(List<Map<String, Object>> data) {
@@ -125,6 +129,32 @@ public class WorkshopsService {
         DataValidationUtil.validateServiceTypes(data.getActionTypes());
     }
 
+    private WorkshopsData formatFields(WorkshopsData data) {
+        String formattedTaxNumber = formatTaxNumber(data.getTaxNumber());
+        String formattedPostalCode = formatPostalCode(data.getPostalCode());
+        return new WorkshopsData(data, formattedTaxNumber, formattedPostalCode);
+    }
 
+    private String cleanInput(String input) {
+        if (input != null) {
+            return input.replaceAll("[^a-zA-Z0-9]", "");
+        } else {
+            return "";
+        }
+    }
 
+    private String formatTaxNumber(String taxNumber) {
+        taxNumber = cleanInput(taxNumber);
+        return taxNumber.substring(0, 3) + "-" + taxNumber.substring(3, 6) + "-" + taxNumber.substring(6, 8) + "-" + taxNumber.substring(8, 10);
+    }
+
+    private String formatPostalCode(String postalCode) {
+        postalCode = cleanInput(postalCode);
+        return postalCode.substring(0,2) + "-" + postalCode.substring(2,5);
+
+    }
 }
+
+
+
+
