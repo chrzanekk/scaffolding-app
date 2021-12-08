@@ -84,12 +84,10 @@ public class VehicleTiresData {
                             String reinforced,
                             Boolean isRunOnFlat,
                             Long seasonId,
-                            String status,
-                            String oldStatus
+                            String status
     ) {
         this.vehicleId = vehicleId;
         this.status = status;
-        this.oldStatus = oldStatus;
         this.productionYear = productionYear;
         this.purchaseDate = purchaseDate;
         this.brand = brand;

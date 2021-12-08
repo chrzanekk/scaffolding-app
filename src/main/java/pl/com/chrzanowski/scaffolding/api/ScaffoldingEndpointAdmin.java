@@ -306,8 +306,7 @@ public class ScaffoldingEndpointAdmin {
                 request.getReinforced(),
                 request.getRunOnFlat(),
                 request.getSeasonId(),
-                request.getStatus(),
-                request.getOldStatus()
+                request.getStatus()
         ));
     }
 
