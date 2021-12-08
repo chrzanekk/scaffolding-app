@@ -165,7 +165,7 @@ public class WorkshopsData {
         this.postalCode = data.getPostalCode();
         this.city = data.getCity();
         this.actionTypes = data.getActionTypes();
-        this.modifyDate = removeDate;
+        this.removeDate = removeDate;
     }
 
 
