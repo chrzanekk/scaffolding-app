@@ -114,6 +114,11 @@ public class DataValidationUtil {
         validateIntegerValueInCompartment(diameter, fieldName, 10, 24);
     }
 
+    public static void validateCapacityIndex(Integer capacityIndex, String fieldName) {
+        validateValue(capacityIndex, fieldName);
+        validateIntegerValueInCompartment(capacityIndex, fieldName, 75, 110);
+    }
+
 
 
 

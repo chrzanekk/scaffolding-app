@@ -127,7 +127,7 @@ public class VehicleTiresService implements IVehicleTires {
         DataValidationUtil.validateTextField(data.getType(), "Typ");
         DataValidationUtil.validateTireDiameter(data.getDiameter(), "Średnica");
         DataValidationUtil.validateTextField(data.getSpeedIndex(), "Index prędkości");
-        DataValidationUtil.validateValue(data.getCapacityIndex(), "Index nośności");
+        DataValidationUtil.validateCapacityIndex(data.getCapacityIndex(), "Index nośności");
         DataValidationUtil.validateTextField(data.getReinforced(), "Czy jest wzmacniana(Reinforced)?");
         DataValidationUtil.validateBoolean(data.isRunOnFlat(), "Run on flat?");
     }
