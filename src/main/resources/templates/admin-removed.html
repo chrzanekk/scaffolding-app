@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <div th:replace="fragments/head"></div>
+    <script th:src="@{/js/admin-removed.js}"></script>
+</head>
+
+<body>
+<div th:replace="fragments/menu :: menu"></div>
+<h5 th:text="#{removed.list}"></h5>
+<div id="removed-workshop-container" class="my-4">
+    <h5 th:text="#{workshop.list}"></h5>
+    <form id="filter" class="bg-light border m-0 p-0 my-3">
+        <div class="form-row m-0 p-0">
+            <div class="form-group row col-12 col-lg-6 border m-0 p-0 py-2">
+                <label class="col-12 col-sm-3 col-md-2 col-xl-3 my-auto text-center"
+                       th:text="#{workshop.name}"></label>
+                <div class="col-12 col-sm-9 col-md-10 col-xl-9 my-auto">
+                    <select id="name-filter" class="form-control">
+                        <option value="">---</option>
+                        <option th:each="workshop : ${workshops}"
+                                th:value="${workshop.name}"
+                                th:text="${workshop.name}">
+                        </option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group row col-12 col-lg-6 border m-0 p-0 py-2">
+                <label class="col-12 col-sm-3 col-md-2 col-xl-3 my-auto text-center"
+                       th:text="#{workshop.city}"></label>
+                <div class="col-12 col-sm-9 col-md-10 col-xl-9 my-auto">
+                    <select id="city-filter" class="form-control">
+                        <option value="">---</option>
+                        <option th:each="workshop : ${workshops}"
+                                th:value="${workshop.city}"
+                                th:text="${workshop.city}">
+                        </option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </form>
+    <div class="table-responsive mb-0 pb-0">
+        <table class="table bg-light table-bordered table-hover table-sm">
+            <thead class="thead-light">
+            <tr>
+                <th class="align-middle col-sm-1" th:text="#{ordinal.number}"></th>
+                <th class="align-middle col-sm-3" th:text="#{workshop.name}"></th>
+                <th class="align-middle col-sm-2" th:text="#{workshop.address}"></th>
+                <th class="align-middle col-sm-1" th:text="#{workshop.postal.code}"></th>
+                <th class="align-middle col-sm-1" th:text="#{workshop.city}"></th>
+                <th class="align-middle col-sm-1" th:text="#{removed.date.time}"></th>
+                <th class="align-middle col-sm-1" th:text="#{workshop.edit}"></th>
+
+            </tr>
+            </thead>
+            <tbody id="removed-workshops">
+
+            </tbody>
+        </table>
+    </div>
+    <div th:replace="fragments/pagination :: pagination"></div>
+</div>
+
+
+
+
+</body>
+
+</html>

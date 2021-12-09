@@ -19,7 +19,7 @@ public class WorkshopsData {
     private LocalDateTime modifyDate;
     private LocalDateTime removeDate;
 
-//to put in endpoint
+//to put in endpoint and restore
     public WorkshopsData(Long id,
                          String name,
                          String taxNumber,
@@ -39,6 +39,7 @@ public class WorkshopsData {
         this.city = city;
         this.actionTypes = actionTypes;
         this.modifyDate = LocalDateTime.now();
+        this.removeDate = null;
     }
 // to put in endpoint to remove
     public WorkshopsData(Long id,
@@ -76,7 +77,7 @@ public class WorkshopsData {
         this.createDate = LocalDateTime.now();
     }
 
-// to update and remove
+// to update
     public WorkshopsData(WorkshopsData data, Long[] actionTypes) {
         this.id = data.getId();
         this.name = data.getName();
@@ -88,6 +89,7 @@ public class WorkshopsData {
         this.city = data.getCity();
         this.actionTypes = actionTypes;
         this.modifyDate = LocalDateTime.now();
+
     }
 // to format fields
     public WorkshopsData(WorkshopsData data, String taxNumber, String postalCode) {
@@ -113,10 +115,11 @@ public class WorkshopsData {
         this.city = data.getCity();
         this.actionTypes = actionTypes;
         this.actionTypesList = actionTypesList;
-        this.modifyDate = LocalDateTime.now();
+        this.modifyDate = data.getModifyDate();
+        this.removeDate = data.getRemoveDate();
     }
 // to get workshop data
-    public WorkshopsData(Long id, String name, String taxNumber, String street, String buildingNo, String apartmentNo, String postalCode, String city) {
+    public WorkshopsData(Long id, String name, String taxNumber, String street, String buildingNo, String apartmentNo, String postalCode, String city, LocalDateTime modifyDate, LocalDateTime removeDate) {
         this.id = id;
         this.name = name;
         this.taxNumber = taxNumber;
@@ -125,6 +128,8 @@ public class WorkshopsData {
         this.apartmentNo = apartmentNo;
         this.postalCode = postalCode;
         this.city = city;
+        this.modifyDate = modifyDate;
+        this.removeDate = removeDate;
     }
 
 //    to create action services in workshop

@@ -121,7 +121,9 @@ public class ServiceActionsService implements IServiceActions {
                             getString(row, "building_number"),
                             getString(row, "apartment_number"),
                             getString(row, "postal_code"),
-                            getString(row, "city")),
+                            getString(row, "city"),
+                            getDateTime(row, "modify_date"),
+                            getDateTime(row, "remove_date")),
                     getString(row, "description")
             ));
         }

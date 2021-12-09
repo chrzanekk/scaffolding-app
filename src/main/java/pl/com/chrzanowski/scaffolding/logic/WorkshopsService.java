@@ -11,8 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import static pl.com.chrzanowski.scaffolding.logic.JdbcUtil.getLong;
-import static pl.com.chrzanowski.scaffolding.logic.JdbcUtil.getString;
+import static pl.com.chrzanowski.scaffolding.logic.JdbcUtil.*;
 
 
 @Service
@@ -35,8 +34,7 @@ public class WorkshopsService {
         return getWorkshops(workshopsJdbcRepository.find(filter));
     }
 
-    public List<WorkshopsData> findWithActionTypes(WorkshopsFilter filter) {
-        List<WorkshopsData> workshops = find(filter);
+    public List<WorkshopsData> findWithActionTypes(List<WorkshopsData> workshops) {
         List<WorkshopsData> workshopsWithActionTypes = new ArrayList<>();
         if (workshops == null) {
             workshopsWithActionTypes = null;
@@ -50,6 +48,10 @@ public class WorkshopsService {
             }
         }
         return workshopsWithActionTypes;
+    }
+
+    public List<WorkshopsData> findRemoved(WorkshopsFilter filter) {
+        return getWorkshops(workshopsJdbcRepository.findRemoved(filter));
     }
 
     public List<ServiceActionTypeData> findServiceWorkshopsById(WorkshopsData data) {
@@ -113,11 +115,15 @@ public class WorkshopsService {
                     getString(row, "building_number"),
                     getString(row, "apartment_number"),
                     getString(row, "postal_code"),
-                    getString(row, "city")
+                    getString(row, "city"),
+                    getDateTime(row, "modify_date"),
+                    getDateTime(row, "remove_date")
             ));
         }
         return list;
     }
+
+
 
     private void validateData(WorkshopsData data) {
         DataValidationUtil.validateTextField(data.getName(), "Nazwa");

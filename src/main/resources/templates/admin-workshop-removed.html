@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <div th:replace="fragments/head"></div>
+    <script th:src="@{/js/admin-workshop-removed.js}"></script>
+    <script th:inline="javascript">
+        var workshop = [[${workshop}]];
+        var actionTypes = [[${serviceActionTypes}]];
+    </script>
+</head>
+
+<body>
+<div th:replace="fragments/menu :: menu"></div>
+
+<div class="container">
+    <div class="text-center">
+        <h4 th:text="#{workshop.details}"></h4>
+    </div>
+
+    <div id="error-alert" class="alert alert-danger text-center d-none mt-3" role="alert">
+        <h4 id="error-alert-text" class="alert-heading"></h4>
+    </div>
+
+    <form class="bg-light p-5 border">
+        <div class="form-row">
+            <div class="form-group col-md-4 text-center">
+                <label for="name" th:text="#{workshop.name}"></label>
+                <input type="text" class="form-control" id="name" th:value="${workshop.name}" readonly>
+            </div>
+            <div class="form-group col-md-4 text-center">
+                <label for="street" th:text="#{workshop.street}"></label>
+                <input type="text" class="form-control" id="street" th:value="${workshop.street}" readonly>
+            </div>
+            <div class="form-group col-md-4 text-center">
+                <label for="building-no" th:text="#{workshop.building.no}"></label>
+                <input type="text" class="form-control" id="building-no" th:value="${workshop.buildingNo}" readonly>
+            </div>
+            <div class="form-group col-md-4 text-center">
+                <label for="apartment-no" th:text="#{workshop.apartment.no}"></label>
+                <input type="text" class="form-control" id="apartment-no" th:value="${workshop.apartmentNo}" readonly>
+            </div>
+            <div class="form-group col-md-4 text-center">
+                <label for="postal-code" th:text="#{workshop.postal.code}"></label>
+                <input type="text" class="form-control" id="postal-code" th:value="${workshop.postalCode}" readonly>
+            </div>
+            <div class="form-group col-md-4 text-center">
+                <label for="city" th:text="#{workshop.city}"></label>
+                <input type="text" class="form-control" id="city" th:value="${workshop.city}" readonly>
+            </div>
+            <div class="form-group col-md-4 text-center">
+                <label for="tax-number" th:text="#{workshop.tax.number}"></label>
+                <input type="text" class="form-control" id="tax-number" th:value="${workshop.taxNumber}" readonly>
+            </div>
+        </div>
+    <div class="text-center">
+            <div class="text-center">
+                <h6 th:text="#{workshop.service.action.types}"></h6>
+                <th:block th:each="actionType: ${serviceActionTypes}">
+                    <input type="checkbox"
+                           th:id="${actionType.id}"
+                           name="actionTypes"
+                           th:value="${actionType.id}" readonly>
+                    <label class="form-check-label"  th:text="${actionType.value}"></label>
+                </th:block>
+            </div>
+    </div>
+    </form>
+    <form class="bg-light p-3 border">
+        <div class="text-center">
+            <button type="button" class="btn btn-warning mt-3" onclick="history.back()"
+                    th:text="#{Cancel}"></button>
+            <button type="button" class="btn btn-warning mt-3" onclick="sendRestoreRequest()"
+                    th:text="#{Restore}"></button>
+        </div>
+    </form>
+</div>
+</form>
+
+</div>
+
+<div th:replace="fragments/operation-successful-modal :: modal"></div>
+<div th:replace="fragments/restore-object-modal :: modal"></div>
+</body>
+
+</html>

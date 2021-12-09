@@ -93,7 +93,7 @@ public class AuthenticatedUser {
                                             Collections.emptyList()),
                                     new Menu(chooseMenuName("Archived/Deleted Data", "Dane zarchiwizowane/usunięte",
                                             currentLang),
-                                            "/building", new Permissions[]{Permissions.ADMIN},
+                                            "/admin/removed", new Permissions[]{Permissions.ADMIN},
                                             Collections.emptyList()),
                                     new Menu("Newsletter", "/admin/marketing/newsletter",
                                             new Permissions[]{Permissions.ADMIN}, Collections.emptyList()),

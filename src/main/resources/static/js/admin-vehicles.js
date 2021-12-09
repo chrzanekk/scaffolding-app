@@ -258,11 +258,11 @@ function findVehiclesWithoutTires() {
         contentType: "application/json"
     })
     .done(function (vehicles) {
-          if(vehicles.length == 0){
-            $("#error-container").hide();
+          if(vehicles.vehicles.length == 0){
+            $('#tire-error-container').hide();
           }
           else {
-            $("#vehicles-without-tires").empty();
+            $('#vehicles-without-tires').empty();
             fillResultsWithoutTires(vehicles.vehicles);
           }
     })

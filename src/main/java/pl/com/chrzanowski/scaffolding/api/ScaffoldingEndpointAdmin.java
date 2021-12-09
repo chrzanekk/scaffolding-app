@@ -11,7 +11,6 @@ import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -446,15 +445,25 @@ public class ScaffoldingEndpointAdmin {
             @RequestParam(name = "city", required = false) String city,
             @RequestParam(name = "page", required = false, defaultValue = "1") Long page,
             @RequestParam(name = "page_size", required = false, defaultValue = "10") Long pageSize) throws SQLException {
-        List<WorkshopsData> workshops = workshopsService.findWithActionTypes(new WorkshopsFilter(name, city, page,
-                pageSize));
+        List<WorkshopsData> workshops = workshopsService.findWithActionTypes(workshopsService.find(new WorkshopsFilter(name, city, page,
+                pageSize)));
+        return new WorkshopsRequestGetResponse(workshopsToResponse(workshops));
+    }
+
+    @GetMapping(path = "/removed-workshops", produces = "application/json; charset=UTF-8")
+    public WorkshopsRequestGetResponse removedWorkshops(
+            @RequestParam(name = "name", required = false) String name,
+            @RequestParam(name = "city", required = false) String city,
+            @RequestParam(name = "page", required = false, defaultValue = "1") Long page,
+            @RequestParam(name = "page_size", required = false, defaultValue = "10") Long pageSize) {
+        List<WorkshopsData> workshops = workshopsService.findWithActionTypes(workshopsService.findRemoved(new WorkshopsFilter()));
         return new WorkshopsRequestGetResponse(workshopsToResponse(workshops));
     }
 
     @GetMapping(path = "/workshop/{id}", produces = "application/json; charset=UTF-8")
     public WorkshopRequestGetResponse workshopById(
             @PathVariable Long id) {
-        WorkshopsData workshop = workshopsService.findWithActionTypes(new WorkshopsFilter(id)).get(0);
+        WorkshopsData workshop = workshopsService.findWithActionTypes(workshopsService.find(new WorkshopsFilter(id))).get(0);
         return new WorkshopRequestGetResponse(workshopToResponse(workshop));
     }
 
@@ -484,6 +493,21 @@ public class ScaffoldingEndpointAdmin {
                 request.getPostalCode(),
                 request.getCity(),
                 request.getActionTypes()));
+    }
+
+    @PutMapping(path = "/restore-workshop/{id}", consumes = "application/json; charset=UTF-8")
+    public void restoreWorkshop(@PathVariable Long id, @RequestBody WorkshopPutRequest request) {
+        workshopsService.update(new WorkshopsData(
+                id,
+                request.getName(),
+                request.getTaxNumber(),
+                request.getStreet(),
+                request.getBuildingNo(),
+                request.getApartmentNo(),
+                request.getPostalCode(),
+                request.getCity(),
+                request.getActionTypes(),
+                request.getModifyDate()));
     }
 
     @PutMapping(path = "/workshop-to-remove/{id}", consumes = "application/json; charset=UTF-8")
@@ -653,7 +677,8 @@ public class ScaffoldingEndpointAdmin {
                     workshop.getPostalCode(),
                     workshop.getCity(),
                     workshop.getActionTypes(),
-                    workshop.getActionTypesList())
+                    workshop.getActionTypesList(),
+                    parseDate(workshop.getRemoveDate()))
             );
         }
         return list;
@@ -670,7 +695,8 @@ public class ScaffoldingEndpointAdmin {
                 workshop.getPostalCode(),
                 workshop.getCity(),
                 workshop.getActionTypes(),
-                workshop.getActionTypesList()
+                workshop.getActionTypesList(),
+                parseDate(workshop.getRemoveDate())
         );
     }
 
@@ -799,6 +825,13 @@ public class ScaffoldingEndpointAdmin {
             ));
         }
         return list;
+    }
+
+    private String parseDate(LocalDateTime date) {
+        if(date==null) {
+            return "";
+        }
+        return date.toString();
     }
 
 }

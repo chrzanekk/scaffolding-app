@@ -424,6 +424,22 @@ public class ApplicationController {
         return "admin-workshops";
     }
 
+    @GetMapping({"/admin/removed"})
+    public String adminRemoved(Model model) {
+
+        if (!userService.isLoggedUserAdmin()) {
+            throw new IllegalArgumentException("Access denied");
+        }
+
+        Language lang = LanguagesUtil.getCurrentLanguage();
+
+        model.addAttribute("workshops", workshopsService.findRemoved(new WorkshopsFilter()));
+        model.addAttribute("serviceActionTypes", dictionariesService.getDictionary(DictionaryType.SERVICE_ACTION_TYPES,lang));
+        model.addAttribute("languageDict", dictionariesService.getDictionary(DictionaryType.LANGUAGES, lang));
+
+        return "admin-removed";
+    }
+
     @GetMapping({"/admin/workshop/{id}"})
     public String adminWorkshopsById(@PathVariable Long id, Model model) {
 
@@ -433,11 +449,27 @@ public class ApplicationController {
 
         Language lang = LanguagesUtil.getCurrentLanguage();
 
-        model.addAttribute("workshop", workshopsService.findWithActionTypes(new WorkshopsFilter(id)).get(0));
+        model.addAttribute("workshop", workshopsService.findWithActionTypes(workshopsService.find(new WorkshopsFilter(id))).get(0));
         model.addAttribute("serviceActionTypes", dictionariesService.getDictionary(DictionaryType.SERVICE_ACTION_TYPES,lang));
         model.addAttribute("languageDict", dictionariesService.getDictionary(DictionaryType.LANGUAGES, lang));
 
         return "admin-workshop";
+    }
+
+    @GetMapping({"/admin/removed-workshop/{id}"})
+    public String adminRemovedWorkshopsById(@PathVariable Long id, Model model) {
+
+        if (!userService.isLoggedUserAdmin()) {
+            throw new IllegalArgumentException("Access denied");
+        }
+
+        Language lang = LanguagesUtil.getCurrentLanguage();
+
+        model.addAttribute("workshop", workshopsService.findWithActionTypes(workshopsService.findRemoved(new WorkshopsFilter(id))).get(0));
+        model.addAttribute("serviceActionTypes", dictionariesService.getDictionary(DictionaryType.SERVICE_ACTION_TYPES,lang));
+        model.addAttribute("languageDict", dictionariesService.getDictionary(DictionaryType.LANGUAGES, lang));
+
+        return "admin-workshop-removed";
     }
 
     @GetMapping({"/admin/service-action-types"})

@@ -17,10 +17,10 @@ public class WorkshopGetResponse {
     private String postalCode;
     private String city;
     private Long[] actionTypes;
+    private String removeDate;
     private List<ServiceActionTypeData> serviceActionTypes;
     private LocalDateTime createDate;
     private LocalDateTime modifyDate;
-    private LocalDateTime removeDate;
 
     public WorkshopGetResponse(Long id,
                                String name,
@@ -31,7 +31,8 @@ public class WorkshopGetResponse {
                                String postalCode,
                                String city,
                                Long[] actionTypes,
-                               List<ServiceActionTypeData> serviceActionTypes) {
+                               List<ServiceActionTypeData> serviceActionTypes,
+                               String removeDate) {
         this.id = id;
         this.name = name;
         this.taxNumber = taxNumber;
@@ -42,6 +43,7 @@ public class WorkshopGetResponse {
         this.city = city;
         this.actionTypes = actionTypes;
         this.serviceActionTypes = serviceActionTypes;
+        this.removeDate = removeDate.toString().replace('T',' ');
     }
 
 
@@ -85,7 +87,7 @@ public class WorkshopGetResponse {
         return modifyDate;
     }
 
-    public LocalDateTime getRemoveDate() {
+    public String getRemoveDate() {
         return removeDate;
     }
 
@@ -96,4 +98,6 @@ public class WorkshopGetResponse {
     public List<ServiceActionTypeData> getServiceActionTypes() {
         return serviceActionTypes;
     }
+
+
 }
