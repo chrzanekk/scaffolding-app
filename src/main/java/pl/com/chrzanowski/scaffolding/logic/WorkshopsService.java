@@ -51,7 +51,7 @@ public class WorkshopsService {
     }
 
     public List<WorkshopsData> findRemoved(WorkshopsFilter filter) {
-        return getWorkshops(workshopsJdbcRepository.findRemoved(filter));
+        return getWorkshops(workshopsJdbcRepository.find(filter));
     }
 
     public List<ServiceActionTypeData> findServiceWorkshopsById(WorkshopsData data) {

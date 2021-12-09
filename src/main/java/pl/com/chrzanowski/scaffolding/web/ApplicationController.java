@@ -363,7 +363,7 @@ public class ApplicationController {
         Language lang = LanguagesUtil.getCurrentLanguage();
 
         model.addAttribute("vehicle", vehicles.findById(new VehicleFilter(id)));
-        model.addAttribute("serviceActions", iServiceActions.find(new ServiceActionsFilter(id, page, pageSize)));
+        model.addAttribute("serviceActions", iServiceActions.find(new ServiceActionsFilter(id, page, pageSize, false)));
         model.addAttribute("serviceActionTypes", dictionariesService.getDictionary(DictionaryType.SERVICE_ACTION_TYPES, lang));
         model.addAttribute("workshops", workshopsService.find(new WorkshopsFilter()));
         model.addAttribute("taxRates", dictionariesService.getDictionary(DictionaryType.TAX_RATE, lang));
@@ -433,7 +433,7 @@ public class ApplicationController {
 
         Language lang = LanguagesUtil.getCurrentLanguage();
 
-        model.addAttribute("workshops", workshopsService.findRemoved(new WorkshopsFilter()));
+        model.addAttribute("workshops", workshopsService.find(new WorkshopsFilter(true)));
         model.addAttribute("serviceActionTypes", dictionariesService.getDictionary(DictionaryType.SERVICE_ACTION_TYPES,lang));
         model.addAttribute("languageDict", dictionariesService.getDictionary(DictionaryType.LANGUAGES, lang));
 
@@ -465,7 +465,8 @@ public class ApplicationController {
 
         Language lang = LanguagesUtil.getCurrentLanguage();
 
-        model.addAttribute("workshop", workshopsService.findWithActionTypes(workshopsService.findRemoved(new WorkshopsFilter(id))).get(0));
+        model.addAttribute("workshop",
+                workshopsService.findWithActionTypes(workshopsService.find(new WorkshopsFilter(id,true))).get(0));
         model.addAttribute("serviceActionTypes", dictionariesService.getDictionary(DictionaryType.SERVICE_ACTION_TYPES,lang));
         model.addAttribute("languageDict", dictionariesService.getDictionary(DictionaryType.LANGUAGES, lang));
 

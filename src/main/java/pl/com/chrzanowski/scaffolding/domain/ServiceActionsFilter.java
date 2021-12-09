@@ -15,14 +15,17 @@ public class ServiceActionsFilter {
     private Long pageSize;
     private LocalDate dateFrom;
     private LocalDate dateTo;
+    private Boolean itContainsRemoveDate;
 
 
     public ServiceActionsFilter(Long vehicleId,
                                 Long page,
-                                Long pageSize) {
+                                Long pageSize,
+                                Boolean itContainsRemoveDate) {
         this.vehicleId = vehicleId;
         this.page = page;
         this.pageSize = pageSize;
+        this.itContainsRemoveDate = itContainsRemoveDate;
     }
 
     public ServiceActionsFilter(Long vehicleId,
@@ -31,7 +34,8 @@ public class ServiceActionsFilter {
                                 LocalDate dateFrom,
                                 LocalDate dateTo,
                                 Long page,
-                                Long pageSize) {
+                                Long pageSize,
+                                Boolean itContainsRemoveDate) {
         this.vehicleId = vehicleId;
         this.actionTypeName = actionTypeName;
         this.workshopName = workshopName;
@@ -39,6 +43,7 @@ public class ServiceActionsFilter {
         this.dateTo = dateTo;
         this.page = page;
         this.pageSize = pageSize;
+        this.itContainsRemoveDate = itContainsRemoveDate;
     }
 
     public ServiceActionsFilter(Long id) {
@@ -46,12 +51,13 @@ public class ServiceActionsFilter {
     }
 
     public ServiceActionsFilter(Long vehicleId, String actionTypeName, String workshopName, LocalDate dateFrom,
-                                LocalDate dateTo) {
+                                LocalDate dateTo, Boolean itContainsRemoveDate) {
         this.vehicleId = vehicleId;
         this.actionTypeName = actionTypeName;
         this.workshopName = workshopName;
         this.dateFrom = dateFrom;
         this.dateTo = dateTo;
+        this.itContainsRemoveDate = itContainsRemoveDate;
     }
 
     public ServiceActionsFilter(Long vehicleId, Long serviceActionTypeId) {
@@ -104,5 +110,9 @@ public class ServiceActionsFilter {
 
     public LocalDate getDateTo() {
         return dateTo;
+    }
+
+    public Boolean getItContainsRemoveDate() {
+        return itContainsRemoveDate;
     }
 }

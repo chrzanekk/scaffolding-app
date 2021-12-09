@@ -26,6 +26,8 @@ public class ServiceActionsData {
     private LocalDateTime modifyDate;
     private LocalDateTime removeDate;
 
+
+//  find method in service
     public ServiceActionsData(Long id,
                               Long vehicleId,
                               Integer carMileage,
@@ -40,7 +42,9 @@ public class ServiceActionsData {
                               String actionTypeName,
                               String workshopName,
                               WorkshopsData workshopsData,
-                              String serviceActionDescription) {
+                              String serviceActionDescription,
+                              LocalDateTime modifyDate,
+                              LocalDateTime removeDate) {
         this.id = id;
         this.vehicleId = vehicleId;
         this.carMileage = carMileage;
@@ -56,9 +60,10 @@ public class ServiceActionsData {
         this.serviceActionTypeId = serviceActionTypeId;
         this.serviceActionTypeName = actionTypeName;
         this.serviceActionDescription = serviceActionDescription;
-        this.modifyDate = LocalDateTime.now();
+        this.modifyDate = modifyDate;
+        this.removeDate = removeDate;
     }
-
+//post method in api
     public ServiceActionsData(Long vehicleId,
                               Integer carMileage,
                               LocalDate serviceDate,
@@ -79,7 +84,7 @@ public class ServiceActionsData {
         this.serviceActionDescription = serviceActionDescription;
         this.createDate = LocalDateTime.now();
     }
-
+//put method in api
     public ServiceActionsData(Long id,
                               Long vehicleId,
                               Integer carMileage,
@@ -102,7 +107,7 @@ public class ServiceActionsData {
         this.serviceActionDescription = serviceActionDescription;
         this.modifyDate = LocalDateTime.now();
     }
-//add method
+//add method in service
     public ServiceActionsData(ServiceActionsData data, BigDecimal taxValue, BigDecimal invoiceGrossValue) {
         this.vehicleId = data.getVehicleId();
         this.carMileage = data.getCarMileage();
@@ -118,7 +123,7 @@ public class ServiceActionsData {
         this.taxValue = taxValue;
     }
 
-//    update method
+//    update method in service
     public ServiceActionsData(BigDecimal taxValue, BigDecimal invoiceGrossValue, ServiceActionsData data) {
         this.id = data.getId();
         this.vehicleId = data.getVehicleId();
@@ -196,8 +201,7 @@ public class ServiceActionsData {
     }
 
 
-
-
+//get last action type
     public ServiceActionsData(Long id, Long vehicleId, LocalDate serviceDate, Long serviceActionTypeId, String serviceActionTypeName) {
         this.id = id;
         this.vehicleId = vehicleId;

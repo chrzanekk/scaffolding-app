@@ -358,7 +358,29 @@ public class ScaffoldingEndpointAdmin {
                 dateFrom,
                 dateTo,
                 page,
-                pageSize));
+                pageSize,
+                false));
+        return new ServiceActionsRequestGetResponse(actionsToResponse(actions));
+    }
+
+    @GetMapping(path = "/removed-vehicle-service-actions/{id}", produces = "application/json; charset=UTF-8")
+    public ServiceActionsRequestGetResponse removedVehicleServiceActions(
+            @PathVariable Long id,
+            @RequestParam(name = "serviceActionTypeName", required = false) String actionTypeName,
+            @RequestParam(name = "workshopName", required = false) String workshop,
+            @RequestParam(name = "dateFrom", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateFrom,
+            @RequestParam(name = "dateTo", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateTo,
+            @RequestParam(name = "page", required = false, defaultValue = "1") Long page,
+            @RequestParam(name = "page_size", required = false, defaultValue = "10") Long pageSize) {
+        List<ServiceActionsData> actions = serviceActions.find(new ServiceActionsFilter(
+                id,
+                actionTypeName,
+                workshop,
+                dateFrom,
+                dateTo,
+                page,
+                pageSize,
+                true));
         return new ServiceActionsRequestGetResponse(actionsToResponse(actions));
     }
 
@@ -375,7 +397,8 @@ public class ScaffoldingEndpointAdmin {
                         actionTypeName,
                         workshop,
                         dateFrom,
-                        dateTo));
+                        dateTo,
+                        false));
         return summaryToResponse(summary);
     }
 
@@ -438,6 +461,25 @@ public class ScaffoldingEndpointAdmin {
                 request.getRemoveDate()
         ));
     }
+//    do opracowania
+    @PutMapping(path = "/vehicle-service-action-to-restore/{id}")
+    public void restoreServiceAction(@PathVariable Long id, @RequestBody ServiceActionPutRequest request) {
+        BigDecimal netValue = DataValidationUtil.validateAndCreateValue(request.getInvoiceNetValue());
+        BigDecimal taxRate = DataValidationUtil.validateAndCreateValue(request.getTaxRate());
+        serviceActions.delete(new ServiceActionsData(
+                request.getId(),
+                request.getVehicleId(),
+                request.getCarMileage(),
+                request.getServiceDate(),
+                request.getInvoiceNumber(),
+                netValue,
+                taxRate,
+                request.getWorkshopId(),
+                request.getServiceActionTypeId(),
+                request.getServiceActionDescription(),
+                request.getRemoveDate()
+        ));
+    }
 
     @GetMapping(path = "/workshops", produces = "application/json; charset=UTF-8")
     public WorkshopsRequestGetResponse workshops(
@@ -446,7 +488,7 @@ public class ScaffoldingEndpointAdmin {
             @RequestParam(name = "page", required = false, defaultValue = "1") Long page,
             @RequestParam(name = "page_size", required = false, defaultValue = "10") Long pageSize) throws SQLException {
         List<WorkshopsData> workshops = workshopsService.findWithActionTypes(workshopsService.find(new WorkshopsFilter(name, city, page,
-                pageSize)));
+                pageSize, false)));
         return new WorkshopsRequestGetResponse(workshopsToResponse(workshops));
     }
 
@@ -456,7 +498,8 @@ public class ScaffoldingEndpointAdmin {
             @RequestParam(name = "city", required = false) String city,
             @RequestParam(name = "page", required = false, defaultValue = "1") Long page,
             @RequestParam(name = "page_size", required = false, defaultValue = "10") Long pageSize) {
-        List<WorkshopsData> workshops = workshopsService.findWithActionTypes(workshopsService.findRemoved(new WorkshopsFilter()));
+        List<WorkshopsData> workshops = workshopsService.findWithActionTypes(workshopsService.find(new WorkshopsFilter(name, city, page,
+                pageSize, true)));
         return new WorkshopsRequestGetResponse(workshopsToResponse(workshops));
     }
 
@@ -562,7 +605,7 @@ public class ScaffoldingEndpointAdmin {
     @PutMapping(path = "/service-action-type-to-remove/{id}", consumes = "application/json; charset=UTF-8")
     public void removeServiceActionType(@PathVariable Long id,
                                         @RequestBody ServiceActionTypesPutRequest request) {
-        serviceActonTypes.remove(new ServiceActionTypeData(id, request.getName(),request.getRemoveDate()));
+        serviceActonTypes.remove(new ServiceActionTypeData(id, request.getName(), request.getRemoveDate()));
     }
 
     @GetMapping(path = "/tire-seasons", produces = "application/json; charset=UTF-8")
@@ -655,13 +698,48 @@ public class ScaffoldingEndpointAdmin {
     private List<ServiceActionGetResponse> actionsToResponse(List<ServiceActionsData> actions) {
         List<ServiceActionGetResponse> list = new ArrayList<>();
         for (ServiceActionsData data : actions) {
-            list.add(new ServiceActionGetResponse(data));
+            list.add(new ServiceActionGetResponse(
+                    data.getId(),
+                    data.getVehicleId(),
+                    data.getCarMileage(),
+                    parseDate(data.getServiceDate()),
+                    data.getInvoiceNumber(),
+                    bigDecimalToString(data.getInvoiceGrossValue()),
+                    bigDecimalToString(data.getTaxValue()),
+                    bigDecimalToString(data.getTaxRate()),
+                    bigDecimalToString(data.getInvoiceNetValue()),
+                    data.getWorkshopId(),
+                    data.getWorkshopName(),
+                    data.getServiceActionTypeId(),
+                    data.getServiceActionTypeName(),
+                    data.getWorkshopsData(),
+                    data.getServiceActionDescription(),
+                    parseDateTime(data.getModifyDate()),
+                    parseDateTime(data.getRemoveDate())));
         }
         return list;
     }
 
     private ServiceActionGetResponse actionToResponse(ServiceActionsData data) {
-        return new ServiceActionGetResponse(data);
+        return new ServiceActionGetResponse(
+                data.getId(),
+                data.getVehicleId(),
+                data.getCarMileage(),
+                parseDate(data.getServiceDate()),
+                data.getInvoiceNumber(),
+                bigDecimalToString(data.getInvoiceGrossValue()),
+                bigDecimalToString(data.getTaxValue()),
+                bigDecimalToString(data.getTaxRate()),
+                bigDecimalToString(data.getInvoiceNetValue()),
+                data.getWorkshopId(),
+                data.getWorkshopName(),
+                data.getServiceActionTypeId(),
+                data.getServiceActionTypeName(),
+                data.getWorkshopsData(),
+                data.getServiceActionDescription(),
+                parseDateTime(data.getModifyDate()),
+                parseDateTime(data.getRemoveDate())
+                );
     }
 
     private List<WorkshopGetResponse> workshopsToResponse(List<WorkshopsData> workshops) {
@@ -678,7 +756,7 @@ public class ScaffoldingEndpointAdmin {
                     workshop.getCity(),
                     workshop.getActionTypes(),
                     workshop.getActionTypesList(),
-                    parseDate(workshop.getRemoveDate()))
+                    parseDateTime(workshop.getRemoveDate()))
             );
         }
         return list;
@@ -696,7 +774,7 @@ public class ScaffoldingEndpointAdmin {
                 workshop.getCity(),
                 workshop.getActionTypes(),
                 workshop.getActionTypesList(),
-                parseDate(workshop.getRemoveDate())
+                parseDateTime(workshop.getRemoveDate())
         );
     }
 
@@ -827,11 +905,25 @@ public class ScaffoldingEndpointAdmin {
         return list;
     }
 
-    private String parseDate(LocalDateTime date) {
-        if(date==null) {
+    private String parseDateTime(LocalDateTime date) {
+        if (date == null) {
             return "";
         }
         return date.toString();
+    }
+
+    private String parseDate(LocalDate date) {
+        if (date == null) {
+            return "";
+        }
+        return date.toString();
+    }
+
+    private String bigDecimalToString(BigDecimal value) {
+        if (value == null) {
+            return "";
+        }
+        return value.toString();
     }
 
 }

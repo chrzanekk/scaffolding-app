@@ -118,27 +118,15 @@ public class WorkshopsJdbcRepository {
             if (filter.getCity() != null) {
                 query += " AND city = '" + filter.getCity() + "'";
             }
-
-            query += " AND remove_date IS NULL ";
-
+            if (!filter.getItContainsRemoveDate()) {
+                query += " AND remove_date IS NULL ";
+            } else {
+                query += " AND remove_date IS NOT NUll ";
+            }
             if (filter.getPage() != null && filter.getPageSize() != null) {
                 query += preparePaginationQuery(filter.getPage(), filter.getPageSize());
             }
         }
-
-        return jdbcTemplate.queryForList(query);
-    }
-
-    public List<Map<String, Object>> findRemoved(WorkshopsFilter filter) {
-        String query = "SELECT * FROM workshops ";
-        if (filter != null) {
-            query += "WHERE 1=1 ";
-            if (filter.getId() != null) {
-                query += " AND id = '" + filter.getId() + "'";
-            }
-        }
-
-        query += " AND remove_date IS NOT NULL";
 
         return jdbcTemplate.queryForList(query);
     }

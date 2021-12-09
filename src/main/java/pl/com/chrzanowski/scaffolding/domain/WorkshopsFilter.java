@@ -17,20 +17,29 @@ public class WorkshopsFilter {
     private Long[] actionTypes;
     private Long page;
     private Long pageSize;
+    private LocalDateTime removeDate;
+    private Boolean itContainsRemoveDate;
 
-    public WorkshopsFilter(Long page, Long pageSize) {
-        this.page = page;
-        this.pageSize = pageSize;
-    }
+
 
     public WorkshopsFilter() {
     }
 
-    public WorkshopsFilter(String name, String city, Long page, Long pageSize) {
+    public WorkshopsFilter(String name, String city, Long page, Long pageSize, Boolean itContainsRemoveDate) {
         this.name = name;
         this.city = city;
         this.page = page;
         this.pageSize = pageSize;
+        this.itContainsRemoveDate = itContainsRemoveDate;
+    }
+
+    public WorkshopsFilter(Boolean itContainsRemoveDate) {
+        this.itContainsRemoveDate = itContainsRemoveDate;
+    }
+
+    public WorkshopsFilter(Long id, Boolean itContainsRemoveDate) {
+        this.id = id;
+        this.itContainsRemoveDate = itContainsRemoveDate;
     }
 
     public WorkshopsFilter(Long id) {
@@ -83,5 +92,13 @@ public class WorkshopsFilter {
 
     public Long getPageSize() {
         return pageSize;
+    }
+
+    public LocalDateTime getRemoveDate() {
+        return removeDate;
+    }
+
+    public Boolean getItContainsRemoveDate() {
+        return itContainsRemoveDate;
     }
 }

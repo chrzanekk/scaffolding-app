@@ -25,9 +25,8 @@ public class ServiceActionGetResponse {
     private String serviceActionTypeName;
     private WorkshopsData workshopsData;
     private String serviceActionDescription;
-    private LocalDateTime createDate;
-    private LocalDateTime modifyDate;
-    private LocalDateTime removeDate;
+    private String modifyDate;
+    private String removeDate;
 
     public ServiceActionGetResponse(ServiceActionsData data) {
         this.id = data.getId();
@@ -45,6 +44,44 @@ public class ServiceActionGetResponse {
         this.serviceActionTypeName = data.getServiceActionTypeName();
         this.workshopsData = data.getWorkshopsData();
         this.serviceActionDescription = data.getServiceActionDescription();
+        this.modifyDate = data.getModifyDate().toString();
+        this.removeDate = data.getRemoveDate().toString();
+    }
+
+    public ServiceActionGetResponse(Long id,
+                                    Long vehicleId,
+                                    Integer carMileage,
+                                    String serviceDate,
+                                    String invoiceNumber,
+                                    String invoiceGrossValue,
+                                    String taxValue,
+                                    String taxRate,
+                                    String invoiceNetValue,
+                                    Long workshopId,
+                                    String workshopName,
+                                    Long serviceActionTypeId,
+                                    String serviceActionTypeName,
+                                    WorkshopsData workshopsData,
+                                    String serviceActionDescription,
+                                    String modifyDate,
+                                    String removeDate) {
+        this.id = id;
+        this.vehicleId = vehicleId;
+        this.carMileage = carMileage;
+        this.serviceDate = serviceDate;
+        this.invoiceNumber = invoiceNumber;
+        this.invoiceGrossValue = invoiceGrossValue;
+        this.taxValue = taxValue;
+        this.taxRate = taxRate;
+        this.invoiceNetValue = invoiceNetValue;
+        this.workshopId = workshopId;
+        this.workshopName = workshopName;
+        this.serviceActionTypeId = serviceActionTypeId;
+        this.serviceActionTypeName = serviceActionTypeName;
+        this.workshopsData = workshopsData;
+        this.serviceActionDescription = serviceActionDescription;
+        this.modifyDate = modifyDate;
+        this.removeDate = removeDate;
     }
 
     public Long getId() {
@@ -107,15 +144,11 @@ public class ServiceActionGetResponse {
         return serviceActionDescription;
     }
 
-    public LocalDateTime getCreateDate() {
-        return createDate;
-    }
-
-    public LocalDateTime getModifyDate() {
+    public String getModifyDate() {
         return modifyDate;
     }
 
-    public LocalDateTime getRemoveDate() {
+    public String getRemoveDate() {
         return removeDate;
     }
 }

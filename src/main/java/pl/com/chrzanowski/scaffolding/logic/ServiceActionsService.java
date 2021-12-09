@@ -124,7 +124,9 @@ public class ServiceActionsService implements IServiceActions {
                             getString(row, "city"),
                             getDateTime(row, "modify_date"),
                             getDateTime(row, "remove_date")),
-                    getString(row, "description")
+                    getString(row, "description"),
+                    getDateTime(row, "modify_date"),
+                    getDateTime(row, "remove_date")
             ));
         }
         return list;
