@@ -11,8 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import static pl.com.chrzanowski.scaffolding.logic.JdbcUtil.getLong;
-import static pl.com.chrzanowski.scaffolding.logic.JdbcUtil.getString;
+import static pl.com.chrzanowski.scaffolding.logic.JdbcUtil.*;
 
 @Service
 public class ServiceActionTypeService implements IServiceActonTypes {
@@ -29,8 +28,6 @@ public class ServiceActionTypeService implements IServiceActonTypes {
         return getActionTypes(serviceActionTypeJdbcRepository.find(filter));
     }
 
-
-
     public Long add(ServiceActionTypeData data) {
         validateData(data);
         return serviceActionTypeJdbcRepository.create(data);
@@ -41,24 +38,14 @@ public class ServiceActionTypeService implements IServiceActonTypes {
         serviceActionTypeJdbcRepository.update(data);
     }
 
-    public void remove(ServiceActionTypeData data) {
-        validateData(data);
-        if(data.getId() != 8L) {
-            serviceActionTypeJdbcRepository.remove(data);
-        }
-        else {
-            throw new IllegalArgumentException("Nie można usunąć tej pozycji.");
-        }
-    }
-
-
     private List<ServiceActionTypeData> getActionTypes(List<Map<String, Object>> data) {
 
         List<ServiceActionTypeData> list = new ArrayList<>();
         for (Map<String, Object> row : data) {
             list.add(new ServiceActionTypeData(
                     getLong(row, "id"),
-                    getString(row, "name")
+                    getString(row, "name"),
+                    getDateTime(row,"remove_date")
             ));
         }
         return list;
@@ -66,6 +53,13 @@ public class ServiceActionTypeService implements IServiceActonTypes {
 
     private void validateData(ServiceActionTypeData data) {
         DataValidationUtil.validateTextField(data.getName(), "Nazwa usługi serwisowej");
+        checkIfRemovingProtectedServiceActionType(data);
+    }
+
+    private void checkIfRemovingProtectedServiceActionType(ServiceActionTypeData data) {
+        if (data.getId()==8L && data.getRemoveDate() != null) {
+            throw new IllegalArgumentException("Nie można usunąć tej pozycji.");
+        }
     }
 
 }

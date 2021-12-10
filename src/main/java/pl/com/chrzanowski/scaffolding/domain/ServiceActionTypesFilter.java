@@ -6,6 +6,7 @@ public class ServiceActionTypesFilter {
     private String name;
     private Long page;
     private Long pageSize;
+    private Boolean itContainsRemoveDate;
 
     public ServiceActionTypesFilter() {
     }
@@ -18,9 +19,20 @@ public class ServiceActionTypesFilter {
         this.name = name;
     }
 
+    public ServiceActionTypesFilter(Long id, Boolean itContainsRemoveDate) {
+        this.id = id;
+        this.itContainsRemoveDate = itContainsRemoveDate;
+    }
+
     public ServiceActionTypesFilter(Long page, Long pageSize) {
         this.page = page;
         this.pageSize = pageSize;
+    }
+
+    public ServiceActionTypesFilter(Long page, Long pageSize, Boolean itContainsRemoveDate) {
+        this.page = page;
+        this.pageSize = pageSize;
+        this.itContainsRemoveDate = itContainsRemoveDate;
     }
 
     public Long getId() {
@@ -37,5 +49,9 @@ public class ServiceActionTypesFilter {
 
     public Long getPageSize() {
         return pageSize;
+    }
+
+    public Boolean getItContainsRemoveDate() {
+        return itContainsRemoveDate;
     }
 }

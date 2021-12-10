@@ -407,10 +407,10 @@ public class ApplicationController {
 
         return "admin-vehicle-service-action-edit";
     }
-//przemyśleć usunięty lub nie usunięty warsztat
+
     @GetMapping({"/admin/removed-vehicle-service-action/{id}"})
     public String adminVehicleServicesRestoreById(@PathVariable Long id, Model model) {
-        Long vehicleId = serviceActions.findById(new ServiceActionsFilter(id, true)).getVehicleId();
+        Long vehicleId = serviceActions.findById(new ServiceActionsFilter(id)).getVehicleId();
         if (!userService.isLoggedUserAdmin()) {
             throw new IllegalArgumentException("Access denied.");
         }
@@ -521,6 +521,21 @@ public class ApplicationController {
         model.addAttribute("languageDict", dictionariesService.getDictionary(DictionaryType.LANGUAGES, lang));
 
         return "admin-service-action-type";
+    }
+
+  @GetMapping({"/admin/removed-service-action-type/{id}"})
+    public String adminRemovedServiceActionTypeById(@PathVariable Long id, Model model) {
+
+        if (!userService.isLoggedUserAdmin()) {
+            throw new IllegalArgumentException("Access denied");
+        }
+
+        Language lang = LanguagesUtil.getCurrentLanguage();
+
+        model.addAttribute("serviceActionType", serviceActonTypes.find(new ServiceActionTypesFilter(id,true)).get(0));
+        model.addAttribute("languageDict", dictionariesService.getDictionary(DictionaryType.LANGUAGES, lang));
+
+        return "admin-service-action-type-removed";
     }
 
 

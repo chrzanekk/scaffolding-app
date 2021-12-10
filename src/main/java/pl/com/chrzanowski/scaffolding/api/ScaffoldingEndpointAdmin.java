@@ -128,6 +128,9 @@ public class ScaffoldingEndpointAdmin {
         marketingService.sendNewsletter(request);
     }
 
+
+
+
     @GetMapping(path = "/vehicles", produces = "application/json; charset=UTF-8")
     public VehiclesRequestGetResponse vehicles(
             @RequestParam(name = "page", required = false, defaultValue = "1") Long page,
@@ -164,7 +167,6 @@ public class ScaffoldingEndpointAdmin {
         return new VehicleRequestGetResponse(vehicleToResponse(vehicle));
     }
 
-
     @PostMapping(path = "/vehicle", consumes = "application/json; charset=UTF-8")
     public void addVehicle(@RequestBody VehiclePostRequest request) {
         vehicles.add(new VehicleData(
@@ -200,6 +202,9 @@ public class ScaffoldingEndpointAdmin {
                 request.getHeight())
         );
     }
+
+
+
 
     @GetMapping(path = "/brands", produces = "application/json; charset=UTF-8")
     public VehicleBrandsRequestGetResponse brands(
@@ -335,12 +340,17 @@ public class ScaffoldingEndpointAdmin {
     }
 
 
+
+
     @GetMapping(path = "/fuel-types", produces = "application/json; charset=UTF-8")
     public FuelTypeRequestGetResponse fuelTypes(@RequestParam(name = "page", required = false, defaultValue = "1") Long page,
                                                 @RequestParam(name = "page_size", required = false, defaultValue = "10") Long pageSize) {
         List<FuelTypeData> fuelTypes = this.fuelTypes.find(new FuelTypeFilter(page, pageSize));
         return new FuelTypeRequestGetResponse(fuelTypeToResponse(fuelTypes));
     }
+
+
+
 
     @GetMapping(path = "/vehicle-service-actions/{id}", produces = "application/json; charset=UTF-8")
     public ServiceActionsRequestGetResponse vehicleServiceActions(
@@ -382,7 +392,6 @@ public class ScaffoldingEndpointAdmin {
                 true));
         return new ServiceActionsRequestGetResponse(actionsToResponse(actions));
     }
-
 
     @GetMapping(path = "/vehicle-service-action-value-summary/{id}", produces = "application/json; charset=UTF-8")
     public ServiceActionsSummaryValueGetResponse serviceActionsInvoiceSummary(
@@ -466,6 +475,7 @@ public class ScaffoldingEndpointAdmin {
 
 
 
+
     @GetMapping(path = "/workshops", produces = "application/json; charset=UTF-8")
     public WorkshopsRequestGetResponse workshops(
             @RequestParam(name = "name", required = false) String name,
@@ -508,7 +518,6 @@ public class ScaffoldingEndpointAdmin {
                 request.getActionTypes()));
     }
 
-
     @PutMapping(path = "/workshop/{id}", consumes = "application/json; charset=UTF-8")
     public void updateWorkshop(@PathVariable Long id, @RequestBody WorkshopPutRequest request) {
         workshopsService.update(new WorkshopsData(
@@ -522,21 +531,6 @@ public class ScaffoldingEndpointAdmin {
                 request.getCity(),
                 request.getActionTypes(),
                 null));
-    }
-
-    @PutMapping(path = "/restore-workshop/{id}", consumes = "application/json; charset=UTF-8")
-    public void restoreWorkshop(@PathVariable Long id, @RequestBody WorkshopPutRequest request) {
-        workshopsService.update(new WorkshopsData(
-                id,
-                request.getName(),
-                request.getTaxNumber(),
-                request.getStreet(),
-                request.getBuildingNo(),
-                request.getApartmentNo(),
-                request.getPostalCode(),
-                request.getCity(),
-                request.getActionTypes(),
-                request.getModifyDate()));
     }
 
     @PutMapping(path = "/workshop-to-remove/{id}", consumes = "application/json; charset=UTF-8")
@@ -554,45 +548,67 @@ public class ScaffoldingEndpointAdmin {
                 request.getRemoveDate()));
     }
 
-
-    @GetMapping(path = "/service-action-types", produces = "application/json; charset=UTF-8")
-    public ServiceActionTypesRequestGetResponse serviceActionTypes(
-            @RequestParam(name = "page", required = false, defaultValue = "1") Long page,
-            @RequestParam(name = "page_size", required = false, defaultValue = "10") Long pageSize) {
-        List<ServiceActionTypeData> serviceActionTypes =
-                serviceActonTypes.find(new ServiceActionTypesFilter(page, pageSize));
-        return new ServiceActionTypesRequestGetResponse(actionTypesToResponse(serviceActionTypes));
-    }
-
-    @GetMapping(path = "/service-action-type/{id}", produces = "application/json; charset=UTF-8")
-    public ServiceActionTypeRequestGetResponse serviceActionTypesById(
-            @PathVariable Long id) {
-        ServiceActionTypeData serviceActionType = serviceActonTypes.find(new ServiceActionTypesFilter(id)).get(0);
-        return new ServiceActionTypeRequestGetResponse(actionTypeToResponse(serviceActionType));
-    }
-
     @GetMapping(path = "/workshop-service-types", produces = "application/json; charset=UTF-8")
     public WorkshopServiceTypesRequestGetResponse serviceTypes(@RequestParam(name = "workshop_id") Long workshopId) {
         List<WorkshopServiceTypeData> workshopServiceTypes = workshopServiceTypeService.find(new WorkshopServiceTypeFilter(workshopId));
         return new WorkshopServiceTypesRequestGetResponse(workshopServicesToResponse(workshopServiceTypes));
     }
 
+
+
+
+    @GetMapping(path = "/service-action-types", produces = "application/json; charset=UTF-8")
+    public ServiceActionTypesRequestGetResponse serviceActionTypes(
+            @RequestParam(name = "page", required = false, defaultValue = "1") Long page,
+            @RequestParam(name = "page_size", required = false, defaultValue = "10") Long pageSize) {
+        List<ServiceActionTypeData> serviceActionTypes =
+                serviceActonTypes.find(new ServiceActionTypesFilter(page, pageSize,false));
+        return new ServiceActionTypesRequestGetResponse(actionTypesToResponse(serviceActionTypes));
+    }
+
+    @GetMapping(path = "/removed-service-action-types", produces = "application/json; charset=UTF-8")
+    public ServiceActionTypesRequestGetResponse removedServiceActionTypes(
+            @RequestParam(name = "page", required = false, defaultValue = "1") Long page,
+            @RequestParam(name = "page_size", required = false, defaultValue = "10") Long pageSize) {
+        List<ServiceActionTypeData> serviceActionTypes =
+                serviceActonTypes.find(new ServiceActionTypesFilter(page, pageSize,true));
+        return new ServiceActionTypesRequestGetResponse(actionTypesToResponse(serviceActionTypes));
+    }
+
+    @GetMapping(path = "/service-action-type/{id}", produces = "application/json; charset=UTF-8")
+    public ServiceActionTypeRequestGetResponse serviceActionTypesById(
+            @PathVariable Long id) {
+        ServiceActionTypeData serviceActionType =
+                serviceActonTypes.find(new ServiceActionTypesFilter(id, false)).get(0);
+        return new ServiceActionTypeRequestGetResponse(actionTypeToResponse(serviceActionType));
+    }
+
+    @GetMapping(path = "/removed-service-action-type/{id}", produces = "application/json; charset=UTF-8")
+    public ServiceActionTypeRequestGetResponse removedServiceActionTypesById(
+            @PathVariable Long id) {
+        ServiceActionTypeData serviceActionType = serviceActonTypes.find(new ServiceActionTypesFilter(id,true)).get(0);
+        return new ServiceActionTypeRequestGetResponse(actionTypeToResponse(serviceActionType));
+    }
+
     @PostMapping(path = "/service-action-type", consumes = "application/json; charset=UTF-8")
     public void addServiceActionType(@RequestBody ServiceActionTypesPostRequest request) {
         serviceActonTypes.add(new ServiceActionTypeData(request.getName()));
     }
-
+//to update and restore
     @PutMapping(path = "/service-action-type/{id}", consumes = "application/json; charset=UTF-8")
     public void updateServiceActionType(@PathVariable Long id,
                                         @RequestBody ServiceActionTypesPutRequest request) {
-        serviceActonTypes.update(new ServiceActionTypeData(id, request.getName()));
+        serviceActonTypes.update(new ServiceActionTypeData(id, request.getName(),null));
     }
 
     @PutMapping(path = "/service-action-type-to-remove/{id}", consumes = "application/json; charset=UTF-8")
     public void removeServiceActionType(@PathVariable Long id,
                                         @RequestBody ServiceActionTypesPutRequest request) {
-        serviceActonTypes.remove(new ServiceActionTypeData(id, request.getName(), request.getRemoveDate()));
+        serviceActonTypes.update(new ServiceActionTypeData(id, request.getName(),request.getRemoveDate()));
     }
+
+
+
 
     @GetMapping(path = "/tire-seasons", produces = "application/json; charset=UTF-8")
     public TireSeasonsRequestGetResponse tireSeasons(@RequestParam(name = "page", required = false, defaultValue = "1") Long page,
@@ -612,6 +628,8 @@ public class ScaffoldingEndpointAdmin {
                                  @RequestBody TireSeasonPutRequest request) {
         tireSeason.update(new TireSeasonData(id, request.getName()));
     }
+
+
 
     private List<VehicleGetResponse> vehiclesToResponse(List<VehicleData> vehicles) {
         List<VehicleGetResponse> list = new ArrayList<>();

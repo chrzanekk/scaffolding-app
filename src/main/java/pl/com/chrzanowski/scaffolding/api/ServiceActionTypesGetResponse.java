@@ -6,9 +6,9 @@ public class ServiceActionTypesGetResponse {
 
     private Long id;
     private String name;
-    private LocalDateTime createDate;
-    private LocalDateTime modifyDate;
-    private LocalDateTime removeDate;
+    private String createDate;
+    private String modifyDate;
+    private String removeDate;
 
     public ServiceActionTypesGetResponse(Long id, String name) {
         this.id = id;
@@ -23,15 +23,15 @@ public class ServiceActionTypesGetResponse {
         return name;
     }
 
-    public LocalDateTime getCreateDate() {
+    public String getCreateDate() {
         return createDate;
     }
 
-    public LocalDateTime getModifyDate() {
+    public String getModifyDate() {
         return modifyDate;
     }
 
-    public LocalDateTime getRemoveDate() {
+    public String getRemoveDate() {
         return removeDate;
     }
 }

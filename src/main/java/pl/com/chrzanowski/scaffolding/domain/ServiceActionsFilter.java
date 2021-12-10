@@ -49,6 +49,10 @@ public class ServiceActionsFilter {
         this.itContainsRemoveDate = itContainsRemoveDate;
     }
 
+    public ServiceActionsFilter(Long id) {
+        this.id = id;
+    }
+
     public ServiceActionsFilter(Long id, @NotNull Boolean itContainsRemoveDate) {
         this.id = id;
         this.itContainsRemoveDate = itContainsRemoveDate;

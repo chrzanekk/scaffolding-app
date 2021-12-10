@@ -67,6 +67,7 @@
             </div>
             <div class="form-group col-md-4 text-center">
                 <label for="service-action-type" th:text="#{vehicle.service.type}"></label>
+<!--                <input type="text" class="form-control" id="service-action-type" th:value="${serviceAction.serviceActionTypeName}" readonly>-->
                 <select id="service-action-type" class="form-control" disabled>
                     <option th:each="serviceActionType : ${serviceActionTypes}"
                             th:value="${serviceActionType.id}"

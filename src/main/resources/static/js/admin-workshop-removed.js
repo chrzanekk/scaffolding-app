@@ -11,7 +11,7 @@ function showRestoreModal() {
 }
 function sendRestoreRequest(){
     $.ajax({
-        url: "/admin/api/scaffolding/restore-workshop/" + workshop.id,
+        url: "/admin/api/scaffolding/workshop/" + workshop.id,
         method: "PUT",
         contentType: "application/json",
         data: JSON.stringify({

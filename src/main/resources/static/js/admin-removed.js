@@ -1,15 +1,21 @@
 var url = "/admin/api/scaffolding"
 var workshopsApiUrl = url + "/removed-workshops?"
 var vehicleServiceActionsApiUrl = url + "/removed-vehicle-service-actions/"
+var serviceActionTypesApiUrl = url + "/removed-service-action-types?"
 
 $(document).ready(function () {
 
     findRemovedWorkshops()
     findRemovedServiceActions()
+    findServiceActionTypes();
     $("#filter input, #filter select, [form='workshops-filter']").on("change", function () {
         findRemovedWorkshops()
-    });$("#filter input, #filter select, [form='service-actions-filter']").on("change", function () {
+    });
+    $("#filter input, #filter select, [form='service-actions-filter']").on("change", function () {
         findRemovedServiceActions()
+    });
+    $("#filter input, #filter select, [form='service-action-types-filter']").on("change", function () {
+        findServiceActionTypes();
     });
 
 });
@@ -149,7 +155,7 @@ function fillServiceActionsRow(action, value) {
     );
 }
 function prepareServiceActionDetailsButton(id) {
-    return '<button type="button" class="btn btn-primary" onclick="goToServiceActionDetailsPage(' + id + ')">Detale</button>';
+    return '<button type="button" class="btn btn-primary" onclick="goToServiceActionDetailsPage(' + id + ')">Sprawdź i przywróć</button>';
 }
 
 function goToServiceActionDetailsPage(id) {
@@ -160,15 +166,10 @@ function prepareServiceActionUrl(){
      var url = "";
      url += preparePaginationUrl();
 
-     var actionType = $("#action-type-filter").find(":selected").val();
      var workshop = $("#workshop-filter").children(":selected").val();
      var dateFrom = $("#date-from-filter").val();
      var dateTo = $("#date-to-filter").val();
 
-
-     if (actionType != "") {
-        url += "&serviceActionTypeName=" + actionType;
-     }
      if (workshop != "") {
         url += "&workshopName=" + workshop;
      }
@@ -182,32 +183,66 @@ function prepareServiceActionUrl(){
      return url;
 }
 
-function reloadWorkshopServices() {
+
+
+function findServiceActionTypes() {
     $.ajax({
-        url: workshopServiceTypes + "workshop_id=" + $("#create-workshop").val(),
-        type: "GET",
+        url: serviceActionTypesApiUrl + prepareServiceActionTypesUrl(),
+        type: "get",
         dataType: "json",
         contentType: "application/json"
     })
-    .done(function (workshopActions) {
-        $('#create-service-action').empty();
-        fillResultsReloadedWorkshopServices(workshopActions.workshopActions);
+    .done(function (serviceActionTypes) {
+        if(serviceActionTypes.serviceActionTypes.length == 0) {
+            $('#removed-service-action-types-container').hide();
+        }
+        else {
+            $('#removed-service-action-types').empty();
+            fillServiceActionTypesResults(serviceActionTypes.serviceActionTypes);
+        }
 
     })
-        .fail(function(jqxhr, textStatus, errorThrown){
+    .fail(function(jqxhr, textStatus, errorThrown){
         displayErrorInformation(jqxhr.responseText);
     });
 }
 
-function fillResultsReloadedWorkshopServices(workshopActions) {
-    workshopActions.forEach(function(action){
-            fillReloadedWorkshopService(action);
-        });
+function fillServiceActionTypesResults(serviceActionTypes) {
+    let value = 1;
+    serviceActionTypes.forEach(function (serviceActionType){
+        fillServiceActionTypesRow(serviceActionType, value);
+        value = value + 1;
+    });
 }
 
-function fillReloadedWorkshopService(action) {
-    $('#create-service-action').append('<option value=' + action.serviceActionId + '>' + action.serviceActionName +
-    '</option>');
+function fillServiceActionTypesRow(serviceActionType, value) {
+    $('#removed-service-action-types').append(
+        "<tr>" +
+            "<td class='align-middle'>" + value + "</td>" +
+            "<td class='align-middle'>" + serviceActionType.name + "</td>" +
+            "<td class='align-middle'>" + prepareServiceActionTypeDetailsButton(serviceActionType.id) + "</td>" +
+        "</tr>"
+    );
+}
+
+function prepareServiceActionTypeDetailsButton(id) {
+    return '<button type="button" class="btn btn-primary" onclick="goToServiceActionTypeDetailsPage(' + id + ')">Sprawdź i przywróć</button>';
+}
+function goToServiceActionTypeDetailsPage(id) {
+    window.location.href = "/admin/removed-service-action-type/" + id;
+}
+
+function prepareServiceActionTypesUrl(){
+     var url = "";
+     url += preparePaginationUrl();
+
+     var name = $("#service-action-type-filter").find(":selected").val();
+
+     if (name != "") {
+        url += "&name=" + name;
+     }
+
+     return url;
 }
 
 function showError(text) {

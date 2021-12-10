@@ -8,7 +8,7 @@ import pl.com.chrzanowski.scaffolding.domain.WorkshopsFilter;
 import java.util.List;
 import java.util.Map;
 
-import static pl.com.chrzanowski.scaffolding.logic.JdbcUtil.*;
+import static pl.com.chrzanowski.scaffolding.logic.JdbcUtil.preparePaginationQuery;
 
 @Service
 public class WorkshopsJdbcRepository {
@@ -75,7 +75,6 @@ public class WorkshopsJdbcRepository {
     }
 
 
-
     public List<Map<String, Object>> find(WorkshopsFilter filter) {
 
         String query = "SELECT * FROM workshops";
@@ -95,10 +94,12 @@ public class WorkshopsJdbcRepository {
             if (filter.getCity() != null) {
                 query += " AND city = '" + filter.getCity() + "'";
             }
-            if (!filter.getItContainsRemoveDate()) {
-                query += " AND remove_date IS NULL ";
-            } else {
-                query += " AND remove_date IS NOT NUll ";
+            if (filter.getItContainsRemoveDate() != null) {
+                if (!filter.getItContainsRemoveDate()) {
+                    query += " AND remove_date IS NULL ";
+                } else {
+                    query += " AND remove_date IS NOT NUll ";
+                }
             }
             if (filter.getPage() != null && filter.getPageSize() != null) {
                 query += preparePaginationQuery(filter.getPage(), filter.getPageSize());

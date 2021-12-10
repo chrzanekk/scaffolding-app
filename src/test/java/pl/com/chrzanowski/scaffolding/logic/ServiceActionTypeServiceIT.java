@@ -83,7 +83,7 @@ public class ServiceActionTypeServiceIT {
 
         ServiceActionTypeData newData = new ServiceActionTypeData(8L,"inne");
 
-        serviceActionTypeService.remove(newData);
+        serviceActionTypeService.update(newData);
 
     }
 }

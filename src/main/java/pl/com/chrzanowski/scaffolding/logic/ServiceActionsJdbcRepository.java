@@ -192,10 +192,12 @@ public class ServiceActionsJdbcRepository {
             if (filter.getServiceActionTypeId() != null) {
                 query += " AND service_action_type.id = '" + filter.getServiceActionTypeId() + "'";
             }
-            if (!filter.getItContainsRemoveDate()) {
-                query += " AND service_actions.remove_date IS NULL ";
-            } else {
-                query += " AND service_actions.remove_date IS NOT NUll ";
+            if(filter.getItContainsRemoveDate() != null) {
+                if (!filter.getItContainsRemoveDate()) {
+                    query += " AND service_actions.remove_date IS NULL ";
+                } else {
+                    query += " AND service_actions.remove_date IS NOT NUll ";
+                }
             }
 
             if (filter.getDateFrom() != null || filter.getDateTo() != null) {

@@ -71,7 +71,7 @@ function setObjectToDeleteIdAndShowModal(id) {
 function clearCreateModal() {
     $("#create-name").val('');
 }
-//todo -> cały flow dodawania i usuawnia pojazdu(konstruktory, repozytoria do innych tabel itp)
+
 function sendCreateRequest() {
     $.ajax({
         url: serviceActionTypeApiUrl,
