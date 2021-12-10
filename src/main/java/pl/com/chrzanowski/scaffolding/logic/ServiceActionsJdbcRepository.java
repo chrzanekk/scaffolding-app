@@ -80,35 +80,6 @@ public class ServiceActionsJdbcRepository {
                 "tax_rate = ?, " +
                 "workshop_id = ?, " +
                 "modify_date = ?, " +
-                "description = ? WHERE " +
-                "id = ?;";
-        jdbcTemplate.update(query,
-                data.getCarMileage(),
-                data.getServiceDate(),
-                data.getServiceActionTypeId(),
-                data.getInvoiceNumber(),
-                data.getInvoiceGrossValue(),
-                data.getTaxValue(),
-                data.getInvoiceNetValue(),
-                data.getTaxRate(),
-                data.getWorkshopId(),
-                data.getModifyDate(),
-                data.getServiceActionDescription(),
-                data.getId());
-    }
-
-    public void remove(ServiceActionsData data) {
-
-        String query = "UPDATE service_actions SET " +
-                "car_mileage = ?, " +
-                "service_date = ?, " +
-                "service_action_type_id = ?, " +
-                "invoice_no = ?, " +
-                "invoice_gross_value = ?, " +
-                "tax_value = ?, " +
-                "invoice_net_value = ?, " +
-                "tax_rate = ?, " +
-                "workshop_id = ?, " +
                 "remove_date = ?, " +
                 "description = ? WHERE " +
                 "id = ?;";
@@ -122,10 +93,12 @@ public class ServiceActionsJdbcRepository {
                 data.getInvoiceNetValue(),
                 data.getTaxRate(),
                 data.getWorkshopId(),
+                data.getModifyDate(),
                 data.getRemoveDate(),
                 data.getServiceActionDescription(),
                 data.getId());
     }
+
 
     List<Map<String, Object>> find(ServiceActionsFilter filter) {
 
@@ -220,9 +193,9 @@ public class ServiceActionsJdbcRepository {
                 query += " AND service_action_type.id = '" + filter.getServiceActionTypeId() + "'";
             }
             if (!filter.getItContainsRemoveDate()) {
-                query += " AND remove_date IS NULL ";
+                query += " AND service_actions.remove_date IS NULL ";
             } else {
-                query += " AND remove_date IS NOT NUll ";
+                query += " AND service_actions.remove_date IS NOT NUll ";
             }
 
             if (filter.getDateFrom() != null || filter.getDateTo() != null) {

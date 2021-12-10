@@ -1,5 +1,6 @@
 package pl.com.chrzanowski.scaffolding.domain;
 
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -22,10 +23,8 @@ public class WorkshopsFilter {
 
 
 
-    public WorkshopsFilter() {
-    }
 
-    public WorkshopsFilter(String name, String city, Long page, Long pageSize, Boolean itContainsRemoveDate) {
+    public WorkshopsFilter(String name, String city, Long page, Long pageSize, @NotNull Boolean itContainsRemoveDate) {
         this.name = name;
         this.city = city;
         this.page = page;
@@ -33,11 +32,11 @@ public class WorkshopsFilter {
         this.itContainsRemoveDate = itContainsRemoveDate;
     }
 
-    public WorkshopsFilter(Boolean itContainsRemoveDate) {
+    public WorkshopsFilter(@NotNull Boolean itContainsRemoveDate) {
         this.itContainsRemoveDate = itContainsRemoveDate;
     }
 
-    public WorkshopsFilter(Long id, Boolean itContainsRemoveDate) {
+    public WorkshopsFilter(Long id,@NotNull Boolean itContainsRemoveDate) {
         this.id = id;
         this.itContainsRemoveDate = itContainsRemoveDate;
     }

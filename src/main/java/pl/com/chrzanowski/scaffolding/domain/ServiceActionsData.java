@@ -84,7 +84,7 @@ public class ServiceActionsData {
         this.serviceActionDescription = serviceActionDescription;
         this.createDate = LocalDateTime.now();
     }
-//put method in api
+//put method in api (to update, remove and restore)
     public ServiceActionsData(Long id,
                               Long vehicleId,
                               Integer carMileage,
@@ -94,7 +94,9 @@ public class ServiceActionsData {
                               BigDecimal taxRate,
                               Long workshopId,
                               Long serviceActionTypeId,
-                              String serviceActionDescription) {
+                              String serviceActionDescription,
+                              LocalDateTime modifyDate,
+                              LocalDateTime removeDate) {
         this.id = id;
         this.vehicleId = vehicleId;
         this.carMileage = carMileage;
@@ -105,7 +107,8 @@ public class ServiceActionsData {
         this.workshopId = workshopId;
         this.serviceActionTypeId = serviceActionTypeId;
         this.serviceActionDescription = serviceActionDescription;
-        this.modifyDate = LocalDateTime.now();
+        this.modifyDate = modifyDate;
+        this.removeDate = removeDate;
     }
 //add method in service
     public ServiceActionsData(ServiceActionsData data, BigDecimal taxValue, BigDecimal invoiceGrossValue) {
@@ -135,69 +138,10 @@ public class ServiceActionsData {
         this.serviceActionTypeId = data.getServiceActionTypeId();
         this.serviceActionDescription = data.getServiceActionDescription();
         this.modifyDate = LocalDateTime.now();
+        this.removeDate = data.getRemoveDate();
         this.taxValue = taxValue;
         this.invoiceNetValue = data.getInvoiceNetValue();
         this.taxRate = data.getTaxRate();
-    }
-
-    public ServiceActionsData(ServiceActionsData data, Long serviceActionTypeId) {
-        this.id = data.getId();
-        this.vehicleId = data.getVehicleId();
-        this.carMileage = data.getCarMileage();
-        this.serviceDate = data.getServiceDate();
-        this.invoiceNumber = data.getInvoiceNumber();
-        this.invoiceGrossValue = data.getInvoiceGrossValue();
-        this.workshopId = data.getWorkshopId();
-        this.serviceActionTypeId = serviceActionTypeId;
-        this.serviceActionDescription = data.getServiceActionDescription();
-        this.modifyDate = LocalDateTime.now();
-        this.taxValue = data.getTaxValue();
-        this.invoiceNetValue = data.getInvoiceNetValue();
-        this.taxRate = data.getTaxRate();
-    }
-
-//  remove method in service
-    public ServiceActionsData(BigDecimal taxValue, BigDecimal invoiceGrossValue, ServiceActionsData data,
-                              LocalDateTime removeDate) {
-        this.id = data.getId();
-        this.vehicleId = data.getVehicleId();
-        this.carMileage = data.getCarMileage();
-        this.serviceDate = data.getServiceDate();
-        this.invoiceNumber = data.getInvoiceNumber();
-        this.invoiceGrossValue = invoiceGrossValue;
-        this.workshopId = data.getWorkshopId();
-        this.serviceActionTypeId = data.getServiceActionTypeId();
-        this.serviceActionDescription = data.getServiceActionDescription();
-        this.modifyDate = LocalDateTime.now();
-        this.taxValue = taxValue;
-        this.invoiceNetValue = data.getInvoiceNetValue();
-        this.taxRate = data.getTaxRate();
-        this.removeDate = removeDate;
-    }
-
-    // delete method in api
-    public ServiceActionsData(Long id,
-                              Long vehicleId,
-                              Integer carMileage,
-                              LocalDate serviceDate,
-                              String invoiceNumber,
-                              BigDecimal invoiceNetValue,
-                              BigDecimal taxRate,
-                              Long workshopId,
-                              Long serviceActionTypeId,
-                              String serviceActionDescription,
-                              LocalDateTime removeDate) {
-        this.id = id;
-        this.vehicleId = vehicleId;
-        this.carMileage = carMileage;
-        this.serviceDate = serviceDate;
-        this.invoiceNumber = invoiceNumber;
-        this.invoiceNetValue = invoiceNetValue;
-        this.taxRate = taxRate;
-        this.workshopId = workshopId;
-        this.serviceActionTypeId = serviceActionTypeId;
-        this.serviceActionDescription = serviceActionDescription;
-        this.removeDate = removeDate;
     }
 
 

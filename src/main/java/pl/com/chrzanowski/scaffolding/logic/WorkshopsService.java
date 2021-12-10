@@ -50,10 +50,6 @@ public class WorkshopsService {
         return workshopsWithActionTypes;
     }
 
-    public List<WorkshopsData> findRemoved(WorkshopsFilter filter) {
-        return getWorkshops(workshopsJdbcRepository.find(filter));
-    }
-
     public List<ServiceActionTypeData> findServiceWorkshopsById(WorkshopsData data) {
         List<ServiceActionTypeData> serviceActionTypeData = serviceActionTypeService.find(new ServiceActionTypesFilter());
         Long[] workshopServicesTypes = workshopServiceTypeService.getActionTypesForWorkshop(data);
@@ -68,7 +64,6 @@ public class WorkshopsService {
         }
         return result;
     }
-
 
     public Long add(WorkshopsData data) {
         WorkshopsData workshopsData = formatFields(data);
@@ -91,19 +86,6 @@ public class WorkshopsService {
         workshopsJdbcRepository.update(workshopsData);
     }
 
-    public void remove(WorkshopsData data) {
-        WorkshopsData workshopsData = new WorkshopsData(formatFields(data), data.getId(), LocalDateTime.now());
-        validateData(workshopsData);
-        if (workshopsData.getActionTypes() != null) {
-            workshopServiceTypeService.deleteActionTypes(workshopsData);
-            workshopServiceTypeService.validateAndCreateActionTypesForWorkshop(workshopsData);
-        } else {
-            workshopsData = new WorkshopsData(workshopsData, workshopServiceTypeService.getActionTypesForWorkshop(workshopsData));
-
-        }
-        workshopsJdbcRepository.remove(workshopsData);
-    }
-
     private List<WorkshopsData> getWorkshops(List<Map<String, Object>> data) {
         List<WorkshopsData> list = new ArrayList<>();
         for (Map<String, Object> row : data) {
@@ -122,8 +104,6 @@ public class WorkshopsService {
         }
         return list;
     }
-
-
 
     private void validateData(WorkshopsData data) {
         DataValidationUtil.validateTextField(data.getName(), "Nazwa");

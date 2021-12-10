@@ -1,5 +1,8 @@
 package pl.com.chrzanowski.scaffolding.domain;
 
+import org.springframework.lang.NonNull;
+
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
 public class ServiceActionsFilter {
@@ -46,12 +49,13 @@ public class ServiceActionsFilter {
         this.itContainsRemoveDate = itContainsRemoveDate;
     }
 
-    public ServiceActionsFilter(Long id) {
+    public ServiceActionsFilter(Long id, @NotNull Boolean itContainsRemoveDate) {
         this.id = id;
+        this.itContainsRemoveDate = itContainsRemoveDate;
     }
 
     public ServiceActionsFilter(Long vehicleId, String actionTypeName, String workshopName, LocalDate dateFrom,
-                                LocalDate dateTo, Boolean itContainsRemoveDate) {
+                                LocalDate dateTo, @NotNull Boolean itContainsRemoveDate) {
         this.vehicleId = vehicleId;
         this.actionTypeName = actionTypeName;
         this.workshopName = workshopName;
@@ -60,13 +64,12 @@ public class ServiceActionsFilter {
         this.itContainsRemoveDate = itContainsRemoveDate;
     }
 
-    public ServiceActionsFilter(Long vehicleId, Long serviceActionTypeId) {
+    public ServiceActionsFilter(Long vehicleId, Long serviceActionTypeId, @NotNull Boolean itContainsRemoveDate) {
         this.vehicleId = vehicleId;
         this.serviceActionTypeId = serviceActionTypeId;
+        this.itContainsRemoveDate = itContainsRemoveDate;
     }
 
-    public ServiceActionsFilter() {
-    }
 
     public Long getId() {
         return id;

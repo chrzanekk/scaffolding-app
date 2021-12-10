@@ -19,29 +19,8 @@ public class WorkshopsData {
     private LocalDateTime modifyDate;
     private LocalDateTime removeDate;
 
-//to put in endpoint and restore
-    public WorkshopsData(Long id,
-                         String name,
-                         String taxNumber,
-                         String street,
-                         String buildingNo,
-                         String apartmentNo,
-                         String postalCode,
-                         String city,
-                         Long[] actionTypes) {
-        this.id = id;
-        this.name = name;
-        this.taxNumber = taxNumber;
-        this.street = street;
-        this.buildingNo = buildingNo;
-        this.apartmentNo = apartmentNo;
-        this.postalCode = postalCode;
-        this.city = city;
-        this.actionTypes = actionTypes;
-        this.modifyDate = LocalDateTime.now();
-        this.removeDate = null;
-    }
-// to put in endpoint to remove
+
+// to put in endpoint to update,remove, and restore
     public WorkshopsData(Long id,
                          String name,
                          String taxNumber,
@@ -77,7 +56,7 @@ public class WorkshopsData {
         this.createDate = LocalDateTime.now();
     }
 
-// to update
+// to update in service
     public WorkshopsData(WorkshopsData data, Long[] actionTypes) {
         this.id = data.getId();
         this.name = data.getName();
@@ -89,6 +68,7 @@ public class WorkshopsData {
         this.city = data.getCity();
         this.actionTypes = actionTypes;
         this.modifyDate = LocalDateTime.now();
+        this.removeDate = data.getRemoveDate();
 
     }
 // to format fields
@@ -102,6 +82,8 @@ public class WorkshopsData {
         this.postalCode = data.getPostalCode();
         this.city = postalCode;
         this.actionTypes = data.getActionTypes();
+        this.modifyDate = data.getModifyDate();
+        this.removeDate = data.getRemoveDate();
     }
 // to find with action types
     public WorkshopsData(WorkshopsData data, Long[] actionTypes, List<ServiceActionTypeData> actionTypesList) {
@@ -158,21 +140,8 @@ public class WorkshopsData {
         this.city = data.getCity();
         this.actionTypes = data.getActionTypes();
         this.modifyDate = LocalDateTime.now();
+        this.removeDate = data.getRemoveDate();
     }
-//    to remove with formatted fields
-    public WorkshopsData(WorkshopsData data, Long id, LocalDateTime removeDate) {
-        this.id = id;
-        this.name = data.getName();
-        this.taxNumber = data.getTaxNumber();
-        this.street = data.getStreet();
-        this.buildingNo = data.getBuildingNo();
-        this.apartmentNo = data.getApartmentNo();
-        this.postalCode = data.getPostalCode();
-        this.city = data.getCity();
-        this.actionTypes = data.getActionTypes();
-        this.removeDate = removeDate;
-    }
-
 
 
     public Long getId() {

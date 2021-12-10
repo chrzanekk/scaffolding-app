@@ -28,25 +28,6 @@ public class ServiceActionGetResponse {
     private String modifyDate;
     private String removeDate;
 
-    public ServiceActionGetResponse(ServiceActionsData data) {
-        this.id = data.getId();
-        this.vehicleId = data.getVehicleId();
-        this.carMileage = data.getCarMileage();
-        this.serviceDate = data.getServiceDate().toString();
-        this.invoiceNumber = data.getInvoiceNumber();
-        this.invoiceGrossValue = data.getInvoiceGrossValue().toString();
-        this.invoiceNetValue = data.getInvoiceNetValue().toString();
-        this.taxValue = data.getTaxValue().toString();
-        this.taxRate = data.getTaxRate().toString();
-        this.workshopId = data.getWorkshopId();
-        this.workshopName = data.getWorkshopName();
-        this.serviceActionTypeId = data.getServiceActionTypeId();
-        this.serviceActionTypeName = data.getServiceActionTypeName();
-        this.workshopsData = data.getWorkshopsData();
-        this.serviceActionDescription = data.getServiceActionDescription();
-        this.modifyDate = data.getModifyDate().toString();
-        this.removeDate = data.getRemoveDate().toString();
-    }
 
     public ServiceActionGetResponse(Long id,
                                     Long vehicleId,

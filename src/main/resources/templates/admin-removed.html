@@ -12,7 +12,7 @@
 <h5 th:text="#{removed.list}"></h5>
 <div id="removed-workshop-container" class="my-4">
     <h5 th:text="#{workshop.list}"></h5>
-    <form id="filter" class="bg-light border m-0 p-0 my-3">
+    <form id="workshops-filter" class="bg-light border m-0 p-0 my-3">
         <div class="form-row m-0 p-0">
             <div class="form-group row col-12 col-lg-6 border m-0 p-0 py-2">
                 <label class="col-12 col-sm-3 col-md-2 col-xl-3 my-auto text-center"
@@ -64,6 +64,77 @@
     <div th:replace="fragments/pagination :: pagination"></div>
 </div>
 
+
+
+<div id="removed-service-actions-container" class="my-4">
+    <h5 th:text="#{vehicle.services}"></h5>
+    <form id="service-actions-filter" class="bg-light border m-0 p-0 my-3">
+        <div class="form-row m-0 p-0">
+            <div class="form-group row col-12 col-lg-6 border m-0 p-0 py-2">
+                <label class="col-12 col-sm-3 col-md-2 col-xl-3 my-auto text-center"
+                       th:text="#{vehicle.service.type}"></label>
+                <div class="col-12 col-sm-9 col-md-10 col-xl-9 my-auto">
+                    <select id="action-type-filter" class="form-control">
+                        <option value="">---</option>
+                        <option th:each="actionType : ${serviceActionTypes}"
+                                th:value="${actionType.value}"
+                                th:text="${actionType.value}">
+                        </option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group row col-12 col-lg-6 border m-0 p-0 py-2">
+                <label class="col-12 col-sm-3 col-md-2 col-xl-3 my-auto text-center"
+                       th:text="#{vehicle.service.workshop}"></label>
+                <div class="col-12 col-sm-9 col-md-10 col-xl-9 my-auto">
+                    <select id="workshop-filter" class="form-control">
+                        <option value="">---</option>
+                        <option th:each="workshop : ${workshops}"
+                                th:value="${workshop.name}"
+                                th:text="${workshop.name}">
+                        </option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group row col-12 col-lg-6 border m-0 p-0 py-2">
+                <label class="col-12 col-sm-3 col-md-2 col-xl-3 my-auto text-center"
+                       th:text="#{filter.starting.date}"></label>
+                <div class="col-12 col-sm-9 col-md-10 col-xl-9 my-auto">
+                    <input id="date-from-filter" type="date" value="" class="form-control">
+                </div>
+            </div>
+            <div class="form-group row col-12 col-lg-6 border m-0 p-0 py-2">
+                <label class="col-12 col-sm-3 col-md-2 col-xl-3 my-auto text-center"
+                       th:text="#{filter.end.date}"></label>
+                <div class="col-12 col-sm-9 col-md-10 col-xl-9 my-auto">
+                    <input id="date-to-filter" type="date" value="" class="form-control">
+                </div>
+            </div>
+        </div>
+    </form>
+    <div class="table-responsive mb-0 pb-0">
+        <table class="table bg-light table-bordered table-hover table-sm">
+            <thead class="thead-light">
+            <tr>
+                <th class="align-middle col-sm-1" th:text="#{vehicle.ordinal.number}"></th>
+                <th class="align-middle col-sm-1" th:text="#{vehicle.service.date}"></th>
+                <th class="align-middle col-sm-2" th:text="#{vehicle.service.type}"></th>
+                <th class="align-middle col-sm-3" th:text="#{vehicle.service.workshop}"></th>
+                <th class="align-middle col-sm-1" th:text="#{invoice.net.value}"></th>
+                <th class="align-middle col-sm-1" th:text="#{invoice.vat.tax.value}"></th>
+                <th class="align-middle col-sm-1" th:text="#{invoice.gross.value}"></th>
+                <th class="align-middle col-sm-1" th:text="#{vehicle.service.details}"></th>
+            </tr>
+            </thead>
+            <tbody id="removed-service-actions">
+
+            </tbody>
+        </table>
+
+
+    </div>
+    <div th:replace="fragments/pagination :: pagination"></div>
+</div>
 
 
 

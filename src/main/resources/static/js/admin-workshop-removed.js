@@ -9,8 +9,7 @@ $(document).ready(function () {
 function showRestoreModal() {
     $('#restore-object-modal').modal('show');
 }
-function sendRestoreRequest(id){
-
+function sendRestoreRequest(){
     $.ajax({
         url: "/admin/api/scaffolding/restore-workshop/" + workshop.id,
         method: "PUT",

@@ -363,9 +363,8 @@ public class ScaffoldingEndpointAdmin {
         return new ServiceActionsRequestGetResponse(actionsToResponse(actions));
     }
 
-    @GetMapping(path = "/removed-vehicle-service-actions/{id}", produces = "application/json; charset=UTF-8")
+    @GetMapping(path = "/removed-vehicle-service-actions/", produces = "application/json; charset=UTF-8")
     public ServiceActionsRequestGetResponse removedVehicleServiceActions(
-            @PathVariable Long id,
             @RequestParam(name = "serviceActionTypeName", required = false) String actionTypeName,
             @RequestParam(name = "workshopName", required = false) String workshop,
             @RequestParam(name = "dateFrom", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateFrom,
@@ -373,7 +372,7 @@ public class ScaffoldingEndpointAdmin {
             @RequestParam(name = "page", required = false, defaultValue = "1") Long page,
             @RequestParam(name = "page_size", required = false, defaultValue = "10") Long pageSize) {
         List<ServiceActionsData> actions = serviceActions.find(new ServiceActionsFilter(
-                id,
+                null,
                 actionTypeName,
                 workshop,
                 dateFrom,
@@ -405,7 +404,7 @@ public class ScaffoldingEndpointAdmin {
     @GetMapping(path = "/vehicle-service-action/{id}", produces = "application/json; charset=UTF-8")
     public ServiceActionRequestGetResponse vehicleServiceActionById(
             @PathVariable Long id) {
-        ServiceActionsData serviceAction = serviceActions.findById(new ServiceActionsFilter(id));
+        ServiceActionsData serviceAction = serviceActions.findById(new ServiceActionsFilter(id, false));
         return new ServiceActionRequestGetResponse(actionToResponse(serviceAction));
     }
 
@@ -424,9 +423,29 @@ public class ScaffoldingEndpointAdmin {
                 request.getServiceActionTypeId(),
                 request.getServiceActionDescription()));
     }
-
+//to put and restore
     @PutMapping(path = "/vehicle-service-action/{id}")
     public void updateServiceAction(@PathVariable Long id, @RequestBody ServiceActionPutRequest request) {
+        BigDecimal netValue = DataValidationUtil.validateAndCreateValue(request.getInvoiceNetValue());
+        BigDecimal taxRate = DataValidationUtil.validateAndCreateValue(request.getTaxRate());
+        serviceActions.update(new ServiceActionsData(
+                id,
+                request.getVehicleId(),
+                request.getCarMileage(),
+                request.getServiceDate(),
+                request.getInvoiceNumber(),
+                netValue,
+                taxRate,
+                request.getWorkshopId(),
+                request.getServiceActionTypeId(),
+                request.getServiceActionDescription(),
+                request.getModifyDate(),
+                null
+        ));
+    }
+
+    @PutMapping(path = "/vehicle-service-action-to-remove/{id}")
+    public void deleteServiceAction(@PathVariable Long id, @RequestBody ServiceActionPutRequest request) {
         BigDecimal netValue = DataValidationUtil.validateAndCreateValue(request.getInvoiceNetValue());
         BigDecimal taxRate = DataValidationUtil.validateAndCreateValue(request.getTaxRate());
         serviceActions.update(new ServiceActionsData(
@@ -439,47 +458,13 @@ public class ScaffoldingEndpointAdmin {
                 taxRate,
                 request.getWorkshopId(),
                 request.getServiceActionTypeId(),
-                request.getServiceActionDescription()
+                request.getServiceActionDescription(),
+                request.getModifyDate(),
+                request.getRemoveDate()
         ));
     }
 
-    @PutMapping(path = "/vehicle-service-action-to-remove/{id}")
-    public void deleteServiceAction(@PathVariable Long id, @RequestBody ServiceActionPutRequest request) {
-        BigDecimal netValue = DataValidationUtil.validateAndCreateValue(request.getInvoiceNetValue());
-        BigDecimal taxRate = DataValidationUtil.validateAndCreateValue(request.getTaxRate());
-        serviceActions.delete(new ServiceActionsData(
-                request.getId(),
-                request.getVehicleId(),
-                request.getCarMileage(),
-                request.getServiceDate(),
-                request.getInvoiceNumber(),
-                netValue,
-                taxRate,
-                request.getWorkshopId(),
-                request.getServiceActionTypeId(),
-                request.getServiceActionDescription(),
-                request.getRemoveDate()
-        ));
-    }
-//    do opracowania
-    @PutMapping(path = "/vehicle-service-action-to-restore/{id}")
-    public void restoreServiceAction(@PathVariable Long id, @RequestBody ServiceActionPutRequest request) {
-        BigDecimal netValue = DataValidationUtil.validateAndCreateValue(request.getInvoiceNetValue());
-        BigDecimal taxRate = DataValidationUtil.validateAndCreateValue(request.getTaxRate());
-        serviceActions.delete(new ServiceActionsData(
-                request.getId(),
-                request.getVehicleId(),
-                request.getCarMileage(),
-                request.getServiceDate(),
-                request.getInvoiceNumber(),
-                netValue,
-                taxRate,
-                request.getWorkshopId(),
-                request.getServiceActionTypeId(),
-                request.getServiceActionDescription(),
-                request.getRemoveDate()
-        ));
-    }
+
 
     @GetMapping(path = "/workshops", produces = "application/json; charset=UTF-8")
     public WorkshopsRequestGetResponse workshops(
@@ -535,7 +520,8 @@ public class ScaffoldingEndpointAdmin {
                 request.getApartmentNo(),
                 request.getPostalCode(),
                 request.getCity(),
-                request.getActionTypes()));
+                request.getActionTypes(),
+                null));
     }
 
     @PutMapping(path = "/restore-workshop/{id}", consumes = "application/json; charset=UTF-8")
@@ -555,7 +541,7 @@ public class ScaffoldingEndpointAdmin {
 
     @PutMapping(path = "/workshop-to-remove/{id}", consumes = "application/json; charset=UTF-8")
     public void removeWorkshop(@PathVariable Long id, @RequestBody WorkshopPutRequest request) {
-        workshopsService.remove(new WorkshopsData(
+        workshopsService.update(new WorkshopsData(
                 id,
                 request.getName(),
                 request.getTaxNumber(),

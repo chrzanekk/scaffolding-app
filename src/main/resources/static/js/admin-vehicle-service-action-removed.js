@@ -1,6 +1,5 @@
 var url = "/admin/api/scaffolding"
 var vehicleServiceActionsApiUrl = url + "/vehicle-service-action/"
-var vehicleServiceActionsToRemoveApiUrl = url + "/vehicle-service-action-to-remove/"
 var workshopServiceTypes = url + "/workshop-service-types?"
 $(document).ready(function () {
 
@@ -10,11 +9,11 @@ $(document).ready(function () {
 
 
 
-function showDeleteModal() {
-    $('#delete-object-modal').modal('show');
+function showRestoreModal() {
+    $('#restore-object-modal').modal('show');
 }
 
-function sendUpdateRequest() {
+function sendRestoreRequest() {
     $.ajax({
         url: vehicleServiceActionsApiUrl + serviceAction.id,
         method: "PUT",
@@ -34,9 +33,12 @@ function sendUpdateRequest() {
         })
     })
         .done(function () {
-            $("#operation-successful-modal").modal('show');
+           $('#restore-object-modal').modal('hide');
+           $("#operation-successful-modal").modal('show');
+           window.location.href = "/admin/removed/";
         })
         .fail(function (jqxhr, textStatus, errorThrown) {
+            $('#restore-object-modal').modal('hide');
             showError(prepareErrorMessage(jqxhr.responseText));
         })
 }
@@ -83,39 +85,6 @@ function setObjectToDeleteIdAndShowModal(id) {
     objToDeleteId = id;
     $('#delete-object-modal').modal('show');
 }
-
-function sendDeleteRequest(){
-        var vehicleId = serviceAction.vehicleId;
-        $.ajax({
-            url: vehicleServiceActionsToRemoveApiUrl + serviceAction.id,
-            method: "PUT",
-            contentType: "application/json",
-            data: JSON.stringify({
-                 id: serviceAction.id,
-                 vehicleId: serviceAction.vehicleId,
-                 carMileage: $("#car-mileage").val(),
-                 serviceDate: $("#service-date").val(),
-                 invoiceNumber: $("#invoice-number").val(),
-                 invoiceNetValue: $("#invoice-net-value").val(),
-                 taxRate: $("#invoice-tax-rate").val(),
-                 workshopId: $("#service-workshop").val(),
-                 serviceActionTypeId: $("#service-action-type").val(),
-                 serviceActionDescription: $("#service-action-description").val(),
-                 removeDate: prepareActualDate()
-            })
-        })
-            .done(function () {
-                $("#operation-successful-modal").modal('show');
-                $('#delete-object-modal').modal('hide');
-                backToServiceActionsList(vehicleId);
-
-            })
-            .fail(function (jqxhr, textStatus, errorThrown) {
-                $('#delete-object-modal').modal('hide');
-                showError(prepareErrorMessage(jqxhr.responseText));
-            })
-    }
-
 
 function prepareActualDate() {
 

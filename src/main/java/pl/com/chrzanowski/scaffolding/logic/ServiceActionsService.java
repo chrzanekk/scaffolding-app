@@ -58,7 +58,7 @@ public class ServiceActionsService implements IServiceActions {
     public Long add(ServiceActionsData data) {
         validateData(data);
         validateOilServiceStatus(data, getLastActionByType(serviceActionsJdbcRepository.findLastDateOfServiceType(
-                new ServiceActionsFilter(data.getVehicleId(), data.getServiceActionTypeId()))));
+                new ServiceActionsFilter(data.getVehicleId(), data.getServiceActionTypeId(), false))));
         if (checkWorkshopServiceType(data)) {
             return serviceActionsJdbcRepository.create(new ServiceActionsData(
                     data,
@@ -78,18 +78,6 @@ public class ServiceActionsService implements IServiceActions {
                     data));
         } else {
             throw new IllegalArgumentException("Ten warsztat nie wykonuje tej usługi.");
-        }
-    }
-
-    public void delete(ServiceActionsData data) {
-        validateData(data);
-        if (checkWorkshopServiceType(data)) {
-            serviceActionsJdbcRepository.remove(new ServiceActionsData(
-                    TaxCalculationUtil.calculateTaxValue(data.getInvoiceNetValue(), data.getTaxRate()),
-                    TaxCalculationUtil.calculateGrossValue(data.getInvoiceNetValue(), data.getTaxRate()),
-                    data, data.getRemoveDate()));
-        } else {
-            throw new IllegalArgumentException("Nie można usunąć, warsztat nie wykonuje wybranej usługi.");
         }
     }
 

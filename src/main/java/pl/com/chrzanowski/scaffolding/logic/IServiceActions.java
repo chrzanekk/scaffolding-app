@@ -13,5 +13,4 @@ public interface IServiceActions {
     ServiceActionsInvoiceSummaryData getActionInvoicesSummary(ServiceActionsFilter filter);
     Long add(ServiceActionsData data);
     void update(ServiceActionsData data);
-    void delete(ServiceActionsData data);
 }
