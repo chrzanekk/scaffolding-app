@@ -107,8 +107,7 @@ function sendDeleteRequest(){
             .done(function () {
                 $("#operation-successful-modal").modal('show');
                 $('#delete-object-modal').modal('hide');
-                backToServiceActionsList(vehicleId);
-
+                backToServiceActions();
             })
             .fail(function (jqxhr, textStatus, errorThrown) {
                 $('#delete-object-modal').modal('hide');
@@ -132,7 +131,7 @@ var dateString =
     return dateString;
 }
 
-function backToServiceActionsList(vehicleId) {
-    window.location.href = "/admin/vehicle-service-actions/" + vehicleId;
+function backToServiceActions() {
+    window.location.href = "/admin/vehicle-service-actions/" + serviceAction.vehicleId;
 }
 

@@ -140,6 +140,7 @@ function sendCreateRequest() {
             $("#operation-successful-modal").modal('show');
             findServiceActions();
             findServiceActionsSummary();
+            backToServiceActions();
         })
         .fail(function (jqxhr, textStatus, errorThrown) {
             showError(prepareErrorMessage(jqxhr.responseText));
@@ -207,7 +208,13 @@ function showError(text) {
     $("#error-alert").removeClass('d-none');
 }
 
+function backToServiceActions() {
+    window.location.href = "/admin/vehicle-service-actions/" + vehicle.id;
+}
 
+function backToVehicles() {
+    window.location.href = "/admin/vehicles";
+}
 
 
 

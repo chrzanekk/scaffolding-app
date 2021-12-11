@@ -417,7 +417,7 @@ public class ApplicationController {
 
         Language lang = LanguagesUtil.getCurrentLanguage();
         model.addAttribute("vehicle", vehicles.findById(new VehicleFilter(vehicleId)));
-        model.addAttribute("serviceAction", serviceActions.findById(new ServiceActionsFilter(id,true)));
+        model.addAttribute("serviceAction", serviceActions.findById(new ServiceActionsFilter(id)));
         model.addAttribute("serviceActionTypes", dictionariesService.getDictionary(DictionaryType.SERVICE_ACTION_TYPES, lang));
         model.addAttribute("workshops", workshopsService.find(new WorkshopsFilter(false)));
         model.addAttribute("taxRates", dictionariesService.getDictionary(DictionaryType.TAX_RATE, lang));

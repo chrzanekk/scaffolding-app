@@ -88,7 +88,8 @@
             <div class="text-center">
                 <button type="button" class="btn btn-danger mt-3" onclick="showDeleteModal()"
                         th:text="#{Delete}"></button>
-                <button type="button" class="btn btn-warning mt-3" onclick="history.back()"
+                <button type="button" class="btn btn-warning mt-3"
+                        onclick="backToServiceActions()"
                         th:text="#{Cancel}"></button>
                 <button type="button" class="btn btn-warning mt-3" onclick="sendUpdateRequest()"
                         th:text="#{Save.changes}"></button>

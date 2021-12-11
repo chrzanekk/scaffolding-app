@@ -35,7 +35,7 @@ function sendRestoreRequest() {
         .done(function () {
            $('#restore-object-modal').modal('hide');
            $("#operation-successful-modal").modal('show');
-           window.location.href = "/admin/removed/";
+           backToRemoved();
         })
         .fail(function (jqxhr, textStatus, errorThrown) {
             $('#restore-object-modal').modal('hide');
@@ -101,7 +101,7 @@ var dateString =
     return dateString;
 }
 
-function backToServiceActionsList(vehicleId) {
-    window.location.href = "/admin/vehicle-service-actions/" + vehicleId;
+function backToRemoved() {
+    window.location.href = "/admin/removed/";
 }
 

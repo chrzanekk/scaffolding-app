@@ -60,3 +60,7 @@ function showApartmentNo(apartmentNo) {
     }
     return value;
 }
+
+function backToServiceActions() {
+    window.location.href = "/admin/vehicle-service-actions/" + vehicle.id;
+}
