@@ -12,6 +12,6 @@ public class TaxCalculationUtil {
     }
 
     public static BigDecimal calculateGrossValue(BigDecimal netValue, BigDecimal taxRate) {
-        return netValue.setScale(2, RoundingMode.HALF_EVEN).multiply((BigDecimal.ONE.add(taxRate.setScale(2, RoundingMode.HALF_EVEN))));
+        return netValue.multiply((BigDecimal.ONE.add(taxRate)));
     }
 }
