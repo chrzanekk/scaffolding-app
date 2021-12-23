@@ -23,13 +23,16 @@ public class ServiceActionTypeServiceIT {
     @Autowired
     private ServiceActionTypeService serviceActionTypeService;
 
-//    @Autowired
-//    private ServiceActionTypeFixture serviceActionTypeFixture;
+    @Autowired
+    private ServiceActionTypeServiceFixture serviceActionTypeFixture;
 
 
     @Test
     public void checkIsAnyDataExists() {
-//        serviceActionTypeFixture.createActionTypes();
+//        robienie tabel
+//        dane
+//        test
+        serviceActionTypeFixture.createActionTypes();
 
         ServiceActionTypesFilter filter = new ServiceActionTypesFilter();
 
@@ -40,7 +43,7 @@ public class ServiceActionTypeServiceIT {
 
     @Test
     public void checkIfTheGivenNameExistsWithPositiveResult() {
-//        serviceActionTypeFixture.createActionTypes();
+        serviceActionTypeFixture.createActionTypes();
 
         ServiceActionTypesFilter filter = new ServiceActionTypesFilter("inne");
 

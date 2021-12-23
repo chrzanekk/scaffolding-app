@@ -27,7 +27,7 @@ public class ServiceActionsData {
     private LocalDateTime removeDate;
 
 
-//  find method in service
+    //  find method in service
     public ServiceActionsData(Long id,
                               Long vehicleId,
                               Integer carMileage,
@@ -63,7 +63,8 @@ public class ServiceActionsData {
         this.modifyDate = modifyDate;
         this.removeDate = removeDate;
     }
-//post method in api
+
+    //post method in api
     public ServiceActionsData(Long vehicleId,
                               Integer carMileage,
                               LocalDate serviceDate,
@@ -84,7 +85,8 @@ public class ServiceActionsData {
         this.serviceActionDescription = serviceActionDescription;
         this.createDate = LocalDateTime.now();
     }
-//put method in api (to update, remove and restore)
+
+    //put method in api (to update, remove and restore)
     public ServiceActionsData(Long id,
                               Long vehicleId,
                               Integer carMileage,
@@ -110,7 +112,8 @@ public class ServiceActionsData {
         this.modifyDate = modifyDate;
         this.removeDate = removeDate;
     }
-//add method in service
+
+    //add method in service
     public ServiceActionsData(ServiceActionsData data, BigDecimal taxValue, BigDecimal invoiceGrossValue) {
         this.vehicleId = data.getVehicleId();
         this.carMileage = data.getCarMileage();
@@ -126,7 +129,7 @@ public class ServiceActionsData {
         this.taxValue = taxValue;
     }
 
-//    update method in service
+    //    update method in service
     public ServiceActionsData(BigDecimal taxValue, BigDecimal invoiceGrossValue, ServiceActionsData data) {
         this.id = data.getId();
         this.vehicleId = data.getVehicleId();
@@ -145,13 +148,18 @@ public class ServiceActionsData {
     }
 
 
-//get last action type
+    //get last action type + private constructor for static method
     public ServiceActionsData(Long id, Long vehicleId, LocalDate serviceDate, Long serviceActionTypeId, String serviceActionTypeName) {
         this.id = id;
         this.vehicleId = vehicleId;
         this.serviceDate = serviceDate;
         this.serviceActionTypeId = serviceActionTypeId;
         this.serviceActionTypeName = serviceActionTypeName;
+    }
+
+    static ServiceActionsData createForLastActionType(Long id, Long vehicleId, LocalDate serviceDate,
+                                                      Long serviceActionTypeId, String serviceActionTypeName) {
+        return new ServiceActionsData(id, vehicleId, serviceDate, serviceActionTypeId, serviceActionTypeName);
     }
 
     public Long getId() {

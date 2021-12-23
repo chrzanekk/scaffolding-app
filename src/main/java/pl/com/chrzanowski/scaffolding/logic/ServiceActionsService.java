@@ -43,17 +43,6 @@ public class ServiceActionsService implements IServiceActions {
         return getSummaryOfInvoices(serviceActionsJdbcRepository.findSummaryInvoiceValues(filter));
     }
 
-    public ServiceActionsData getLastActionByType(ServiceActionsFilter filter) {
-        return getLastActionByType(serviceActionsJdbcRepository.findLastDateOfServiceType(filter));
-    }
-
-    public Boolean hasLoggedUserPermissionToActionsManagement() {
-
-        UserData loggedUser = usersService.getLoggedUser();
-
-        return userAuthoritiesService.hasUserAuthority(loggedUser, UserAuthority.ADMIN);
-
-    }
 
     public Long add(ServiceActionsData data) {
         validateData(data);
@@ -68,7 +57,7 @@ public class ServiceActionsService implements IServiceActions {
             throw new IllegalArgumentException("Ten warsztat nie wykonuje tej usługi.");
         }
     }
-
+//fix modify and remove date
     public void update(ServiceActionsData data) {
         validateData(data);
         if (checkWorkshopServiceType(data)) {

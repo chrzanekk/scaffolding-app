@@ -6,7 +6,6 @@ import pl.com.chrzanowski.scaffolding.domain.ServiceActionTypesFilter;
 import pl.com.chrzanowski.scaffolding.domain.WorkshopsData;
 import pl.com.chrzanowski.scaffolding.domain.WorkshopsFilter;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -124,9 +123,8 @@ public class WorkshopsService {
     private String cleanInput(String input) {
         if (input != null) {
             return input.replaceAll("[^a-zA-Z0-9]", "");
-        } else {
-            return "";
         }
+        return "";
     }
 
     private String formatTaxNumber(String taxNumber) {
@@ -136,8 +134,7 @@ public class WorkshopsService {
 
     private String formatPostalCode(String postalCode) {
         postalCode = cleanInput(postalCode);
-        return postalCode.substring(0,2) + "-" + postalCode.substring(2,5);
-
+        return postalCode.substring(0, 2) + "-" + postalCode.substring(2, 5);
     }
 }
 

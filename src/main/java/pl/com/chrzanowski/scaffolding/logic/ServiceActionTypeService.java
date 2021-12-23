@@ -53,13 +53,7 @@ public class ServiceActionTypeService implements IServiceActonTypes {
 
     private void validateData(ServiceActionTypeData data) {
         DataValidationUtil.validateTextField(data.getName(), "Nazwa usługi serwisowej");
-        checkIfRemovingProtectedServiceActionType(data);
-    }
 
-    private void checkIfRemovingProtectedServiceActionType(ServiceActionTypeData data) {
-        if (data.getId()==8L && data.getRemoveDate() != null) {
-            throw new IllegalArgumentException("Nie można usunąć tej pozycji.");
-        }
     }
 
 }

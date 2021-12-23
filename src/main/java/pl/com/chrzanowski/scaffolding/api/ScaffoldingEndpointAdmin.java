@@ -594,7 +594,7 @@ public class ScaffoldingEndpointAdmin {
     public void addServiceActionType(@RequestBody ServiceActionTypesPostRequest request) {
         serviceActonTypes.add(new ServiceActionTypeData(request.getName()));
     }
-//to update and restore
+
     @PutMapping(path = "/service-action-type/{id}", consumes = "application/json; charset=UTF-8")
     public void updateServiceActionType(@PathVariable Long id,
                                         @RequestBody ServiceActionTypesPutRequest request) {

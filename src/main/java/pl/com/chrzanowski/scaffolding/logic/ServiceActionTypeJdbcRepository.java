@@ -29,7 +29,7 @@ public class ServiceActionTypeJdbcRepository {
 
     public void update(ServiceActionTypeData data) {
         String query = "UPDATE service_action_type SET name = ?, modify_date = ?, remove_date = ? WHERE id = ?;";
-        jdbcTemplate.update(query, data.getName(), data.getModifyDate(),data.getRemoveDate(), data.getId());
+        jdbcTemplate.update(query, data.getName(), data.getModifyDate(), data.getRemoveDate(), data.getId());
     }
 
     public List<Map<String, Object>> find(ServiceActionTypesFilter filter) {
