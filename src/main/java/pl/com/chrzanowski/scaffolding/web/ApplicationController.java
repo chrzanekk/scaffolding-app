@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.thymeleaf.TemplateEngine;
-import pl.com.chrzanowski.scaffolding.api.ServiceActionGetResponse;
+
 import pl.com.chrzanowski.scaffolding.api.ServiceActionRequestGetResponse;
 import pl.com.chrzanowski.scaffolding.config.ApplicationConfig;
 import pl.com.chrzanowski.scaffolding.domain.*;
