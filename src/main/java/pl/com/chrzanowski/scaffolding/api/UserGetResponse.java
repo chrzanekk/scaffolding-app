@@ -2,6 +2,8 @@ package pl.com.chrzanowski.scaffolding.api;
 
 import pl.com.chrzanowski.scaffolding.domain.UserData;
 
+import java.time.LocalDateTime;
+
 public class UserGetResponse {
     private Long id;
     private String login;
@@ -18,7 +20,7 @@ public class UserGetResponse {
     private Boolean emailConfirmed;
     private String[] authorities;
 
-    public UserGetResponse(UserData data) {
+    public UserGetResponse(UserData data, String registrationDatetime) {
         this.id = data.getId();
         this.login = data.getLogin();
         this.firstName = data.getFirstName();
@@ -27,7 +29,7 @@ public class UserGetResponse {
         this.newsletterAccepted = data.getNewsletterAccepted();
         this.regulationAccepted = data.getRegulationAccepted();
         this.passwordHash = data.getPasswordHash();
-        this.registrationDatetime = data.getRegistrationDatetime().toString();
+        this.registrationDatetime = registrationDatetime;
         this.isEnabled = data.getEnabled();
         this.registrationIp = data.getRegistrationIp();
         this.userAgent = data.getRegistrationUserAgent();

@@ -192,14 +192,17 @@ public class UserData {
         this.registrationIp = WebUtil.getUserAgent(httpServletRequest);
         this.registrationUserAgent = WebUtil.getUserAgent(httpServletRequest);
     }
-
-    public UserData(String login, String passwordHash, String language, Boolean regulationAccepted,
+//to register
+    public UserData(String firstName, String secondName, String login, String passwordHash, String language, Boolean regulationAccepted,
                     Boolean newsletterAccepted, Boolean isEnabled, Boolean emailConfirmed, String[] authorities, HttpServletRequest httpServletRequest) {
+        this.firstName = firstName;
+        this.secondName = secondName;
         this.login = login;
         this.passwordHash = passwordHash;
         this.language = language;
         this.regulationAccepted = regulationAccepted;
         this.newsletterAccepted = newsletterAccepted;
+        this.registrationDatetime = LocalDateTime.now();
         this.isEnabled = isEnabled;
         this.emailConfirmed = emailConfirmed;
         this.registrationIp = WebUtil.getClientIp(httpServletRequest);

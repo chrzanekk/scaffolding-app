@@ -78,6 +78,8 @@ public class ScaffoldingEndpointAdmin {
     public void createUser(@RequestBody UserPostRequest request, HttpServletRequest httpServletRequest) {
         userService.registerUser(
                 new UserData(
+                        request.getFirstName(),
+                        request.getSecondName(),
                         request.getLogin(),
                         request.getPasswordHash(),
                         request.getLanguage(),
@@ -85,7 +87,7 @@ public class ScaffoldingEndpointAdmin {
                         request.getNewsletterAccepted(),
                         request.getIsEnabled(),
                         request.getIsEmailConfirmed(),
-                        request.getAuthorities(),
+                        new String[] {UserAuthority.USER.getCode()},
                         httpServletRequest));
     }
 
@@ -686,7 +688,7 @@ public class ScaffoldingEndpointAdmin {
     private List<UserGetResponse> usersToResponses(List<UserData> users) {
         List<UserGetResponse> list = new ArrayList<>();
         for (UserData user : users) {
-            list.add(new UserGetResponse(user));
+            list.add(new UserGetResponse(user, parseDateTime(user.getRegistrationDatetime())));
         }
         return list;
     }

@@ -36,6 +36,8 @@ public class ScaffoldingEndpoint {
     @PostMapping("/register-user")
     public void register(@RequestBody UserPostRequest request, HttpServletRequest httpServletRequest) {
         UserData userCreateRequest = new UserData(
+                request.getFirstName(),
+                request.getSecondName(),
                 request.getLogin(),
                 request.getPasswordHash(),
                 request.getLanguage(),
