@@ -63,6 +63,14 @@
                         <input id="create-login" type="text" class="form-control">
                     </div>
                     <div class="form-group">
+                        <label for="first-name" th:text="#{register.first.name}"></label>
+                        <input id="first-name" class="form-control" type="text" th:placeholder="#{register.first.name}">
+                    </div>
+                    <div class="form-group">
+                        <label for="last-name" th:text="#{register.last.name}"></label>
+                        <input id="last-name" class="form-control" type="text" th:placeholder="#{register.last.name}">
+                    </div>
+                    <div class="form-group">
                         <label for="password" th:text="#{register.password}"></label>
                         <input id="password" class="form-control" type="password" placeholder="********">
                         <small class="form-text text-muted" th:text="#{password.requirements}"></small>

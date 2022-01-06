@@ -2,13 +2,11 @@ package pl.com.chrzanowski.scaffolding.api;
 
 import pl.com.chrzanowski.scaffolding.domain.UserData;
 
-import java.time.LocalDateTime;
-
 public class UserGetResponse {
     private Long id;
     private String login;
     private String firstName;
-    private String secondName;
+    private String lastName;
     private String language;
     private Boolean newsletterAccepted;
     private Boolean regulationAccepted;
@@ -24,7 +22,7 @@ public class UserGetResponse {
         this.id = data.getId();
         this.login = data.getLogin();
         this.firstName = data.getFirstName();
-        this.secondName = data.getSecondName();
+        this.lastName = data.getLastName();
         this.language = data.getLanguage();
         this.newsletterAccepted = data.getNewsletterAccepted();
         this.regulationAccepted = data.getRegulationAccepted();
@@ -50,8 +48,8 @@ public class UserGetResponse {
         return firstName;
     }
 
-    public String getSecondName() {
-        return secondName;
+    public String getLastName() {
+        return lastName;
     }
 
     public Boolean getEnabled() {

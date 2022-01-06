@@ -26,8 +26,8 @@ public class NotificationsFromPanelService {
 
     public void createNotifications(CreateNotificationsParameters parameters) {
         validateParameters(parameters);
-        List<UserData> customers = userService.find(new UsersFilter(parameters.getLanguage()));
-        List<NotificationData> notifications = prepareNotifications(customers, parameters);
+        List<UserData> users = userService.find(new UsersFilter(parameters.getLanguage()));
+        List<NotificationData> notifications = prepareNotifications(users, parameters);
         notificationsService.validateAndCreate(notifications);
     }
 

@@ -5,7 +5,6 @@ import org.springframework.stereotype.Service;
 import pl.com.chrzanowski.scaffolding.domain.UserData;
 import pl.com.chrzanowski.scaffolding.domain.UsersFilter;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -41,7 +40,7 @@ public class UserJdbcRepository {
                 data.getLogin(),
                 data.getPasswordHash(),
                 data.getFirstName(),
-                data.getSecondName(),
+                data.getLastName(),
                 data.getLanguage(),
                 data.getRegulationAccepted(),
                 data.getNewsletterAccepted(),
@@ -74,7 +73,7 @@ public class UserJdbcRepository {
                 data.getLogin(),
                 data.getPasswordHash(),
                 data.getFirstName(),
-                data.getSecondName(),
+                data.getLastName(),
                 data.getLanguage(),
                 data.getRegulationAccepted(),
                 data.getNewsletterAccepted(),
@@ -107,28 +106,29 @@ public class UserJdbcRepository {
             }
 
             if (filter.getEnabled() != null) {
-                query += " AND is_enabled = " + (filter.getEnabled() ? "1" : "0");
+                query += " AND is_enabled = '" + (filter.getEnabled() ? "1" : "0") + "'";
             }
 
             if (filter.getNewsletterAccepted() != null) {
-                query += " AND newsletter_accepted = " + (filter.getNewsletterAccepted() ? "1" : "0");
+                query += " AND newsletter_accepted = '" + (filter.getNewsletterAccepted() ? "1" : "0") + "'";
             }
 
             if (filter.getEmailConfirmed() != null) {
-                query += " AND email_confirmed = " + (filter.getEmailConfirmed() ? "1" : "0");
+                query += " AND email_confirmed = '" + (filter.getEmailConfirmed() ? "1" : "0") + "'";
             }
 
             if (filter.getLanguage() != null) {
                 query += " AND language = '" + filter.getLanguage().getCode() + "'";
             }
 
+            if (filter.getDeleteDateTime() == null) {
+                query += " AND delete_datetime is null";
+            }
+
             if (filter.getLimit() != null) {
                 query += " LIMIT " + filter.getLimit();
             }
 
-            if (filter.getId() == null) {
-                query += " AND delete_datetime is null";
-            }
 
             query += preparePaginationQuery(filter.getPage(), filter.getPageSize());
 

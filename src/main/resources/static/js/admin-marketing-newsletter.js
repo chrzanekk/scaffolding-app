@@ -6,7 +6,7 @@ $(document).ready(function () {
 function send() {
 
     $.ajax({
-            url: "/admin/api/crs/marketing/newsletter",
+            url: "/admin/api/scaffolding/marketing/newsletter",
             type: "post",
             //dataType: "json",
             contentType: "application/json",

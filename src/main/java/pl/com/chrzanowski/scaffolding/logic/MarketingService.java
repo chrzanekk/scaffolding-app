@@ -23,7 +23,7 @@ public class MarketingService {
         if (newsletter == null || newsletter.getContent() == null || newsletter.getContent().size() == 0) {
             throw new IllegalArgumentException("Incorrect content");
         }
-        for (UserData user : userService.find(new UsersFilter(true, true, 10000l, true))) {
+        for (UserData user : userService.find(new UsersFilter(true, true, 10000l, true,null))) {
             newsletterService.sendNewsletterToCustomer(user, newsletter);
         }
     }

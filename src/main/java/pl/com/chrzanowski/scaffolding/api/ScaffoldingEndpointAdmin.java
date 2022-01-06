@@ -79,7 +79,7 @@ public class ScaffoldingEndpointAdmin {
         userService.registerUser(
                 new UserData(
                         request.getFirstName(),
-                        request.getSecondName(),
+                        request.getLastName(),
                         request.getLogin(),
                         request.getPasswordHash(),
                         request.getLanguage(),
@@ -96,7 +96,7 @@ public class ScaffoldingEndpointAdmin {
         UserData data = userService.get(id);
         userService.update(new UserData(id,
                 request.getFirstName(),
-                request.getSecondName(),
+                request.getLastName(),
                 request.getLogin(),
                 data.getPasswordHash(),
                 request.getLanguage(),

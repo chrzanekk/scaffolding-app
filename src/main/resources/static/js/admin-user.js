@@ -73,7 +73,7 @@ function sendUpdateRequest() {
         contentType: "application/json",
         data: JSON.stringify({
             firstName: $("#first-name").val(),
-            secondName: $("#last-name").val(),
+            lastName: $("#last-name").val(),
             login: $("#login").val(),
             language: $("#language").find(":selected").val(),
             isEnabled: $("#enabled").find(":selected").val(),

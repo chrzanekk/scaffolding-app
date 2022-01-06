@@ -2,6 +2,8 @@ package pl.com.chrzanowski.scaffolding.domain;
 
 import pl.com.chrzanowski.scaffolding.logic.Language;
 
+import java.time.LocalDateTime;
+
 public class UsersFilter {
     private Long id;
     private String login;
@@ -13,6 +15,7 @@ public class UsersFilter {
     private Long page;
     private Long pageSize;
     private String loginLike;
+    private LocalDateTime deleteDateTime;
 
     public UsersFilter(String loginLike, Long page, Long pageSize) {
         this.page = page;
@@ -37,11 +40,13 @@ public class UsersFilter {
         this.language = language;
     }
 
-    public UsersFilter(Boolean newsletterAccepted, Boolean isEnabled, Long limit, Boolean emailConfirmed) {
+    public UsersFilter(Boolean newsletterAccepted, Boolean isEnabled, Long limit, Boolean emailConfirmed,
+                       LocalDateTime deleteDateTime) {
         this.newsletterAccepted = newsletterAccepted;
         this.isEnabled = isEnabled;
         this.limit = limit;
         this.emailConfirmed = emailConfirmed;
+        this.deleteDateTime = deleteDateTime;
     }
 
     public Long getId() {
@@ -82,5 +87,9 @@ public class UsersFilter {
 
     public String getLoginLike() {
         return loginLike;
+    }
+
+    public LocalDateTime getDeleteDateTime() {
+        return deleteDateTime;
     }
 }

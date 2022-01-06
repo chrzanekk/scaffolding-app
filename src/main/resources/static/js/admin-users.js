@@ -52,7 +52,7 @@ function fillRow(user) {
     $('#records').append(
         "<tr>" +
             "<td class='align-middle'>" + user.firstName + "</td>" +
-            "<td class='align-middle'>" + user.secondName + "</td>" +
+            "<td class='align-middle'>" + user.lastName + "</td>" +
             "<td class='align-middle'>" + user.login + "</td>" +
             "<td class='align-middle'>" + user.language + "</td>" +
             "<td class='align-middle'>" + prepareDateTime(user.registrationDatetime) + "</td>" +

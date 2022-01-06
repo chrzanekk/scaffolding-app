@@ -7,18 +7,20 @@ function performUserRegistration() {
     $("#register-button").prop( "disabled", true );
 
     var login = $("#login").val();
+    var firstName = $("#first-name").val();
+    var lastName = $("#last-name").val();
     var password = $("#password").val();
     var repeatedPassword = $("#repeated-password").val();
     var language = $("#language").find(":selected").val();
 
     if(arePasswordsValid(password, repeatedPassword)) {
-        sendUserPostRequest(login, password, language);
+        sendUserPostRequest(login, firstName, lastName, password, language);
     } else {
         $("#register-button").prop( "disabled", false );
     }
 }
 
-function sendUserPostRequest(login, password, language) {
+function sendUserPostRequest(login, firstName, lastName, password, language) {
    $.ajax({
            url: "/api/scaffolding/register-user",
            method: "post",
@@ -26,6 +28,8 @@ function sendUserPostRequest(login, password, language) {
            data: JSON.stringify(
                {
                    login: login,
+                   firstName: firstName,
+                   lastName: lastName,
                    passwordHash: hash(password),
                    language: language,
                    regulationAccepted: $("#regulation").prop('checked'),

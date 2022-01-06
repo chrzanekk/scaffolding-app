@@ -45,7 +45,7 @@ public class ApplicationConfig {
     @Value("${company.contact.mailto}")
     private String companyContactMailto;
 
-    @Value("${course-platform.url}")
+    @Value("${platform.url}")
     private String scaffoldingAppUrl;
 
     @Value("${password.reset.token.validity.time.in.minutes}")

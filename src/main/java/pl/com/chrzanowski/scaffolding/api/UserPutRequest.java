@@ -6,7 +6,7 @@ public class UserPutRequest {
 
     private String login;
     private String firstName;
-    private String secondName;
+    private String lastName;
     private String passwordHash;
     private String language;
     private Boolean regulationAccepted;
@@ -27,8 +27,8 @@ public class UserPutRequest {
         return firstName;
     }
 
-    public String getSecondName() {
-        return secondName;
+    public String getLastName() {
+        return lastName;
     }
 
     public Boolean getEnabled() {

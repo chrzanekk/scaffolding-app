@@ -3,14 +3,13 @@ package pl.com.chrzanowski.scaffolding.api;
 public class UserPostRequest {
 
     private String login;
+    private String firstName;
+    private String lastName;
     private String passwordHash;
     private String language;
     private Boolean regulationAccepted;
     private Boolean newsletterAccepted;
-    private String firstName;
-    private String secondName;
     private Boolean isEnabled;
-    private String invoiceFirstAndLastName;
     private Boolean isEmailConfirmed;
     private String[] authorities;
 
@@ -42,16 +41,12 @@ public class UserPostRequest {
         return firstName;
     }
 
-    public String getSecondName() {
-        return secondName;
+    public String getLastName() {
+        return lastName;
     }
 
     public Boolean getIsEnabled() {
         return isEnabled;
-    }
-
-    public String getInvoiceFirstAndLastName() {
-        return invoiceFirstAndLastName;
     }
 
     public Boolean getIsEmailConfirmed() {
