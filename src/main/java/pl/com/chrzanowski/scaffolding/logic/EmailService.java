@@ -47,17 +47,6 @@ public class EmailService {
         sentEmailsService.create(new SentEmailData(recipient.getId(), title, content, locale.toLanguageTag(), MailEvent.AFTER_REGISTRATION.getCode()));
     }
 
-//    public void sendAfterOrderMail(CustomerData recipient, Locale locale, CourseOrderData order, List<CourseData> boughtCourses) {
-//        Context context = new Context(locale);
-//        context.setVariable("pageUrl", applicationConfig.getCoursePlatformUrl());
-//        context.setVariable("order", order);
-//        context.setVariable("boughtCourses", boughtCourses);
-//        String content = templateEngine.process("mail-after-order", context);
-//        String title = chooseTitle(EmailTitle.AFTER_ORDER, locale);
-//        sendEmail(recipient.getLogin(), title, content);
-//        sentEmailsService.create(new SentEmailData(order.getId(), recipient.getId(), title, content, locale.toLanguageTag(), MailEvent.AFTER_ORDER.getCode()));
-//    }
-
     public void sendAfterPasswordChangeMail(UserData recipient) {
         Locale locale = Locale.forLanguageTag(recipient.getLanguage());
         Context context = new Context(locale);
