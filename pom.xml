@@ -154,6 +154,7 @@
     </dependencies>
 
     <build>
+        <finalName>scaff-app</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
