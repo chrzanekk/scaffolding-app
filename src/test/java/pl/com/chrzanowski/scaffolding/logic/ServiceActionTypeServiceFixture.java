@@ -17,11 +17,15 @@ public class ServiceActionTypeServiceFixture {
     @Autowired
     private ServiceActionTypeService serviceActionTypeService;
 
+
+
     @Autowired
     private EntityManager em;
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void createActionTypes() {
+
+
 
         ServiceActionTypeData data = new ServiceActionTypeData("serwis olejowy");
         serviceActionTypeService.add(data);

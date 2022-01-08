@@ -1,12 +1,10 @@
 package pl.com.chrzanowski.scaffolding.logic;
 
-import org.junit.Ignore;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.annotation.DirtiesContext;
-import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import pl.com.chrzanowski.scaffolding.Application;
 import pl.com.chrzanowski.scaffolding.domain.ServiceActionTypeData;
@@ -24,15 +22,19 @@ public class ServiceActionTypeServiceIT {
     private ServiceActionTypeService serviceActionTypeService;
 
     @Autowired
+    private ServiceActionTypeServiceDB serviceActionTypeServiceDB;
+
+    @Autowired
     private ServiceActionTypeServiceFixture serviceActionTypeFixture;
 
 
     @Test
     public void checkIsAnyDataExists() {
-//        robienie tabel
-//        dane
-//        test
+
+        serviceActionTypeServiceDB.createServiceTypeTable();
+
         serviceActionTypeFixture.createActionTypes();
+
 
         ServiceActionTypesFilter filter = new ServiceActionTypesFilter();
 
@@ -43,9 +45,12 @@ public class ServiceActionTypeServiceIT {
 
     @Test
     public void checkIfTheGivenNameExistsWithPositiveResult() {
+//        robienie tabel
+        serviceActionTypeServiceDB.createServiceTypeTable();
+//        dane
         serviceActionTypeFixture.createActionTypes();
-
-        ServiceActionTypesFilter filter = new ServiceActionTypesFilter("inne");
+//        test
+        ServiceActionTypesFilter filter = new ServiceActionTypesFilter("naprawy");
 
         List<ServiceActionTypeData> result = serviceActionTypeService.find(filter);
 
@@ -54,7 +59,11 @@ public class ServiceActionTypeServiceIT {
 
     @Test
     public void checkIfTheGivenNameExistsWithNegativeResult() {
-
+//        robienie tabel
+        serviceActionTypeServiceDB.createServiceTypeTable();
+//        dane
+        serviceActionTypeFixture.createActionTypes();
+//        test
         ServiceActionTypesFilter filter = new ServiceActionTypesFilter("naprawa silnika");
 
         List<ServiceActionTypeData> result = serviceActionTypeService.find(filter);
@@ -65,7 +74,11 @@ public class ServiceActionTypeServiceIT {
 
     @Test(expected = IllegalArgumentException.class)
     public void checkIfDataValidationWorksWhenGivenNameIsEmptyString() {
-
+//        robienie tabel
+        serviceActionTypeServiceDB.createServiceTypeTable();
+//        dane
+        serviceActionTypeFixture.createActionTypes();
+//        test
         ServiceActionTypeData newData = new ServiceActionTypeData("");
 
         serviceActionTypeService.add(newData);
@@ -74,19 +87,15 @@ public class ServiceActionTypeServiceIT {
 
     @Test(expected = IllegalArgumentException.class)
     public void checkIfDataValidationWorksWhenGivenNameIsNull() {
-
+//        robienie tabel
+        serviceActionTypeServiceDB.createServiceTypeTable();
+//        dane
+        serviceActionTypeFixture.createActionTypes();
+//        test
         ServiceActionTypeData newData = new ServiceActionTypeData(null);
 
         serviceActionTypeService.add(newData);
 
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void checkIfDataValidationWorksWhenGivenNameProtectedAgainstRemove() {
-
-        ServiceActionTypeData newData = new ServiceActionTypeData(8L,"inne");
-
-        serviceActionTypeService.update(newData);
-
-    }
 }

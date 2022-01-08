@@ -21,8 +21,18 @@ public class VehicleBrandServiceIT {
     @Autowired
     private VehicleBrandService vehicleBrandService;
 
+    @Autowired
+    private VehicleBrandServiceFixture vehicleBrandServiceFixture;
+
+    @Autowired
+    private VehicleBrandServiceDB vehicleBrandServiceDB;
+
     @Test
     public void checkIsAnyDataExists() {
+        vehicleBrandServiceDB.createVehicleBrandTable();
+
+        vehicleBrandServiceFixture.createVehicleBrands();
+
         VehicleBrandFilter filter = new VehicleBrandFilter();
 
         Integer size = vehicleBrandService.find(filter).size();
@@ -32,6 +42,9 @@ public class VehicleBrandServiceIT {
 
     @Test
     public void checkIfTheGivenNameExistsWithPositiveResult() {
+        vehicleBrandServiceDB.createVehicleBrandTable();
+
+        vehicleBrandServiceFixture.createVehicleBrands();
 
         VehicleBrandFilter filter = new VehicleBrandFilter("Audi");
 
@@ -43,6 +56,9 @@ public class VehicleBrandServiceIT {
 
     @Test
     public void checkIfTheGivenNameExistsWithNegativeResult() {
+        vehicleBrandServiceDB.createVehicleBrandTable();
+
+        vehicleBrandServiceFixture.createVehicleBrands();
 
         VehicleBrandFilter filter = new VehicleBrandFilter("Moskwicz");
 
@@ -54,6 +70,9 @@ public class VehicleBrandServiceIT {
 
     @Test(expected = IllegalArgumentException.class)
     public void checkIfDataValidationWorksWhenGivenNameIsEmptyString() {
+        vehicleBrandServiceDB.createVehicleBrandTable();
+
+        vehicleBrandServiceFixture.createVehicleBrands();
 
         VehicleBrandData data = new VehicleBrandData("");
 
@@ -63,6 +82,9 @@ public class VehicleBrandServiceIT {
 
     @Test(expected = IllegalArgumentException.class)
     public void checkIfDataValidationWorksWhenGivenNameIsNull() {
+        vehicleBrandServiceDB.createVehicleBrandTable();
+
+        vehicleBrandServiceFixture.createVehicleBrands();
 
         VehicleBrandData data = new VehicleBrandData(null);
 
