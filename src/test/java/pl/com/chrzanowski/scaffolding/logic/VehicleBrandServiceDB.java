@@ -5,26 +5,18 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 
 @Service
 public class VehicleBrandServiceDB {
 
-    static final String JDBC_DRIVER = "org.h2.Driver";
-    static final String DB_URL = "jdbc:h2:mem:testdb";
-    static final String USER = "sa";
-    static final String PASSWORD = "";
-
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void createVehicleBrandTable() {
         Connection connection;
         Statement statement;
         try{
-            Class.forName(JDBC_DRIVER);
-            System.out.println("Connecting to db...");
-            connection = DriverManager.getConnection(DB_URL,USER,PASSWORD);
+            connection = ConnectToTestDB.connectToTestDB();
             statement = connection.createStatement();
 
             String sql = "DROP TABLE IF EXISTS vehicle_brand";

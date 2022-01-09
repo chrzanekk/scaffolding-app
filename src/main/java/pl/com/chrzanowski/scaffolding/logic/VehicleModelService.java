@@ -50,7 +50,7 @@ public class VehicleModelService implements IVehicleModels {
     }
 
     private void validateData(VehicleModelData data) {
-        DataValidationUtil.validateValue(data.getId(),"Marka");
+        DataValidationUtil.validateValue(data.getBrandId(),"Marka");
         DataValidationUtil.validateTextField(data.getName(), "Model");
     }
 }

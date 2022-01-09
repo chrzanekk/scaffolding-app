@@ -20,9 +20,19 @@ public class VehicleModelServiceIT {
     @Autowired
     private VehicleModelService vehicleModelService;
 
+    @Autowired
+    private VehicleModelServiceFixture vehicleModelServiceFixture;
+
+    @Autowired
+    private VehicleModelServiceDB vehicleModelServiceDB;
+
 
     @Test
     public void checkIsAnyDataExists() {
+
+
+        vehicleModelServiceFixture.createVehicleBrandsAndModels();
+
         VehicleModelFilter filter = new VehicleModelFilter();
 
         Integer size = vehicleModelService.find(filter).size();
@@ -32,6 +42,8 @@ public class VehicleModelServiceIT {
 
     @Test
     public void checkIfTheGivenNameExistsWithPositiveResult() {
+
+        vehicleModelServiceFixture.createVehicleBrandsAndModels();
 
         VehicleModelFilter filter = new VehicleModelFilter("A4");
 
@@ -43,6 +55,9 @@ public class VehicleModelServiceIT {
     @Test
     public void checkIfTheGivenNameExistsWithNegativeResult() {
 
+
+        vehicleModelServiceFixture.createVehicleBrandsAndModels();
+
         VehicleModelFilter filter = new VehicleModelFilter("A5");
 
         List<VehicleModelData> result = vehicleModelService.find(filter);
@@ -52,6 +67,9 @@ public class VehicleModelServiceIT {
 
     @Test
     public void checkIfGivenModelNameExistsWithBrandIdWithNegativeResult() {
+
+
+        vehicleModelServiceFixture.createVehicleBrandsAndModels();
 
         VehicleModelFilter filter = new VehicleModelFilter(null,12L,"A5");
 
@@ -63,7 +81,9 @@ public class VehicleModelServiceIT {
     @Test
     public void checkIfGivenModelNameExistsWithBrandIdWithPositiveResult() {
 
-        VehicleModelFilter filter = new VehicleModelFilter(null,12L,"A4");
+        vehicleModelServiceFixture.createVehicleBrandsAndModels();
+
+        VehicleModelFilter filter = new VehicleModelFilter(null,1L,"A4");
 
         List<VehicleModelData> result = vehicleModelService.find(filter);
 
@@ -72,6 +92,8 @@ public class VehicleModelServiceIT {
 
     @Test(expected = IllegalArgumentException.class)
     public void checkIfDataValidationWorksWhenGivenNameWithoutBrandId() {
+
+        vehicleModelServiceFixture.createVehicleBrandsAndModels();
 
         VehicleModelData data = new VehicleModelData("Mercedes",null);
 
@@ -82,6 +104,9 @@ public class VehicleModelServiceIT {
     @Test(expected = IllegalArgumentException.class)
     public void checkIfDataValidationWorksWhenGivenEmptyStringAsNameAndNullAsBrandId() {
 
+
+        vehicleModelServiceFixture.createVehicleBrandsAndModels();
+
         VehicleModelData data = new VehicleModelData("",null);
 
         vehicleModelService.add(data);
@@ -90,6 +115,9 @@ public class VehicleModelServiceIT {
     @Test(expected = IllegalArgumentException.class)
     public void checkIfDataValidationWorksWhenGivenEmptyStringAsNameAndBrandId() {
 
+
+        vehicleModelServiceFixture.createVehicleBrandsAndModels();
+
         VehicleModelData data = new VehicleModelData("",1L);
 
         vehicleModelService.add(data);
@@ -97,6 +125,9 @@ public class VehicleModelServiceIT {
 
     @Test(expected = IllegalArgumentException.class)
     public void checkIfDataValidationWorksWhenGivenNullAsNameAndBrandId() {
+
+
+        vehicleModelServiceFixture.createVehicleBrandsAndModels();
 
         VehicleModelData data = new VehicleModelData(null,1L);
 
