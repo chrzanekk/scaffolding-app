@@ -17,7 +17,7 @@ public class ConnectToTestDB {
     static final String PASSWORD = "";
 
 
-    public static Connection connectToTestDB() {
+    public static Connection getConnection() {
         Connection connection = null;
         try{
             Class.forName(JDBC_DRIVER);

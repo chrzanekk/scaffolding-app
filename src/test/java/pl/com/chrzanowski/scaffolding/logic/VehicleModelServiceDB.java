@@ -12,11 +12,11 @@ import java.sql.Statement;
 public class VehicleModelServiceDB {
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
-    public void createVehicleBrandAndModelTable() {
+    public void createTable() {
         Connection connection;
         Statement statement;
         try{
-            connection = ConnectToTestDB.connectToTestDB();
+            connection = ConnectToTestDB.getConnection();
             statement = connection.createStatement();
 
 //            String sql = "DROP TABLE IF EXISTS vehicle_brand";

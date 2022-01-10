@@ -29,7 +29,7 @@ public class VehicleBrandServiceIT {
 
     @Test
     public void checkIsAnyDataExists() {
-        vehicleBrandServiceDB.createVehicleBrandTable();
+        vehicleBrandServiceDB.createTable();
 
         vehicleBrandServiceFixture.createVehicleBrands();
 
@@ -42,7 +42,7 @@ public class VehicleBrandServiceIT {
 
     @Test
     public void checkIfTheGivenNameExistsWithPositiveResult() {
-        vehicleBrandServiceDB.createVehicleBrandTable();
+        vehicleBrandServiceDB.createTable();
 
         vehicleBrandServiceFixture.createVehicleBrands();
 
@@ -56,7 +56,7 @@ public class VehicleBrandServiceIT {
 
     @Test
     public void checkIfTheGivenNameExistsWithNegativeResult() {
-        vehicleBrandServiceDB.createVehicleBrandTable();
+        vehicleBrandServiceDB.createTable();
 
         vehicleBrandServiceFixture.createVehicleBrands();
 
@@ -70,7 +70,7 @@ public class VehicleBrandServiceIT {
 
     @Test(expected = IllegalArgumentException.class)
     public void checkIfDataValidationWorksWhenGivenNameIsEmptyString() {
-        vehicleBrandServiceDB.createVehicleBrandTable();
+        vehicleBrandServiceDB.createTable();
 
         vehicleBrandServiceFixture.createVehicleBrands();
 
@@ -82,7 +82,7 @@ public class VehicleBrandServiceIT {
 
     @Test(expected = IllegalArgumentException.class)
     public void checkIfDataValidationWorksWhenGivenNameIsNull() {
-        vehicleBrandServiceDB.createVehicleBrandTable();
+        vehicleBrandServiceDB.createTable();
 
         vehicleBrandServiceFixture.createVehicleBrands();
 

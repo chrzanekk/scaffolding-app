@@ -12,11 +12,11 @@ import java.sql.Statement;
 public class ServiceActionTypeServiceDB {
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
-    public void createServiceTypeTable() {
+    public void createTable() {
         Connection connection;
         Statement statement;
         try{
-            connection = ConnectToTestDB.connectToTestDB();
+            connection = ConnectToTestDB.getConnection();
             statement = connection.createStatement();
 
             String sql = "DROP TABLE IF EXISTS service_action_type";

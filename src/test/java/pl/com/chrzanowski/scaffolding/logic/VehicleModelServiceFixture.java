@@ -4,8 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import pl.com.chrzanowski.scaffolding.domain.VehicleBrandData;
-import pl.com.chrzanowski.scaffolding.domain.VehicleBrandFilter;
 import pl.com.chrzanowski.scaffolding.domain.VehicleModelData;
 
 import javax.persistence.EntityManager;
@@ -28,7 +26,7 @@ public class VehicleModelServiceFixture {
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void createVehicleBrandsAndModels() {
 
-        vehicleModelServiceDB.createVehicleBrandAndModelTable();
+        vehicleModelServiceDB.createTable();
 //
 //        VehicleBrandData audi = new VehicleBrandData("Audi");
 //        Long audiId = vehicleBrandService.add(audi);

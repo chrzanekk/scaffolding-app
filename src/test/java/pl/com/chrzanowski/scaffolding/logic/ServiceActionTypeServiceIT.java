@@ -31,7 +31,7 @@ public class ServiceActionTypeServiceIT {
     @Test
     public void checkIsAnyDataExists() {
 
-        serviceActionTypeServiceDB.createServiceTypeTable();
+        serviceActionTypeServiceDB.createTable();
 
         serviceActionTypeFixture.createActionTypes();
 
@@ -46,7 +46,7 @@ public class ServiceActionTypeServiceIT {
     @Test
     public void checkIfTheGivenNameExistsWithPositiveResult() {
 //        robienie tabel
-        serviceActionTypeServiceDB.createServiceTypeTable();
+        serviceActionTypeServiceDB.createTable();
 //        dane
         serviceActionTypeFixture.createActionTypes();
 //        test
@@ -60,7 +60,7 @@ public class ServiceActionTypeServiceIT {
     @Test
     public void checkIfTheGivenNameExistsWithNegativeResult() {
 //        robienie tabel
-        serviceActionTypeServiceDB.createServiceTypeTable();
+        serviceActionTypeServiceDB.createTable();
 //        dane
         serviceActionTypeFixture.createActionTypes();
 //        test
@@ -75,7 +75,7 @@ public class ServiceActionTypeServiceIT {
     @Test(expected = IllegalArgumentException.class)
     public void checkIfDataValidationWorksWhenGivenNameIsEmptyString() {
 //        robienie tabel
-        serviceActionTypeServiceDB.createServiceTypeTable();
+        serviceActionTypeServiceDB.createTable();
 //        dane
         serviceActionTypeFixture.createActionTypes();
 //        test
@@ -88,7 +88,7 @@ public class ServiceActionTypeServiceIT {
     @Test(expected = IllegalArgumentException.class)
     public void checkIfDataValidationWorksWhenGivenNameIsNull() {
 //        robienie tabel
-        serviceActionTypeServiceDB.createServiceTypeTable();
+        serviceActionTypeServiceDB.createTable();
 //        dane
         serviceActionTypeFixture.createActionTypes();
 //        test
