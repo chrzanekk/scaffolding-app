@@ -36,17 +36,17 @@ public class VehicleTiresServiceIT {
 
         assertThat(size).isNotZero();
     }
-//
-//    @Test
-//    public void checkIfTheGivenTireBrandExistsWithPositiveResult() {
-//
-//        VehicleTiresFilter filter = new VehicleTiresFilter("Hancook", null);
-//
-//        List<VehicleTiresData> result = vehicleTiresService.find(filter);
-//
-//        assertThat(result).hasSize(2);
-//    }
-//
+
+    @Test
+    public void checkIfTheGivenTireBrandExistsWithPositiveResult() {
+        //given
+        VehicleTiresFilter filter = new VehicleTiresFilter("Pirelli", null);
+        //when
+        List<VehicleTiresData> result = vehicleTiresService.find(filter);
+        //then
+        assertThat(result).hasSize(1);
+    }
+
 //    @Test
 //    public void checkIfTheGivenTireModelExistsWithPositiveResult() {
 //

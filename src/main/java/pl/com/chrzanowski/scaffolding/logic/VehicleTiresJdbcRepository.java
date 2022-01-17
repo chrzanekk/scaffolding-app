@@ -143,7 +143,7 @@ public class VehicleTiresJdbcRepository {
             }
 
             if (filter.getSeasonName() != null) {
-                query += " AND vehicle_season.name = '" + filter.getSeasonName() + "'";
+                query += " AND tire_season.name = '" + filter.getSeasonName() + "'";
             }
 
             if (filter.getPage() != null && filter.getPageSize() != null) {

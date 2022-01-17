@@ -17,8 +17,6 @@ public class ServiceActionTypeServiceFixture {
     @Autowired
     private ServiceActionTypeService serviceActionTypeService;
 
-
-
     @Autowired
     private EntityManager em;
 

@@ -72,8 +72,26 @@ public class ApplicationConfig {
     @Value("${company.page.url}")
     private String companyPageUrl;
 
+    @Value("${path-to-service-actions-demand-pdf}")
+    private String pathToServiceActionsPdf;
+
+    @Value("${path-to-fonts}")
+    private String pathToFonts;
+
+
     private String templateNameProductsDemandPdf = "products-demand-pdf.html";
 
+    public String getPathToServiceActionsPdf() {
+        return pathToServiceActionsPdf;
+    }
+
+    public String getTemplateNameProductsDemandPdf() {
+        return templateNameProductsDemandPdf;
+    }
+
+    public String getPathToFonts() {
+        return pathToFonts;
+    }
 
     public String getReplyToEmail() {
         return replyToEmail;

@@ -16,38 +16,40 @@ public class VehicleModelServiceDB {
         Connection connection;
         Statement statement;
         try{
-            connection = ConnectToTestDB.getConnection();
+            connection = TestDB.getConnection();
             statement = connection.createStatement();
 
-//            String sql = "DROP TABLE IF EXISTS vehicle_brand";
-//            statement.executeUpdate(sql);
-
-            String sql = "DROP TABLE IF EXISTS vehicle_model";
+            String sql = "DROP TABLE IF EXISTS vehicle_brand";
             statement.executeUpdate(sql);
 
-//            sql = "CREATE TABLE vehicle_brand (\n" +
-//                    "\tid int auto_increment,\n" +
-//                    "\tname varchar(30) not null,\n" +
-//                    "\tcreate_date datetime default now(),\n" +
-//                    "\tmodify_date datetime,\n" +
-//                    "\tremove_date datetime)";
-//            statement.executeUpdate(sql);
-//
-//            sql = "ALTER TABLE vehicle_brand ADD PRIMARY KEY (id)";
-//            statement.executeUpdate(sql);
+            sql = "DROP TABLE IF EXISTS vehicle_model";
+            statement.executeUpdate(sql);
 
-            sql = "CREATE TABLE vehicle_model (\n" +
+            sql = "CREATE TABLE vehicle_brand (\n" +
                     "\tid int auto_increment,\n" +
-                    "\tbrand_id int not null,\n" +
-                    "\tname varchar(30),\n" +
-                    "\tprimary key (id),\n" +
+                    "\tname varchar(30) not null,\n" +
                     "\tcreate_date datetime default now(),\n" +
                     "\tmodify_date datetime,\n" +
                     "\tremove_date datetime)";
             statement.executeUpdate(sql);
 
-//            sql = "ALTER TABLE vehicle_model ADD FOREIGN KEY (brand_id) REFERENCES vehicle_brand";
-//            statement.executeUpdate(sql);
+            sql = "ALTER TABLE vehicle_brand ADD PRIMARY KEY (id)";
+            statement.executeUpdate(sql);
+
+            sql = "CREATE TABLE vehicle_model (\n" +
+                    "\tid int auto_increment,\n" +
+                    "\tbrand_id int not null,\n" +
+                    "\tname varchar(30),\n" +
+                    "\tcreate_date datetime default now(),\n" +
+                    "\tmodify_date datetime,\n" +
+                    "\tremove_date datetime)";
+            statement.executeUpdate(sql);
+
+            sql = "ALTER TABLE vehicle_model ADD PRIMARY KEY (id)";
+            statement.executeUpdate(sql);
+
+            sql = "ALTER TABLE vehicle_model ADD FOREIGN KEY (brand_id) REFERENCES vehicle_brand";
+            statement.executeUpdate(sql);
 
             statement.close();
             connection.close();

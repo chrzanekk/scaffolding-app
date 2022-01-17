@@ -16,7 +16,7 @@ public class VehicleBrandServiceDB {
         Connection connection;
         Statement statement;
         try{
-            connection = ConnectToTestDB.getConnection();
+            connection = TestDB.getConnection();
             statement = connection.createStatement();
 
             String sql = "DROP TABLE IF EXISTS vehicle_brand";

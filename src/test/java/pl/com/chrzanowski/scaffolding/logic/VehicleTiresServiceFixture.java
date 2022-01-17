@@ -30,8 +30,6 @@ public class VehicleTiresServiceFixture {
 
         vehicleTiresServiceDB.createTables();
 
-        String sql = "INSERT INTO tire_season ('name') VALUES ('letnie')";
-
         VehicleTiresData setOne = new VehicleTiresData(3L,
                 "Pirelli",
                 "Summer Sport",

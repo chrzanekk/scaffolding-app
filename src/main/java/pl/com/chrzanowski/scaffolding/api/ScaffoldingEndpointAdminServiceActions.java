@@ -1,6 +1,10 @@
 package pl.com.chrzanowski.scaffolding.api;
 
+import org.springframework.core.io.InputStreamResource;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.com.chrzanowski.scaffolding.domain.ServiceActionsData;
 import pl.com.chrzanowski.scaffolding.domain.ServiceActionsFilter;
@@ -8,6 +12,7 @@ import pl.com.chrzanowski.scaffolding.domain.ServiceActionsInvoiceSummaryData;
 import pl.com.chrzanowski.scaffolding.logic.DataValidationUtil;
 import pl.com.chrzanowski.scaffolding.logic.IServiceActions;
 
+import java.io.ByteArrayInputStream;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -73,7 +78,7 @@ public class ScaffoldingEndpointAdminServiceActions {
             @RequestParam(name = "dateFrom", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateFrom,
             @RequestParam(name = "dateTo", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateTo) {
         ServiceActionsInvoiceSummaryData summary =
-                serviceActions.getActionInvoicesSummary(new ServiceActionsFilter(id,
+                serviceActions.findActionInvoicesSummary(new ServiceActionsFilter(id,
                         actionTypeName,
                         workshop,
                         dateFrom,
@@ -144,6 +149,35 @@ public class ScaffoldingEndpointAdminServiceActions {
                 request.getModifyDate(),
                 request.getRemoveDate()
         ));
+    }
+
+    @GetMapping(path = "vehicle-service-actions/pdf/{id}", produces = MediaType.APPLICATION_PDF_VALUE)
+    public ResponseEntity<InputStreamResource> getServiceActionsPdf(
+            @PathVariable Long id,
+            @RequestParam(name = "serviceActionTypeName", required = false) String actionTypeName,
+            @RequestParam(name = "workshopName", required = false) String workshop,
+            @RequestParam(name = "dateFrom", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateFrom,
+            @RequestParam(name = "dateTo", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateTo,
+            @RequestParam(name = "page", required = false, defaultValue = "1") Long page,
+            @RequestParam(name = "page_size", required = false, defaultValue = "1000000") Long pageSize) {
+        ByteArrayInputStream bis = serviceActions.getActionsDemandWithSummaryPdf(new ServiceActionsFilter(
+                id,
+                actionTypeName,
+                workshop,
+                dateFrom,
+                dateTo,
+                page,
+                pageSize,
+                false));
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Disposition", "inline; filename=request_" + LocalDate.now() + ".pdf");
+
+        return ResponseEntity
+                .ok()
+                .headers(headers)
+                .contentType(MediaType.APPLICATION_PDF)
+                .body(new InputStreamResource(bis));
     }
 
     private List<ServiceActionGetResponse> actionsToResponse(List<ServiceActionsData> actions) {

@@ -30,16 +30,15 @@ public class ServiceActionTypeServiceIT {
 
     @Test
     public void checkIsAnyDataExists() {
-
+        //given
         serviceActionTypeServiceDB.createTable();
-
         serviceActionTypeFixture.createActionTypes();
-
-
         ServiceActionTypesFilter filter = new ServiceActionTypesFilter();
 
+        //when
         Integer size = serviceActionTypeService.find(filter).size();
 
+        //then
         assertThat(size).isNotZero();
     }
 

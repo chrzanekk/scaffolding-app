@@ -16,3 +16,4 @@ src/main/resources/application-mac.properties
 application-prod-backup-test.properties
 /src/main/resources/application-kondzio.properties
 /*.iml
+/src/main/resources/application.properties

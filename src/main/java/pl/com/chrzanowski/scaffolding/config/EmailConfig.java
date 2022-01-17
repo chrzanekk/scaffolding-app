@@ -6,7 +6,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class EmailConfig {
 
-    @Value("${masterdieta-emails-disabled}")
+    @Value("${emails-disabled}")
     private Boolean emailsDisabled;
 
     public Boolean getEmailsDisabled() {
