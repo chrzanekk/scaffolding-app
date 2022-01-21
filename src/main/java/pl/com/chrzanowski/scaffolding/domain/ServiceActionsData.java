@@ -25,6 +25,7 @@ public class ServiceActionsData {
     private LocalDateTime createDate;
     private LocalDateTime modifyDate;
     private LocalDateTime removeDate;
+    private Long ordinalNumber;
 
 
     //  find method in service
@@ -62,6 +63,44 @@ public class ServiceActionsData {
         this.serviceActionDescription = serviceActionDescription;
         this.modifyDate = modifyDate;
         this.removeDate = removeDate;
+    }
+
+    public ServiceActionsData(Long id,
+                              Long vehicleId,
+                              Integer carMileage,
+                              LocalDate serviceDate,
+                              String invoiceNumber,
+                              BigDecimal invoiceGrossValue,
+                              BigDecimal invoiceNetValue,
+                              BigDecimal taxValue,
+                              BigDecimal taxRate,
+                              Long workshopId,
+                              Long serviceActionTypeId,
+                              String actionTypeName,
+                              String workshopName,
+                              WorkshopsData workshopsData,
+                              String serviceActionDescription,
+                              LocalDateTime modifyDate,
+                              LocalDateTime removeDate,
+                              Long ordinalNumber) {
+        this.id = id;
+        this.vehicleId = vehicleId;
+        this.carMileage = carMileage;
+        this.serviceDate = serviceDate;
+        this.invoiceNumber = invoiceNumber;
+        this.invoiceGrossValue = invoiceGrossValue;
+        this.invoiceNetValue = invoiceNetValue;
+        this.taxValue = taxValue;
+        this.taxRate = taxRate;
+        this.workshopId = workshopId;
+        this.workshopName = workshopName;
+        this.workshopsData = workshopsData;
+        this.serviceActionTypeId = serviceActionTypeId;
+        this.serviceActionTypeName = actionTypeName;
+        this.serviceActionDescription = serviceActionDescription;
+        this.modifyDate = modifyDate;
+        this.removeDate = removeDate;
+        this.ordinalNumber = ordinalNumber;
     }
 
     //post method in api
@@ -162,6 +201,30 @@ public class ServiceActionsData {
         return new ServiceActionsData(id, vehicleId, serviceDate, serviceActionTypeId, serviceActionTypeName);
     }
 
+    static ServiceActionsData createForPdfDemandData(ServiceActionsData data, Long ordinalNumber) {
+        return new ServiceActionsData(data.getId(),
+                data.getVehicleId(),
+                data.getCarMileage(),
+                data.getServiceDate(),
+                data.getInvoiceNumber(),
+                data.getInvoiceGrossValue(),
+                data.getInvoiceNetValue(),
+                data.getTaxValue(),
+                data.getTaxRate(),
+                data.getWorkshopId(),
+                data.getServiceActionTypeId(),
+                data.getServiceActionTypeName(),
+                data.getWorkshopName(),
+                data.getWorkshopsData(),
+                data.getServiceActionDescription(),
+                data.getModifyDate(),
+                data.getRemoveDate(),
+                ordinalNumber
+                );
+    }
+
+
+
     public Long getId() {
         return id;
     }
@@ -232,5 +295,9 @@ public class ServiceActionsData {
 
     public LocalDateTime getRemoveDate() {
         return removeDate;
+    }
+
+    public Long getOrdinalNumber() {
+        return ordinalNumber;
     }
 }

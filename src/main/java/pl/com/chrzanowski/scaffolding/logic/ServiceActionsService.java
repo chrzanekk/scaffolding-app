@@ -69,7 +69,7 @@ public class ServiceActionsService implements IServiceActions {
     public ServiceActionsDemandResultData findActionsDemandWithSummary(ServiceActionsFilter filter) {
         ServiceActionsInvoiceSummaryData summaryData =
                 getSummaryOfInvoices(serviceActionsJdbcRepository.findSummaryInvoiceValues(filter));
-        List<ServiceActionsData> serviceActionsData = getActions(serviceActionsJdbcRepository.find(filter));
+        List<ServiceActionsData> serviceActionsData = getActionsWithOrdinalNumber(serviceActionsJdbcRepository.find(filter));
         VehicleData vehicleData = vehiclesService.findById(new VehicleFilter(filter.getVehicleId()));
 
 
@@ -167,6 +167,45 @@ public class ServiceActionsService implements IServiceActions {
                     getDateTime(row, "modify_date"),
                     getDateTime(row, "remove_date")
             ));
+        }
+        return list;
+    }
+
+    private List<ServiceActionsData> getActionsWithOrdinalNumber(List<Map<String,Object>> data) {
+        List<ServiceActionsData> list = new ArrayList<>();
+        Long ordinalNumber = 1L;
+        for (Map<String, Object> row : data) {
+            list.add(new ServiceActionsData(
+                    getLong(row, "id"),
+                    getLong(row, "vehicle_id"),
+                    getInteger(row, "car_mileage"),
+                    getDate(row, "service_date"),
+                    getString(row, "invoice_no"),
+                    getBigDecimal(row, "invoice_gross_value"),
+                    getBigDecimal(row, "invoice_net_value"),
+                    getBigDecimal(row, "tax_value"),
+                    getBigDecimal(row,"tax_rate"),
+                    getLong(row, "workshop_id"),
+                    getLong(row, "service_action_type_id"),
+                    getString(row, "action_type"),
+                    getString(row, "workshop"),
+                    new WorkshopsData(
+                            getLong(row, "workshopId"),
+                            getString(row, "workshop"),
+                            getString(row, "tax_number"),
+                            getString(row, "street"),
+                            getString(row, "building_number"),
+                            getString(row, "apartment_number"),
+                            getString(row, "postal_code"),
+                            getString(row, "city"),
+                            getDateTime(row, "modify_date"),
+                            getDateTime(row, "remove_date")),
+                    getString(row, "description"),
+                    getDateTime(row, "modify_date"),
+                    getDateTime(row, "remove_date"),
+                    ordinalNumber
+            ));
+            ordinalNumber++;
         }
         return list;
     }

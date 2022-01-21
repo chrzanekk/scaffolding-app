@@ -86,7 +86,7 @@
             </thead>
             <tbody>
             <tr th:each="elem: ${list}">
-                <td colspan="1" th:text="1."></td>
+                <td colspan="1" th:text="${elem.ordinalNumber}+."></td>
                 <td colspan="2" th:text="${elem.serviceDate}"></td>
                 <td colspan="2" th:text="${elem.serviceActionTypeName}"></td>
                 <td colspan="4" th:text="${elem.workshopName}"></td>
