@@ -14,6 +14,7 @@ import pl.com.chrzanowski.scaffolding.domain.*;
 import java.io.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -33,6 +34,7 @@ public class ServiceActionsService implements IServiceActions {
     private DictionariesService dictionariesService;
     private ApplicationConfig applicationConfig;
     private SpringTemplateEngine templateEngine;
+    private IVehicles vehiclesService;
 
     public ServiceActionsService(ServiceActionsJdbcRepository serviceActionsJdbcRepository,
                                  UserService usersService,
@@ -40,7 +42,8 @@ public class ServiceActionsService implements IServiceActions {
                                  WorkshopServiceTypeService workshopServiceTypeService,
                                  DictionariesService dictionariesService,
                                  ApplicationConfig applicationConfig,
-                                 SpringTemplateEngine templateEngine) {
+                                 SpringTemplateEngine templateEngine,
+                                 IVehicles vehiclesService) {
         this.serviceActionsJdbcRepository = serviceActionsJdbcRepository;
         this.usersService = usersService;
         this.userAuthoritiesService = userAuthoritiesService;
@@ -48,6 +51,7 @@ public class ServiceActionsService implements IServiceActions {
         this.dictionariesService = dictionariesService;
         this.applicationConfig = applicationConfig;
         this.templateEngine = templateEngine;
+        this.vehiclesService = vehiclesService;
     }
 
     public List<ServiceActionsData> find(ServiceActionsFilter filter) {
@@ -66,11 +70,16 @@ public class ServiceActionsService implements IServiceActions {
         ServiceActionsInvoiceSummaryData summaryData =
                 getSummaryOfInvoices(serviceActionsJdbcRepository.findSummaryInvoiceValues(filter));
         List<ServiceActionsData> serviceActionsData = getActions(serviceActionsJdbcRepository.find(filter));
+        VehicleData vehicleData = vehiclesService.findById(new VehicleFilter(filter.getVehicleId()));
+
+
         return new ServiceActionsDemandResultData(
                 summaryData.getSummaryNetValue(),
                 summaryData.getSummaryTaxValue(),
                 summaryData.getSummaryGrossValue(),
-                serviceActionsData
+                serviceActionsData,
+                vehicleData,
+                DateUtil.formatDate(LocalDateTime.now())
                 );
     }
 
@@ -78,7 +87,7 @@ public class ServiceActionsService implements IServiceActions {
         ServiceActionsDemandResultData data = findActionsDemandWithSummary(filter);
         try {
             return new ByteArrayInputStream(FileUtils.readFileToByteArray(
-                    exportToPdfBox(fillPdfVariable(data), applicationConfig.getTemplateNameProductsDemandPdf(),
+                    exportToPdfBox(fillPdfVariable(data), applicationConfig.getTemplateNameServiceActionsDemandPdf(),
                             applicationConfig.getPathToServiceActionsPdf() + getServiceActionsDemandPdfName())
             ));
         } catch (IOException e) {
@@ -250,6 +259,8 @@ public class ServiceActionsService implements IServiceActions {
         vars.put("summaryNetValue", data.getSummaryNetValue());
         vars.put("summaryTaxValue", data.getSummaryTaxValue());
         vars.put("summaryGrossValue", data.getSummaryGrossValue());
+        vars.put("vehicle", data.getVehicleData());
+        vars.put("createDate", data.getCreateDate());
         return vars;
     }
 

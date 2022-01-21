@@ -73,10 +73,16 @@
             </div>
         </div>
     </div>
-        <button id="print" type="button"
-                onClick="window.open('vehicle-service-actions/pdf/'">Export
-            do PDF
-        </button>
+<!--        <button id="print" type="button"-->
+<!--                onClick="window.open('vehicle-service-actions/pdf/' + document.getElementById('vehicle').value)">Export-->
+<!--            do PDF-->
+<!--        </button>-->
+    <div th:with="id=${vehicle.id}">
+        <button type="button" class="btn btn-success btn-lg btn-block"
+                 onClick="exportToPdf()"
+                 th:text="#{vehicle.service.actions.pdf}"></button>
+    </div>
+
 </form>
 
     <div id="result-container" class="my-4">

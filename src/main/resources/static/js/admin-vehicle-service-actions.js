@@ -173,8 +173,6 @@ function prepareUrl(){
      return url;
 }
 
-
-
 function reloadWorkshopServices() {
     $.ajax({
         url: workshopServiceTypes + "workshop_id=" + $("#create-workshop").val(),
@@ -214,6 +212,10 @@ function backToServiceActions() {
 
 function backToVehicles() {
     window.location.href = "/admin/vehicles";
+}
+
+function exportToPdf() {
+    window.open("/admin/api/scaffolding/vehicle-service-actions/pdf/" + vehicle.id + "?" + prepareUrl());
 }
 
 

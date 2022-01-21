@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html charset=UTF-8"/>
+
+    <style>
+
+    .dejavu {
+    font-family: 'dejavu';
+    font-size: 10px;
+    }
+
+    table {
+    border-collapse: collapse;
+    width: 100%;
+    }
+
+    table, td, th {
+    border: 1px solid black;
+    }
+
+    </style>
+</head>
+
+<body>
+<form>
+    <p class="dejavu" align="center" th:text="#{vehicle.services.report}"></p>
+    <div class="dejavu">
+        <table>
+            <tr>
+                <th>Data wygenerowania</th>
+                <td  th:text="${createDate}"></td>
+            </tr>
+            <tr>
+                <th>Model i marka samochodu</th>
+                <td  th:text="${vehicle.brandName} +' '+ ${vehicle.modelName}"></td>
+            </tr>
+            <tr>
+                <th>Nr rejestracyjny</th>
+                <td  th:text="${vehicle.registrationNumber}"></td>
+            </tr>
+
+
+        </table>
+
+    </div>
+
+
+</form>
+
+<form>
+    <div>
+        <table class="dejavu">
+            <thead>
+            <tr>
+                <th colspan="5">Suma netto</th>
+                <th colspan="5">Suma VAT</th>
+                <th colspan="5">Suma brutto</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td colspan="5" th:text="${summaryNetValue}  + ' ' + PLN"></td>
+                <td colspan="5" th:text="${summaryTaxValue}  + ' ' + PLN"></td>
+                <td colspan="5" th:text="${summaryGrossValue}  + ' ' + PLN"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</form>
+<form>
+    <div>
+        <table class="dejavu">
+            <thead>
+            <tr>
+                <th colspan="1" align="center">L.p.</th>
+                <th colspan="2" align="center">Data usługi</th>
+                <th colspan="2" align="center">Typ usługi</th>
+                <th colspan="4" align="center">Warsztat</th>
+                <th colspan="3" align="center">Wartość netto</th>
+                <th colspan="3" align="center">Wartość VAT</th>
+                <th colspan="3" align="center">Wartość brutto</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="elem: ${list}">
+                <td colspan="1" th:text="1."></td>
+                <td colspan="2" th:text="${elem.serviceDate}"></td>
+                <td colspan="2" th:text="${elem.serviceActionTypeName}"></td>
+                <td colspan="4" th:text="${elem.workshopName}"></td>
+                <td colspan="3" align="right" th:text="${elem.invoiceNetValue} + ' ' + PLN"></td>
+                <td colspan="3" align="right" th:text="${elem.taxValue} + ' ' + PLN"></td>
+                <td colspan="3" align="right" th:text="${elem.invoiceGrossValue} + ' ' + PLN"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</form>
+</body>
+</html>

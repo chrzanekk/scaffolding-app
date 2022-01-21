@@ -1,20 +1,29 @@
 package pl.com.chrzanowski.scaffolding.domain;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class ServiceActionsDemandResultData {
     private BigDecimal summaryNetValue;
     private BigDecimal summaryTaxValue;
     private BigDecimal summaryGrossValue;
-
+    private VehicleData vehicleData;
     private List<ServiceActionsData> serviceActions;
+    private String createDate;
 
-    public ServiceActionsDemandResultData(BigDecimal summaryNetValue, BigDecimal summaryTaxValue, BigDecimal summaryGrossValue, List<ServiceActionsData> serviceActions) {
+    public ServiceActionsDemandResultData(BigDecimal summaryNetValue,
+                                          BigDecimal summaryTaxValue,
+                                          BigDecimal summaryGrossValue,
+                                          List<ServiceActionsData> serviceActions,
+                                          VehicleData vehicleData,
+                                          String createDate) {
         this.summaryNetValue = summaryNetValue;
         this.summaryTaxValue = summaryTaxValue;
         this.summaryGrossValue = summaryGrossValue;
         this.serviceActions = serviceActions;
+        this.vehicleData = vehicleData;
+        this.createDate = createDate;
     }
 
     public BigDecimal getSummaryNetValue() {
@@ -31,5 +40,13 @@ public class ServiceActionsDemandResultData {
 
     public List<ServiceActionsData> getServiceActions() {
         return serviceActions;
+    }
+
+    public VehicleData getVehicleData() {
+        return vehicleData;
+    }
+
+    public String getCreateDate() {
+        return createDate;
     }
 }

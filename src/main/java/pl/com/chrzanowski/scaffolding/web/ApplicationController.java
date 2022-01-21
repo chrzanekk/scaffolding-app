@@ -372,6 +372,7 @@ public class ApplicationController {
         return "admin-vehicle-service-actions";
     }
 
+
     @GetMapping({"/admin/vehicle-service-action/{id}"})
     public String adminVehicleServicesById(@PathVariable Long id, Model model) {
         Long vehicleId = serviceActions.findById(new ServiceActionsFilter(id,false)).getVehicleId();
@@ -523,7 +524,7 @@ public class ApplicationController {
         return "admin-service-action-type";
     }
 
-  @GetMapping({"/admin/removed-service-action-type/{id}"})
+    @GetMapping({"/admin/removed-service-action-type/{id}"})
     public String adminRemovedServiceActionTypeById(@PathVariable Long id, Model model) {
 
         if (!userService.isLoggedUserAdmin()) {

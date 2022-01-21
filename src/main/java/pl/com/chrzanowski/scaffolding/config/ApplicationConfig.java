@@ -79,14 +79,14 @@ public class ApplicationConfig {
     private String pathToFonts;
 
 
-    private String templateNameProductsDemandPdf = "products-demand-pdf.html";
+    private String templateNameServiceActionsDemandPdf = "admin-vehicle-service-actions-pdf.html";
 
     public String getPathToServiceActionsPdf() {
         return pathToServiceActionsPdf;
     }
 
-    public String getTemplateNameProductsDemandPdf() {
-        return templateNameProductsDemandPdf;
+    public String getTemplateNameServiceActionsDemandPdf() {
+        return templateNameServiceActionsDemandPdf;
     }
 
     public String getPathToFonts() {

@@ -10,6 +10,7 @@ import pl.com.chrzanowski.scaffolding.domain.ServiceActionsData;
 import pl.com.chrzanowski.scaffolding.domain.ServiceActionsFilter;
 import pl.com.chrzanowski.scaffolding.domain.ServiceActionsInvoiceSummaryData;
 import pl.com.chrzanowski.scaffolding.logic.DataValidationUtil;
+import pl.com.chrzanowski.scaffolding.logic.DateUtil;
 import pl.com.chrzanowski.scaffolding.logic.IServiceActions;
 
 import java.io.ByteArrayInputStream;
@@ -167,7 +168,7 @@ public class ScaffoldingEndpointAdminServiceActions {
                 dateFrom,
                 dateTo,
                 page,
-                pageSize,
+                1000000L,
                 false));
 
         HttpHeaders headers = new HttpHeaders();
@@ -187,7 +188,7 @@ public class ScaffoldingEndpointAdminServiceActions {
                     data.getId(),
                     data.getVehicleId(),
                     data.getCarMileage(),
-                    parseDate(data.getServiceDate()),
+                    DateUtil.parseDate(data.getServiceDate()),
                     data.getInvoiceNumber(),
                     bigDecimalToString(data.getInvoiceGrossValue()),
                     bigDecimalToString(data.getTaxValue()),
@@ -199,8 +200,8 @@ public class ScaffoldingEndpointAdminServiceActions {
                     data.getServiceActionTypeName(),
                     data.getWorkshopsData(),
                     data.getServiceActionDescription(),
-                    parseDateTime(data.getModifyDate()),
-                    parseDateTime(data.getRemoveDate())));
+                    DateUtil.parseDateTime(data.getModifyDate()),
+                    DateUtil.parseDateTime(data.getRemoveDate())));
         }
         return list;
     }
@@ -210,7 +211,7 @@ public class ScaffoldingEndpointAdminServiceActions {
                 data.getId(),
                 data.getVehicleId(),
                 data.getCarMileage(),
-                parseDate(data.getServiceDate()),
+                DateUtil.parseDate(data.getServiceDate()),
                 data.getInvoiceNumber(),
                 bigDecimalToString(data.getInvoiceGrossValue()),
                 bigDecimalToString(data.getTaxValue()),
@@ -222,8 +223,8 @@ public class ScaffoldingEndpointAdminServiceActions {
                 data.getServiceActionTypeName(),
                 data.getWorkshopsData(),
                 data.getServiceActionDescription(),
-                parseDateTime(data.getModifyDate()),
-                parseDateTime(data.getRemoveDate())
+                DateUtil.parseDateTime(data.getModifyDate()),
+                DateUtil.parseDateTime(data.getRemoveDate())
         );
     }
 
@@ -232,20 +233,6 @@ public class ScaffoldingEndpointAdminServiceActions {
                 data.getSummaryNetValue(),
                 data.getSummaryTaxValue(),
                 data.getSummaryGrossValue());
-    }
-
-    private String parseDateTime(LocalDateTime date) {
-        if (date == null) {
-            return "";
-        }
-        return date.toString();
-    }
-
-    private String parseDate(LocalDate date) {
-        if (date == null) {
-            return "";
-        }
-        return date.toString();
     }
 
     private String bigDecimalToString(BigDecimal value) {

@@ -6,6 +6,7 @@ import pl.com.chrzanowski.scaffolding.domain.WorkshopServiceTypeData;
 import pl.com.chrzanowski.scaffolding.domain.WorkshopServiceTypeFilter;
 import pl.com.chrzanowski.scaffolding.domain.WorkshopsData;
 import pl.com.chrzanowski.scaffolding.domain.WorkshopsFilter;
+import pl.com.chrzanowski.scaffolding.logic.DateUtil;
 import pl.com.chrzanowski.scaffolding.logic.WorkshopServiceTypeService;
 import pl.com.chrzanowski.scaffolding.logic.WorkshopsService;
 
@@ -117,7 +118,7 @@ public class ScaffoldingEndpointAdminWorkshops {
                     workshop.getCity(),
                     workshop.getActionTypes(),
                     workshop.getActionTypesList(),
-                    parseDateTime(workshop.getRemoveDate()))
+                    DateUtil.parseDateTime(workshop.getRemoveDate()))
             );
         }
         return list;
@@ -135,7 +136,7 @@ public class ScaffoldingEndpointAdminWorkshops {
                 workshop.getCity(),
                 workshop.getActionTypes(),
                 workshop.getActionTypesList(),
-                parseDateTime(workshop.getRemoveDate())
+                DateUtil.parseDateTime(workshop.getRemoveDate())
         );
     }
 
@@ -152,10 +153,5 @@ public class ScaffoldingEndpointAdminWorkshops {
         return list;
     }
 
-    private String parseDateTime(LocalDateTime date) {
-        if (date == null) {
-            return "";
-        }
-        return date.toString();
-    }
+
 }

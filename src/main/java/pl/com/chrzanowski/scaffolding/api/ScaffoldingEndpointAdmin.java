@@ -110,7 +110,7 @@ public class ScaffoldingEndpointAdmin {
     private List<UserGetResponse> usersToResponses(List<UserData> users) {
         List<UserGetResponse> list = new ArrayList<>();
         for (UserData user : users) {
-            list.add(new UserGetResponse(user, parseDateTime(user.getRegistrationDatetime())));
+            list.add(new UserGetResponse(user, DateUtil.parseDateTime(user.getRegistrationDatetime())));
         }
         return list;
     }
@@ -123,11 +123,5 @@ public class ScaffoldingEndpointAdmin {
         return list;
     }
 
-    private String parseDateTime(LocalDateTime date) {
-        if (date == null) {
-            return "";
-        }
-        return date.toString();
-    }
 
 }
