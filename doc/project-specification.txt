@@ -2,7 +2,6 @@
 - Java 8
 - Spring boot 2.1.x
 - MySQL 5.7+
-- React
 
 # definitions
 
@@ -11,6 +10,6 @@
 
 
 # road map
-- create new application with SSL, REST
+
 
 
