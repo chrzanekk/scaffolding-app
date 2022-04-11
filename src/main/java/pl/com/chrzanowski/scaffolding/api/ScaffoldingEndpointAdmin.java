@@ -1,13 +1,20 @@
 package pl.com.chrzanowski.scaffolding.api;
 
 import org.springframework.web.bind.annotation.*;
+import pl.com.chrzanowski.scaffolding.api.fueltypes.FuelTypeGetResponse;
+import pl.com.chrzanowski.scaffolding.api.fueltypes.FuelTypeRequestGetResponse;
+import pl.com.chrzanowski.scaffolding.api.notofiactions.NotificationsPostRequest;
+import pl.com.chrzanowski.scaffolding.api.users.*;
 import pl.com.chrzanowski.scaffolding.domain.*;
 import pl.com.chrzanowski.scaffolding.logic.*;
+import pl.com.chrzanowski.scaffolding.logic.marketing.MarketingService;
 import pl.com.chrzanowski.scaffolding.logic.notifications.NotificationsFromPanelService;
+import pl.com.chrzanowski.scaffolding.logic.user.UserAuthority;
+import pl.com.chrzanowski.scaffolding.logic.user.UserService;
+import pl.com.chrzanowski.scaffolding.logic.utils.DateUtil;
 
 import javax.servlet.http.HttpServletRequest;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 

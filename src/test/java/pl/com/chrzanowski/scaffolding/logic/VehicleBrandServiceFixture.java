@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import pl.com.chrzanowski.scaffolding.domain.VehicleBrandData;
+import pl.com.chrzanowski.scaffolding.logic.vehiclebrands.VehicleBrandService;
 
 import javax.persistence.EntityManager;
 

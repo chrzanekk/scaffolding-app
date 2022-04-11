@@ -1,6 +1,6 @@
 package pl.com.chrzanowski.scaffolding.domain;
 
-import pl.com.chrzanowski.scaffolding.api.NotificationsPostRequest;
+import pl.com.chrzanowski.scaffolding.api.notofiactions.NotificationsPostRequest;
 import pl.com.chrzanowski.scaffolding.logic.Language;
 
 public class CreateNotificationsParameters {

@@ -2,16 +2,16 @@ package pl.com.chrzanowski.scaffolding.api;
 
 
 import org.springframework.web.bind.annotation.*;
+import pl.com.chrzanowski.scaffolding.api.workshops.*;
 import pl.com.chrzanowski.scaffolding.domain.WorkshopServiceTypeData;
 import pl.com.chrzanowski.scaffolding.domain.WorkshopServiceTypeFilter;
 import pl.com.chrzanowski.scaffolding.domain.WorkshopsData;
 import pl.com.chrzanowski.scaffolding.domain.WorkshopsFilter;
-import pl.com.chrzanowski.scaffolding.logic.DateUtil;
-import pl.com.chrzanowski.scaffolding.logic.WorkshopServiceTypeService;
-import pl.com.chrzanowski.scaffolding.logic.WorkshopsService;
+import pl.com.chrzanowski.scaffolding.logic.utils.DateUtil;
+import pl.com.chrzanowski.scaffolding.logic.workshops.WorkshopServiceTypeService;
+import pl.com.chrzanowski.scaffolding.logic.workshops.WorkshopsService;
 
 import java.sql.SQLException;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 

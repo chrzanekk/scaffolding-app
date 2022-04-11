@@ -6,6 +6,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import pl.com.chrzanowski.scaffolding.domain.VehicleTiresData;
+import pl.com.chrzanowski.scaffolding.logic.dictionaries.DictionariesService;
+import pl.com.chrzanowski.scaffolding.logic.tires.VehicleTiresService;
 
 import javax.persistence.EntityManager;
 import java.time.LocalDate;

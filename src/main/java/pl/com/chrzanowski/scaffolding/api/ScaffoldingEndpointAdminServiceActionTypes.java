@@ -2,6 +2,7 @@ package pl.com.chrzanowski.scaffolding.api;
 
 
 import org.springframework.web.bind.annotation.*;
+import pl.com.chrzanowski.scaffolding.api.serviceactiontypes.*;
 import pl.com.chrzanowski.scaffolding.domain.ServiceActionTypeData;
 import pl.com.chrzanowski.scaffolding.domain.ServiceActionTypesFilter;
 import pl.com.chrzanowski.scaffolding.logic.IServiceActonTypes;

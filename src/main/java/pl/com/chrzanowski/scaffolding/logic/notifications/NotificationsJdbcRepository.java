@@ -5,14 +5,14 @@ import org.springframework.stereotype.Service;
 import pl.com.chrzanowski.scaffolding.domain.NotificationData;
 import pl.com.chrzanowski.scaffolding.domain.NotificationsFilter;
 import pl.com.chrzanowski.scaffolding.domain.UserData;
-import pl.com.chrzanowski.scaffolding.logic.UserService;
+import pl.com.chrzanowski.scaffolding.logic.user.UserService;
 import pl.com.chrzanowski.scaffolding.logic.Language;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import static pl.com.chrzanowski.scaffolding.logic.JdbcUtil.*;
+import static pl.com.chrzanowski.scaffolding.logic.utils.JdbcUtil.*;
 
 @Service
 public class NotificationsJdbcRepository {

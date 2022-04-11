@@ -12,10 +12,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.thymeleaf.TemplateEngine;
 
-import pl.com.chrzanowski.scaffolding.api.ServiceActionRequestGetResponse;
+import pl.com.chrzanowski.scaffolding.api.serviceactions.ServiceActionRequestGetResponse;
 import pl.com.chrzanowski.scaffolding.config.ApplicationConfig;
 import pl.com.chrzanowski.scaffolding.domain.*;
 import pl.com.chrzanowski.scaffolding.logic.*;
+import pl.com.chrzanowski.scaffolding.logic.dictionaries.DictionariesService;
+import pl.com.chrzanowski.scaffolding.logic.dictionaries.DictionaryType;
+import pl.com.chrzanowski.scaffolding.logic.email.EmailConfirmService;
+import pl.com.chrzanowski.scaffolding.logic.email.EmailService;
+import pl.com.chrzanowski.scaffolding.logic.user.UserService;
+import pl.com.chrzanowski.scaffolding.logic.utils.LanguagesUtil;
+import pl.com.chrzanowski.scaffolding.logic.workshops.WorkshopsService;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;

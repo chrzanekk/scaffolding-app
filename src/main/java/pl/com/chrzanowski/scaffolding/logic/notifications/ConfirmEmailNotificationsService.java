@@ -6,7 +6,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import pl.com.chrzanowski.scaffolding.domain.NotificationData;
 import pl.com.chrzanowski.scaffolding.domain.UserData;
-import pl.com.chrzanowski.scaffolding.logic.UserService;
+import pl.com.chrzanowski.scaffolding.logic.user.UserService;
 import pl.com.chrzanowski.scaffolding.logic.Language;
 
 import java.util.ArrayList;

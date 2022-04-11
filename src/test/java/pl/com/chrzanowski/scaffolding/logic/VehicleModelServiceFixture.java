@@ -6,6 +6,8 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import pl.com.chrzanowski.scaffolding.domain.VehicleBrandData;
 import pl.com.chrzanowski.scaffolding.domain.VehicleModelData;
+import pl.com.chrzanowski.scaffolding.logic.vehiclebrands.VehicleBrandService;
+import pl.com.chrzanowski.scaffolding.logic.vehiclemodels.VehicleModelService;
 
 import javax.persistence.EntityManager;
 

@@ -2,13 +2,26 @@ package pl.com.chrzanowski.scaffolding.api;
 
 
 import org.springframework.web.bind.annotation.*;
+import pl.com.chrzanowski.scaffolding.api.notofiactions.NotificationGetResponse;
+import pl.com.chrzanowski.scaffolding.api.notofiactions.NotificationsRequestGetResponse;
+import pl.com.chrzanowski.scaffolding.api.notofiactions.TracePostRequest;
+import pl.com.chrzanowski.scaffolding.api.notofiactions.UnseenNotificationsCountRequestGetResponse;
+import pl.com.chrzanowski.scaffolding.api.users.ChangePasswordRequest;
+import pl.com.chrzanowski.scaffolding.api.users.LoggedUserPutRequest;
+import pl.com.chrzanowski.scaffolding.api.users.ResetPasswordPutRequest;
+import pl.com.chrzanowski.scaffolding.api.users.UserPostRequest;
 import pl.com.chrzanowski.scaffolding.domain.NotificationData;
 import pl.com.chrzanowski.scaffolding.domain.NotificationsFilter;
 import pl.com.chrzanowski.scaffolding.domain.TraceData;
 import pl.com.chrzanowski.scaffolding.domain.UserData;
-import pl.com.chrzanowski.scaffolding.logic.*;
+import pl.com.chrzanowski.scaffolding.logic.email.EmailConfirmService;
 import pl.com.chrzanowski.scaffolding.logic.notifications.NotificationType;
 import pl.com.chrzanowski.scaffolding.logic.notifications.NotificationsService;
+import pl.com.chrzanowski.scaffolding.logic.trace.TraceService;
+import pl.com.chrzanowski.scaffolding.logic.user.PasswordResetTokensService;
+import pl.com.chrzanowski.scaffolding.logic.user.UserAuthority;
+import pl.com.chrzanowski.scaffolding.logic.user.UserService;
+import pl.com.chrzanowski.scaffolding.logic.utils.WebUtil;
 
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;

@@ -9,6 +9,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import pl.com.chrzanowski.scaffolding.Application;
 import pl.com.chrzanowski.scaffolding.domain.VehicleBrandData;
 import pl.com.chrzanowski.scaffolding.domain.VehicleBrandFilter;
+import pl.com.chrzanowski.scaffolding.logic.vehiclebrands.VehicleBrandService;
 
 import java.util.List;
 

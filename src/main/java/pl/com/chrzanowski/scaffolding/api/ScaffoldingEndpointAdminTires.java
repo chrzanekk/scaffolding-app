@@ -2,11 +2,16 @@ package pl.com.chrzanowski.scaffolding.api;
 
 
 import org.springframework.web.bind.annotation.*;
+import pl.com.chrzanowski.scaffolding.api.tires.*;
+import pl.com.chrzanowski.scaffolding.api.tireseasons.TireSeasonGetResponse;
+import pl.com.chrzanowski.scaffolding.api.tireseasons.TireSeasonPostRequest;
+import pl.com.chrzanowski.scaffolding.api.tireseasons.TireSeasonPutRequest;
+import pl.com.chrzanowski.scaffolding.api.tireseasons.TireSeasonsRequestGetResponse;
 import pl.com.chrzanowski.scaffolding.domain.TireSeasonData;
 import pl.com.chrzanowski.scaffolding.domain.TireSeasonFilter;
 import pl.com.chrzanowski.scaffolding.domain.VehicleTiresData;
 import pl.com.chrzanowski.scaffolding.domain.VehicleTiresFilter;
-import pl.com.chrzanowski.scaffolding.logic.DictionariesService;
+import pl.com.chrzanowski.scaffolding.logic.dictionaries.DictionariesService;
 import pl.com.chrzanowski.scaffolding.logic.ITireSeasons;
 import pl.com.chrzanowski.scaffolding.logic.IVehicleTires;
 import pl.com.chrzanowski.scaffolding.logic.IVehicles;

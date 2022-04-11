@@ -9,8 +9,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 import pl.com.chrzanowski.scaffolding.Application;
 import pl.com.chrzanowski.scaffolding.domain.VehicleTiresData;
 import pl.com.chrzanowski.scaffolding.domain.VehicleTiresFilter;
+import pl.com.chrzanowski.scaffolding.logic.tires.VehicleTiresService;
 
-import java.time.LocalDate;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;

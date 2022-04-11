@@ -6,17 +6,17 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import pl.com.chrzanowski.scaffolding.api.serviceactions.*;
 import pl.com.chrzanowski.scaffolding.domain.ServiceActionsData;
 import pl.com.chrzanowski.scaffolding.domain.ServiceActionsFilter;
 import pl.com.chrzanowski.scaffolding.domain.ServiceActionsInvoiceSummaryData;
-import pl.com.chrzanowski.scaffolding.logic.DataValidationUtil;
-import pl.com.chrzanowski.scaffolding.logic.DateUtil;
+import pl.com.chrzanowski.scaffolding.logic.utils.DataValidationUtil;
+import pl.com.chrzanowski.scaffolding.logic.utils.DateUtil;
 import pl.com.chrzanowski.scaffolding.logic.IServiceActions;
 
 import java.io.ByteArrayInputStream;
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 

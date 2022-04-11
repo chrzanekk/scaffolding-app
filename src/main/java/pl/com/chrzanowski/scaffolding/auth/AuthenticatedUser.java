@@ -6,6 +6,10 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import pl.com.chrzanowski.scaffolding.domain.UserData;
 import pl.com.chrzanowski.scaffolding.logic.*;
+import pl.com.chrzanowski.scaffolding.logic.user.UserAuthoritiesService;
+import pl.com.chrzanowski.scaffolding.logic.user.UserAuthority;
+import pl.com.chrzanowski.scaffolding.logic.user.UserService;
+import pl.com.chrzanowski.scaffolding.logic.utils.LanguagesUtil;
 
 import java.util.ArrayList;
 import java.util.Arrays;

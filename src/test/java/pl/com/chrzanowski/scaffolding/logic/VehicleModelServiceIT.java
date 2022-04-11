@@ -8,6 +8,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import pl.com.chrzanowski.scaffolding.Application;
 import pl.com.chrzanowski.scaffolding.domain.VehicleModelData;
 import pl.com.chrzanowski.scaffolding.domain.VehicleModelFilter;
+import pl.com.chrzanowski.scaffolding.logic.vehiclemodels.VehicleModelService;
 
 import java.util.List;
 

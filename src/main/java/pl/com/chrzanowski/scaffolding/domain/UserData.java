@@ -1,6 +1,6 @@
 package pl.com.chrzanowski.scaffolding.domain;
 
-import pl.com.chrzanowski.scaffolding.logic.WebUtil;
+import pl.com.chrzanowski.scaffolding.logic.utils.WebUtil;
 
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;

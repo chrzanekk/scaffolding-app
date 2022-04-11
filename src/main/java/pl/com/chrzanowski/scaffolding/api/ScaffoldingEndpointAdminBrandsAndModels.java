@@ -1,6 +1,8 @@
 package pl.com.chrzanowski.scaffolding.api;
 
 import org.springframework.web.bind.annotation.*;
+import pl.com.chrzanowski.scaffolding.api.vehiclebrands.*;
+import pl.com.chrzanowski.scaffolding.api.vehiclemodels.*;
 import pl.com.chrzanowski.scaffolding.domain.VehicleBrandData;
 import pl.com.chrzanowski.scaffolding.domain.VehicleBrandFilter;
 import pl.com.chrzanowski.scaffolding.domain.VehicleModelData;

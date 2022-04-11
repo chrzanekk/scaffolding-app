@@ -13,7 +13,7 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import pl.com.chrzanowski.scaffolding.auth.ShaPasswordEncoder;
-import pl.com.chrzanowski.scaffolding.logic.UserAuthority;
+import pl.com.chrzanowski.scaffolding.logic.user.UserAuthority;
 
 import javax.sql.DataSource;
 import java.util.Arrays;

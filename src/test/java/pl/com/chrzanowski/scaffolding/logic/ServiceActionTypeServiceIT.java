@@ -9,6 +9,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import pl.com.chrzanowski.scaffolding.Application;
 import pl.com.chrzanowski.scaffolding.domain.ServiceActionTypeData;
 import pl.com.chrzanowski.scaffolding.domain.ServiceActionTypesFilter;
+import pl.com.chrzanowski.scaffolding.logic.serviceactiontypes.ServiceActionTypeService;
 
 import java.util.List;
 
