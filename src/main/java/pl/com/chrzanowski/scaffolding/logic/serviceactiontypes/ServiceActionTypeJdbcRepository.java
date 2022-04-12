@@ -2,8 +2,8 @@ package pl.com.chrzanowski.scaffolding.logic.serviceactiontypes;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
-import pl.com.chrzanowski.scaffolding.domain.ServiceActionTypeData;
-import pl.com.chrzanowski.scaffolding.domain.ServiceActionTypesFilter;
+import pl.com.chrzanowski.scaffolding.domain.serviceactiontypes.ServiceActionTypeData;
+import pl.com.chrzanowski.scaffolding.domain.serviceactiontypes.ServiceActionTypesFilter;
 import pl.com.chrzanowski.scaffolding.logic.CommonJdbcRepository;
 
 import java.util.List;
@@ -46,11 +46,11 @@ public class ServiceActionTypeJdbcRepository {
             if (filter.getName() != null) {
                 query += " AND name = '" + filter.getName() + "'";
             }
-            if (filter.getItContainsRemoveDate() != null) {
-                if (!filter.getItContainsRemoveDate()) {
+            if (filter.getIsRemoved() != null) {
+                if (!filter.getIsRemoved()) {
                     query += " AND remove_date IS NULL ";
                 } else {
-                    query += " AND remove_date IS NOT NUll ";
+                    query += " AND remove_date IS NOT NULL";
                 }
             }
 

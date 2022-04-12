@@ -2,8 +2,8 @@ package pl.com.chrzanowski.scaffolding.logic.workshops;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
-import pl.com.chrzanowski.scaffolding.domain.WorkshopsData;
-import pl.com.chrzanowski.scaffolding.domain.WorkshopsFilter;
+import pl.com.chrzanowski.scaffolding.domain.workshops.WorkshopsData;
+import pl.com.chrzanowski.scaffolding.domain.workshops.WorkshopsFilter;
 import pl.com.chrzanowski.scaffolding.logic.CommonJdbcRepository;
 
 import java.util.List;

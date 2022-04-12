@@ -1,12 +1,7 @@
 package pl.com.chrzanowski.scaffolding.api.serviceactions;
 
 
-import pl.com.chrzanowski.scaffolding.domain.ServiceActionsData;
-import pl.com.chrzanowski.scaffolding.domain.WorkshopsData;
-
-import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
+import pl.com.chrzanowski.scaffolding.domain.workshops.WorkshopsData;
 
 public class ServiceActionGetResponse {
 

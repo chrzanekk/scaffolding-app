@@ -1,6 +1,6 @@
 package pl.com.chrzanowski.scaffolding.logic.utils;
 
-import pl.com.chrzanowski.scaffolding.domain.UserData;
+import pl.com.chrzanowski.scaffolding.domain.users.UserData;
 
 import java.util.ArrayList;
 import java.util.List;

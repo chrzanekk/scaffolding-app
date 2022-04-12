@@ -1,10 +1,10 @@
 package pl.com.chrzanowski.scaffolding.logic.workshops;
 
 import org.springframework.stereotype.Service;
-import pl.com.chrzanowski.scaffolding.domain.ServiceActionTypeData;
-import pl.com.chrzanowski.scaffolding.domain.ServiceActionTypesFilter;
-import pl.com.chrzanowski.scaffolding.domain.WorkshopsData;
-import pl.com.chrzanowski.scaffolding.domain.WorkshopsFilter;
+import pl.com.chrzanowski.scaffolding.domain.serviceactiontypes.ServiceActionTypeData;
+import pl.com.chrzanowski.scaffolding.domain.serviceactiontypes.ServiceActionTypesFilter;
+import pl.com.chrzanowski.scaffolding.domain.workshops.WorkshopsData;
+import pl.com.chrzanowski.scaffolding.domain.workshops.WorkshopsFilter;
 import pl.com.chrzanowski.scaffolding.logic.serviceactiontypes.ServiceActionTypeService;
 import pl.com.chrzanowski.scaffolding.logic.utils.DataValidationUtil;
 

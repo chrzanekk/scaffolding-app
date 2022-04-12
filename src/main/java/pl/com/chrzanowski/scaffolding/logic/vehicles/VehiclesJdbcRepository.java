@@ -2,8 +2,8 @@ package pl.com.chrzanowski.scaffolding.logic.vehicles;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
-import pl.com.chrzanowski.scaffolding.domain.VehicleData;
-import pl.com.chrzanowski.scaffolding.domain.VehicleFilter;
+import pl.com.chrzanowski.scaffolding.domain.vehicles.VehicleData;
+import pl.com.chrzanowski.scaffolding.domain.vehicles.VehicleFilter;
 import pl.com.chrzanowski.scaffolding.logic.CommonJdbcRepository;
 import pl.com.chrzanowski.scaffolding.logic.vehiclebrands.VehicleBrandJdbcRepository;
 import pl.com.chrzanowski.scaffolding.logic.vehiclemodels.VehicleModelJdbcRepository;

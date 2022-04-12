@@ -4,8 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import pl.com.chrzanowski.scaffolding.domain.VehicleBrandData;
-import pl.com.chrzanowski.scaffolding.domain.VehicleModelData;
+import pl.com.chrzanowski.scaffolding.domain.vehiclebrands.VehicleBrandData;
+import pl.com.chrzanowski.scaffolding.domain.vehiclemodels.VehicleModelData;
 import pl.com.chrzanowski.scaffolding.logic.vehiclebrands.VehicleBrandService;
 import pl.com.chrzanowski.scaffolding.logic.vehiclemodels.VehicleModelService;
 

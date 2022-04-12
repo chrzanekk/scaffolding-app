@@ -1,11 +1,10 @@
 package pl.com.chrzanowski.scaffolding.logic;
 
-import pl.com.chrzanowski.scaffolding.domain.ServiceActionsData;
-import pl.com.chrzanowski.scaffolding.domain.ServiceActionsFilter;
-import pl.com.chrzanowski.scaffolding.domain.ServiceActionsInvoiceSummaryData;
+import pl.com.chrzanowski.scaffolding.domain.serviceactions.ServiceActionsData;
+import pl.com.chrzanowski.scaffolding.domain.serviceactions.ServiceActionsFilter;
+import pl.com.chrzanowski.scaffolding.domain.serviceactions.ServiceActionsInvoiceSummaryData;
 
 import java.io.ByteArrayInputStream;
-import java.math.BigDecimal;
 import java.util.List;
 
 public interface IServiceActions {

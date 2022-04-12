@@ -4,8 +4,8 @@ package pl.com.chrzanowski.scaffolding.logic.user;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-import pl.com.chrzanowski.scaffolding.domain.UserData;
-import pl.com.chrzanowski.scaffolding.domain.UsersFilter;
+import pl.com.chrzanowski.scaffolding.domain.users.UserData;
+import pl.com.chrzanowski.scaffolding.domain.users.UsersFilter;
 import pl.com.chrzanowski.scaffolding.logic.email.EmailService;
 import pl.com.chrzanowski.scaffolding.logic.email.EmailUtil;
 

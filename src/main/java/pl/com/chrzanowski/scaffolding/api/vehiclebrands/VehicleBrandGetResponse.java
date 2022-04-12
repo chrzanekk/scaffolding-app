@@ -1,6 +1,6 @@
 package pl.com.chrzanowski.scaffolding.api.vehiclebrands;
 
-import pl.com.chrzanowski.scaffolding.domain.VehicleBrandData;
+import pl.com.chrzanowski.scaffolding.domain.vehiclebrands.VehicleBrandData;
 
 import java.time.LocalDateTime;
 

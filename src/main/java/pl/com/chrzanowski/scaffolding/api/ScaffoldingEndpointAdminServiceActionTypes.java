@@ -3,8 +3,8 @@ package pl.com.chrzanowski.scaffolding.api;
 
 import org.springframework.web.bind.annotation.*;
 import pl.com.chrzanowski.scaffolding.api.serviceactiontypes.*;
-import pl.com.chrzanowski.scaffolding.domain.ServiceActionTypeData;
-import pl.com.chrzanowski.scaffolding.domain.ServiceActionTypesFilter;
+import pl.com.chrzanowski.scaffolding.domain.serviceactiontypes.ServiceActionTypeData;
+import pl.com.chrzanowski.scaffolding.domain.serviceactiontypes.ServiceActionTypesFilter;
 import pl.com.chrzanowski.scaffolding.logic.IServiceActonTypes;
 
 import java.util.ArrayList;
@@ -53,29 +53,29 @@ public class ScaffoldingEndpointAdminServiceActionTypes {
     }
 
     @PostMapping(path = "/service-action-type", consumes = "application/json; charset=UTF-8")
-    public void addServiceActionType(@RequestBody ServiceActionTypesPostRequest request) {
+    public void addServiceActionType(@RequestBody ServiceActionTypePostRequest request) {
         serviceActonTypes.add(new ServiceActionTypeData(request.getName()));
     }
 
     @PutMapping(path = "/service-action-type/{id}", consumes = "application/json; charset=UTF-8")
     public void updateServiceActionType(@PathVariable Long id,
-                                        @RequestBody ServiceActionTypesPutRequest request) {
+                                        @RequestBody ServiceActionTypePutRequest request) {
         serviceActonTypes.update(new ServiceActionTypeData(id, request.getName(),null));
     }
 
     @PutMapping(path = "/service-action-type-to-remove/{id}", consumes = "application/json; charset=UTF-8")
     public void removeServiceActionType(@PathVariable Long id,
-                                        @RequestBody ServiceActionTypesPutRequest request) {
+                                        @RequestBody ServiceActionTypePutRequest request) {
         serviceActonTypes.update(new ServiceActionTypeData(id, request.getName(),request.getRemoveDate()));
     }
 
 
 
 
-    private List<ServiceActionTypesGetResponse> actionTypesToResponse(List<ServiceActionTypeData> actionTypes) {
-        List<ServiceActionTypesGetResponse> list = new ArrayList<>();
+    private List<ServiceActionTypeGetResponse> actionTypesToResponse(List<ServiceActionTypeData> actionTypes) {
+        List<ServiceActionTypeGetResponse> list = new ArrayList<>();
         for (ServiceActionTypeData data : actionTypes) {
-            list.add(new ServiceActionTypesGetResponse(
+            list.add(new ServiceActionTypeGetResponse(
                     data.getId(),
                     data.getName()
             ));
@@ -83,7 +83,7 @@ public class ScaffoldingEndpointAdminServiceActionTypes {
         return list;
     }
 
-    private ServiceActionTypesGetResponse actionTypeToResponse(ServiceActionTypeData actionType) {
-        return new ServiceActionTypesGetResponse(actionType.getId(), actionType.getName());
+    private ServiceActionTypeGetResponse actionTypeToResponse(ServiceActionTypeData actionType) {
+        return new ServiceActionTypeGetResponse(actionType.getId(), actionType.getName());
     }
 }

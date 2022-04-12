@@ -2,13 +2,13 @@ package pl.com.chrzanowski.scaffolding.api.serviceactiontypes;
 
 public class ServiceActionTypeRequestGetResponse {
 
-    private ServiceActionTypesGetResponse serviceActionType;
+    private ServiceActionTypeGetResponse serviceActionType;
 
-    public ServiceActionTypeRequestGetResponse(ServiceActionTypesGetResponse serviceActionType) {
+    public ServiceActionTypeRequestGetResponse(ServiceActionTypeGetResponse serviceActionType) {
         this.serviceActionType = serviceActionType;
     }
 
-    public ServiceActionTypesGetResponse getServiceActionType() {
+    public ServiceActionTypeGetResponse getServiceActionType() {
         return serviceActionType;
     }
 }

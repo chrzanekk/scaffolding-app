@@ -1,6 +1,6 @@
 package pl.com.chrzanowski.scaffolding.api.fueltypes;
 
-import pl.com.chrzanowski.scaffolding.domain.FuelTypeData;
+import pl.com.chrzanowski.scaffolding.domain.fueltypes.FuelTypeData;
 
 public class FuelTypeGetResponse {
 

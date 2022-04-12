@@ -2,8 +2,8 @@ package pl.com.chrzanowski.scaffolding.logic.tires;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
-import pl.com.chrzanowski.scaffolding.domain.VehicleTiresData;
-import pl.com.chrzanowski.scaffolding.domain.VehicleTiresFilter;
+import pl.com.chrzanowski.scaffolding.domain.tires.VehicleTiresData;
+import pl.com.chrzanowski.scaffolding.domain.tires.VehicleTiresFilter;
 import pl.com.chrzanowski.scaffolding.logic.CommonJdbcRepository;
 
 import java.math.BigDecimal;

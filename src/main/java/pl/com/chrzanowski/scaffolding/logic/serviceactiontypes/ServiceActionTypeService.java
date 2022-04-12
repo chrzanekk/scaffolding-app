@@ -1,8 +1,8 @@
 package pl.com.chrzanowski.scaffolding.logic.serviceactiontypes;
 
 import org.springframework.stereotype.Service;
-import pl.com.chrzanowski.scaffolding.domain.ServiceActionTypeData;
-import pl.com.chrzanowski.scaffolding.domain.ServiceActionTypesFilter;
+import pl.com.chrzanowski.scaffolding.domain.serviceactiontypes.ServiceActionTypeData;
+import pl.com.chrzanowski.scaffolding.domain.serviceactiontypes.ServiceActionTypesFilter;
 import pl.com.chrzanowski.scaffolding.logic.IServiceActonTypes;
 import pl.com.chrzanowski.scaffolding.logic.utils.DataValidationUtil;
 

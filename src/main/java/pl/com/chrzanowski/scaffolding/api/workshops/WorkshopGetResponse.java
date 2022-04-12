@@ -1,7 +1,6 @@
 package pl.com.chrzanowski.scaffolding.api.workshops;
 
-import pl.com.chrzanowski.scaffolding.domain.ServiceActionTypeData;
-import pl.com.chrzanowski.scaffolding.domain.WorkshopsData;
+import pl.com.chrzanowski.scaffolding.domain.serviceactiontypes.ServiceActionTypeData;
 
 import java.time.LocalDateTime;
 import java.util.List;

@@ -4,9 +4,9 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
-import pl.com.chrzanowski.scaffolding.domain.TokenData;
-import pl.com.chrzanowski.scaffolding.domain.UserData;
-import pl.com.chrzanowski.scaffolding.domain.UsersFilter;
+import pl.com.chrzanowski.scaffolding.domain.users.TokenData;
+import pl.com.chrzanowski.scaffolding.domain.users.UserData;
+import pl.com.chrzanowski.scaffolding.domain.users.UsersFilter;
 import pl.com.chrzanowski.scaffolding.logic.utils.MapToListConverter;
 
 import java.util.List;

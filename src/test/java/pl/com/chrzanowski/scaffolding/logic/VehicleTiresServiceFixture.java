@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import pl.com.chrzanowski.scaffolding.domain.VehicleTiresData;
+import pl.com.chrzanowski.scaffolding.domain.tires.VehicleTiresData;
 import pl.com.chrzanowski.scaffolding.logic.dictionaries.DictionariesService;
 import pl.com.chrzanowski.scaffolding.logic.tires.VehicleTiresService;
 

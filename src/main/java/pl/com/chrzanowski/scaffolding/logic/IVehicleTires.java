@@ -1,7 +1,7 @@
 package pl.com.chrzanowski.scaffolding.logic;
 
-import pl.com.chrzanowski.scaffolding.domain.VehicleTiresData;
-import pl.com.chrzanowski.scaffolding.domain.VehicleTiresFilter;
+import pl.com.chrzanowski.scaffolding.domain.tires.VehicleTiresData;
+import pl.com.chrzanowski.scaffolding.domain.tires.VehicleTiresFilter;
 
 import java.util.List;
 

@@ -14,7 +14,14 @@ import org.thymeleaf.TemplateEngine;
 
 import pl.com.chrzanowski.scaffolding.api.serviceactions.ServiceActionRequestGetResponse;
 import pl.com.chrzanowski.scaffolding.config.ApplicationConfig;
-import pl.com.chrzanowski.scaffolding.domain.*;
+import pl.com.chrzanowski.scaffolding.domain.serviceactions.ServiceActionsFilter;
+import pl.com.chrzanowski.scaffolding.domain.serviceactiontypes.ServiceActionTypesFilter;
+import pl.com.chrzanowski.scaffolding.domain.tires.VehicleTiresFilter;
+import pl.com.chrzanowski.scaffolding.domain.users.UsersFilter;
+import pl.com.chrzanowski.scaffolding.domain.vehiclebrands.VehicleBrandFilter;
+import pl.com.chrzanowski.scaffolding.domain.vehiclemodels.VehicleModelFilter;
+import pl.com.chrzanowski.scaffolding.domain.vehicles.VehicleFilter;
+import pl.com.chrzanowski.scaffolding.domain.workshops.WorkshopsFilter;
 import pl.com.chrzanowski.scaffolding.logic.*;
 import pl.com.chrzanowski.scaffolding.logic.dictionaries.DictionariesService;
 import pl.com.chrzanowski.scaffolding.logic.dictionaries.DictionaryType;

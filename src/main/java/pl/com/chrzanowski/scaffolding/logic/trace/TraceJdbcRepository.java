@@ -2,7 +2,7 @@ package pl.com.chrzanowski.scaffolding.logic.trace;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
-import pl.com.chrzanowski.scaffolding.domain.TraceData;
+import pl.com.chrzanowski.scaffolding.domain.trace.TraceData;
 
 @Service
 public class TraceJdbcRepository {

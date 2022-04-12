@@ -1,7 +1,7 @@
 package pl.com.chrzanowski.scaffolding.logic;
 
-import pl.com.chrzanowski.scaffolding.domain.TireSeasonData;
-import pl.com.chrzanowski.scaffolding.domain.TireSeasonFilter;
+import pl.com.chrzanowski.scaffolding.domain.tireseasons.TireSeasonData;
+import pl.com.chrzanowski.scaffolding.domain.tireseasons.TireSeasonFilter;
 
 import java.util.List;
 

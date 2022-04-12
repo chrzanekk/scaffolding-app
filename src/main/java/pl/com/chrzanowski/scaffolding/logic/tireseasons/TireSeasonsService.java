@@ -1,8 +1,8 @@
 package pl.com.chrzanowski.scaffolding.logic.tireseasons;
 
 import org.springframework.stereotype.Service;
-import pl.com.chrzanowski.scaffolding.domain.TireSeasonData;
-import pl.com.chrzanowski.scaffolding.domain.TireSeasonFilter;
+import pl.com.chrzanowski.scaffolding.domain.tireseasons.TireSeasonData;
+import pl.com.chrzanowski.scaffolding.domain.tireseasons.TireSeasonFilter;
 import pl.com.chrzanowski.scaffolding.logic.ITireSeasons;
 
 import java.util.ArrayList;

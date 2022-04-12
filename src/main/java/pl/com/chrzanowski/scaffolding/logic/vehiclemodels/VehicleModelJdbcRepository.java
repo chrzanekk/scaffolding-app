@@ -3,9 +3,8 @@ package pl.com.chrzanowski.scaffolding.logic.vehiclemodels;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
-import pl.com.chrzanowski.scaffolding.domain.VehicleData;
-import pl.com.chrzanowski.scaffolding.domain.VehicleModelData;
-import pl.com.chrzanowski.scaffolding.domain.VehicleModelFilter;
+import pl.com.chrzanowski.scaffolding.domain.vehiclemodels.VehicleModelData;
+import pl.com.chrzanowski.scaffolding.domain.vehiclemodels.VehicleModelFilter;
 import pl.com.chrzanowski.scaffolding.logic.CommonJdbcRepository;
 
 

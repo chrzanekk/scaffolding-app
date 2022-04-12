@@ -1,7 +1,5 @@
 package pl.com.chrzanowski.scaffolding.api.vehicles;
 
-import pl.com.chrzanowski.scaffolding.domain.VehicleData;
-
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 

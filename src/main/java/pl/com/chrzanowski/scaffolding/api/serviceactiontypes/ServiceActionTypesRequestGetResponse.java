@@ -4,13 +4,13 @@ import java.util.List;
 
 public class ServiceActionTypesRequestGetResponse {
 
-    private List<ServiceActionTypesGetResponse> serviceActionTypes;
+    private List<ServiceActionTypeGetResponse> serviceActionTypes;
 
-    public ServiceActionTypesRequestGetResponse(List<ServiceActionTypesGetResponse> serviceActionTypes) {
+    public ServiceActionTypesRequestGetResponse(List<ServiceActionTypeGetResponse> serviceActionTypes) {
         this.serviceActionTypes = serviceActionTypes;
     }
 
-    public List<ServiceActionTypesGetResponse> getServiceActionTypes() {
+    public List<ServiceActionTypeGetResponse> getServiceActionTypes() {
         return serviceActionTypes;
     }
 }

@@ -2,8 +2,8 @@ package pl.com.chrzanowski.scaffolding.logic.user;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
-import pl.com.chrzanowski.scaffolding.domain.UserAuthoritiesFilter;
-import pl.com.chrzanowski.scaffolding.domain.UserAuthorityData;
+import pl.com.chrzanowski.scaffolding.domain.users.UserAuthoritiesFilter;
+import pl.com.chrzanowski.scaffolding.domain.users.UserAuthorityData;
 
 import java.util.ArrayList;
 import java.util.List;

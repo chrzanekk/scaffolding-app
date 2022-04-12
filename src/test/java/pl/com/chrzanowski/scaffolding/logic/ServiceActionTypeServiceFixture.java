@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import pl.com.chrzanowski.scaffolding.domain.ServiceActionTypeData;
+import pl.com.chrzanowski.scaffolding.domain.serviceactiontypes.ServiceActionTypeData;
 import pl.com.chrzanowski.scaffolding.logic.serviceactiontypes.ServiceActionTypeService;
 
 

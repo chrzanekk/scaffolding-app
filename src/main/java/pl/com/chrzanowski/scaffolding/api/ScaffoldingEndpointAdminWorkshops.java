@@ -3,10 +3,10 @@ package pl.com.chrzanowski.scaffolding.api;
 
 import org.springframework.web.bind.annotation.*;
 import pl.com.chrzanowski.scaffolding.api.workshops.*;
-import pl.com.chrzanowski.scaffolding.domain.WorkshopServiceTypeData;
-import pl.com.chrzanowski.scaffolding.domain.WorkshopServiceTypeFilter;
-import pl.com.chrzanowski.scaffolding.domain.WorkshopsData;
-import pl.com.chrzanowski.scaffolding.domain.WorkshopsFilter;
+import pl.com.chrzanowski.scaffolding.domain.workshops.WorkshopServiceTypeData;
+import pl.com.chrzanowski.scaffolding.domain.workshops.WorkshopServiceTypeFilter;
+import pl.com.chrzanowski.scaffolding.domain.workshops.WorkshopsData;
+import pl.com.chrzanowski.scaffolding.domain.workshops.WorkshopsFilter;
 import pl.com.chrzanowski.scaffolding.logic.utils.DateUtil;
 import pl.com.chrzanowski.scaffolding.logic.workshops.WorkshopServiceTypeService;
 import pl.com.chrzanowski.scaffolding.logic.workshops.WorkshopsService;

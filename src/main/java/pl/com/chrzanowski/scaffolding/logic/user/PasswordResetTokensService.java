@@ -2,10 +2,10 @@ package pl.com.chrzanowski.scaffolding.logic.user;
 
 import org.springframework.stereotype.Service;
 import pl.com.chrzanowski.scaffolding.config.ApplicationConfig;
-import pl.com.chrzanowski.scaffolding.domain.PasswordResetTokenData;
-import pl.com.chrzanowski.scaffolding.domain.PasswordResetTokensFilter;
-import pl.com.chrzanowski.scaffolding.domain.UserData;
-import pl.com.chrzanowski.scaffolding.domain.UsersFilter;
+import pl.com.chrzanowski.scaffolding.domain.users.PasswordResetTokenData;
+import pl.com.chrzanowski.scaffolding.domain.users.PasswordResetTokensFilter;
+import pl.com.chrzanowski.scaffolding.domain.users.UserData;
+import pl.com.chrzanowski.scaffolding.domain.users.UsersFilter;
 import pl.com.chrzanowski.scaffolding.logic.email.EmailService;
 
 import java.time.LocalDateTime;

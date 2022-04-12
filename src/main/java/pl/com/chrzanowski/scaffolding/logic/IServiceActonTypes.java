@@ -1,10 +1,9 @@
 package pl.com.chrzanowski.scaffolding.logic;
 
-import pl.com.chrzanowski.scaffolding.domain.ServiceActionTypeData;
-import pl.com.chrzanowski.scaffolding.domain.ServiceActionTypesFilter;
+import pl.com.chrzanowski.scaffolding.domain.serviceactiontypes.ServiceActionTypeData;
+import pl.com.chrzanowski.scaffolding.domain.serviceactiontypes.ServiceActionTypesFilter;
 
 import java.util.List;
-import java.util.Map;
 
 public interface IServiceActonTypes {
 

@@ -2,8 +2,8 @@ package pl.com.chrzanowski.scaffolding.logic.vehiclebrands;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
-import pl.com.chrzanowski.scaffolding.domain.VehicleBrandData;
-import pl.com.chrzanowski.scaffolding.domain.VehicleBrandFilter;
+import pl.com.chrzanowski.scaffolding.domain.vehiclebrands.VehicleBrandData;
+import pl.com.chrzanowski.scaffolding.domain.vehiclebrands.VehicleBrandFilter;
 import pl.com.chrzanowski.scaffolding.logic.CommonJdbcRepository;
 
 import java.util.List;

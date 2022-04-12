@@ -6,8 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import pl.com.chrzanowski.scaffolding.Application;
-import pl.com.chrzanowski.scaffolding.domain.VehicleModelData;
-import pl.com.chrzanowski.scaffolding.domain.VehicleModelFilter;
+import pl.com.chrzanowski.scaffolding.domain.vehiclemodels.VehicleModelData;
+import pl.com.chrzanowski.scaffolding.domain.vehiclemodels.VehicleModelFilter;
 import pl.com.chrzanowski.scaffolding.logic.vehiclemodels.VehicleModelService;
 
 import java.util.List;

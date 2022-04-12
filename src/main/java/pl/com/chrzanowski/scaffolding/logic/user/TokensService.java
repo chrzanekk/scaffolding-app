@@ -1,8 +1,8 @@
 package pl.com.chrzanowski.scaffolding.logic.user;
 
 import org.springframework.stereotype.Service;
-import pl.com.chrzanowski.scaffolding.domain.UserData;
-import pl.com.chrzanowski.scaffolding.domain.TokenData;
+import pl.com.chrzanowski.scaffolding.domain.users.UserData;
+import pl.com.chrzanowski.scaffolding.domain.users.TokenData;
 
 import java.time.LocalDateTime;
 import java.util.UUID;

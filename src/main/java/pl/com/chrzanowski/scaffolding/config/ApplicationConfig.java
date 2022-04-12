@@ -133,8 +133,6 @@ public class ApplicationConfig {
         return scaffoldingAppUrl;
     }
 
-
-
     public Long getPasswordResetTokenValidityTimeInMinutes() {
         return passwordResetTokenValidityTimeInMinutes;
     }

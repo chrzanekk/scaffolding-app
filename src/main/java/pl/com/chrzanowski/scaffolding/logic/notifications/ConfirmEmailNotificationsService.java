@@ -4,8 +4,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
-import pl.com.chrzanowski.scaffolding.domain.NotificationData;
-import pl.com.chrzanowski.scaffolding.domain.UserData;
+import pl.com.chrzanowski.scaffolding.domain.notifications.NotificationData;
+import pl.com.chrzanowski.scaffolding.domain.users.UserData;
 import pl.com.chrzanowski.scaffolding.logic.user.UserService;
 import pl.com.chrzanowski.scaffolding.logic.Language;
 

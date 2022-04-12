@@ -1,9 +1,9 @@
 package pl.com.chrzanowski.scaffolding.logic.marketing;
 
 import org.springframework.stereotype.Service;
-import pl.com.chrzanowski.scaffolding.domain.NewsletterData;
-import pl.com.chrzanowski.scaffolding.domain.UserData;
-import pl.com.chrzanowski.scaffolding.domain.UsersFilter;
+import pl.com.chrzanowski.scaffolding.domain.newsletter.NewsletterData;
+import pl.com.chrzanowski.scaffolding.domain.users.UserData;
+import pl.com.chrzanowski.scaffolding.domain.users.UsersFilter;
 import pl.com.chrzanowski.scaffolding.logic.newsletter.NewsletterService;
 import pl.com.chrzanowski.scaffolding.logic.user.UserService;
 

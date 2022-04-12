@@ -3,10 +3,10 @@ package pl.com.chrzanowski.scaffolding.api;
 import org.springframework.web.bind.annotation.*;
 import pl.com.chrzanowski.scaffolding.api.vehiclebrands.*;
 import pl.com.chrzanowski.scaffolding.api.vehiclemodels.*;
-import pl.com.chrzanowski.scaffolding.domain.VehicleBrandData;
-import pl.com.chrzanowski.scaffolding.domain.VehicleBrandFilter;
-import pl.com.chrzanowski.scaffolding.domain.VehicleModelData;
-import pl.com.chrzanowski.scaffolding.domain.VehicleModelFilter;
+import pl.com.chrzanowski.scaffolding.domain.vehiclebrands.VehicleBrandData;
+import pl.com.chrzanowski.scaffolding.domain.vehiclebrands.VehicleBrandFilter;
+import pl.com.chrzanowski.scaffolding.domain.vehiclemodels.VehicleModelData;
+import pl.com.chrzanowski.scaffolding.domain.vehiclemodels.VehicleModelFilter;
 import pl.com.chrzanowski.scaffolding.logic.IVehicleBrands;
 import pl.com.chrzanowski.scaffolding.logic.IVehicleModels;
 

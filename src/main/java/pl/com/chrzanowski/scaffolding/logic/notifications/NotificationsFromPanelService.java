@@ -1,10 +1,10 @@
 package pl.com.chrzanowski.scaffolding.logic.notifications;
 
 import org.springframework.stereotype.Service;
-import pl.com.chrzanowski.scaffolding.domain.CreateNotificationsParameters;
-import pl.com.chrzanowski.scaffolding.domain.NotificationData;
-import pl.com.chrzanowski.scaffolding.domain.UserData;
-import pl.com.chrzanowski.scaffolding.domain.UsersFilter;
+import pl.com.chrzanowski.scaffolding.domain.notifications.CreateNotificationsParameters;
+import pl.com.chrzanowski.scaffolding.domain.notifications.NotificationData;
+import pl.com.chrzanowski.scaffolding.domain.users.UserData;
+import pl.com.chrzanowski.scaffolding.domain.users.UsersFilter;
 import pl.com.chrzanowski.scaffolding.logic.user.UserService;
 import pl.com.chrzanowski.scaffolding.logic.Language;
 

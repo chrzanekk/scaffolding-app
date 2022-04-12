@@ -2,8 +2,8 @@ package pl.com.chrzanowski.scaffolding.logic.serviceactions;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
-import pl.com.chrzanowski.scaffolding.domain.ServiceActionsData;
-import pl.com.chrzanowski.scaffolding.domain.ServiceActionsFilter;
+import pl.com.chrzanowski.scaffolding.domain.serviceactions.ServiceActionsData;
+import pl.com.chrzanowski.scaffolding.domain.serviceactions.ServiceActionsFilter;
 import pl.com.chrzanowski.scaffolding.logic.CommonJdbcRepository;
 import pl.com.chrzanowski.scaffolding.logic.serviceactiontypes.ServiceActionTypeJdbcRepository;
 

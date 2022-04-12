@@ -1,7 +1,7 @@
 package pl.com.chrzanowski.scaffolding.logic;
 
-import pl.com.chrzanowski.scaffolding.domain.FuelTypeData;
-import pl.com.chrzanowski.scaffolding.domain.FuelTypeFilter;
+import pl.com.chrzanowski.scaffolding.domain.fueltypes.FuelTypeData;
+import pl.com.chrzanowski.scaffolding.domain.fueltypes.FuelTypeFilter;
 
 import java.util.List;
 

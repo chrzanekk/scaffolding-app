@@ -1,9 +1,9 @@
 package pl.com.chrzanowski.scaffolding.logic.tires;
 
 import org.springframework.stereotype.Service;
-import pl.com.chrzanowski.scaffolding.domain.DictionaryData;
-import pl.com.chrzanowski.scaffolding.domain.VehicleTiresData;
-import pl.com.chrzanowski.scaffolding.domain.VehicleTiresFilter;
+import pl.com.chrzanowski.scaffolding.domain.dictionaries.DictionaryData;
+import pl.com.chrzanowski.scaffolding.domain.tires.VehicleTiresData;
+import pl.com.chrzanowski.scaffolding.domain.tires.VehicleTiresFilter;
 import pl.com.chrzanowski.scaffolding.logic.IVehicleTires;
 import pl.com.chrzanowski.scaffolding.logic.Language;
 import pl.com.chrzanowski.scaffolding.logic.dictionaries.DictionariesService;

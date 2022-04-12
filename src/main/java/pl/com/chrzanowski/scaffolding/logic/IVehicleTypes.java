@@ -1,7 +1,7 @@
 package pl.com.chrzanowski.scaffolding.logic;
 
-import pl.com.chrzanowski.scaffolding.domain.VehicleTypeData;
-import pl.com.chrzanowski.scaffolding.domain.VehicleTypeFilter;
+import pl.com.chrzanowski.scaffolding.domain.vehicletypes.VehicleTypeData;
+import pl.com.chrzanowski.scaffolding.domain.vehicletypes.VehicleTypeFilter;
 
 import java.util.List;
 

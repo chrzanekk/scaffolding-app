@@ -2,9 +2,8 @@ package pl.com.chrzanowski.scaffolding.logic.user;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
-import pl.com.chrzanowski.scaffolding.domain.PasswordResetTokenData;
-import pl.com.chrzanowski.scaffolding.domain.PasswordResetTokensFilter;
-import pl.com.chrzanowski.scaffolding.logic.user.UserService;
+import pl.com.chrzanowski.scaffolding.domain.users.PasswordResetTokenData;
+import pl.com.chrzanowski.scaffolding.domain.users.PasswordResetTokensFilter;
 
 import java.util.List;
 import java.util.Map;

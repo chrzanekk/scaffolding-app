@@ -1,6 +1,6 @@
 package pl.com.chrzanowski.scaffolding.api.users;
 
-import pl.com.chrzanowski.scaffolding.domain.UserData;
+import pl.com.chrzanowski.scaffolding.domain.users.UserData;
 
 public class UserGetResponse {
     private Long id;

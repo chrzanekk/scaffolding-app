@@ -1,8 +1,8 @@
 package pl.com.chrzanowski.scaffolding.logic.trace;
 
 import org.springframework.stereotype.Service;
-import pl.com.chrzanowski.scaffolding.domain.UserData;
-import pl.com.chrzanowski.scaffolding.domain.TraceData;
+import pl.com.chrzanowski.scaffolding.domain.users.UserData;
+import pl.com.chrzanowski.scaffolding.domain.trace.TraceData;
 import pl.com.chrzanowski.scaffolding.logic.user.UserService;
 
 @Service
