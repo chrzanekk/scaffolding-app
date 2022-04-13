@@ -19,6 +19,7 @@ import pl.com.chrzanowski.scaffolding.domain.vehiclemodels.VehicleModelFilter;
 import pl.com.chrzanowski.scaffolding.domain.vehicletypes.VehicleTypeData;
 import pl.com.chrzanowski.scaffolding.domain.vehicletypes.VehicleTypeFilter;
 import pl.com.chrzanowski.scaffolding.logic.*;
+import pl.com.chrzanowski.scaffolding.logic.currency.CurrencyCodes;
 import pl.com.chrzanowski.scaffolding.logic.email.EmailTitle;
 import pl.com.chrzanowski.scaffolding.logic.tires.VehicleTireLoadCapacity;
 import pl.com.chrzanowski.scaffolding.logic.tires.VehicleTireSpeed;
@@ -103,6 +104,8 @@ public class DictionariesService {
             return getTireType(lang);
         } else if (TAX_RATE == type) {
             return getTaxRate(lang);
+        } else if (CURRENCY == type) {
+            return getCurrency(lang);
         }
         throw new IllegalArgumentException("Dictionary no defined: " + type + " for language: " + lang);
     }
@@ -338,6 +341,30 @@ public class DictionariesService {
                 Arrays.asList(new DictionaryData("0.00", "Value Added Tax - 0%", lang.getCode()),
                         new DictionaryData("0.08", "Value Added Tax 8%", lang.getCode()),
                         new DictionaryData("0.23", "Value Added Tax 23%", lang.getCode()));
+    }
+
+    private List<DictionaryData> getCurrency(Language lang) {
+        List<DictionaryData> currencyCodeList = new ArrayList<>();
+        if (Language.US == lang || Language.EN == lang) {
+            Map<String, String> currencyMap = CurrencyCodes.LOAD_CURRENCY_EN;
+            for (Map.Entry<String, String> data : currencyMap.entrySet()) {
+                currencyCodeList.add(new DictionaryData(
+                        data.getKey(),
+                        data.getValue(),
+                        lang.getCode()
+                ));
+            }
+        } else {
+            Map<String, String> currencyMap = CurrencyCodes.LOAD_CURRENCY_PL;
+            for (Map.Entry<String, String> data : currencyMap.entrySet()) {
+                currencyCodeList.add(new DictionaryData(
+                        data.getKey(),
+                        data.getValue(),
+                        lang.getCode()
+                ));
+            }
+        }
+        return currencyCodeList;
     }
 
 }
