@@ -4,6 +4,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+//all major currencies her for select field when new contractor is created
 public enum CurrencyCodes {
     AMERICAN_DOLLAR("Dolar Amerykański", "American Dollar", "USD"),
     POLSKI_ZLOTY("Polski Złoty", "Polish Zloty", "PLN"),
