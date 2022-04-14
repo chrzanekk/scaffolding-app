@@ -3,7 +3,6 @@ package pl.com.chrzanowski.scaffolding.logic.contractortypes;
 import org.springframework.stereotype.Service;
 import pl.com.chrzanowski.scaffolding.domain.contractortypes.ContractorTypeData;
 import pl.com.chrzanowski.scaffolding.domain.contractortypes.ContractorTypeFilter;
-import pl.com.chrzanowski.scaffolding.domain.serviceactiontypes.ServiceActionTypeData;
 import pl.com.chrzanowski.scaffolding.logic.IContractorTypes;
 import pl.com.chrzanowski.scaffolding.logic.utils.DataValidationUtil;
 
@@ -41,27 +40,27 @@ public class ContractorTypeService implements IContractorTypes {
 
     @Override
     public List<ContractorTypeData> find(ContractorTypeFilter filter) {
-        return null;
+        return getContractorTypes(contractorTypeJdbcRepository.find(filter));
     }
 
-    private List<ContractorTypeData> getContractorTypes(List<Map<String,Object>> data) {
+    private List<ContractorTypeData> getContractorTypes(List<Map<String, Object>> data) {
         List<ContractorTypeData> list = new ArrayList<>();
         for (Map<String, Object> row : data) {
             list.add(new ContractorTypeData(
                     getLong(row, "id"),
                     getString(row, "name"),
                     getDateTime(row, "create_date"),
-                    getDateTime(row,"modify_date"),
-                    getDateTime(row,"remove_date"),
-                    getLong(row,"create_user_id"),
-                    getLong(row,"modify_user_id"),
-                    getLong(row,"remove_user_id")
+                    getDateTime(row, "modify_date"),
+                    getDateTime(row, "remove_date"),
+                    getLong(row, "create_user_id"),
+                    getLong(row, "modify_user_id"),
+                    getLong(row, "remove_user_id")
             ));
         }
         return list;
     }
 
-    private void validateData(ContractorTypeData data){
+    private void validateData(ContractorTypeData data) {
         DataValidationUtil.validateTextField(data.getName(), "Typ kontrahenta");
     }
 }

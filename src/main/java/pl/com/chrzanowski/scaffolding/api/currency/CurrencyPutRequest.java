@@ -1,9 +1,10 @@
-package pl.com.chrzanowski.scaffolding.api.contractortypes;
+package pl.com.chrzanowski.scaffolding.api.currency;
 
-public class ContractorTypeGetResponse {
+public class CurrencyPutRequest {
 
     private Long id;
     private String name;
+    private String code;
     private String createDate;
     private String modifyDate;
     private String removeDate;
@@ -11,23 +12,14 @@ public class ContractorTypeGetResponse {
     private Long modifyUserId;
     private Long removeUserId;
 
-
-    public ContractorTypeGetResponse(Long id,
-                                     String name,
-                                     String createDate,
-                                     String modifyDate,
-                                     String removeDate,
-                                     Long createUserId,
-                                     Long modifyUserId,
-                                     Long removeUserId) {
+    public CurrencyPutRequest(Long id,
+                              String name,
+                              String code,
+                              Long modifyUserId) {
         this.id = id;
         this.name = name;
-        this.createDate = createDate;
-        this.modifyDate = modifyDate;
-        this.removeDate = removeDate;
-        this.createUserId = createUserId;
+        this.code = code;
         this.modifyUserId = modifyUserId;
-        this.removeUserId = removeUserId;
     }
 
     public Long getId() {
@@ -36,6 +28,10 @@ public class ContractorTypeGetResponse {
 
     public String getName() {
         return name;
+    }
+
+    public String getCode() {
+        return code;
     }
 
     public String getCreateDate() {

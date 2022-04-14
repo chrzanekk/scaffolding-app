@@ -11,9 +11,12 @@ public class ContractorTypePutRequest {
     private Long modifyUserId;
     private Long removeUserId;
 
-    public ContractorTypePutRequest(Long id, String name) {
+    public ContractorTypePutRequest(Long id,
+                                    String name,
+                                    Long modifyUserId) {
         this.id = id;
         this.name = name;
+        this.modifyUserId = modifyUserId;
     }
 
     public Long getId() {

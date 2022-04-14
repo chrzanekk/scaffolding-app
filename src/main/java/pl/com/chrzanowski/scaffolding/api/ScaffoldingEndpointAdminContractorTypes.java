@@ -24,15 +24,16 @@ public class ScaffoldingEndpointAdminContractorTypes {
     @GetMapping(path = "/contractor-types", produces = "application/json; charset=UTF-8")
     public ContractorTypesRequestGetResponse contractorTypes(
             @RequestParam(name = "page", required = false, defaultValue = "1") Long page,
-            @RequestParam(name = "page_size" , required = false, defaultValue = "10") Long pageSize) {
-        List<ContractorTypeData> contractorTypesList = contractorTypes.find(new ContractorTypeFilter(page, pageSize));
+            @RequestParam(name = "page_size", required = false, defaultValue = "10") Long pageSize) {
+        List<ContractorTypeData> contractorTypesList = contractorTypes.find(new ContractorTypeFilter(page, pageSize,
+                false));
         return new ContractorTypesRequestGetResponse(contractorTypesToResponse(contractorTypesList));
     }
 
     @GetMapping(path = "/removed-contractor-types", produces = "application/json; charset=UTF-8")
     public ContractorTypesRequestGetResponse removedContractorTypes(
             @RequestParam(name = "page", required = false, defaultValue = "1") Long page,
-            @RequestParam(name = "page_size" , required = false, defaultValue = "10") Long pageSize) {
+            @RequestParam(name = "page_size", required = false, defaultValue = "10") Long pageSize) {
         List<ContractorTypeData> contractorTypesList = contractorTypes.find(new ContractorTypeFilter(page, pageSize,
                 true));
         return new ContractorTypesRequestGetResponse(contractorTypesToResponse(contractorTypesList));
@@ -65,17 +66,8 @@ public class ScaffoldingEndpointAdminContractorTypes {
 
     private List<ContractorTypeGetResponse> contractorTypesToResponse(List<ContractorTypeData> contractorTypes) {
         List<ContractorTypeGetResponse> list = new ArrayList<>();
-        for(ContractorTypeData data :contractorTypes) {
-            list.add(new ContractorTypeGetResponse(
-                    data.getId(),
-                    data.getName(),
-                    DateUtil.parseDateTime(data.getCreateDate()),
-                    DateUtil.parseDateTime(data.getModifyDate()),
-                    DateUtil.parseDateTime(data.getRemoveDate()),
-                    data.getCreateUserId(),
-                    data.getModifyUserId(),
-                    data.getRemoveUserId()
-            ));
+        for (ContractorTypeData data : contractorTypes) {
+            list.add(contractorTypeToResponse(data));
         }
         return list;
     }
