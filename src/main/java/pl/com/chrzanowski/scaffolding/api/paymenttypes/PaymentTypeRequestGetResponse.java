@@ -1,4 +1,4 @@
-package pl.com.chrzanowski.scaffolding.api.paymenttype;
+package pl.com.chrzanowski.scaffolding.api.paymenttypes;
 
 public class PaymentTypeRequestGetResponse {
 

@@ -1,7 +1,7 @@
 package pl.com.chrzanowski.scaffolding.api;
 
 import org.springframework.web.bind.annotation.*;
-import pl.com.chrzanowski.scaffolding.api.paymenttype.*;
+import pl.com.chrzanowski.scaffolding.api.paymenttypes.*;
 import pl.com.chrzanowski.scaffolding.domain.paymenttypes.PaymentTypeData;
 import pl.com.chrzanowski.scaffolding.domain.paymenttypes.PaymentTypeFilter;
 import pl.com.chrzanowski.scaffolding.logic.IPaymentTypes;

@@ -26,6 +26,13 @@ public class CoreFieldsFilter {
         this.id = id;
     }
 
+    public CoreFieldsFilter(Long id, Boolean isRemoved) {
+        this.id = id;
+        this.isRemoved = isRemoved;
+    }
+
+
+
     public Long getId() {
         return id;
     }

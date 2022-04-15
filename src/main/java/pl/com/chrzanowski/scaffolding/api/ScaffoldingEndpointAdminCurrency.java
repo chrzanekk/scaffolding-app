@@ -47,20 +47,21 @@ public class ScaffoldingEndpointAdminCurrency {
     public void addCurrency(@RequestBody CurrencyPostRequest request) {
         currency.create(new CurrencyData(
                 request.getName(),
-                request.getCode(),
-                request.getCreateUserId()));
+                request.getCreateUserId(),
+                request.getCode()
+                ));
     }
 
     @PutMapping(path = "/currency/{id}", consumes = "application/json; charset=UTF-8")
     public void updateCurrency(@PathVariable Long id,
                                @RequestBody CurrencyPutRequest request) {
-        currency.update(new CurrencyData(id, request.getName(), request.getCode(), request.getModifyUserId()));
+        currency.update(new CurrencyData(id, request.getName(), request.getModifyUserId(),request.getCode() ));
     }
 
     @PutMapping(path = "/currency-to-remove/{id}", consumes = "application/json; charset=UTF-8")
     public void removeCurrency(@PathVariable Long id,
                                @RequestBody CurrencyPutRequest request) {
-        currency.remove(new CurrencyData(id, request.getRemoveUserId()));
+        currency.remove(new CurrencyData(id, request.getRemoveUserId(), request.getCode()));
     }
 
     private List<CurrencyGetResponse> currencyListToResponse(List<CurrencyData> currencyList) {
@@ -75,12 +76,13 @@ public class ScaffoldingEndpointAdminCurrency {
         return new CurrencyGetResponse(
                 data.getId(),
                 data.getName(),
-                data.getCode(),
                 DateUtil.parseDateTime(data.getCreateDate()),
                 DateUtil.parseDateTime(data.getModifyDate()),
                 DateUtil.parseDateTime(data.getRemoveDate()),
                 data.getCreateUserId(),
                 data.getModifyUserId(),
-                data.getRemoveUserId());
+                data.getRemoveUserId(),
+                data.getCode()
+                );
     }
 }

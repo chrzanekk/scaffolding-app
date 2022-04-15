@@ -1,26 +1,18 @@
 package pl.com.chrzanowski.scaffolding.api.currency;
 
-public class CurrencyPostRequest {
-    private String name;
+import pl.com.chrzanowski.scaffolding.domain.CoreFieldsResponseRequestData;
+
+public class CurrencyPostRequest extends CoreFieldsResponseRequestData {
+
     private String code;
-    private Long createUserId;
 
-
-    public CurrencyPostRequest(String name, String code, Long createUserId) {
-        this.name = name;
+    public CurrencyPostRequest(String name, Long createUserId, String code) {
+        super(name, createUserId);
         this.code = code;
-        this.createUserId = createUserId;
-    }
-
-    public String getName() {
-        return name;
     }
 
     public String getCode() {
         return code;
     }
 
-    public Long getCreateUserId() {
-        return createUserId;
-    }
 }

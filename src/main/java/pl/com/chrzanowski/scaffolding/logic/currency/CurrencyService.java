@@ -52,14 +52,14 @@ public class CurrencyService implements ICurrency {
             list.add(new CurrencyData(
                     getLong(row, "id"),
                     getString(row, "name"),
-                    getString(row, "code"),
                     getDateTime(row, "create_date"),
                     getDateTime(row, "modify_date"),
                     getDateTime(row, "remove_date"),
                     getLong(row, "create_user_id"),
                     getLong(row, "modify_user_id"),
-                    getLong(row, "remove_user_id")
-            ));
+                    getLong(row, "remove_user_id"),
+                    getString(row, "code")
+                    ));
         }
         return list;
     }

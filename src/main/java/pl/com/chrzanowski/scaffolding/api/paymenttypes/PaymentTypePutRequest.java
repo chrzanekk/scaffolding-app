@@ -1,8 +1,6 @@
-package pl.com.chrzanowski.scaffolding.api.paymenttype;
+package pl.com.chrzanowski.scaffolding.api.paymenttypes;
 
 import pl.com.chrzanowski.scaffolding.domain.CoreFieldsData;
-
-import java.time.LocalDateTime;
 
 public class PaymentTypePutRequest extends CoreFieldsData {
 

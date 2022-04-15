@@ -1,20 +1,11 @@
 package pl.com.chrzanowski.scaffolding.api.contractortypes;
 
-public class ContractorTypePostRequest {
+import pl.com.chrzanowski.scaffolding.domain.CoreFieldsResponseRequestData;
 
-    private String name;
-    private Long createUserId;
+public class ContractorTypePostRequest extends CoreFieldsResponseRequestData {
 
     public ContractorTypePostRequest(String name, Long createUserId) {
-        this.name = name;
-        this.createUserId = createUserId;
+        super(name, createUserId);
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public Long getCreateUserId() {
-        return createUserId;
-    }
 }

@@ -29,6 +29,17 @@ public class CoreFieldsResponseRequestData {
         this.removeUserId = removeUserId;
     }
 
+    public CoreFieldsResponseRequestData(String name, Long createUserId) {
+        this.name = name;
+        this.createUserId = createUserId;
+    }
+
+    public CoreFieldsResponseRequestData(Long id, String name, Long modifyUserId) {
+        this.id = id;
+        this.name = name;
+        this.modifyUserId = modifyUserId;
+    }
+
     public Long getId() {
         return id;
     }
