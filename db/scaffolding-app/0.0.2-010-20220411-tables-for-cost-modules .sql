@@ -29,21 +29,6 @@ CREATE TABLE currency(
 	FOREIGN KEY (remove_user_id) REFERENCES users(id)
 );
 
-CREATE TABLE payment_statuses(
-	id INT AUTO_INCREMENT,
-	NAME varchar(50) NOT NULL,
-	create_date datetime default NOW(),
-	create_user_id INT,
-	modify_date datetime,
-	modify_user_id INT,
-	remove_date DATETIME,
-	remove_user_id INT,
-	PRIMARY KEY (id),
-	FOREIGN KEY (create_user_id) REFERENCES users(id),
-	FOREIGN KEY (modify_user_id) REFERENCES users(id),
-	FOREIGN KEY (remove_user_id) REFERENCES users(id)
-);
-
 CREATE TABLE payment_types(
 	id INT AUTO_INCREMENT,
 	NAME varchar(50) NOT NULL,
@@ -127,7 +112,7 @@ CREATE TABLE invoices(
 	invoice_gross_value DECIMAL(10,2) NOT NULL,
 	tax_value DECIMAL(10,2) NOT NULL,
 	tax_rate DECIMAL(10,2) NOT NULL,
-	payment_status_id INT NOT NULL,
+	payment_status BOOLEAN NOT NULL,
 	payment_date DATE NOT NULL,
 	payment_type_id INT NOT NULL,
 	description VARCHAR(500),
@@ -142,7 +127,6 @@ CREATE TABLE invoices(
 	FOREIGN KEY (contractor_category_id) REFERENCES contractors_categories(id),
 	FOREIGN KEY (cost_account_id) REFERENCES cost_accounts(id),
 	FOREIGN KEY (currency_id) REFERENCES currency(id),
-	FOREIGN KEY (payment_status_id) REFERENCES payment_statuses(id),
 	FOREIGN KEY (payment_type_id) REFERENCES payment_types(id)
 );
 
