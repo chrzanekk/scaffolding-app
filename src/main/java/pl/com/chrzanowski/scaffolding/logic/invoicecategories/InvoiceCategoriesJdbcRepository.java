@@ -1,9 +1,9 @@
-package pl.com.chrzanowski.scaffolding.logic.contractortypes;
+package pl.com.chrzanowski.scaffolding.logic.invoicecategories;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
-import pl.com.chrzanowski.scaffolding.domain.contractortypes.ContractorTypeData;
-import pl.com.chrzanowski.scaffolding.domain.contractortypes.ContractorTypeFilter;
+import pl.com.chrzanowski.scaffolding.domain.invoicecategories.InvoiceCategoryData;
+import pl.com.chrzanowski.scaffolding.domain.invoicecategories.InvoiceCategoryFilter;
 import pl.com.chrzanowski.scaffolding.logic.CommonJdbcRepository;
 
 import java.util.List;
@@ -12,33 +12,33 @@ import java.util.Map;
 import static pl.com.chrzanowski.scaffolding.logic.utils.JdbcUtil.preparePaginationQuery;
 
 @Service
-public class ContractorTypeJdbcRepository {
+public class InvoiceCategoriesJdbcRepository {
 
     private JdbcTemplate jdbcTemplate;
     private CommonJdbcRepository commonJdbcRepository;
 
-    public ContractorTypeJdbcRepository(JdbcTemplate jdbcTemplate, CommonJdbcRepository commonJdbcRepository) {
+    public InvoiceCategoriesJdbcRepository(JdbcTemplate jdbcTemplate, CommonJdbcRepository commonJdbcRepository) {
         this.jdbcTemplate = jdbcTemplate;
         this.commonJdbcRepository = commonJdbcRepository;
     }
 
-    public Long create(ContractorTypeData data) {
+    public Long create(InvoiceCategoryData data) {
         String query = "INSERT INTO contractor_types (name, create_user_id) VALUES (?,?); ";
         jdbcTemplate.update(query, data.getName(), data.getCreateUserId());
         return commonJdbcRepository.getLastInsertedId();
     }
 
-    public void update(ContractorTypeData data) {
+    public void update(InvoiceCategoryData data) {
         String query = "UPDATE contractor_types SET name = ?, modify_date = ?, modify_user_id =? WHERE id = ?; ";
         jdbcTemplate.update(query, data.getName(), data.getModifyDate(), data.getModifyUserId(), data.getId());
     }
 
-    public void remove(ContractorTypeData data) {
+    public void remove(InvoiceCategoryData data) {
         String query = "UPDATE contractor_types SET name = ?, remove_date = ?, remove_user_id =? WHERE id = ?; ";
         jdbcTemplate.update(query, data.getName(), data.getRemoveDate(), data.getRemoveUserId(), data.getId());
     }
 
-    public List<Map<String, Object>> find(ContractorTypeFilter filter) {
+    public List<Map<String, Object>> find(InvoiceCategoryFilter filter) {
 
         String query = "SELECT * FROM contractor_types";
 

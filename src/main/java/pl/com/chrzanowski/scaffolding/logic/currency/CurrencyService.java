@@ -1,7 +1,6 @@
 package pl.com.chrzanowski.scaffolding.logic.currency;
 
 import org.springframework.stereotype.Service;
-import pl.com.chrzanowski.scaffolding.domain.contractortypes.ContractorTypeData;
 import pl.com.chrzanowski.scaffolding.domain.currency.CurrencyData;
 import pl.com.chrzanowski.scaffolding.domain.currency.CurrencyFilter;
 import pl.com.chrzanowski.scaffolding.logic.ICurrency;
