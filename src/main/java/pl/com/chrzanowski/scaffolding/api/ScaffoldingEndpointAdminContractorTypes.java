@@ -15,17 +15,17 @@ import java.util.List;
 @RequestMapping("/admin/api/scaffolding")
 public class ScaffoldingEndpointAdminContractorTypes {
 
-    private IContractorTypes contractorTypes;
+    private IContractorTypes contractorTypesService;
 
-    public ScaffoldingEndpointAdminContractorTypes(IContractorTypes contractorTypes) {
-        this.contractorTypes = contractorTypes;
+    public ScaffoldingEndpointAdminContractorTypes(IContractorTypes contractorTypesService) {
+        this.contractorTypesService = contractorTypesService;
     }
 
     @GetMapping(path = "/contractor-types", produces = "application/json; charset=UTF-8")
     public ContractorTypesRequestGetResponse contractorTypes(
             @RequestParam(name = "page", required = false, defaultValue = "1") Long page,
             @RequestParam(name = "page_size", required = false, defaultValue = "10") Long pageSize) {
-        List<ContractorTypeData> contractorTypesList = contractorTypes.find(new ContractorTypeFilter(page, pageSize,
+        List<ContractorTypeData> contractorTypesList = contractorTypesService.find(new ContractorTypeFilter(page, pageSize,
                 false));
         return new ContractorTypesRequestGetResponse(contractorTypesToResponse(contractorTypesList));
     }
@@ -34,7 +34,7 @@ public class ScaffoldingEndpointAdminContractorTypes {
     public ContractorTypesRequestGetResponse removedContractorTypes(
             @RequestParam(name = "page", required = false, defaultValue = "1") Long page,
             @RequestParam(name = "page_size", required = false, defaultValue = "10") Long pageSize) {
-        List<ContractorTypeData> contractorTypesList = contractorTypes.find(new ContractorTypeFilter(page, pageSize,
+        List<ContractorTypeData> contractorTypesList = contractorTypesService.find(new ContractorTypeFilter(page, pageSize,
                 true));
         return new ContractorTypesRequestGetResponse(contractorTypesToResponse(contractorTypesList));
     }
@@ -42,25 +42,25 @@ public class ScaffoldingEndpointAdminContractorTypes {
     @GetMapping(path = "/contractor-type/{id}", produces = "application/json; charset=UTF-8")
     public ContractorTypeRequestGetResponse contractorTypeById(
             @PathVariable Long id) {
-        ContractorTypeData contractorType = contractorTypes.find(new ContractorTypeFilter(id, false)).get(0);
+        ContractorTypeData contractorType = contractorTypesService.find(new ContractorTypeFilter(id, false)).get(0);
         return new ContractorTypeRequestGetResponse(contractorTypeToResponse(contractorType));
     }
 
     @PostMapping(path = "/contractor-type", consumes = "application/json; charset=UTF-8")
     public void addContractorType(@RequestBody ContractorTypePostRequest request) {
-        contractorTypes.add(new ContractorTypeData(request.getName(), request.getCreateUserId()));
+        contractorTypesService.add(new ContractorTypeData(request.getName(), request.getCreateUserId()));
     }
 
     @PutMapping(path = "/contractor-type/{id}", consumes = "application/json; charset=UTF-8")
     public void updateContractorType(@PathVariable Long id,
                                      @RequestBody ContractorTypePutRequest request) {
-        contractorTypes.update(new ContractorTypeData(id, request.getName(), request.getModifyUserId()));
+        contractorTypesService.update(new ContractorTypeData(id, request.getName(), request.getModifyUserId()));
     }
 
     @PutMapping(path = "/contractor-type-to-remove/{id}", consumes = "application/json; charset=UTF-8")
     public void removeContractorType(@PathVariable Long id,
                                      @RequestBody ContractorTypePutRequest request) {
-        contractorTypes.remove(new ContractorTypeData(id, request.getRemoveUserId()));
+        contractorTypesService.remove(new ContractorTypeData(id, request.getRemoveUserId()));
     }
 
 
