@@ -13,6 +13,7 @@ public class ContractorFilter extends CoreFieldsFilter {
     private String city;
     private String country;
     private String bankAccount;
+    private Boolean itContainsRemoveDate;
 
     public ContractorFilter(Long id,
                             String name,
@@ -50,5 +51,45 @@ public class ContractorFilter extends CoreFieldsFilter {
 
     public ContractorFilter(Long id, Boolean isRemoved) {
         super(id, isRemoved);
+    }
+
+    public String getContractorType() {
+        return contractorType;
+    }
+
+    public String getTaxNumber() {
+        return taxNumber;
+    }
+
+    public String getStreet() {
+        return street;
+    }
+
+    public String getBuildingNo() {
+        return buildingNo;
+    }
+
+    public String getApartmentNo() {
+        return apartmentNo;
+    }
+
+    public String getPostalCode() {
+        return postalCode;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public String getBankAccount() {
+        return bankAccount;
+    }
+
+    public Boolean getItContainsRemoveDate() {
+        return itContainsRemoveDate;
     }
 }

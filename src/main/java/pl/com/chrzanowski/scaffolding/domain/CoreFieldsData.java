@@ -50,6 +50,20 @@ public class CoreFieldsData {
         this.removeDate = LocalDateTime.now();
     }
 
+    public CoreFieldsData(Long id, String name, LocalDateTime createDate, Long createUserId) {
+        this.id = id;
+        this.name = name;
+        this.createDate = createDate;
+        this.createUserId = createUserId;
+    }
+
+    public CoreFieldsData(Long id) {
+        this.id = id;
+    }
+
+    public CoreFieldsData() {
+    }
+
     public Long getId() {
         return id;
     }

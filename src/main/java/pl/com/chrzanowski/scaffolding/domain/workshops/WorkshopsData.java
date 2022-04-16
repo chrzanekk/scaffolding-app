@@ -102,8 +102,17 @@ public class WorkshopsData {
         this.modifyDate = data.getModifyDate();
         this.removeDate = data.getRemoveDate();
     }
-// to get workshop data
-    public WorkshopsData(Long id, String name, String taxNumber, String street, String buildingNo, String apartmentNo, String postalCode, String city, LocalDateTime modifyDate, LocalDateTime removeDate) {
+    // to get workshop data
+    public WorkshopsData(Long id,
+                         String name,
+                         String taxNumber,
+                         String street,
+                         String buildingNo,
+                         String apartmentNo,
+                         String postalCode,
+                         String city,
+                         LocalDateTime modifyDate,
+                         LocalDateTime removeDate) {
         this.id = id;
         this.name = name;
         this.taxNumber = taxNumber;

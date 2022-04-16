@@ -11,4 +11,5 @@ public interface IContractor {
     void update(ContractorData data);
     void remove(ContractorData data);
     List<ContractorData> find(ContractorFilter filter);
+    List<ContractorData> findWithCurrency(List<ContractorData> data);
 }

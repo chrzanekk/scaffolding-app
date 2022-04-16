@@ -117,26 +117,9 @@ public class WorkshopsService {
     }
 
     private WorkshopsData formatFields(WorkshopsData data) {
-        String formattedTaxNumber = formatTaxNumber(data.getTaxNumber());
-        String formattedPostalCode = formatPostalCode(data.getPostalCode());
+        String formattedTaxNumber = DataValidationUtil.formatTaxNumber(data.getTaxNumber());
+        String formattedPostalCode = DataValidationUtil.formatPostalCode(data.getPostalCode());
         return new WorkshopsData(data, formattedTaxNumber, formattedPostalCode);
-    }
-
-    private String cleanInput(String input) {
-        if (input != null) {
-            return input.replaceAll("[^a-zA-Z0-9]", "");
-        }
-        return "";
-    }
-
-    private String formatTaxNumber(String taxNumber) {
-        taxNumber = cleanInput(taxNumber);
-        return taxNumber.substring(0, 3) + "-" + taxNumber.substring(3, 6) + "-" + taxNumber.substring(6, 8) + "-" + taxNumber.substring(8, 10);
-    }
-
-    private String formatPostalCode(String postalCode) {
-        postalCode = cleanInput(postalCode);
-        return postalCode.substring(0, 2) + "-" + postalCode.substring(2, 5);
     }
 }
 

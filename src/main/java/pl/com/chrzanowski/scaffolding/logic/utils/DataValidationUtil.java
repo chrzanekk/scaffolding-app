@@ -152,4 +152,21 @@ public class DataValidationUtil {
                 ".";
     }
 
+    public static String formatTaxNumber(String taxNumber) {
+        taxNumber = cleanInput(taxNumber);
+        return taxNumber.substring(0, 3) + "-" + taxNumber.substring(3, 6) + "-" + taxNumber.substring(6, 8) + "-" + taxNumber.substring(8, 10);
+    }
+
+    public static String formatPostalCode(String postalCode) {
+        postalCode = cleanInput(postalCode);
+        return postalCode.substring(0, 2) + "-" + postalCode.substring(2, 5);
+    }
+
+    private static String cleanInput(String input) {
+        if (input != null) {
+            return input.replaceAll("[^a-zA-Z0-9]", "");
+        }
+        return "";
+    }
+
 }
