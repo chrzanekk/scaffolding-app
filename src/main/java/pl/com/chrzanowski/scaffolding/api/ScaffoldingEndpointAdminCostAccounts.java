@@ -57,7 +57,7 @@ public class ScaffoldingEndpointAdminCostAccounts {
     @PutMapping(path = "/cost-account-to-remove/{id}", consumes = "application/json; charset=UTF-8")
     public void removeCostAccount(@PathVariable Long id,
                                   @RequestBody CostAccountPutRequest request) {
-        costAccountsService.remove(new CostAccountData(id, request.getRemoveUserId()));
+        costAccountsService.remove(new CostAccountData(id, request.getRemoveUserId(), request.getName()));
     }
 
 

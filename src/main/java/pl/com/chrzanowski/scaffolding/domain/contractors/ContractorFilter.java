@@ -41,6 +41,25 @@ public class ContractorFilter extends CoreFieldsFilter {
         this.bankAccount = bankAccount;
     }
 
+    public ContractorFilter(String name,
+                            Long page,
+                            Long pageSize,
+                            Boolean isRemoved,
+                            String contractorType,
+                            String taxNumber,
+                            String street,
+                            String postalCode,
+                            String city,
+                            String country) {
+        super(name, page, pageSize, isRemoved);
+        this.contractorType = contractorType;
+        this.taxNumber = taxNumber;
+        this.street = street;
+        this.postalCode = postalCode;
+        this.city = city;
+        this.country = country;
+    }
+
     public ContractorFilter(Long page, Long pageSize, Boolean isRemoved) {
         super(page, pageSize, isRemoved);
     }

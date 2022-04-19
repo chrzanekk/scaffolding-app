@@ -22,6 +22,13 @@ public class CoreFieldsFilter {
         this.isRemoved = isRemoved;
     }
 
+    public CoreFieldsFilter(String name, Long page, Long pageSize, Boolean isRemoved) {
+        this.name = name;
+        this.page = page;
+        this.pageSize = pageSize;
+        this.isRemoved = isRemoved;
+    }
+
     public CoreFieldsFilter(Long id) {
         this.id = id;
     }

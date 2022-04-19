@@ -89,7 +89,7 @@ public class ContractorJdbcRepository {
     }
 
     public List<Map<String, Object>> find(ContractorFilter filter) {
-        String query = "SELECT * FROM workshops";
+        String query = "SELECT * FROM contractors";
 
         if (filter != null) {
             query += " WHERE 1=1";

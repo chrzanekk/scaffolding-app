@@ -2,7 +2,7 @@ package pl.com.chrzanowski.scaffolding.api.workshops;
 
 public class WorkshopRequestGetResponse {
 
-    WorkshopGetResponse workshop;
+    private WorkshopGetResponse workshop;
 
     public WorkshopRequestGetResponse(WorkshopGetResponse workshop) {
         this.workshop = workshop;

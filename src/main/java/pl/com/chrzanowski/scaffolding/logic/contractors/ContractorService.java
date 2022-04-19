@@ -3,7 +3,6 @@ package pl.com.chrzanowski.scaffolding.logic.contractors;
 import org.springframework.stereotype.Service;
 import pl.com.chrzanowski.scaffolding.domain.contractors.ContractorData;
 import pl.com.chrzanowski.scaffolding.domain.contractors.ContractorFilter;
-import pl.com.chrzanowski.scaffolding.domain.workshops.WorkshopsData;
 import pl.com.chrzanowski.scaffolding.logic.IContractor;
 import pl.com.chrzanowski.scaffolding.logic.utils.DataValidationUtil;
 
@@ -27,7 +26,7 @@ public class ContractorService implements IContractor {
 
     @Override
     public Long create(ContractorData data) {
-        ContractorData contractorData = formatFields(data);
+        ContractorData contractorData = formatFieldsForCreate(data);
         validateData(contractorData);
         Long contractorId = contractorJdbcRepository.create(data);
         contractorCurrencyService.validateAndCreateCurrencyList(new ContractorData(
@@ -41,9 +40,9 @@ public class ContractorService implements IContractor {
 
     @Override
     public void update(ContractorData data) {
-        ContractorData contractorData = formatFields(data);
+        ContractorData contractorData = formatFieldsForUpdate(data);
         validateData(data);
-        if(data.getCurrencyList() != null) {
+        if (data.getCurrencyList() != null) {
             contractorCurrencyService.deleteCurrency(data);
             contractorCurrencyService.validateAndCreateCurrencyList(data);
         } else {
@@ -109,9 +108,9 @@ public class ContractorService implements IContractor {
 
     }
 
-    private List<ContractorData> getContractors(List<Map<String,Object>> data) {
+    private List<ContractorData> getContractors(List<Map<String, Object>> data) {
         List<ContractorData> list = new ArrayList<>();
-        for(Map<String,Object> row : data) {
+        for (Map<String, Object> row : data) {
             list.add(new ContractorData(
                     getLong(row, "id"),
                     getString(row, "name"),
@@ -136,11 +135,29 @@ public class ContractorService implements IContractor {
         return list;
     }
 
-    private ContractorData formatFields(ContractorData data){
+    private ContractorData formatFieldsForUpdate(ContractorData data) {
         String formattedTaxNumber = DataValidationUtil.formatTaxNumber(data.getTaxNumber());
         String formattedPostalCode = DataValidationUtil.formatPostalCode(data.getPostalCode());
         return new ContractorData(
                 data.getId(),
+                data.getName(),
+                data.getModifyUserId(),
+                data.getContractorType(),
+                formattedTaxNumber,
+                data.getStreet(),
+                data.getBuildingNo(),
+                data.getApartmentNo(),
+                formattedPostalCode,
+                data.getCity(),
+                data.getCountry(),
+                data.getBankAccount(),
+                data.getDescription(),
+                data.getCurrencyList());
+    }
+    private ContractorData formatFieldsForCreate(ContractorData data) {
+        String formattedTaxNumber = DataValidationUtil.formatTaxNumber(data.getTaxNumber());
+        String formattedPostalCode = DataValidationUtil.formatPostalCode(data.getPostalCode());
+        return new ContractorData(
                 data.getName(),
                 data.getCreateUserId(),
                 data.getContractorType(),
@@ -152,6 +169,9 @@ public class ContractorService implements IContractor {
                 data.getCity(),
                 data.getCountry(),
                 data.getBankAccount(),
-                data.getDescription());
+                data.getDescription(),
+                data.getCurrencyList());
     }
+
+
 }

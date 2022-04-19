@@ -60,7 +60,7 @@ public class ScaffoldingEndpointAdminInvoiceCategories {
     @PutMapping(path = "/invoice-category-to-remove/{id}", consumes = "application/json; charset=UTF-8")
     public void removeInvoiceCategory(@PathVariable Long id,
                                      @RequestBody InvoiceCategoryPutRequest request) {
-        invoiceCategoriesService.remove(new InvoiceCategoryData(id, request.getRemoveUserId()));
+        invoiceCategoriesService.remove(new InvoiceCategoryData(id, request.getRemoveUserId(), request.getName()));
     }
 
 

@@ -97,7 +97,8 @@ public class ContractorData extends CoreFieldsData {
                           String city,
                           String country,
                           String bankAccount,
-                          String description) {
+                          String description,
+                          Long[] currencyList) {
         super(id, name, modifyUserId);
         this.contractorType = contractorType;
         this.taxNumber = taxNumber;
@@ -109,6 +110,7 @@ public class ContractorData extends CoreFieldsData {
         this.country = country;
         this.bankAccount = bankAccount;
         this.description = description;
+        this.currencyList = currencyList;
     }
 
     public ContractorData(Long id,
@@ -142,6 +144,61 @@ public class ContractorData extends CoreFieldsData {
         this.country = data.getCountry();
         this.bankAccount = data.getBankAccount();
         this.description = data.getDescription();
+        this.currencyList = currencyList;
+    }
+
+    public ContractorData(String name,
+                          Long createUserId,
+                          String contractorType,
+                          String taxNumber,
+                          String street,
+                          String buildingNo,
+                          String apartmentNo,
+                          String postalCode,
+                          String city,
+                          String country,
+                          String bankAccount,
+                          String description,
+                          Long[] currencyList) {
+        super(name, createUserId);
+        this.contractorType = contractorType;
+        this.taxNumber = taxNumber;
+        this.street = street;
+        this.buildingNo = buildingNo;
+        this.apartmentNo = apartmentNo;
+        this.postalCode = postalCode;
+        this.city = city;
+        this.country = country;
+        this.bankAccount = bankAccount;
+        this.description = description;
+        this.currencyList = currencyList;
+    }
+
+    public ContractorData(Long id,
+                          Long removeUserId,
+                          String name,
+                          String contractorType,
+                          String taxNumber,
+                          String street,
+                          String buildingNo,
+                          String apartmentNo,
+                          String postalCode,
+                          String city,
+                          String country,
+                          String bankAccount,
+                          String description,
+                          Long[] currencyList) {
+        super(id, name, removeUserId);
+        this.contractorType = contractorType;
+        this.taxNumber = taxNumber;
+        this.street = street;
+        this.buildingNo = buildingNo;
+        this.apartmentNo = apartmentNo;
+        this.postalCode = postalCode;
+        this.city = city;
+        this.country = country;
+        this.bankAccount = bankAccount;
+        this.description = description;
         this.currencyList = currencyList;
     }
 

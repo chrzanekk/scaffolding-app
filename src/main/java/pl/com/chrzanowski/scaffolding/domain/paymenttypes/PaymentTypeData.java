@@ -25,7 +25,7 @@ public class PaymentTypeData extends CoreFieldsData {
         super(id, name, modifyUserId);
     }
 
-    public PaymentTypeData(Long id, Long removeUserId) {
-        super(id, removeUserId);
+    public PaymentTypeData(Long id, Long removeUserId, String name) {
+        super(id, removeUserId, name);
     }
 }

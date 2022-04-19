@@ -61,7 +61,7 @@ public class ScaffoldingEndpointAdminCurrency {
     @PutMapping(path = "/currency-to-remove/{id}", consumes = "application/json; charset=UTF-8")
     public void removeCurrency(@PathVariable Long id,
                                @RequestBody CurrencyPutRequest request) {
-        currency.remove(new CurrencyData(id, request.getRemoveUserId(), request.getCode()));
+        currency.remove(new CurrencyData(id, request.getRemoveUserId(),request.getName(), request.getCode()));
     }
 
     private List<CurrencyGetResponse> currencyListToResponse(List<CurrencyData> currencyList) {

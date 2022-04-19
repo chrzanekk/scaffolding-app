@@ -1,27 +1,19 @@
-package pl.com.chrzanowski.scaffolding.domain.contractors;
+package pl.com.chrzanowski.scaffolding.api.contractors;
 
-import pl.com.chrzanowski.scaffolding.domain.currency.CurrencyData;
-
-public class ContractorCurrencyData {
+public class ContractorCurrencyGetResponse {
 
     private Long id;
     private Long contractorId;
     private Long currencyId;
-    private Long[] currencyList;
     private String currencyName;
     private String currencyCode;
 
-    public ContractorCurrencyData(Long id, Long contractorId, Long currencyId, String currencyName, String currencyCode) {
+    public ContractorCurrencyGetResponse(Long id, Long contractorId, Long currencyId, String currencyName, String currencyCode) {
         this.id = id;
         this.contractorId = contractorId;
         this.currencyId = currencyId;
         this.currencyName = currencyName;
         this.currencyCode = currencyCode;
-    }
-
-    public ContractorCurrencyData(Long contractorId, Long[] currencyList) {
-        this.contractorId = contractorId;
-        this.currencyList = currencyList;
     }
 
     public Long getId() {
@@ -34,10 +26,6 @@ public class ContractorCurrencyData {
 
     public Long getCurrencyId() {
         return currencyId;
-    }
-
-    public Long[] getCurrencyList() {
-        return currencyList;
     }
 
     public String getCurrencyName() {

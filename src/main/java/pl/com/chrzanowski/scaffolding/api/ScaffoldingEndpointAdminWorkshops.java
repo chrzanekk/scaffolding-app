@@ -107,19 +107,7 @@ public class ScaffoldingEndpointAdminWorkshops {
     private List<WorkshopGetResponse> workshopsToResponse(List<WorkshopsData> workshops) {
         List<WorkshopGetResponse> list = new ArrayList<>();
         for (WorkshopsData workshop : workshops) {
-            list.add(new WorkshopGetResponse(
-                    workshop.getId(),
-                    workshop.getName(),
-                    workshop.getTaxNumber(),
-                    workshop.getStreet(),
-                    workshop.getBuildingNo(),
-                    workshop.getApartmentNo(),
-                    workshop.getPostalCode(),
-                    workshop.getCity(),
-                    workshop.getActionTypes(),
-                    workshop.getActionTypesList(),
-                    DateUtil.parseDateTime(workshop.getRemoveDate()))
-            );
+            list.add(workshopToResponse(workshop));
         }
         return list;
     }

@@ -30,8 +30,8 @@ public class CurrencyData extends CoreFieldsData {
         this.code = code;
     }
 
-    public CurrencyData(Long id, Long removeUserId, String code) {
-        super(id, removeUserId);
+    public CurrencyData(Long id, Long removeUserId, String name, String code) {
+        super(id, removeUserId, name);
         this.code = code;
     }
 

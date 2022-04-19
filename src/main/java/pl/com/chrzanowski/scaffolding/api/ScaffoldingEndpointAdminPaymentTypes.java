@@ -56,7 +56,7 @@ public class ScaffoldingEndpointAdminPaymentTypes {
     @PutMapping(path = "/payment-type-to-remove/{id}", consumes = "application/json; charset=UTF-8")
     public void removePaymentType(@PathVariable Long id,
                                   @RequestBody PaymentTypePutRequest request) {
-        paymentTypes.remove(new PaymentTypeData(id, request.getRemoveUserId()));
+        paymentTypes.remove(new PaymentTypeData(id, request.getRemoveUserId(), request.getName()));
     }
 
 

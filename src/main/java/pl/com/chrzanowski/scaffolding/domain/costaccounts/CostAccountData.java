@@ -13,8 +13,8 @@ public class CostAccountData extends CoreFieldsData {
         super(id, name, modifyUserId);
     }
 
-    public CostAccountData(Long id, Long removeUserId) {
-        super(id, removeUserId);
+    public CostAccountData(Long id, Long removeUserId, String name) {
+        super(id, removeUserId, name);
     }
 
     public CostAccountData(Long id,

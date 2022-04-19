@@ -13,8 +13,8 @@ public class InvoiceCategoryData extends CoreFieldsData {
         super(id, name, modifyUserId);
     }
 
-    public InvoiceCategoryData(Long id, Long removeUserId) {
-        super(id, removeUserId);
+    public InvoiceCategoryData(Long id, Long removeUserId, String name) {
+        super(id, removeUserId, name);
     }
 
     public InvoiceCategoryData(Long id,

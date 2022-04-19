@@ -44,8 +44,9 @@ public class CoreFieldsData {
         this.modifyDate = LocalDateTime.now();
     }
 
-    public CoreFieldsData(Long id, Long removeUserId) {
+    public CoreFieldsData(Long id, Long removeUserId, String name) {
         this.id = id;
+        this.name = name;
         this.removeUserId = removeUserId;
         this.removeDate = LocalDateTime.now();
     }

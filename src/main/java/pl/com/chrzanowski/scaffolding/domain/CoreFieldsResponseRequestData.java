@@ -40,6 +40,9 @@ public class CoreFieldsResponseRequestData {
         this.modifyUserId = modifyUserId;
     }
 
+    public CoreFieldsResponseRequestData() {
+    }
+
     public Long getId() {
         return id;
     }
