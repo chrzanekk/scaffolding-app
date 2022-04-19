@@ -6,6 +6,7 @@ import pl.com.chrzanowski.scaffolding.api.costaccounts.*;
 import pl.com.chrzanowski.scaffolding.domain.costaccounts.CostAccountData;
 import pl.com.chrzanowski.scaffolding.domain.costaccounts.CostAccountFilter;
 import pl.com.chrzanowski.scaffolding.logic.ICostAccounts;
+import pl.com.chrzanowski.scaffolding.logic.user.UserService;
 import pl.com.chrzanowski.scaffolding.logic.utils.DateUtil;
 
 import java.util.ArrayList;
@@ -16,9 +17,11 @@ import java.util.List;
 public class ScaffoldingEndpointAdminCostAccounts {
 
     private ICostAccounts costAccountsService;
+    private UserService userService;
 
-    public ScaffoldingEndpointAdminCostAccounts(ICostAccounts costAccountsService) {
+    public ScaffoldingEndpointAdminCostAccounts(ICostAccounts costAccountsService, UserService userService) {
         this.costAccountsService = costAccountsService;
+        this.userService = userService;
     }
 
     @GetMapping(path = "/cost-accounts", produces = "application/json; charset=UTF-8")
@@ -79,7 +82,10 @@ public class ScaffoldingEndpointAdminCostAccounts {
                 DateUtil.parseDateTime(costAccount.getRemoveDate()),
                 costAccount.getCreateUserId(),
                 costAccount.getModifyUserId(),
-                costAccount.getModifyUserId()
+                costAccount.getModifyUserId(),
+                userService.getAndPrepareUserFullName(costAccount.getCreateUserId()),
+                userService.getAndPrepareUserFullName(costAccount.getModifyUserId()),
+                userService.getAndPrepareUserFullName(costAccount.getRemoveUserId())
         );
     }
 }

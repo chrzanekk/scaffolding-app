@@ -5,6 +5,7 @@ import pl.com.chrzanowski.scaffolding.api.paymenttypes.*;
 import pl.com.chrzanowski.scaffolding.domain.paymenttypes.PaymentTypeData;
 import pl.com.chrzanowski.scaffolding.domain.paymenttypes.PaymentTypeFilter;
 import pl.com.chrzanowski.scaffolding.logic.IPaymentTypes;
+import pl.com.chrzanowski.scaffolding.logic.user.UserService;
 import pl.com.chrzanowski.scaffolding.logic.utils.DateUtil;
 
 import java.util.ArrayList;
@@ -15,9 +16,11 @@ import java.util.List;
 public class ScaffoldingEndpointAdminPaymentTypes {
 
     private IPaymentTypes paymentTypes;
+    private UserService userService;
 
-    public ScaffoldingEndpointAdminPaymentTypes(IPaymentTypes paymentTypes) {
+    public ScaffoldingEndpointAdminPaymentTypes(IPaymentTypes paymentTypes, UserService userService) {
         this.paymentTypes = paymentTypes;
+        this.userService = userService;
     }
 
     @GetMapping(path = "/payment-types", produces = "application/json; charset=UTF-8")
@@ -60,7 +63,6 @@ public class ScaffoldingEndpointAdminPaymentTypes {
     }
 
 
-
     private List<PaymentTypeGetResponse> paymentTypesToResponse(List<PaymentTypeData> paymentTypes) {
         List<PaymentTypeGetResponse> list = new ArrayList<>();
         for (PaymentTypeData data : paymentTypes) {
@@ -78,7 +80,10 @@ public class ScaffoldingEndpointAdminPaymentTypes {
                 DateUtil.parseDateTime(paymentType.getRemoveDate()),
                 paymentType.getCreateUserId(),
                 paymentType.getModifyUserId(),
-                paymentType.getRemoveUserId()
+                paymentType.getRemoveUserId(),
+                userService.getAndPrepareUserFullName(paymentType.getCreateUserId()),
+                userService.getAndPrepareUserFullName(paymentType.getModifyUserId()),
+                userService.getAndPrepareUserFullName(paymentType.getRemoveUserId())
         );
     }
 

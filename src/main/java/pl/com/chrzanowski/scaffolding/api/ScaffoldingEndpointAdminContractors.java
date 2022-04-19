@@ -7,8 +7,10 @@ import pl.com.chrzanowski.scaffolding.domain.contractors.ContractorCurrencyData;
 import pl.com.chrzanowski.scaffolding.domain.contractors.ContractorCurrencyFilter;
 import pl.com.chrzanowski.scaffolding.domain.contractors.ContractorData;
 import pl.com.chrzanowski.scaffolding.domain.contractors.ContractorFilter;
+import pl.com.chrzanowski.scaffolding.domain.users.UserData;
 import pl.com.chrzanowski.scaffolding.logic.IContractor;
 import pl.com.chrzanowski.scaffolding.logic.contractors.ContractorCurrencyService;
+import pl.com.chrzanowski.scaffolding.logic.user.UserService;
 import pl.com.chrzanowski.scaffolding.logic.utils.DateUtil;
 
 import java.util.ArrayList;
@@ -20,10 +22,12 @@ public class ScaffoldingEndpointAdminContractors {
 
     private IContractor contractorService;
     private ContractorCurrencyService contractorCurrencyService;
+    private UserService userService;
 
-    public ScaffoldingEndpointAdminContractors(IContractor contractorService, ContractorCurrencyService contractorCurrencyService) {
+    public ScaffoldingEndpointAdminContractors(IContractor contractorService, ContractorCurrencyService contractorCurrencyService, UserService userService) {
         this.contractorService = contractorService;
         this.contractorCurrencyService = contractorCurrencyService;
+        this.userService = userService;
     }
 
     @GetMapping(path = "/contractors", produces = "application/json; charset=UTF-8")
@@ -183,6 +187,9 @@ public class ScaffoldingEndpointAdminContractors {
                 contractor.getCreateUserId(),
                 contractor.getModifyUserId(),
                 contractor.getRemoveUserId(),
+                userService.getAndPrepareUserFullName(contractor.getCreateUserId()),
+                userService.getAndPrepareUserFullName(contractor.getModifyUserId()),
+                userService.getAndPrepareUserFullName(contractor.getRemoveUserId()),
                 contractor.getContractorType(),
                 contractor.getTaxNumber(),
                 contractor.getStreet(),
@@ -195,6 +202,6 @@ public class ScaffoldingEndpointAdminContractors {
                 contractor.getDescription(),
                 contractor.getCurrencyList(),
                 contractor.getCurrencyDataList()
-        );
+                );
     }
 }

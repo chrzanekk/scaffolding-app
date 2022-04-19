@@ -4,7 +4,9 @@ import org.springframework.web.bind.annotation.*;
 import pl.com.chrzanowski.scaffolding.api.currency.*;
 import pl.com.chrzanowski.scaffolding.domain.currency.CurrencyData;
 import pl.com.chrzanowski.scaffolding.domain.currency.CurrencyFilter;
+import pl.com.chrzanowski.scaffolding.domain.users.UserData;
 import pl.com.chrzanowski.scaffolding.logic.ICurrency;
+import pl.com.chrzanowski.scaffolding.logic.user.UserService;
 import pl.com.chrzanowski.scaffolding.logic.utils.DateUtil;
 
 import java.util.ArrayList;
@@ -15,9 +17,11 @@ import java.util.List;
 public class ScaffoldingEndpointAdminCurrency {
 
     private ICurrency currency;
+    private UserService userService;
 
-    public ScaffoldingEndpointAdminCurrency(ICurrency currency) {
+    public ScaffoldingEndpointAdminCurrency(ICurrency currency, UserService userService) {
         this.currency = currency;
+        this.userService = userService;
     }
 
     @GetMapping(path = "/get-currency", produces = "application/json; charset=UTF-8")
@@ -82,6 +86,9 @@ public class ScaffoldingEndpointAdminCurrency {
                 data.getCreateUserId(),
                 data.getModifyUserId(),
                 data.getRemoveUserId(),
+                userService.getAndPrepareUserFullName(data.getCreateUserId()),
+                userService.getAndPrepareUserFullName(data.getModifyUserId()),
+                userService.getAndPrepareUserFullName(data.getRemoveUserId()),
                 data.getCode()
                 );
     }

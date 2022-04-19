@@ -28,6 +28,9 @@ public class ContractorGetResponse extends CoreFieldsResponseRequestData {
                                  Long createUserId,
                                  Long modifyUserId,
                                  Long removeUserId,
+                                 String createUserName,
+                                 String modifyUserName,
+                                 String removeUserName,
                                  String contractorType,
                                  String taxNumber,
                                  String street,
@@ -40,7 +43,7 @@ public class ContractorGetResponse extends CoreFieldsResponseRequestData {
                                  String description,
                                  Long[] currencyList,
                                  List<CurrencyData> currencyDataList) {
-        super(id, name, createDate, modifyDate, removeDate, createUserId, modifyUserId, removeUserId);
+        super(id, name, createDate, modifyDate, removeDate, createUserId, modifyUserId, removeUserId, createUserName, modifyUserName, removeUserName);
         this.contractorType = contractorType;
         this.taxNumber = taxNumber;
         this.street = street;

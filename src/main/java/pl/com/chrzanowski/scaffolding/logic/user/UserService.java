@@ -139,6 +139,14 @@ public class UserService {
         return getUsers(userJdbcRepository.findConfirmEmailNotificationRecipients());
     }
 
+    public String getAndPrepareUserFullName(Long userId) {
+        if (userId != null) {
+            UserData user = get(userId);
+            return user.getFirstName() + " " + user.getLastName();
+        }
+        return "";
+    }
+
     private String prepareUserAgent(String userAgent) {
         if (userAgent == null) {
             return null;
@@ -161,6 +169,7 @@ public class UserService {
 
     private void validate(UserData data) {
         validateEmail(data.getLogin());
+        validateFirstAndSecondName(data.getFirstName(), data.getLastName());
         validatePassword(data.getPasswordHash());
         validateRegulationAccept(data.getRegulationAccepted());
         validateNewsletterAccept(data.getNewsletterAccepted());
@@ -212,6 +221,11 @@ public class UserService {
         }
     }
 
+    private void validateFirstAndSecondName(String firstName, String lastName) {
+        if((firstName == null || lastName == null) || (firstName.equals("")) || (lastName.equals(""))) {
+            throw new IllegalArgumentException("Imię i nazwisko nie może być puste.");
+        }
+    }
 
     private void createNewUserAccount(UserData userCreateRequest) {
         UserData user = new UserData(userCreateRequest.getLogin(),
@@ -262,5 +276,7 @@ public class UserService {
         }
         return users;
     }
+
+
 
 }

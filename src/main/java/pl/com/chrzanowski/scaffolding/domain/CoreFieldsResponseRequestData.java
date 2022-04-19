@@ -10,6 +10,10 @@ public class CoreFieldsResponseRequestData {
     private Long createUserId;
     private Long modifyUserId;
     private Long removeUserId;
+    private String createUserName;
+    private String modifyUserName;
+    private String removeUserName;
+
 
     public CoreFieldsResponseRequestData(Long id,
                                          String name,
@@ -18,7 +22,10 @@ public class CoreFieldsResponseRequestData {
                                          String removeDate,
                                          Long createUserId,
                                          Long modifyUserId,
-                                         Long removeUserId) {
+                                         Long removeUserId,
+                                         String createUserName,
+                                         String modifyUserName,
+                                         String removeUserName) {
         this.id = id;
         this.name = name;
         this.createDate = createDate;
@@ -27,6 +34,9 @@ public class CoreFieldsResponseRequestData {
         this.createUserId = createUserId;
         this.modifyUserId = modifyUserId;
         this.removeUserId = removeUserId;
+        this.createUserName = createUserName;
+        this.modifyUserName = modifyUserName;
+        this.removeUserName = removeUserName;
     }
 
     public CoreFieldsResponseRequestData(String name, Long createUserId) {
@@ -73,5 +83,17 @@ public class CoreFieldsResponseRequestData {
 
     public Long getRemoveUserId() {
         return removeUserId;
+    }
+
+    public String getCreateUserName() {
+        return createUserName;
+    }
+
+    public String getModifyUserName() {
+        return modifyUserName;
+    }
+
+    public String getRemoveUserName() {
+        return removeUserName;
     }
 }

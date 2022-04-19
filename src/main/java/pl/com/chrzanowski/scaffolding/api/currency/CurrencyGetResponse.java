@@ -13,8 +13,11 @@ public class CurrencyGetResponse extends CoreFieldsResponseRequestData {
                                Long createUserId,
                                Long modifyUserId,
                                Long removeUserId,
+                               String createUserName,
+                               String modifyUserName,
+                               String removeUserName,
                                String code) {
-        super(id, name, createDate, modifyDate, removeDate, createUserId, modifyUserId, removeUserId);
+        super(id, name, createDate, modifyDate, removeDate, createUserId, modifyUserId, removeUserId, createUserName, modifyUserName, removeUserName);
         this.code = code;
     }
 

@@ -11,8 +11,11 @@ public class InvoiceCategoryGetResponse extends CoreFieldsResponseRequestData {
                                       String removeDate,
                                       Long createUserId,
                                       Long modifyUserId,
-                                      Long removeUserId) {
-        super(id, name, createDate, modifyDate, removeDate, createUserId, modifyUserId, removeUserId);
+                                      Long removeUserId,
+                                      String createUserName,
+                                      String modifyUserName,
+                                      String removeUserName) {
+        super(id, name, createDate, modifyDate, removeDate, createUserId, modifyUserId, removeUserId, createUserName, modifyUserName, removeUserName);
     }
 }
 

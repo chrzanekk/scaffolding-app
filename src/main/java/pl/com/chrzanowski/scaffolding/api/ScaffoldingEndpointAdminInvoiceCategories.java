@@ -6,6 +6,7 @@ import pl.com.chrzanowski.scaffolding.api.invoicecategories.*;
 import pl.com.chrzanowski.scaffolding.domain.invoicecategories.InvoiceCategoryData;
 import pl.com.chrzanowski.scaffolding.domain.invoicecategories.InvoiceCategoryFilter;
 import pl.com.chrzanowski.scaffolding.logic.IInvoiceCategories;
+import pl.com.chrzanowski.scaffolding.logic.user.UserService;
 import pl.com.chrzanowski.scaffolding.logic.utils.DateUtil;
 
 import java.util.ArrayList;
@@ -16,6 +17,7 @@ import java.util.List;
 public class ScaffoldingEndpointAdminInvoiceCategories {
 
     private IInvoiceCategories invoiceCategoriesService;
+    private UserService userService;
 
     public ScaffoldingEndpointAdminInvoiceCategories(IInvoiceCategories invoiceCategoriesService) {
         this.invoiceCategoriesService = invoiceCategoriesService;
@@ -81,7 +83,10 @@ public class ScaffoldingEndpointAdminInvoiceCategories {
                 DateUtil.parseDateTime(invoiceCategory.getRemoveDate()),
                 invoiceCategory.getCreateUserId(),
                 invoiceCategory.getModifyUserId(),
-                invoiceCategory.getRemoveUserId()
+                invoiceCategory.getRemoveUserId(),
+                userService.getAndPrepareUserFullName(invoiceCategory.getCreateUserId()),
+                userService.getAndPrepareUserFullName(invoiceCategory.getModifyUserId()),
+                userService.getAndPrepareUserFullName(invoiceCategory.getRemoveUserId())
         );
     }
 }
