@@ -49,6 +49,9 @@ public class UsersFilter {
         this.deleteDateTime = deleteDateTime;
     }
 
+    public UsersFilter() {
+    }
+
     public Long getId() {
         return id;
     }

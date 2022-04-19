@@ -22,8 +22,21 @@ public class UserData {
     private String firstName;
     private String lastName;
 
-    public UserData(Long id, String login, String passwordHash, String firstName, String lastName,
-                    String language, Boolean regulationAccepted, Boolean newsletterAccepted, Boolean isEnabled, LocalDateTime registrationDatetime, String registrationIp, String registrationUserAgent, Boolean emailConfirmed, LocalDateTime deleteDateTime, String[] authorities) {
+    public UserData(Long id,
+                    String login,
+                    String passwordHash,
+                    String firstName,
+                    String lastName,
+                    String language,
+                    Boolean regulationAccepted,
+                    Boolean newsletterAccepted,
+                    Boolean isEnabled,
+                    LocalDateTime registrationDatetime,
+                    String registrationIp,
+                    String registrationUserAgent,
+                    Boolean emailConfirmed,
+                    LocalDateTime deleteDateTime,
+                    String[] authorities) {
         this.id = id;
         this.login = login;
         this.passwordHash = passwordHash;
@@ -40,10 +53,20 @@ public class UserData {
         this.deleteDateTime = deleteDateTime;
         this.authorities = authorities;
     }
-//to find
-    public UserData(Long id, String firstName, String lastName, String login, String passwordHash, String language,
+    //to find
+    public UserData(Long id,
+                    String firstName,
+                    String lastName,
+                    String login,
+                    String passwordHash,
+                    String language,
                     Boolean regulationAccepted,
-                    Boolean newsletterAccepted, Boolean isEnabled, LocalDateTime registrationDatetime, String registrationIp, String registrationUserAgent, Boolean emailConfirmed) {
+                    Boolean newsletterAccepted,
+                    Boolean isEnabled,
+                    LocalDateTime registrationDatetime,
+                    String registrationIp,
+                    String registrationUserAgent,
+                    Boolean emailConfirmed) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -59,9 +82,16 @@ public class UserData {
         this.emailConfirmed = emailConfirmed;
     }
 
-    public UserData(String login, String passwordHash, String language, Boolean regulationAccepted,
-                    Boolean newsletterAccepted, Boolean isEnabled, LocalDateTime registrationDatetime,
-                    String registrationIp, String registrationUserAgent, Boolean emailConfirmed) {
+    public UserData(String login,
+                    String passwordHash,
+                    String language,
+                    Boolean regulationAccepted,
+                    Boolean newsletterAccepted,
+                    Boolean isEnabled,
+                    LocalDateTime registrationDatetime,
+                    String registrationIp,
+                    String registrationUserAgent,
+                    Boolean emailConfirmed) {
         this.login = login;
         this.passwordHash = passwordHash;
         this.language = language;

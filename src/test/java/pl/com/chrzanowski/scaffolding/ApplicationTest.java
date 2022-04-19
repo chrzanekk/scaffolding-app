@@ -1,4 +1,4 @@
-//package pl.com.goodsolution.adviser;
+//package pl.com.chrzanowski.scaffolding;
 //
 //import org.junit.Test;
 //import org.junit.runner.RunWith;
@@ -9,8 +9,8 @@
 //@SpringBootTest
 //public class ApplicationTest {
 //
-//	@Test
-//	public void contextLoads() {
-//	}
+//    @Test
+//    public void contextLoads() {
+//    }
 //
 //}
