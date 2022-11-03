@@ -21,8 +21,7 @@ public class VehicleTiresServiceDB {
             connection = TestDB.getConnection();
             statement = connection.createStatement();
 
-//            String sql = "DROP TABLE IF EXISTS tire_season";
-//            statement.executeUpdate(sql);
+
 
             statement = connection.createStatement();
             String sql = "DROP TABLE IF EXISTS tires";
@@ -83,7 +82,7 @@ public class VehicleTiresServiceDB {
                     "\tcreate_date datetime default now(),\n" +
                     "\tmodify_date datetime,\n" +
                     "\tremove_date datetime,\n" +
-                    "\tprimary key (id))\n" +
+                    "\tprimary key (id),\n" +
                     "\tforeign key (tire_id) references tires(id))";
             statement.executeUpdate(vehicleTires);
 
@@ -93,6 +92,8 @@ public class VehicleTiresServiceDB {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
     }
+
 
 }

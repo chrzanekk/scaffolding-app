@@ -46,23 +46,23 @@ public class ScaffoldingEndpoint {
         this.notificationsService = notificationsService;
     }
 
-    @PostMapping("/register-user")
-    public void register(@RequestBody UserPostRequest request, HttpServletRequest httpServletRequest) {
-        UserData userCreateRequest = new UserData(
-                request.getFirstName(),
-                request.getLastName(),
-                request.getLogin(),
-                request.getPasswordHash(),
-                request.getLanguage(),
-                request.getRegulationAccepted(),
-                request.getNewsletterAccepted(),
-                request.getIsEnabled(),
-                request.getIsEmailConfirmed(),
-                new String[] {UserAuthority.USER.getCode()},
-                httpServletRequest
-                );
-        userService.registerUser(userCreateRequest);
-    }
+//    @PostMapping("/register-user")
+//    public void register(@RequestBody UserPostRequest request, HttpServletRequest httpServletRequest) {
+//        UserData userCreateRequest = new UserData(
+//                request.getFirstName(),
+//                request.getLastName(),
+//                request.getLogin(),
+//                request.getPasswordHash(),
+//                request.getLanguage(),
+//                request.getRegulationAccepted(),
+//                request.getNewsletterAccepted(),
+//                request.getIsEnabled(),
+//                request.getIsEmailConfirmed(),
+//                new String[] {UserAuthority.USER.getCode()},
+//                httpServletRequest
+//                );
+//        userService.registerUser(userCreateRequest);
+//    }
 
     @PostMapping("/change-password")
     public void changePassword(@RequestBody ChangePasswordRequest request) {

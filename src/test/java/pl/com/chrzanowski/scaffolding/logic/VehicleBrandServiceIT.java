@@ -13,7 +13,7 @@ import pl.com.chrzanowski.scaffolding.logic.vehiclebrands.VehicleBrandService;
 
 import java.util.List;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, classes = Application.class)
@@ -52,6 +52,20 @@ public class VehicleBrandServiceIT {
         List<VehicleBrandData> result = vehicleBrandService.find(filter);
 
         assertThat(result).hasSize(1);
+
+    }
+
+    @Test
+    public void checkIfBrandIdIsReturnedCorrectly() {
+        vehicleBrandServiceDB.createTable();
+
+//        vehicleBrandServiceFixture.createVehicleBrands();
+
+        VehicleBrandData data = new VehicleBrandData("Fiat");
+
+        Long insertedId = vehicleBrandService.add(data);
+
+//        assertThat(new Long[]{insertedId}, equals(1L));
 
     }
 
